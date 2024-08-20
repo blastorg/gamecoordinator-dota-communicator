@@ -1,20 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-    "module": "nodenext" /* Specify what module code is generated. */,
-    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
-    "outDir": "./lib" /* Specify an output folder for all emitted files. */,
-    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    /* Language and Environment */
+    "target": "ES2020",
+    /* Modules */
+    "rootDir": "./src/" /* Specify the root folder within your source files. */,
+    "outDir": "./lib/",
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    /* Type Checking */
     "strict": true /* Enable all strict type-checking options. */,
-    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
-    "strictNullChecks": true /* When type checking, take into account 'null' and 'undefined'. */,
-    "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
-    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
-    "noFallthroughCasesInSwitch": true /* Enable error reporting for fallthrough cases in switch statements. */,
-    "noUncheckedIndexedAccess": true /* Add 'undefined' to a type when accessed using an index. */,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    /* Completeness */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "declaration": true /* Generate .d.ts files for every TypeScript or JavaScript file inside your project. */
   },
-  "include": ["src", "__tests__", "local", "protobufs"],
-  "exclude": ["node_modules", "lib"]
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "exclude": ["node_modules", "lib", "tests", "local_testing"]
 }

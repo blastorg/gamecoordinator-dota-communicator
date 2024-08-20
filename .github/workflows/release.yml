@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  install-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+
+  release:
+    if: "!startsWith(github.event.head_commit.message, '[skip ci]')"
+    needs: install-and-test
+    runs-on: ubuntu-latest
+    name: "Create a new release & update changelog using semantic-release"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm run build
+      - name: semantic-release
+        run: npx semantic-release
+        id: semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      new-release-published: ${{ steps.semantic-release.outputs.new-release-published }}
+      new-release-version: ${{ steps.semantic-release.outputs.new-release-version }}
+
+  publish-to-github-registry:
+    needs: release
+    if: "contains(${{ needs.release.outputs.new-release-published }}, 'true')"
+    runs-on: ubuntu-latest
+    name: "Releases package to Github Packages registry"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-tags: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com/
+          scope: "@blastorg"
+      - run: npm ci
+      - run: npm run build
+      - run: npm version ${{ needs.release.outputs.new-release-version }} --no-git-tag-version --no-commit-hooks
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  publish-to-npm:
+    needs: release
+    if: "contains(${{ needs.release.outputs.new-release-published }}, 'true')"
+    runs-on: ubuntu-latest
+    name: "Releases package to NPM registry"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-tags: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+          scope: "@blastorg"
+      - run: npm ci
+      - run: npm run build
+      - run: npm version ${{ needs.release.outputs.new-release-version }} --no-git-tag-version --no-commit-hooks
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPMJS_READWRITE_TOKEN}}
