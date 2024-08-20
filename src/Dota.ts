@@ -55,10 +55,10 @@ export class Dota {
     this.steam = steam;
 
     this.startSteamEvents();
-    this._startGcEvents();
+    this.startGcEvents();
   }
 
-  private _startGcEvents() {
+  private startGcEvents() {
     handleClientWelcome.call(this, this.state);
     handleConnectionStatus.call(this, this.state);
   }
