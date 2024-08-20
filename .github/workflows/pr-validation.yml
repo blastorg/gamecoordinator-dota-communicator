@@ -1,0 +1,35 @@
+name: PR validation
+
+on:
+  pull_request:
+    branches:
+      - "main"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: "Build and test the package"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - uses: actions/setup-node@v3
+        with:
+          cache: "pnpm"
+          node-version: 18
+          registry-url: https://npm.pkg.github.com
+          scope: "@blastorg"
+      - run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_READ_TOKEN }}
+      - run: pnpm run tsc
+      - run: pnpm run prettier
+      - run: pnpm run lint
+      - run: pnpm run test
+      - run: pnpm run build
