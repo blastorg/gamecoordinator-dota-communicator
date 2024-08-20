@@ -2,7 +2,7 @@ import { Dota } from "../Dota";
 import { CMsgDOTAProfileCard } from "../../protobufs/generated/protoc";
 
 export function getProfileCard(this: Dota, accountId: number): Promise<CMsgDOTAProfileCard> {
-  // Send a message to the Game Coordinator requesting match details
+  // Send a message to the Game Coordinator requesting the profile card
   this.send("getProfileCard", {
     accountId,
   });
