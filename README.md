@@ -21,19 +21,17 @@ Input the account id of a user and get their profile card back in return. The re
 **Example**
 
 ```
-import steamUser from "steam-user";
-import dotenv from "dotenv";
-import { Dota } from "@blastorg/gamecoordinator-dota-communicator";
-dotenv.config();
 
+// Define clients
 const client = new steamUser();
-
 const dota = new Dota(client);
 
+// Log on to Steam using the refresh token
 client.logOn({
   refreshToken: process.env.STEAM_REFRESH_TOKEN as string,
 });
 
+// On successful logon, set the persona state to online and play Dota 2
 client.on("loggedOn", () => {
   console.log("Logged on");
 
@@ -41,6 +39,8 @@ client.on("loggedOn", () => {
 
   client.gamesPlayed([570], true);
 });
+
+// When the client is connected to the Game Coordinator, get match details for a match and the profile card for an account
 
 dota.customEvents.on("connectedToGc", async () => {
   console.log("Connected to GC");

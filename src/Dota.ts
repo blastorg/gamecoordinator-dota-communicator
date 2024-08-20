@@ -70,6 +70,7 @@ export class Dota {
     handleError.call(this, this.state);
   }
 
+  // Send a message to the Game Coordinator
   public send<T extends ClientProtobufsNamedEventType>(
     messageId: T,
     body: Parameters<ClientProtobufsNamedType[T]["encode"]>[0],
@@ -85,6 +86,8 @@ export class Dota {
     const buffer = Buffer.from(protobuf.encode(body).finish());
     return this.sendRawBuffer(message, buffer);
   }
+
+  // Send a partial message to the Game Coordinator
   public sendPartial<T extends ClientProtobufsNamedEventType>(
     messageId: T,
     body: DeepPartial<Parameters<ClientProtobufsNamedType[T]["encode"]>[0]>,
@@ -100,6 +103,7 @@ export class Dota {
     return this.sendRawBuffer(message, buffer);
   }
 
+  // Send a raw buffer to the Game Coordinator
   public sendRawBuffer(messageId: number, body: Buffer | ByteBuffer): void {
     if (!this) {
       throw new Error("Not connected to Steam network");
