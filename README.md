@@ -1,6 +1,6 @@
-# Gamecoordinator Dota Communicator
+# Gamecoordinator Dota Communicator Typescript library
 
-This library interacts with the Dota Game Coordinator. It has prebuilt methods that allows you to easily get specific information and it also provides you with a fully typed and comprehensive toolset that you can use to implement your own methods.
+This Typescript library interacts with the Dota Game Coordinator. It has prebuilt methods that allows you to easily get specific information and it also provides you with a fully typed and comprehensive toolset that you can use to implement your own methods.
 
 It requires the use of [steam-user](https://github.com/DoctorMcKay/node-steam-user) to interact with the current steam session. You should familiarize yourself with this library.
 
