@@ -6,17 +6,15 @@ It requires the use of [steam-user](https://github.com/DoctorMcKay/node-steam-us
 
 # Custom methods
 
-The following functions act as an example of how to implement your own functions, and allows you to interact with the Game Coordinator. 
+The following functions act as an example of how to implement your own functions, and allows you to interact with the Game Coordinator.
 
-### ``getMatchDetails``
+### `getMatchDetails`
 
-Input the match ID and get information about the specific match in return. The return data matches the ``CMsgDOTAMatch`` protobuf.
+Input the match ID and get information about the specific match in return. The return data matches the `CMsgDOTAMatch` protobuf.
 
+### `getProfileCard`
 
-### ``getProfileCard``
-
-Input the account id of a user and get their profile card back in return. The return data matches the ``CMsgDOTAProfileCard`` protobuf.
-
+Input the account id of a user and get their profile card back in return. The return data matches the `CMsgDOTAProfileCard` protobuf.
 
 **Example**
 
@@ -65,6 +63,7 @@ Run the following commands in the following order. It installs, gets the most re
 4. `pnpm run protos:mappings`
 
 **ENV**
+
 ```
 STEAM_REFRESH_TOKEN=YOUR_REFRESH_TOKEN
 ```
