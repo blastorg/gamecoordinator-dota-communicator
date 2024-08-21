@@ -33,7 +33,7 @@ jobs:
       - name: semantic-release
         run: pnpm dlx semantic-release
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   release-to-npm:
     runs-on: ubuntu-latest
@@ -58,3 +58,4 @@ jobs:
         run: pnpm dlx semantic-release
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPMJS_READWRITE_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
