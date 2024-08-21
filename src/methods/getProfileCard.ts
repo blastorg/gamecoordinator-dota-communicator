@@ -9,7 +9,7 @@ export function getProfileCard(this: Dota, accountId: number): Promise<CMsgDOTAP
 
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      reject(new Error("Timeout waiting for match details"));
+      reject(new Error(`Timeout waiting for profile card for account: ${accountId}`));
     }, 5000);
 
     this.gcEvents.once("getProfileCardResponse", ({ data }) => {

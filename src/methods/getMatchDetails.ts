@@ -12,13 +12,13 @@ export function getMatchDetails(
 
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      reject(new Error("Timeout waiting for match details"));
+      reject(new Error(`Timeout waiting for match details for match: ${matchId}`));
     }, 5000);
 
     this.gcEvents.once("matchDetailsResponse", ({ data }) => {
       clearTimeout(timer);
       if (!data.match) {
-        reject(new Error("No match data"));
+        reject(new Error(`No match data for match: ${matchId}`));
         return;
       }
       const url = `http://replay${data.match.cluster}.valve.net/570/${
