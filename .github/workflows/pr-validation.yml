@@ -26,8 +26,6 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: "@blastorg"
       - run: pnpm install --frozen-lockfile
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_READ_TOKEN }}
       - run: pnpm run tsc
       - run: pnpm run prettier
       - run: pnpm run lint
