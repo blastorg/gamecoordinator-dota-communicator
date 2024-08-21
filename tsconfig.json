@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2020",
+    /* Modules */
+    "outDir": "./lib/",
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    /* Type Checking */
+    "strict": true /* Enable all strict type-checking options. */,
+    /* Completeness */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "declaration": true /* Generate .d.ts files for every TypeScript or JavaScript file inside your project. */
+  },
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "exclude": ["node_modules", "lib", "tests", "local_testing"]
+}

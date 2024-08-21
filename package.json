@@ -1,0 +1,80 @@
+{
+  "name": "@blastorg/gamecoordinator-dota-communicator",
+  "description": "",
+  "version": "1.0.0",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
+  "files": [
+    "lib/src/**/*",
+    "protobufs/**/*"
+  ],
+  "scripts": {
+    "build": "rm -rf lib && tsc",
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "test": "jest --passWithNoTests",
+    "tsc": "tsc --noEmit",
+    "pack:local": "pnpm build && npm pack --pack-destination ~",
+    "preinstall": "npx only-allow pnpm",
+    "prettier:write": "prettier --write ./src",
+    "prettier": "prettier src --check",
+    "prepare": "husky install",
+    "local:test": "tsx local/index.ts",
+    "local:parseMatchMetadata": "tsx local/parseMatchMetadataFile.ts",
+    "protos:sync": "git submodule update --init --recursive",
+    "protos:generate": "tsx protobufs/generateProtos.ts",
+    "protos:mappings": "tsx protobufs/generateMapping.ts"
+  },
+  "author": "BLAST",
+  "publishConfig": {
+    "access": "public"
+  },
+  "release": {
+    "branches": [
+      {
+        "name": "main"
+      }
+    ]
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.3",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "@tsconfig/node18": "^18.2.4",
+    "@types/bytebuffer": "^5.0.49",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.14.0",
+    "@types/steam-user": "^5.0.0",
+    "@types/unbzip2-stream": "^1.4.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.9.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.52.0",
+    "eslint-plugin-import": "^2.28.1",
+    "husky": "^8.0.0",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.0.2",
+    "prettier": "^3.0.3",
+    "semantic-release": "^22.0.7",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1",
+    "ts-proto": "^1.176.1",
+    "tsc-files": "^1.1.4",
+    "tsx": "^4.11.2",
+    "typed-emitter": "^2.1.0",
+    "typescript": "^5.4.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "bytebuffer": "^5.0.1",
+    "long": "^5.2.3",
+    "protobufjs": "^7.3.0",
+    "steam-user": "^5.0.9"
+  }
+}
