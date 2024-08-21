@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable import/namespace */
-import fs from "fs";
+ import fs from "fs";
 import * as protobufs from "./generated/protoc";
 import { makeFirstLetterLower } from "./util/makeFirstLetterLower";
 

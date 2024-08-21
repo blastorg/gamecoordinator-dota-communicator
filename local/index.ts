@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-
 import dotenv from "dotenv";
 import steamUser from "steam-user";
 import { Dota } from "../src";

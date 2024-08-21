@@ -9,6 +9,5 @@ async function main() {
 }
 
 main().catch((err) => {
-  // eslint-disable-next-line no-console
   console.log("Caught an error:", err);
 });

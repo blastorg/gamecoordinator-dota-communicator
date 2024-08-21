@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { execSync } from "child_process";
 import { mkdirSync, existsSync, readdirSync } from "fs";
 import { basename, extname, join, resolve } from "path";
