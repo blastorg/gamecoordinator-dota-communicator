@@ -26,6 +26,8 @@ pnpm install @blastorg/gamecoordinator-dota-communicator
 
 **Example**
 
+Also visible in /local
+
 ```
 
 // Define clients
