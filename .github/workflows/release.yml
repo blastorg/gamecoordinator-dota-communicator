@@ -38,7 +38,7 @@ jobs:
 
   release-to-npm:
     runs-on: ubuntu-latest
-    name: "Create a new release to github & update changelog using semantic-release"
+    name: "Release to NPM"
     steps:
       - uses: actions/checkout@v3
       - name: Setup PNPM
