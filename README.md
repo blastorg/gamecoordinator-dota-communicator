@@ -16,6 +16,14 @@ Input the match ID and get information about the specific match in return. The r
 
 Input the account id of a user and get their profile card back in return. The return data matches the `CMsgDOTAProfileCard` protobuf.
 
+## Install
+
+
+```shell
+npm install @blastorg/gamecoordinator-dota-communicator
+pnpm install @blastorg/gamecoordinator-dota-communicator
+```
+
 **Example**
 
 ```
