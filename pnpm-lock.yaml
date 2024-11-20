@@ -18,8 +18,8 @@ importers:
         specifier: ^7.3.0
         version: 7.3.0
       steam-user:
-        specifier: ^5.0.9
-        version: 5.0.9
+        specifier: ^5.2.0
+        version: 5.2.0
     devDependencies:
       '@semantic-release/changelog':
         specifier: ^6.0.3
@@ -36,9 +36,9 @@ importers:
       '@semantic-release/release-notes-generator':
         specifier: ^12.1.0
         version: 12.1.0(semantic-release@22.0.12(typescript@5.4.5))
-      '@tsconfig/node18':
-        specifier: ^18.2.4
-        version: 18.2.4
+      '@tsconfig/node20':
+        specifier: ^20.1.4
+        version: 20.1.4
       '@types/bytebuffer':
         specifier: ^5.0.49
         version: 5.0.49
@@ -49,8 +49,8 @@ importers:
         specifier: ^20.14.0
         version: 20.14.0
       '@types/steam-user':
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^5.0.3
+        version: 5.0.3
       '@types/unbzip2-stream':
         specifier: ^1.4.3
         version: 1.4.3
@@ -786,8 +786,8 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@tsconfig/node18@18.2.4':
-    resolution: {integrity: sha512-5xxU8vVs9/FNcvm3gE07fPbn9tl6tqGGWA9tSlwsUEkBxtRnTsNmwrV8gasZ9F/EobaSv9+nu8AxUKccw77JpQ==}
+  '@tsconfig/node20@20.1.4':
+    resolution: {integrity: sha512-sqgsT69YFeLWf5NtJ4Xq/xAF8p4ZQHlmGW74Nu2tD4+g5fAsposc4ZfaaPixVu4y01BEiDCWLRDCvDM5JOsRxg==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -849,8 +849,8 @@ packages:
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
 
-  '@types/steam-user@5.0.0':
-    resolution: {integrity: sha512-L0SHoJiZIbiLPGE5+9zU12PiTJNidiaVdre1hEx+lWowSL4+zuTnKQAv8HTdhfS9aAm/+YB0F1/ATClhT285AA==}
+  '@types/steam-user@5.0.3':
+    resolution: {integrity: sha512-jn4bPDEKGZDZEr1sIRNxLlZuffkG4mSeL+6AC95P/YUQmfYiwfwlvljcXxLFkHwdIPAGqErB4AsGqiL64najTg==}
 
   '@types/steamid@2.0.3':
     resolution: {integrity: sha512-ozNMQViUYLU+NBN4v7X0bV1O8uTL1bA+WvfHtt9IKcydS4tyYKH7w1vq+xcPGWGL0PRhGtY7C1Zhaeyj2IsETw==}
@@ -3154,16 +3154,16 @@ packages:
     resolution: {integrity: sha512-oYVInCvJlPPaQPYW1+iGcVP0N0ZvwtWiCDM1Z353XJ8l4DXQI/N+R5yyaRQcHRH5oQv3+BY6gPF40lu7gwEiJw==}
     engines: {node: '>=4.0.0'}
 
-  steam-session@1.7.2:
-    resolution: {integrity: sha512-BfOhwKqrzuiX9xeZ0X9IUhd3cwsZYzfGSkk51Oah7FM7JqDCDlcMrdv/1Q+YT7pBWpPCnnrncVkxiZ5mrRToCg==}
+  steam-session@1.9.0:
+    resolution: {integrity: sha512-CsCxy2ln70/LrRcho8nbixTLT2RMswqt/kzUualZYeT7DkTUF7nni8G/f1tBdT6ce2lKzl4Hq5xJlQ8C6rxg9A==}
     engines: {node: '>=12.22.0'}
 
   steam-totp@2.1.2:
     resolution: {integrity: sha512-bTKlc/NoIUQId+my+O556s55DDsNNXfVIPWFDNVu68beql7AJhV0c+GTjFxfwCDYfdc4NkAme+0WrDdnY2D2VA==}
     engines: {node: '>=6.0.0'}
 
-  steam-user@5.0.9:
-    resolution: {integrity: sha512-lV6K2cfr5AQzxf69U9nvJiqLbXT5N3HbwC8OyGZnD3v/ZFo8Vsk3j2RdrlS0lONuISGg/8l12uOG02EBAOhj9w==}
+  steam-user@5.2.0:
+    resolution: {integrity: sha512-GzDou8anDZOw0VgkTj6TybnEKjqSktdizz756UtjDBgh1ONnvI8HCw/FXKmpKmFnyf8iTshHcw16ATLC3WLP/Q==}
     engines: {node: '>=14.0.0'}
 
   steamid@1.1.3:
@@ -4395,7 +4395,7 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@tsconfig/node18@18.2.4': {}
+  '@tsconfig/node20@20.1.4': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
@@ -4469,7 +4469,7 @@ snapshots:
 
   '@types/stack-utils@2.0.3': {}
 
-  '@types/steam-user@5.0.0':
+  '@types/steam-user@5.0.3':
     dependencies:
       '@types/bytebuffer': 5.0.49
       '@types/file-manager': 2.0.3
@@ -7100,7 +7100,7 @@ snapshots:
       protobufjs: 6.11.4
       steamid: 1.1.3
 
-  steam-session@1.7.2:
+  steam-session@1.9.0:
     dependencies:
       '@doctormckay/stdlib': 2.10.0
       '@doctormckay/user-agents': 1.0.0
@@ -7117,7 +7117,7 @@ snapshots:
 
   steam-totp@2.1.2: {}
 
-  steam-user@5.0.9:
+  steam-user@5.2.0:
     dependencies:
       '@bbob/parser': 2.9.0
       '@doctormckay/stdlib': 2.10.0
@@ -7131,7 +7131,7 @@ snapshots:
       protobufjs: 7.3.0
       socks-proxy-agent: 7.0.0
       steam-appticket: 1.0.1
-      steam-session: 1.7.2
+      steam-session: 1.9.0
       steam-totp: 2.1.2
       steamid: 2.0.0
       websocket13: 4.0.0
