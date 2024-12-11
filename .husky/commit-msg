@@ -1,0 +1,1 @@
+pnpm exec commitlint --edit --extends @commitlint/config-conventional
