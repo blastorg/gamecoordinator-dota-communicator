@@ -73,8 +73,8 @@ importers:
         specifier: ^2.28.1
         version: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
       husky:
-        specifier: ^8.0.0
-        version: 8.0.3
+        specifier: ^9.1.7
+        version: 9.1.7
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.14.0)(ts-node@10.9.2(@types/node@20.14.0)(typescript@5.4.5))
@@ -1923,9 +1923,9 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  husky@8.0.3:
-    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
-    engines: {node: '>=14'}
+  husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
     hasBin: true
 
   iconv-lite@0.4.24:
@@ -5758,7 +5758,7 @@ snapshots:
 
   human-signals@5.0.0: {}
 
-  husky@8.0.3: {}
+  husky@9.1.7: {}
 
   iconv-lite@0.4.24:
     dependencies:
