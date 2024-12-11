@@ -16,7 +16,7 @@
     "preinstall": "npx only-allow pnpm",
     "prettier:write": "prettier --write ./src",
     "prettier": "prettier src --check",
-    "prepare": "husky install",
+    "prepare": "husky",
     "local:test": "tsx local/index.ts",
     "local:parseMatchMetadata": "tsx local/parseMatchMetadataFile.ts",
     "protos:sync": "git submodule update --init --recursive",
