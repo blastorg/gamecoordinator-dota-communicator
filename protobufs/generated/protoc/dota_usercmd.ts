@@ -215,13 +215,13 @@ export const CDota2UserCmdPB = {
   },
   fromPartial(object: DeepPartial<CDota2UserCmdPB>): CDota2UserCmdPB {
     const message = createBaseCDota2UserCmdPB();
-    message.base =
-      object.base !== undefined && object.base !== null ? CBaseUserCmdPB.fromPartial(object.base) : undefined;
+    message.base = (object.base !== undefined && object.base !== null)
+      ? CBaseUserCmdPB.fromPartial(object.base)
+      : undefined;
     message.spectatorQueryUnitEntindex = object.spectatorQueryUnitEntindex ?? 0;
-    message.crosshairtrace =
-      object.crosshairtrace !== undefined && object.crosshairtrace !== null
-        ? CMsgVector.fromPartial(object.crosshairtrace)
-        : undefined;
+    message.crosshairtrace = (object.crosshairtrace !== undefined && object.crosshairtrace !== null)
+      ? CMsgVector.fromPartial(object.crosshairtrace)
+      : undefined;
     message.camerapositionX = object.camerapositionX ?? 0;
     message.camerapositionY = object.camerapositionY ?? 0;
     message.clickbehavior = object.clickbehavior ?? 0;
@@ -235,15 +235,11 @@ export const CDota2UserCmdPB = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

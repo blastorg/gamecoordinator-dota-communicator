@@ -549,21 +549,18 @@ export const CMsgSteamSocketsUDPConnectRequest = {
     message.challenge = object.challenge ?? "0";
     message.myTimestamp = object.myTimestamp ?? "0";
     message.pingEstMs = object.pingEstMs ?? 0;
-    message.crypt =
-      object.crypt !== undefined && object.crypt !== null
-        ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
-        : undefined;
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.crypt = (object.crypt !== undefined && object.crypt !== null)
+      ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
+      : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     message.legacyProtocolVersion = object.legacyProtocolVersion ?? 0;
     message.identityString = object.identityString ?? "";
     message.legacyClientSteamId = object.legacyClientSteamId ?? "0";
-    message.legacyIdentityBinary =
-      object.legacyIdentityBinary !== undefined && object.legacyIdentityBinary !== null
-        ? CMsgSteamNetworkingIdentityLegacyBinary.fromPartial(object.legacyIdentityBinary)
-        : undefined;
+    message.legacyIdentityBinary = (object.legacyIdentityBinary !== undefined && object.legacyIdentityBinary !== null)
+      ? CMsgSteamNetworkingIdentityLegacyBinary.fromPartial(object.legacyIdentityBinary)
+      : undefined;
     return message;
   },
 };
@@ -750,20 +747,17 @@ export const CMsgSteamSocketsUDPConnectOK = {
     message.serverConnectionId = object.serverConnectionId ?? 0;
     message.yourTimestamp = object.yourTimestamp ?? "0";
     message.delayTimeUsec = object.delayTimeUsec ?? 0;
-    message.crypt =
-      object.crypt !== undefined && object.crypt !== null
-        ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
-        : undefined;
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.crypt = (object.crypt !== undefined && object.crypt !== null)
+      ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
+      : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     message.identityString = object.identityString ?? "";
     message.legacyServerSteamId = object.legacyServerSteamId ?? "0";
-    message.legacyIdentityBinary =
-      object.legacyIdentityBinary !== undefined && object.legacyIdentityBinary !== null
-        ? CMsgSteamNetworkingIdentityLegacyBinary.fromPartial(object.legacyIdentityBinary)
-        : undefined;
+    message.legacyIdentityBinary = (object.legacyIdentityBinary !== undefined && object.legacyIdentityBinary !== null)
+      ? CMsgSteamNetworkingIdentityLegacyBinary.fromPartial(object.legacyIdentityBinary)
+      : undefined;
     return message;
   },
 };
@@ -1014,10 +1008,9 @@ export const CMsgSteamSocketsUDPStats = {
   },
   fromPartial(object: DeepPartial<CMsgSteamSocketsUDPStats>): CMsgSteamSocketsUDPStats {
     const message = createBaseCMsgSteamSocketsUDPStats();
-    message.stats =
-      object.stats !== undefined && object.stats !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.stats)
-        : undefined;
+    message.stats = (object.stats !== undefined && object.stats !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.stats)
+      : undefined;
     message.flags = object.flags ?? 0;
     return message;
   },
@@ -1025,15 +1018,11 @@ export const CMsgSteamSocketsUDPStats = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

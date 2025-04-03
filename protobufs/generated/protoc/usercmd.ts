@@ -21,11 +21,13 @@ export interface CSubtickMoveStep {
   when?: number | undefined;
   analogForwardDelta?: number | undefined;
   analogLeftDelta?: number | undefined;
+  analogPitchDelta?: number | undefined;
+  analogYawDelta?: number | undefined;
 }
 
 export interface CBaseUserCmdPB {
-  commandNumber?: number | undefined;
-  tickCount?: number | undefined;
+  legacyCommandNumber?: number | undefined;
+  clientTick?: number | undefined;
   buttonsPb?: CInButtonStatePB | undefined;
   viewangles?: CMsgQAngle | undefined;
   forwardmove?: number | undefined;
@@ -137,7 +139,15 @@ export const CInButtonStatePB = {
 };
 
 function createBaseCSubtickMoveStep(): CSubtickMoveStep {
-  return { button: "0", pressed: false, when: 0, analogForwardDelta: 0, analogLeftDelta: 0 };
+  return {
+    button: "0",
+    pressed: false,
+    when: 0,
+    analogForwardDelta: 0,
+    analogLeftDelta: 0,
+    analogPitchDelta: 0,
+    analogYawDelta: 0,
+  };
 }
 
 export const CSubtickMoveStep = {
@@ -156,6 +166,12 @@ export const CSubtickMoveStep = {
     }
     if (message.analogLeftDelta !== undefined && message.analogLeftDelta !== 0) {
       writer.uint32(45).float(message.analogLeftDelta);
+    }
+    if (message.analogPitchDelta !== undefined && message.analogPitchDelta !== 0) {
+      writer.uint32(53).float(message.analogPitchDelta);
+    }
+    if (message.analogYawDelta !== undefined && message.analogYawDelta !== 0) {
+      writer.uint32(61).float(message.analogYawDelta);
     }
     return writer;
   },
@@ -202,6 +218,20 @@ export const CSubtickMoveStep = {
 
           message.analogLeftDelta = reader.float();
           continue;
+        case 6:
+          if (tag !== 53) {
+            break;
+          }
+
+          message.analogPitchDelta = reader.float();
+          continue;
+        case 7:
+          if (tag !== 61) {
+            break;
+          }
+
+          message.analogYawDelta = reader.float();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -218,6 +248,8 @@ export const CSubtickMoveStep = {
       when: isSet(object.when) ? globalThis.Number(object.when) : 0,
       analogForwardDelta: isSet(object.analogForwardDelta) ? globalThis.Number(object.analogForwardDelta) : 0,
       analogLeftDelta: isSet(object.analogLeftDelta) ? globalThis.Number(object.analogLeftDelta) : 0,
+      analogPitchDelta: isSet(object.analogPitchDelta) ? globalThis.Number(object.analogPitchDelta) : 0,
+      analogYawDelta: isSet(object.analogYawDelta) ? globalThis.Number(object.analogYawDelta) : 0,
     };
   },
 
@@ -238,6 +270,12 @@ export const CSubtickMoveStep = {
     if (message.analogLeftDelta !== undefined && message.analogLeftDelta !== 0) {
       obj.analogLeftDelta = message.analogLeftDelta;
     }
+    if (message.analogPitchDelta !== undefined && message.analogPitchDelta !== 0) {
+      obj.analogPitchDelta = message.analogPitchDelta;
+    }
+    if (message.analogYawDelta !== undefined && message.analogYawDelta !== 0) {
+      obj.analogYawDelta = message.analogYawDelta;
+    }
     return obj;
   },
 
@@ -251,14 +289,16 @@ export const CSubtickMoveStep = {
     message.when = object.when ?? 0;
     message.analogForwardDelta = object.analogForwardDelta ?? 0;
     message.analogLeftDelta = object.analogLeftDelta ?? 0;
+    message.analogPitchDelta = object.analogPitchDelta ?? 0;
+    message.analogYawDelta = object.analogYawDelta ?? 0;
     return message;
   },
 };
 
 function createBaseCBaseUserCmdPB(): CBaseUserCmdPB {
   return {
-    commandNumber: 0,
-    tickCount: 0,
+    legacyCommandNumber: 0,
+    clientTick: 0,
     buttonsPb: undefined,
     viewangles: undefined,
     forwardmove: 0,
@@ -279,11 +319,11 @@ function createBaseCBaseUserCmdPB(): CBaseUserCmdPB {
 
 export const CBaseUserCmdPB = {
   encode(message: CBaseUserCmdPB, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.commandNumber !== undefined && message.commandNumber !== 0) {
-      writer.uint32(8).int32(message.commandNumber);
+    if (message.legacyCommandNumber !== undefined && message.legacyCommandNumber !== 0) {
+      writer.uint32(8).int32(message.legacyCommandNumber);
     }
-    if (message.tickCount !== undefined && message.tickCount !== 0) {
-      writer.uint32(16).int32(message.tickCount);
+    if (message.clientTick !== undefined && message.clientTick !== 0) {
+      writer.uint32(16).int32(message.clientTick);
     }
     if (message.buttonsPb !== undefined) {
       CInButtonStatePB.encode(message.buttonsPb, writer.uint32(26).fork()).ldelim();
@@ -345,14 +385,14 @@ export const CBaseUserCmdPB = {
             break;
           }
 
-          message.commandNumber = reader.int32();
+          message.legacyCommandNumber = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
             break;
           }
 
-          message.tickCount = reader.int32();
+          message.clientTick = reader.int32();
           continue;
         case 3:
           if (tag !== 26) {
@@ -470,8 +510,8 @@ export const CBaseUserCmdPB = {
 
   fromJSON(object: any): CBaseUserCmdPB {
     return {
-      commandNumber: isSet(object.commandNumber) ? globalThis.Number(object.commandNumber) : 0,
-      tickCount: isSet(object.tickCount) ? globalThis.Number(object.tickCount) : 0,
+      legacyCommandNumber: isSet(object.legacyCommandNumber) ? globalThis.Number(object.legacyCommandNumber) : 0,
+      clientTick: isSet(object.clientTick) ? globalThis.Number(object.clientTick) : 0,
       buttonsPb: isSet(object.buttonsPb) ? CInButtonStatePB.fromJSON(object.buttonsPb) : undefined,
       viewangles: isSet(object.viewangles) ? CMsgQAngle.fromJSON(object.viewangles) : undefined,
       forwardmove: isSet(object.forwardmove) ? globalThis.Number(object.forwardmove) : 0,
@@ -496,11 +536,11 @@ export const CBaseUserCmdPB = {
 
   toJSON(message: CBaseUserCmdPB): unknown {
     const obj: any = {};
-    if (message.commandNumber !== undefined && message.commandNumber !== 0) {
-      obj.commandNumber = Math.round(message.commandNumber);
+    if (message.legacyCommandNumber !== undefined && message.legacyCommandNumber !== 0) {
+      obj.legacyCommandNumber = Math.round(message.legacyCommandNumber);
     }
-    if (message.tickCount !== undefined && message.tickCount !== 0) {
-      obj.tickCount = Math.round(message.tickCount);
+    if (message.clientTick !== undefined && message.clientTick !== 0) {
+      obj.clientTick = Math.round(message.clientTick);
     }
     if (message.buttonsPb !== undefined) {
       obj.buttonsPb = CInButtonStatePB.toJSON(message.buttonsPb);
@@ -555,16 +595,14 @@ export const CBaseUserCmdPB = {
   },
   fromPartial(object: DeepPartial<CBaseUserCmdPB>): CBaseUserCmdPB {
     const message = createBaseCBaseUserCmdPB();
-    message.commandNumber = object.commandNumber ?? 0;
-    message.tickCount = object.tickCount ?? 0;
-    message.buttonsPb =
-      object.buttonsPb !== undefined && object.buttonsPb !== null
-        ? CInButtonStatePB.fromPartial(object.buttonsPb)
-        : undefined;
-    message.viewangles =
-      object.viewangles !== undefined && object.viewangles !== null
-        ? CMsgQAngle.fromPartial(object.viewangles)
-        : undefined;
+    message.legacyCommandNumber = object.legacyCommandNumber ?? 0;
+    message.clientTick = object.clientTick ?? 0;
+    message.buttonsPb = (object.buttonsPb !== undefined && object.buttonsPb !== null)
+      ? CInButtonStatePB.fromPartial(object.buttonsPb)
+      : undefined;
+    message.viewangles = (object.viewangles !== undefined && object.viewangles !== null)
+      ? CMsgQAngle.fromPartial(object.viewangles)
+      : undefined;
     message.forwardmove = object.forwardmove ?? 0;
     message.leftmove = object.leftmove ?? 0;
     message.upmove = object.upmove ?? 0;
@@ -634,8 +672,9 @@ export const CUserCmdBasePB = {
   },
   fromPartial(object: DeepPartial<CUserCmdBasePB>): CUserCmdBasePB {
     const message = createBaseCUserCmdBasePB();
-    message.base =
-      object.base !== undefined && object.base !== null ? CBaseUserCmdPB.fromPartial(object.base) : undefined;
+    message.base = (object.base !== undefined && object.base !== null)
+      ? CBaseUserCmdPB.fromPartial(object.base)
+      : undefined;
     return message;
   },
 };
@@ -650,15 +689,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

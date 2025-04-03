@@ -141,7 +141,6 @@ export interface CExtraMsgBlock {
 }
 
 export interface CMsgSteamLearnServerInfo {
-  enableDataSubmission?: boolean | undefined;
   accessTokens?: CMsgSteamLearnAccessTokens | undefined;
   projectInfos: CMsgSteamLearnServerInfo_ProjectInfo[];
 }
@@ -150,6 +149,8 @@ export interface CMsgSteamLearnServerInfo_ProjectInfo {
   projectId?: number | undefined;
   snapshotPublishedVersion?: number | undefined;
   inferencePublishedVersion?: number | undefined;
+  snapshotPercentage?: number | undefined;
+  snapshotEnabled?: boolean | undefined;
 }
 
 export interface CMsgGCAssertJobData {
@@ -354,7 +355,6 @@ export interface CMsgClientWelcome {
   outofdateSubscribedCaches: CMsgSOCacheSubscribed[];
   uptodateSubscribedCaches: CMsgSOCacheSubscriptionCheck[];
   location?: CMsgClientWelcome_Location | undefined;
-  saveGameKey?: Buffer | undefined;
   gcSocacheFileVersion?: number | undefined;
   txnCountryCode?: string | undefined;
   gameData2?: Buffer | undefined;
@@ -402,7 +402,8 @@ export interface CMsgGCToGCSOCacheUnsubscribe {
   unsubscribeFromType?: number | undefined;
 }
 
-export interface CMsgGCClientPing {}
+export interface CMsgGCClientPing {
+}
 
 export interface CMsgGCToGCForwardAccountDetails {
   steamid?: string | undefined;
@@ -415,7 +416,8 @@ export interface CMsgGCToGCLoadSessionSOCache {
   forwardAccountDetails?: CMsgGCToGCForwardAccountDetails | undefined;
 }
 
-export interface CMsgGCToGCLoadSessionSOCacheResponse {}
+export interface CMsgGCToGCLoadSessionSOCacheResponse {
+}
 
 export interface CMsgGCToGCUpdateSessionStats {
   userSessions?: number | undefined;
@@ -423,7 +425,8 @@ export interface CMsgGCToGCUpdateSessionStats {
   inLogonSurge?: boolean | undefined;
 }
 
-export interface CMsgGCToClientRequestDropped {}
+export interface CMsgGCToClientRequestDropped {
+}
 
 export interface CWorkshopPopulateItemDescriptionsRequest {
   appid?: number | undefined;
@@ -579,7 +582,8 @@ export interface CMsgGCToGCMasterSubscribeToCache {
   steamIds: string[];
 }
 
-export interface CMsgGCToGCMasterSubscribeToCacheResponse {}
+export interface CMsgGCToGCMasterSubscribeToCacheResponse {
+}
 
 export interface CMsgGCToGCMasterSubscribeToCacheAsync {
   subscribeMsg?: CMsgGCToGCMasterSubscribeToCache | undefined;
@@ -702,14 +706,11 @@ export const CExtraMsgBlock = {
 };
 
 function createBaseCMsgSteamLearnServerInfo(): CMsgSteamLearnServerInfo {
-  return { enableDataSubmission: false, accessTokens: undefined, projectInfos: [] };
+  return { accessTokens: undefined, projectInfos: [] };
 }
 
 export const CMsgSteamLearnServerInfo = {
   encode(message: CMsgSteamLearnServerInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.enableDataSubmission !== undefined && message.enableDataSubmission !== false) {
-      writer.uint32(8).bool(message.enableDataSubmission);
-    }
     if (message.accessTokens !== undefined) {
       CMsgSteamLearnAccessTokens.encode(message.accessTokens, writer.uint32(34).fork()).ldelim();
     }
@@ -726,13 +727,6 @@ export const CMsgSteamLearnServerInfo = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.enableDataSubmission = reader.bool();
-          continue;
         case 4:
           if (tag !== 34) {
             break;
@@ -758,9 +752,6 @@ export const CMsgSteamLearnServerInfo = {
 
   fromJSON(object: any): CMsgSteamLearnServerInfo {
     return {
-      enableDataSubmission: isSet(object.enableDataSubmission)
-        ? globalThis.Boolean(object.enableDataSubmission)
-        : false,
       accessTokens: isSet(object.accessTokens) ? CMsgSteamLearnAccessTokens.fromJSON(object.accessTokens) : undefined,
       projectInfos: globalThis.Array.isArray(object?.projectInfos)
         ? object.projectInfos.map((e: any) => CMsgSteamLearnServerInfo_ProjectInfo.fromJSON(e))
@@ -770,9 +761,6 @@ export const CMsgSteamLearnServerInfo = {
 
   toJSON(message: CMsgSteamLearnServerInfo): unknown {
     const obj: any = {};
-    if (message.enableDataSubmission !== undefined && message.enableDataSubmission !== false) {
-      obj.enableDataSubmission = message.enableDataSubmission;
-    }
     if (message.accessTokens !== undefined) {
       obj.accessTokens = CMsgSteamLearnAccessTokens.toJSON(message.accessTokens);
     }
@@ -787,18 +775,22 @@ export const CMsgSteamLearnServerInfo = {
   },
   fromPartial(object: DeepPartial<CMsgSteamLearnServerInfo>): CMsgSteamLearnServerInfo {
     const message = createBaseCMsgSteamLearnServerInfo();
-    message.enableDataSubmission = object.enableDataSubmission ?? false;
-    message.accessTokens =
-      object.accessTokens !== undefined && object.accessTokens !== null
-        ? CMsgSteamLearnAccessTokens.fromPartial(object.accessTokens)
-        : undefined;
+    message.accessTokens = (object.accessTokens !== undefined && object.accessTokens !== null)
+      ? CMsgSteamLearnAccessTokens.fromPartial(object.accessTokens)
+      : undefined;
     message.projectInfos = object.projectInfos?.map((e) => CMsgSteamLearnServerInfo_ProjectInfo.fromPartial(e)) || [];
     return message;
   },
 };
 
 function createBaseCMsgSteamLearnServerInfo_ProjectInfo(): CMsgSteamLearnServerInfo_ProjectInfo {
-  return { projectId: 0, snapshotPublishedVersion: 0, inferencePublishedVersion: 0 };
+  return {
+    projectId: 0,
+    snapshotPublishedVersion: 0,
+    inferencePublishedVersion: 0,
+    snapshotPercentage: 0,
+    snapshotEnabled: false,
+  };
 }
 
 export const CMsgSteamLearnServerInfo_ProjectInfo = {
@@ -811,6 +803,12 @@ export const CMsgSteamLearnServerInfo_ProjectInfo = {
     }
     if (message.inferencePublishedVersion !== undefined && message.inferencePublishedVersion !== 0) {
       writer.uint32(24).uint32(message.inferencePublishedVersion);
+    }
+    if (message.snapshotPercentage !== undefined && message.snapshotPercentage !== 0) {
+      writer.uint32(48).uint32(message.snapshotPercentage);
+    }
+    if (message.snapshotEnabled !== undefined && message.snapshotEnabled !== false) {
+      writer.uint32(56).bool(message.snapshotEnabled);
     }
     return writer;
   },
@@ -843,6 +841,20 @@ export const CMsgSteamLearnServerInfo_ProjectInfo = {
 
           message.inferencePublishedVersion = reader.uint32();
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.snapshotPercentage = reader.uint32();
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.snapshotEnabled = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -861,6 +873,8 @@ export const CMsgSteamLearnServerInfo_ProjectInfo = {
       inferencePublishedVersion: isSet(object.inferencePublishedVersion)
         ? globalThis.Number(object.inferencePublishedVersion)
         : 0,
+      snapshotPercentage: isSet(object.snapshotPercentage) ? globalThis.Number(object.snapshotPercentage) : 0,
+      snapshotEnabled: isSet(object.snapshotEnabled) ? globalThis.Boolean(object.snapshotEnabled) : false,
     };
   },
 
@@ -875,6 +889,12 @@ export const CMsgSteamLearnServerInfo_ProjectInfo = {
     if (message.inferencePublishedVersion !== undefined && message.inferencePublishedVersion !== 0) {
       obj.inferencePublishedVersion = Math.round(message.inferencePublishedVersion);
     }
+    if (message.snapshotPercentage !== undefined && message.snapshotPercentage !== 0) {
+      obj.snapshotPercentage = Math.round(message.snapshotPercentage);
+    }
+    if (message.snapshotEnabled !== undefined && message.snapshotEnabled !== false) {
+      obj.snapshotEnabled = message.snapshotEnabled;
+    }
     return obj;
   },
 
@@ -886,6 +906,8 @@ export const CMsgSteamLearnServerInfo_ProjectInfo = {
     message.projectId = object.projectId ?? 0;
     message.snapshotPublishedVersion = object.snapshotPublishedVersion ?? 0;
     message.inferencePublishedVersion = object.inferencePublishedVersion ?? 0;
+    message.snapshotPercentage = object.snapshotPercentage ?? 0;
+    message.snapshotEnabled = object.snapshotEnabled ?? false;
     return message;
   },
 };
@@ -1370,10 +1392,9 @@ export const CMsgSOSingleObject = {
     message.typeId = object.typeId ?? 0;
     message.objectData = object.objectData ?? Buffer.alloc(0);
     message.version = object.version ?? "0";
-    message.ownerSoid =
-      object.ownerSoid !== undefined && object.ownerSoid !== null
-        ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
-        : undefined;
+    message.ownerSoid = (object.ownerSoid !== undefined && object.ownerSoid !== null)
+      ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
+      : undefined;
     message.serviceId = object.serviceId ?? 0;
     return message;
   },
@@ -1516,15 +1537,14 @@ export const CMsgSOMultipleObjects = {
   },
   fromPartial(object: DeepPartial<CMsgSOMultipleObjects>): CMsgSOMultipleObjects {
     const message = createBaseCMsgSOMultipleObjects();
-    message.objectsModified =
-      object.objectsModified?.map((e) => CMsgSOMultipleObjects_SingleObject.fromPartial(e)) || [];
+    message.objectsModified = object.objectsModified?.map((e) => CMsgSOMultipleObjects_SingleObject.fromPartial(e)) ||
+      [];
     message.version = object.version ?? "0";
     message.objectsAdded = object.objectsAdded?.map((e) => CMsgSOMultipleObjects_SingleObject.fromPartial(e)) || [];
     message.objectsRemoved = object.objectsRemoved?.map((e) => CMsgSOMultipleObjects_SingleObject.fromPartial(e)) || [];
-    message.ownerSoid =
-      object.ownerSoid !== undefined && object.ownerSoid !== null
-        ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
-        : undefined;
+    message.ownerSoid = (object.ownerSoid !== undefined && object.ownerSoid !== null)
+      ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
+      : undefined;
     message.serviceId = object.serviceId ?? 0;
     return message;
   },
@@ -1746,10 +1766,9 @@ export const CMsgSOCacheSubscribed = {
     const message = createBaseCMsgSOCacheSubscribed();
     message.objects = object.objects?.map((e) => CMsgSOCacheSubscribed_SubscribedType.fromPartial(e)) || [];
     message.version = object.version ?? "0";
-    message.ownerSoid =
-      object.ownerSoid !== undefined && object.ownerSoid !== null
-        ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
-        : undefined;
+    message.ownerSoid = (object.ownerSoid !== undefined && object.ownerSoid !== null)
+      ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
+      : undefined;
     message.serviceId = object.serviceId ?? 0;
     message.serviceList = object.serviceList?.map((e) => e) || [];
     message.syncVersion = object.syncVersion ?? "0";
@@ -1958,10 +1977,9 @@ export const CMsgSOCacheSubscribedUpToDate = {
   fromPartial(object: DeepPartial<CMsgSOCacheSubscribedUpToDate>): CMsgSOCacheSubscribedUpToDate {
     const message = createBaseCMsgSOCacheSubscribedUpToDate();
     message.version = object.version ?? "0";
-    message.ownerSoid =
-      object.ownerSoid !== undefined && object.ownerSoid !== null
-        ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
-        : undefined;
+    message.ownerSoid = (object.ownerSoid !== undefined && object.ownerSoid !== null)
+      ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
+      : undefined;
     message.serviceId = object.serviceId ?? 0;
     message.serviceList = object.serviceList?.map((e) => e) || [];
     message.syncVersion = object.syncVersion ?? "0";
@@ -2021,10 +2039,9 @@ export const CMsgSOCacheUnsubscribed = {
   },
   fromPartial(object: DeepPartial<CMsgSOCacheUnsubscribed>): CMsgSOCacheUnsubscribed {
     const message = createBaseCMsgSOCacheUnsubscribed();
-    message.ownerSoid =
-      object.ownerSoid !== undefined && object.ownerSoid !== null
-        ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
-        : undefined;
+    message.ownerSoid = (object.ownerSoid !== undefined && object.ownerSoid !== null)
+      ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
+      : undefined;
     return message;
   },
 };
@@ -2154,10 +2171,9 @@ export const CMsgSOCacheSubscriptionCheck = {
   fromPartial(object: DeepPartial<CMsgSOCacheSubscriptionCheck>): CMsgSOCacheSubscriptionCheck {
     const message = createBaseCMsgSOCacheSubscriptionCheck();
     message.version = object.version ?? "0";
-    message.ownerSoid =
-      object.ownerSoid !== undefined && object.ownerSoid !== null
-        ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
-        : undefined;
+    message.ownerSoid = (object.ownerSoid !== undefined && object.ownerSoid !== null)
+      ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
+      : undefined;
     message.serviceId = object.serviceId ?? 0;
     message.serviceList = object.serviceList?.map((e) => e) || [];
     message.syncVersion = object.syncVersion ?? "0";
@@ -2217,10 +2233,9 @@ export const CMsgSOCacheSubscriptionRefresh = {
   },
   fromPartial(object: DeepPartial<CMsgSOCacheSubscriptionRefresh>): CMsgSOCacheSubscriptionRefresh {
     const message = createBaseCMsgSOCacheSubscriptionRefresh();
-    message.ownerSoid =
-      object.ownerSoid !== undefined && object.ownerSoid !== null
-        ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
-        : undefined;
+    message.ownerSoid = (object.ownerSoid !== undefined && object.ownerSoid !== null)
+      ? CMsgSOIDOwner.fromPartial(object.ownerSoid)
+      : undefined;
     return message;
   },
 };
@@ -3510,8 +3525,9 @@ export const CMsgSOCacheHaveVersion = {
   },
   fromPartial(object: DeepPartial<CMsgSOCacheHaveVersion>): CMsgSOCacheHaveVersion {
     const message = createBaseCMsgSOCacheHaveVersion();
-    message.soid =
-      object.soid !== undefined && object.soid !== null ? CMsgSOIDOwner.fromPartial(object.soid) : undefined;
+    message.soid = (object.soid !== undefined && object.soid !== null)
+      ? CMsgSOIDOwner.fromPartial(object.soid)
+      : undefined;
     message.version = object.version ?? "0";
     message.serviceId = object.serviceId ?? 0;
     message.cachedFileVersion = object.cachedFileVersion ?? 0;
@@ -3943,7 +3959,6 @@ function createBaseCMsgClientWelcome(): CMsgClientWelcome {
     outofdateSubscribedCaches: [],
     uptodateSubscribedCaches: [],
     location: undefined,
-    saveGameKey: Buffer.alloc(0),
     gcSocacheFileVersion: 0,
     txnCountryCode: "",
     gameData2: Buffer.alloc(0),
@@ -3974,9 +3989,6 @@ export const CMsgClientWelcome = {
     }
     if (message.location !== undefined) {
       CMsgClientWelcome_Location.encode(message.location, writer.uint32(42).fork()).ldelim();
-    }
-    if (message.saveGameKey !== undefined && message.saveGameKey.length !== 0) {
-      writer.uint32(50).bytes(message.saveGameKey);
     }
     if (message.gcSocacheFileVersion !== undefined && message.gcSocacheFileVersion !== 0) {
       writer.uint32(72).uint32(message.gcSocacheFileVersion);
@@ -4055,13 +4067,6 @@ export const CMsgClientWelcome = {
           }
 
           message.location = CMsgClientWelcome_Location.decode(reader, reader.uint32());
-          continue;
-        case 6:
-          if (tag !== 50) {
-            break;
-          }
-
-          message.saveGameKey = reader.bytes() as Buffer;
           continue;
         case 9:
           if (tag !== 72) {
@@ -4160,7 +4165,6 @@ export const CMsgClientWelcome = {
         ? object.uptodateSubscribedCaches.map((e: any) => CMsgSOCacheSubscriptionCheck.fromJSON(e))
         : [],
       location: isSet(object.location) ? CMsgClientWelcome_Location.fromJSON(object.location) : undefined,
-      saveGameKey: isSet(object.saveGameKey) ? Buffer.from(bytesFromBase64(object.saveGameKey)) : Buffer.alloc(0),
       gcSocacheFileVersion: isSet(object.gcSocacheFileVersion) ? globalThis.Number(object.gcSocacheFileVersion) : 0,
       txnCountryCode: isSet(object.txnCountryCode) ? globalThis.String(object.txnCountryCode) : "",
       gameData2: isSet(object.gameData2) ? Buffer.from(bytesFromBase64(object.gameData2)) : Buffer.alloc(0),
@@ -4194,14 +4198,11 @@ export const CMsgClientWelcome = {
     }
     if (message.uptodateSubscribedCaches?.length) {
       obj.uptodateSubscribedCaches = message.uptodateSubscribedCaches.map((e) =>
-        CMsgSOCacheSubscriptionCheck.toJSON(e),
+        CMsgSOCacheSubscriptionCheck.toJSON(e)
       );
     }
     if (message.location !== undefined) {
       obj.location = CMsgClientWelcome_Location.toJSON(message.location);
-    }
-    if (message.saveGameKey !== undefined && message.saveGameKey.length !== 0) {
-      obj.saveGameKey = base64FromBytes(message.saveGameKey);
     }
     if (message.gcSocacheFileVersion !== undefined && message.gcSocacheFileVersion !== 0) {
       obj.gcSocacheFileVersion = Math.round(message.gcSocacheFileVersion);
@@ -4250,11 +4251,9 @@ export const CMsgClientWelcome = {
       object.outofdateSubscribedCaches?.map((e) => CMsgSOCacheSubscribed.fromPartial(e)) || [];
     message.uptodateSubscribedCaches =
       object.uptodateSubscribedCaches?.map((e) => CMsgSOCacheSubscriptionCheck.fromPartial(e)) || [];
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgClientWelcome_Location.fromPartial(object.location)
-        : undefined;
-    message.saveGameKey = object.saveGameKey ?? Buffer.alloc(0);
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgClientWelcome_Location.fromPartial(object.location)
+      : undefined;
     message.gcSocacheFileVersion = object.gcSocacheFileVersion ?? 0;
     message.txnCountryCode = object.txnCountryCode ?? "";
     message.gameData2 = object.gameData2 ?? Buffer.alloc(0);
@@ -4265,13 +4264,12 @@ export const CMsgClientWelcome = {
     message.hasAcceptedChinaSsa = object.hasAcceptedChinaSsa ?? false;
     message.isBannedSteamChina = object.isBannedSteamChina ?? false;
     message.additionalWelcomeMsgs =
-      object.additionalWelcomeMsgs !== undefined && object.additionalWelcomeMsgs !== null
+      (object.additionalWelcomeMsgs !== undefined && object.additionalWelcomeMsgs !== null)
         ? CExtraMsgBlock.fromPartial(object.additionalWelcomeMsgs)
         : undefined;
-    message.steamLearnServerInfo =
-      object.steamLearnServerInfo !== undefined && object.steamLearnServerInfo !== null
-        ? CMsgSteamLearnServerInfo.fromPartial(object.steamLearnServerInfo)
-        : undefined;
+    message.steamLearnServerInfo = (object.steamLearnServerInfo !== undefined && object.steamLearnServerInfo !== null)
+      ? CMsgSteamLearnServerInfo.fromPartial(object.steamLearnServerInfo)
+      : undefined;
     return message;
   },
 };
@@ -4923,10 +4921,9 @@ export const CMsgGCToGCForwardAccountDetails = {
   fromPartial(object: DeepPartial<CMsgGCToGCForwardAccountDetails>): CMsgGCToGCForwardAccountDetails {
     const message = createBaseCMsgGCToGCForwardAccountDetails();
     message.steamid = object.steamid ?? "0";
-    message.accountDetails =
-      object.accountDetails !== undefined && object.accountDetails !== null
-        ? CGCSystemMsgGetAccountDetailsResponse.fromPartial(object.accountDetails)
-        : undefined;
+    message.accountDetails = (object.accountDetails !== undefined && object.accountDetails !== null)
+      ? CGCSystemMsgGetAccountDetailsResponse.fromPartial(object.accountDetails)
+      : undefined;
     message.ageSeconds = object.ageSeconds ?? 0;
     return message;
   },
@@ -5004,7 +5001,7 @@ export const CMsgGCToGCLoadSessionSOCache = {
     const message = createBaseCMsgGCToGCLoadSessionSOCache();
     message.accountId = object.accountId ?? 0;
     message.forwardAccountDetails =
-      object.forwardAccountDetails !== undefined && object.forwardAccountDetails !== null
+      (object.forwardAccountDetails !== undefined && object.forwardAccountDetails !== null)
         ? CMsgGCToGCForwardAccountDetails.fromPartial(object.forwardAccountDetails)
         : undefined;
     return message;
@@ -5196,10 +5193,8 @@ export const CWorkshopPopulateItemDescriptionsRequest = {
       writer.uint32(8).uint32(message.appid);
     }
     for (const v of message.languages) {
-      CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBlock.encode(
-        v!,
-        writer.uint32(18).fork(),
-      ).ldelim();
+      CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBlock.encode(v!, writer.uint32(18).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -5241,8 +5236,8 @@ export const CWorkshopPopulateItemDescriptionsRequest = {
       appid: isSet(object.appid) ? globalThis.Number(object.appid) : 0,
       languages: globalThis.Array.isArray(object?.languages)
         ? object.languages.map((e: any) =>
-            CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBlock.fromJSON(e),
-          )
+          CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBlock.fromJSON(e)
+        )
         : [],
     };
   },
@@ -5254,7 +5249,7 @@ export const CWorkshopPopulateItemDescriptionsRequest = {
     }
     if (message.languages?.length) {
       obj.languages = message.languages.map((e) =>
-        CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBlock.toJSON(e),
+        CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBlock.toJSON(e)
       );
     }
     return obj;
@@ -5268,7 +5263,7 @@ export const CWorkshopPopulateItemDescriptionsRequest = {
     message.appid = object.appid ?? 0;
     message.languages =
       object.languages?.map((e) =>
-        CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBlock.fromPartial(e),
+        CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBlock.fromPartial(e)
       ) || [];
     return message;
   },
@@ -5416,8 +5411,8 @@ export const CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBl
       language: isSet(object.language) ? globalThis.String(object.language) : "",
       descriptions: globalThis.Array.isArray(object?.descriptions)
         ? object.descriptions.map((e: any) =>
-            CWorkshopPopulateItemDescriptionsRequest_SingleItemDescription.fromJSON(e),
-          )
+          CWorkshopPopulateItemDescriptionsRequest_SingleItemDescription.fromJSON(e)
+        )
         : [],
     };
   },
@@ -5429,7 +5424,7 @@ export const CWorkshopPopulateItemDescriptionsRequest_ItemDescriptionsLanguageBl
     }
     if (message.descriptions?.length) {
       obj.descriptions = message.descriptions.map((e) =>
-        CWorkshopPopulateItemDescriptionsRequest_SingleItemDescription.toJSON(e),
+        CWorkshopPopulateItemDescriptionsRequest_SingleItemDescription.toJSON(e)
       );
     }
     return obj;
@@ -5716,8 +5711,8 @@ export const CWorkshopSetItemPaymentRulesRequest = {
       gameitemid: isSet(object.gameitemid) ? globalThis.Number(object.gameitemid) : 0,
       associatedWorkshopFiles: globalThis.Array.isArray(object?.associatedWorkshopFiles)
         ? object.associatedWorkshopFiles.map((e: any) =>
-            CWorkshopSetItemPaymentRulesRequest_WorkshopItemPaymentRule.fromJSON(e),
-          )
+          CWorkshopSetItemPaymentRulesRequest_WorkshopItemPaymentRule.fromJSON(e)
+        )
         : [],
       partnerAccounts: globalThis.Array.isArray(object?.partnerAccounts)
         ? object.partnerAccounts.map((e: any) => CWorkshopSetItemPaymentRulesRequest_PartnerItemPaymentRule.fromJSON(e))
@@ -5728,8 +5723,8 @@ export const CWorkshopSetItemPaymentRulesRequest = {
         : false,
       associatedWorkshopFileForDirectPayments: isSet(object.associatedWorkshopFileForDirectPayments)
         ? CWorkshopSetItemPaymentRulesRequest_WorkshopDirectPaymentRule.fromJSON(
-            object.associatedWorkshopFileForDirectPayments,
-          )
+          object.associatedWorkshopFileForDirectPayments,
+        )
         : undefined,
     };
   },
@@ -5744,12 +5739,12 @@ export const CWorkshopSetItemPaymentRulesRequest = {
     }
     if (message.associatedWorkshopFiles?.length) {
       obj.associatedWorkshopFiles = message.associatedWorkshopFiles.map((e) =>
-        CWorkshopSetItemPaymentRulesRequest_WorkshopItemPaymentRule.toJSON(e),
+        CWorkshopSetItemPaymentRulesRequest_WorkshopItemPaymentRule.toJSON(e)
       );
     }
     if (message.partnerAccounts?.length) {
       obj.partnerAccounts = message.partnerAccounts.map((e) =>
-        CWorkshopSetItemPaymentRulesRequest_PartnerItemPaymentRule.toJSON(e),
+        CWorkshopSetItemPaymentRulesRequest_PartnerItemPaymentRule.toJSON(e)
       );
     }
     if (message.validateOnly !== undefined && message.validateOnly !== false) {
@@ -5759,10 +5754,8 @@ export const CWorkshopSetItemPaymentRulesRequest = {
       obj.makeWorkshopFilesSubscribable = message.makeWorkshopFilesSubscribable;
     }
     if (message.associatedWorkshopFileForDirectPayments !== undefined) {
-      obj.associatedWorkshopFileForDirectPayments =
-        CWorkshopSetItemPaymentRulesRequest_WorkshopDirectPaymentRule.toJSON(
-          message.associatedWorkshopFileForDirectPayments,
-        );
+      obj.associatedWorkshopFileForDirectPayments = CWorkshopSetItemPaymentRulesRequest_WorkshopDirectPaymentRule
+        .toJSON(message.associatedWorkshopFileForDirectPayments);
     }
     return obj;
   },
@@ -5776,7 +5769,7 @@ export const CWorkshopSetItemPaymentRulesRequest = {
     message.gameitemid = object.gameitemid ?? 0;
     message.associatedWorkshopFiles =
       object.associatedWorkshopFiles?.map((e) =>
-        CWorkshopSetItemPaymentRulesRequest_WorkshopItemPaymentRule.fromPartial(e),
+        CWorkshopSetItemPaymentRulesRequest_WorkshopItemPaymentRule.fromPartial(e)
       ) || [];
     message.partnerAccounts =
       object.partnerAccounts?.map((e) => CWorkshopSetItemPaymentRulesRequest_PartnerItemPaymentRule.fromPartial(e)) ||
@@ -5784,11 +5777,11 @@ export const CWorkshopSetItemPaymentRulesRequest = {
     message.validateOnly = object.validateOnly ?? false;
     message.makeWorkshopFilesSubscribable = object.makeWorkshopFilesSubscribable ?? false;
     message.associatedWorkshopFileForDirectPayments =
-      object.associatedWorkshopFileForDirectPayments !== undefined &&
-      object.associatedWorkshopFileForDirectPayments !== null
+      (object.associatedWorkshopFileForDirectPayments !== undefined &&
+          object.associatedWorkshopFileForDirectPayments !== null)
         ? CWorkshopSetItemPaymentRulesRequest_WorkshopDirectPaymentRule.fromPartial(
-            object.associatedWorkshopFileForDirectPayments,
-          )
+          object.associatedWorkshopFileForDirectPayments,
+        )
         : undefined;
     return message;
   },
@@ -7783,10 +7776,9 @@ export const CMsgGCToGCMasterSubscribeToCacheAsync = {
   },
   fromPartial(object: DeepPartial<CMsgGCToGCMasterSubscribeToCacheAsync>): CMsgGCToGCMasterSubscribeToCacheAsync {
     const message = createBaseCMsgGCToGCMasterSubscribeToCacheAsync();
-    message.subscribeMsg =
-      object.subscribeMsg !== undefined && object.subscribeMsg !== null
-        ? CMsgGCToGCMasterSubscribeToCache.fromPartial(object.subscribeMsg)
-        : undefined;
+    message.subscribeMsg = (object.subscribeMsg !== undefined && object.subscribeMsg !== null)
+      ? CMsgGCToGCMasterSubscribeToCache.fromPartial(object.subscribeMsg)
+      : undefined;
     return message;
   },
 };
@@ -8005,15 +7997,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

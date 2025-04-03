@@ -158,7 +158,7 @@ export const CUIFontFilePackagePB = {
     }
     if (message.encryptedFontFiles?.length) {
       obj.encryptedFontFiles = message.encryptedFontFiles.map((e) =>
-        CUIFontFilePackagePB_CUIEncryptedFontFilePB.toJSON(e),
+        CUIFontFilePackagePB_CUIEncryptedFontFilePB.toJSON(e)
       );
     }
     return obj;
@@ -249,15 +249,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

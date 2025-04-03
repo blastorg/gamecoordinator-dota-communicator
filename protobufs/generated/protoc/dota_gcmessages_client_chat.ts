@@ -219,6 +219,7 @@ export interface CMsgDOTAChatMessage {
   chatWheelMessage?: CMsgDOTAChatMessage_ChatWheelMessage | undefined;
   eventLevel?: number | undefined;
   suggestPickHeroFacet?: number | undefined;
+  requestedHeroId?: number | undefined;
 }
 
 export interface CMsgDOTAChatMessage_DiceRoll {
@@ -417,7 +418,8 @@ export interface CMsgDOTAOtherLeftChatChannel {
   channelUserId?: number | undefined;
 }
 
-export interface CMsgDOTARequestChatChannelList {}
+export interface CMsgDOTARequestChatChannelList {
+}
 
 export interface CMsgDOTARequestChatChannelListResponse {
   channels: CMsgDOTARequestChatChannelListResponse_ChatChannel[];
@@ -1210,6 +1212,7 @@ function createBaseCMsgDOTAChatMessage(): CMsgDOTAChatMessage {
     chatWheelMessage: undefined,
     eventLevel: 0,
     suggestPickHeroFacet: 0,
+    requestedHeroId: 0,
   };
 }
 
@@ -1291,13 +1294,13 @@ export const CMsgDOTAChatMessage = {
       writer.uint32(200).uint32(message.badgeLevel);
     }
     if (message.suggestPickHeroId !== undefined && message.suggestPickHeroId !== 0) {
-      writer.uint32(208).uint32(message.suggestPickHeroId);
+      writer.uint32(208).int32(message.suggestPickHeroId);
     }
     if (message.suggestPickHeroRole !== undefined && message.suggestPickHeroRole !== "") {
       writer.uint32(218).string(message.suggestPickHeroRole);
     }
     if (message.suggestBanHeroId !== undefined && message.suggestBanHeroId !== 0) {
-      writer.uint32(240).uint32(message.suggestBanHeroId);
+      writer.uint32(240).int32(message.suggestBanHeroId);
     }
     if (message.triviaAnswer !== undefined) {
       CMsgDOTAChatMessage_TriviaAnswered.encode(message.triviaAnswer, writer.uint32(258).fork()).ldelim();
@@ -1334,6 +1337,9 @@ export const CMsgDOTAChatMessage = {
     }
     if (message.suggestPickHeroFacet !== undefined && message.suggestPickHeroFacet !== 0) {
       writer.uint32(344).uint32(message.suggestPickHeroFacet);
+    }
+    if (message.requestedHeroId !== undefined && message.requestedHeroId !== 0) {
+      writer.uint32(352).int32(message.requestedHeroId);
     }
     return writer;
   },
@@ -1525,7 +1531,7 @@ export const CMsgDOTAChatMessage = {
             break;
           }
 
-          message.suggestPickHeroId = reader.uint32();
+          message.suggestPickHeroId = reader.int32();
           continue;
         case 27:
           if (tag !== 218) {
@@ -1539,7 +1545,7 @@ export const CMsgDOTAChatMessage = {
             break;
           }
 
-          message.suggestBanHeroId = reader.uint32();
+          message.suggestBanHeroId = reader.int32();
           continue;
         case 32:
           if (tag !== 258) {
@@ -1625,6 +1631,13 @@ export const CMsgDOTAChatMessage = {
 
           message.suggestPickHeroFacet = reader.uint32();
           continue;
+        case 44:
+          if (tag !== 352) {
+            break;
+          }
+
+          message.requestedHeroId = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1696,6 +1709,7 @@ export const CMsgDOTAChatMessage = {
         : undefined,
       eventLevel: isSet(object.eventLevel) ? globalThis.Number(object.eventLevel) : 0,
       suggestPickHeroFacet: isSet(object.suggestPickHeroFacet) ? globalThis.Number(object.suggestPickHeroFacet) : 0,
+      requestedHeroId: isSet(object.requestedHeroId) ? globalThis.Number(object.requestedHeroId) : 0,
     };
   },
 
@@ -1821,6 +1835,9 @@ export const CMsgDOTAChatMessage = {
     if (message.suggestPickHeroFacet !== undefined && message.suggestPickHeroFacet !== 0) {
       obj.suggestPickHeroFacet = Math.round(message.suggestPickHeroFacet);
     }
+    if (message.requestedHeroId !== undefined && message.requestedHeroId !== 0) {
+      obj.requestedHeroId = Math.round(message.requestedHeroId);
+    }
     return obj;
   },
 
@@ -1844,10 +1861,9 @@ export const CMsgDOTAChatMessage = {
     message.playerId = object.playerId ?? -1;
     message.shareProfileAccountId = object.shareProfileAccountId ?? 0;
     message.channelUserId = object.channelUserId ?? 0;
-    message.diceRoll =
-      object.diceRoll !== undefined && object.diceRoll !== null
-        ? CMsgDOTAChatMessage_DiceRoll.fromPartial(object.diceRoll)
-        : undefined;
+    message.diceRoll = (object.diceRoll !== undefined && object.diceRoll !== null)
+      ? CMsgDOTAChatMessage_DiceRoll.fromPartial(object.diceRoll)
+      : undefined;
     message.sharePartyId = object.sharePartyId ?? "0";
     message.shareLobbyId = object.shareLobbyId ?? "0";
     message.shareLobbyCustomGameId = object.shareLobbyCustomGameId ?? "0";
@@ -1860,10 +1876,9 @@ export const CMsgDOTAChatMessage = {
     message.suggestPickHeroId = object.suggestPickHeroId ?? 0;
     message.suggestPickHeroRole = object.suggestPickHeroRole ?? "";
     message.suggestBanHeroId = object.suggestBanHeroId ?? 0;
-    message.triviaAnswer =
-      object.triviaAnswer !== undefined && object.triviaAnswer !== null
-        ? CMsgDOTAChatMessage_TriviaAnswered.fromPartial(object.triviaAnswer)
-        : undefined;
+    message.triviaAnswer = (object.triviaAnswer !== undefined && object.triviaAnswer !== null)
+      ? CMsgDOTAChatMessage_TriviaAnswered.fromPartial(object.triviaAnswer)
+      : undefined;
     message.requestedAbilityId = object.requestedAbilityId ?? -1;
     message.chatFlags = object.chatFlags ?? 0;
     message.startedFindingMatch = object.startedFindingMatch ?? false;
@@ -1871,16 +1886,15 @@ export const CMsgDOTAChatMessage = {
     message.favoriteTeamId = object.favoriteTeamId ?? 0;
     message.favoriteTeamQuality = object.favoriteTeamQuality ?? 0;
     message.suggestPlayerDraftPick = object.suggestPlayerDraftPick ?? -1;
-    message.playerDraftPick =
-      object.playerDraftPick !== undefined && object.playerDraftPick !== null
-        ? CMsgDOTAChatMessage_PlayerDraftPick.fromPartial(object.playerDraftPick)
-        : undefined;
-    message.chatWheelMessage =
-      object.chatWheelMessage !== undefined && object.chatWheelMessage !== null
-        ? CMsgDOTAChatMessage_ChatWheelMessage.fromPartial(object.chatWheelMessage)
-        : undefined;
+    message.playerDraftPick = (object.playerDraftPick !== undefined && object.playerDraftPick !== null)
+      ? CMsgDOTAChatMessage_PlayerDraftPick.fromPartial(object.playerDraftPick)
+      : undefined;
+    message.chatWheelMessage = (object.chatWheelMessage !== undefined && object.chatWheelMessage !== null)
+      ? CMsgDOTAChatMessage_ChatWheelMessage.fromPartial(object.chatWheelMessage)
+      : undefined;
     message.eventLevel = object.eventLevel ?? 0;
     message.suggestPickHeroFacet = object.suggestPickHeroFacet ?? 0;
+    message.requestedHeroId = object.requestedHeroId ?? 0;
     return message;
   },
 };
@@ -2905,8 +2919,8 @@ export const CMsgDOTARequestChatChannelListResponse = {
   },
   fromPartial(object: DeepPartial<CMsgDOTARequestChatChannelListResponse>): CMsgDOTARequestChatChannelListResponse {
     const message = createBaseCMsgDOTARequestChatChannelListResponse();
-    message.channels =
-      object.channels?.map((e) => CMsgDOTARequestChatChannelListResponse_ChatChannel.fromPartial(e)) || [];
+    message.channels = object.channels?.map((e) => CMsgDOTARequestChatChannelListResponse_ChatChannel.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -3532,15 +3546,11 @@ export const CMsgDOTAChatRegionsEnabled_Region = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

@@ -9,6 +9,7 @@ import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { CExtraMsgBlock } from "./gcsdk_gcmessages";
 import { EGCPlatform, eGCPlatformFromJSON, eGCPlatformToJSON } from "./steammessages";
+import { CMsgSteamLearnAccessTokens } from "./steammessages_steamlearn.steamworkssdk";
 
 export enum EGCBaseMsg {
   k_EMsgGCInviteToParty = 4501,
@@ -33,6 +34,8 @@ export enum EGCBaseMsg {
   k_EMsgClientToGCIntegrityStatus = 4522,
   k_EMsgClientToGCAggregateMetrics = 4523,
   k_EMsgGCToClientAggregateMetricsBackoff = 4524,
+  k_EMsgGCToServerSteamLearnAccessTokensChanged = 4525,
+  k_EMsgGCToServerSteamLearnUseHTTP = 4526,
 }
 
 export function eGCBaseMsgFromJSON(object: any): EGCBaseMsg {
@@ -103,6 +106,12 @@ export function eGCBaseMsgFromJSON(object: any): EGCBaseMsg {
     case 4524:
     case "k_EMsgGCToClientAggregateMetricsBackoff":
       return EGCBaseMsg.k_EMsgGCToClientAggregateMetricsBackoff;
+    case 4525:
+    case "k_EMsgGCToServerSteamLearnAccessTokensChanged":
+      return EGCBaseMsg.k_EMsgGCToServerSteamLearnAccessTokensChanged;
+    case 4526:
+    case "k_EMsgGCToServerSteamLearnUseHTTP":
+      return EGCBaseMsg.k_EMsgGCToServerSteamLearnUseHTTP;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EGCBaseMsg");
   }
@@ -154,6 +163,10 @@ export function eGCBaseMsgToJSON(object: EGCBaseMsg): string {
       return "k_EMsgClientToGCAggregateMetrics";
     case EGCBaseMsg.k_EMsgGCToClientAggregateMetricsBackoff:
       return "k_EMsgGCToClientAggregateMetricsBackoff";
+    case EGCBaseMsg.k_EMsgGCToServerSteamLearnAccessTokensChanged:
+      return "k_EMsgGCToServerSteamLearnAccessTokensChanged";
+    case EGCBaseMsg.k_EMsgGCToServerSteamLearnUseHTTP:
+      return "k_EMsgGCToServerSteamLearnUseHTTP";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EGCBaseMsg");
   }
@@ -303,7 +316,8 @@ export interface CMsgKickFromParty {
   steamId?: string | undefined;
 }
 
-export interface CMsgLeaveParty {}
+export interface CMsgLeaveParty {
+}
 
 export interface CMsgCustomGameInstallStatus {
   status?: ECustomGameInstallStatus | undefined;
@@ -421,7 +435,8 @@ export interface CMsgGCToGCDirtySDOCache {
   keyUint64?: string | undefined;
 }
 
-export interface CMsgSDONoMemcached {}
+export interface CMsgSDONoMemcached {
+}
 
 export interface CMsgGCToGCUpdateSQLKeyValue {
   keyName?: string | undefined;
@@ -435,7 +450,8 @@ export interface CMsgGCClientVersionUpdated {
   clientVersion?: number | undefined;
 }
 
-export interface CMsgGCToGCWebAPIAccountChanged {}
+export interface CMsgGCToGCWebAPIAccountChanged {
+}
 
 export interface CMsgExtractGems {
   toolItemId?: string | undefined;
@@ -719,7 +735,8 @@ export interface CMsgGCToGCPerformManualOpCompleted {
   sourceGc?: number | undefined;
 }
 
-export interface CMsgGCToGCReloadServerRegionSettings {}
+export interface CMsgGCToGCReloadServerRegionSettings {
+}
 
 export interface CMsgGCAdditionalWelcomeMsgList {
   welcomeMessages: CExtraMsgBlock[];
@@ -769,6 +786,14 @@ export interface CMsgClientToGCAggregateMetrics_SingleMetric {
 
 export interface CMsgGCToClientAggregateMetricsBackoff {
   uploadRateModifier?: number | undefined;
+}
+
+export interface CMsgGCToServerSteamLearnAccessTokensChanged {
+  accessTokens?: CMsgSteamLearnAccessTokens | undefined;
+}
+
+export interface CMsgGCToServerSteamLearnUseHTTP {
+  useHttp?: boolean | undefined;
 }
 
 function createBaseCGCStorePurchaseInitLineItem(): CGCStorePurchaseInitLineItem {
@@ -1376,10 +1401,9 @@ export const CMsgInviteToParty = {
     message.clientVersion = object.clientVersion ?? 0;
     message.teamId = object.teamId ?? 0;
     message.asCoach = object.asCoach ?? false;
-    message.pingData =
-      object.pingData !== undefined && object.pingData !== null
-        ? CMsgClientPingData.fromPartial(object.pingData)
-        : undefined;
+    message.pingData = (object.pingData !== undefined && object.pingData !== null)
+      ? CMsgClientPingData.fromPartial(object.pingData)
+      : undefined;
     return message;
   },
 };
@@ -1646,10 +1670,9 @@ export const CMsgPartyInviteResponse = {
     message.partyId = object.partyId ?? "0";
     message.accept = object.accept ?? false;
     message.clientVersion = object.clientVersion ?? 0;
-    message.pingData =
-      object.pingData !== undefined && object.pingData !== null
-        ? CMsgClientPingData.fromPartial(object.pingData)
-        : undefined;
+    message.pingData = (object.pingData !== undefined && object.pingData !== null)
+      ? CMsgClientPingData.fromPartial(object.pingData)
+      : undefined;
     return message;
   },
 };
@@ -2021,7 +2044,7 @@ export const CMsgServerAvailable = {
   fromPartial(object: DeepPartial<CMsgServerAvailable>): CMsgServerAvailable {
     const message = createBaseCMsgServerAvailable();
     message.customGameInstallStatus =
-      object.customGameInstallStatus !== undefined && object.customGameInstallStatus !== null
+      (object.customGameInstallStatus !== undefined && object.customGameInstallStatus !== null)
         ? CMsgCustomGameInstallStatus.fromPartial(object.customGameInstallStatus)
         : undefined;
     return message;
@@ -2914,10 +2937,9 @@ export const CSOEconItem = {
     message.flags = object.flags ?? 0;
     message.origin = object.origin ?? 0;
     message.attribute = object.attribute?.map((e) => CSOEconItemAttribute.fromPartial(e)) || [];
-    message.interiorItem =
-      object.interiorItem !== undefined && object.interiorItem !== null
-        ? CSOEconItem.fromPartial(object.interiorItem)
-        : undefined;
+    message.interiorItem = (object.interiorItem !== undefined && object.interiorItem !== null)
+      ? CSOEconItem.fromPartial(object.interiorItem)
+      : undefined;
     message.style = object.style ?? 0;
     message.originalId = object.originalId ?? "0";
     message.equippedState = object.equippedState?.map((e) => CSOEconItemEquipped.fromPartial(e)) || [];
@@ -5299,8 +5321,9 @@ export const CMsgGCToClientApplyRemoteConVars = {
   },
   fromPartial(object: DeepPartial<CMsgGCToClientApplyRemoteConVars>): CMsgGCToClientApplyRemoteConVars {
     const message = createBaseCMsgGCToClientApplyRemoteConVars();
-    message.msg =
-      object.msg !== undefined && object.msg !== null ? CMsgApplyRemoteConVars.fromPartial(object.msg) : undefined;
+    message.msg = (object.msg !== undefined && object.msg !== null)
+      ? CMsgApplyRemoteConVars.fromPartial(object.msg)
+      : undefined;
     return message;
   },
 };
@@ -5357,8 +5380,9 @@ export const CMsgGCToServerApplyRemoteConVars = {
   },
   fromPartial(object: DeepPartial<CMsgGCToServerApplyRemoteConVars>): CMsgGCToServerApplyRemoteConVars {
     const message = createBaseCMsgGCToServerApplyRemoteConVars();
-    message.msg =
-      object.msg !== undefined && object.msg !== null ? CMsgApplyRemoteConVars.fromPartial(object.msg) : undefined;
+    message.msg = (object.msg !== undefined && object.msg !== null)
+      ? CMsgApplyRemoteConVars.fromPartial(object.msg)
+      : undefined;
     return message;
   },
 };
@@ -5752,6 +5776,126 @@ export const CMsgGCToClientAggregateMetricsBackoff = {
   },
 };
 
+function createBaseCMsgGCToServerSteamLearnAccessTokensChanged(): CMsgGCToServerSteamLearnAccessTokensChanged {
+  return { accessTokens: undefined };
+}
+
+export const CMsgGCToServerSteamLearnAccessTokensChanged = {
+  encode(message: CMsgGCToServerSteamLearnAccessTokensChanged, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.accessTokens !== undefined) {
+      CMsgSteamLearnAccessTokens.encode(message.accessTokens, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGCToServerSteamLearnAccessTokensChanged {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgGCToServerSteamLearnAccessTokensChanged();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.accessTokens = CMsgSteamLearnAccessTokens.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgGCToServerSteamLearnAccessTokensChanged {
+    return {
+      accessTokens: isSet(object.accessTokens) ? CMsgSteamLearnAccessTokens.fromJSON(object.accessTokens) : undefined,
+    };
+  },
+
+  toJSON(message: CMsgGCToServerSteamLearnAccessTokensChanged): unknown {
+    const obj: any = {};
+    if (message.accessTokens !== undefined) {
+      obj.accessTokens = CMsgSteamLearnAccessTokens.toJSON(message.accessTokens);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgGCToServerSteamLearnAccessTokensChanged>): CMsgGCToServerSteamLearnAccessTokensChanged {
+    return CMsgGCToServerSteamLearnAccessTokensChanged.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CMsgGCToServerSteamLearnAccessTokensChanged>,
+  ): CMsgGCToServerSteamLearnAccessTokensChanged {
+    const message = createBaseCMsgGCToServerSteamLearnAccessTokensChanged();
+    message.accessTokens = (object.accessTokens !== undefined && object.accessTokens !== null)
+      ? CMsgSteamLearnAccessTokens.fromPartial(object.accessTokens)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseCMsgGCToServerSteamLearnUseHTTP(): CMsgGCToServerSteamLearnUseHTTP {
+  return { useHttp: false };
+}
+
+export const CMsgGCToServerSteamLearnUseHTTP = {
+  encode(message: CMsgGCToServerSteamLearnUseHTTP, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.useHttp !== undefined && message.useHttp !== false) {
+      writer.uint32(8).bool(message.useHttp);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGCToServerSteamLearnUseHTTP {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgGCToServerSteamLearnUseHTTP();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.useHttp = reader.bool();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgGCToServerSteamLearnUseHTTP {
+    return { useHttp: isSet(object.useHttp) ? globalThis.Boolean(object.useHttp) : false };
+  },
+
+  toJSON(message: CMsgGCToServerSteamLearnUseHTTP): unknown {
+    const obj: any = {};
+    if (message.useHttp !== undefined && message.useHttp !== false) {
+      obj.useHttp = message.useHttp;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgGCToServerSteamLearnUseHTTP>): CMsgGCToServerSteamLearnUseHTTP {
+    return CMsgGCToServerSteamLearnUseHTTP.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgGCToServerSteamLearnUseHTTP>): CMsgGCToServerSteamLearnUseHTTP {
+    const message = createBaseCMsgGCToServerSteamLearnUseHTTP();
+    message.useHttp = object.useHttp ?? false;
+    return message;
+  },
+};
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -5762,15 +5906,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

@@ -39,9 +39,11 @@ export interface DestroyEntityToolEvent {
   ehandle?: number | undefined;
 }
 
-export interface DestroyAllEntitiesToolEvent {}
+export interface DestroyAllEntitiesToolEvent {
+}
 
-export interface RestartMapToolEvent {}
+export interface RestartMapToolEvent {
+}
 
 export interface ToolEventGetEntityInfo {
   ehandle?: number | undefined;
@@ -206,9 +208,10 @@ export const TraceRayServerToolEvent = {
   },
   fromPartial(object: DeepPartial<TraceRayServerToolEvent>): TraceRayServerToolEvent {
     const message = createBaseTraceRayServerToolEvent();
-    message.start =
-      object.start !== undefined && object.start !== null ? CMsgVector.fromPartial(object.start) : undefined;
-    message.end = object.end !== undefined && object.end !== null ? CMsgVector.fromPartial(object.end) : undefined;
+    message.start = (object.start !== undefined && object.start !== null)
+      ? CMsgVector.fromPartial(object.start)
+      : undefined;
+    message.end = (object.end !== undefined && object.end !== null) ? CMsgVector.fromPartial(object.end) : undefined;
     return message;
   },
 };
@@ -338,10 +341,12 @@ export const ToolTraceRayResult = {
   fromPartial(object: DeepPartial<ToolTraceRayResult>): ToolTraceRayResult {
     const message = createBaseToolTraceRayResult();
     message.hit = object.hit ?? false;
-    message.impact =
-      object.impact !== undefined && object.impact !== null ? CMsgVector.fromPartial(object.impact) : undefined;
-    message.normal =
-      object.normal !== undefined && object.normal !== null ? CMsgVector.fromPartial(object.normal) : undefined;
+    message.impact = (object.impact !== undefined && object.impact !== null)
+      ? CMsgVector.fromPartial(object.impact)
+      : undefined;
+    message.normal = (object.normal !== undefined && object.normal !== null)
+      ? CMsgVector.fromPartial(object.normal)
+      : undefined;
     message.distance = object.distance ?? 0;
     message.fraction = object.fraction ?? 0;
     message.ehandle = object.ehandle ?? 0;
@@ -826,10 +831,15 @@ export const ToolEventGetEntityInfoResult = {
     message.cppclass = object.cppclass ?? "shithead";
     message.classname = object.classname ?? "";
     message.name = object.name ?? "";
-    message.origin =
-      object.origin !== undefined && object.origin !== null ? CMsgVector.fromPartial(object.origin) : undefined;
-    message.mins = object.mins !== undefined && object.mins !== null ? CMsgVector.fromPartial(object.mins) : undefined;
-    message.maxs = object.maxs !== undefined && object.maxs !== null ? CMsgVector.fromPartial(object.maxs) : undefined;
+    message.origin = (object.origin !== undefined && object.origin !== null)
+      ? CMsgVector.fromPartial(object.origin)
+      : undefined;
+    message.mins = (object.mins !== undefined && object.mins !== null)
+      ? CMsgVector.fromPartial(object.mins)
+      : undefined;
+    message.maxs = (object.maxs !== undefined && object.maxs !== null)
+      ? CMsgVector.fromPartial(object.maxs)
+      : undefined;
     return message;
   },
 };
@@ -1197,15 +1207,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

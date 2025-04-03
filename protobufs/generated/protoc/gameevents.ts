@@ -532,12 +532,15 @@ export const CMsgPlaceDecalEvent = {
   },
   fromPartial(object: DeepPartial<CMsgPlaceDecalEvent>): CMsgPlaceDecalEvent {
     const message = createBaseCMsgPlaceDecalEvent();
-    message.position =
-      object.position !== undefined && object.position !== null ? CMsgVector.fromPartial(object.position) : undefined;
-    message.normal =
-      object.normal !== undefined && object.normal !== null ? CMsgVector.fromPartial(object.normal) : undefined;
-    message.saxis =
-      object.saxis !== undefined && object.saxis !== null ? CMsgVector.fromPartial(object.saxis) : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CMsgVector.fromPartial(object.position)
+      : undefined;
+    message.normal = (object.normal !== undefined && object.normal !== null)
+      ? CMsgVector.fromPartial(object.normal)
+      : undefined;
+    message.saxis = (object.saxis !== undefined && object.saxis !== null)
+      ? CMsgVector.fromPartial(object.saxis)
+      : undefined;
     message.decalmaterialindex = object.decalmaterialindex ?? 0;
     message.flags = object.flags ?? 0;
     message.color = object.color ?? 0;
@@ -812,8 +815,8 @@ export const CMsgSource1LegacyGameEventList = {
   },
   fromPartial(object: DeepPartial<CMsgSource1LegacyGameEventList>): CMsgSource1LegacyGameEventList {
     const message = createBaseCMsgSource1LegacyGameEventList();
-    message.descriptors =
-      object.descriptors?.map((e) => CMsgSource1LegacyGameEventList_descriptorT.fromPartial(e)) || [];
+    message.descriptors = object.descriptors?.map((e) => CMsgSource1LegacyGameEventList_descriptorT.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -1788,15 +1791,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

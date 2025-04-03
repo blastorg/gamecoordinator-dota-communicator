@@ -145,6 +145,7 @@ export enum dotaunitorderT {
   DOTA_UNIT_ORDER_MOVE_RELATIVE = 39,
   DOTA_UNIT_ORDER_CAST_TOGGLE_ALT = 40,
   DOTA_UNIT_ORDER_CONSUME_ITEM = 41,
+  DOTA_UNIT_ORDER_SET_ITEM_MARK_FOR_SELL = 42,
 }
 
 export function dotaunitorderTFromJSON(object: any): dotaunitorderT {
@@ -275,6 +276,9 @@ export function dotaunitorderTFromJSON(object: any): dotaunitorderT {
     case 41:
     case "DOTA_UNIT_ORDER_CONSUME_ITEM":
       return dotaunitorderT.DOTA_UNIT_ORDER_CONSUME_ITEM;
+    case 42:
+    case "DOTA_UNIT_ORDER_SET_ITEM_MARK_FOR_SELL":
+      return dotaunitorderT.DOTA_UNIT_ORDER_SET_ITEM_MARK_FOR_SELL;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum dotaunitorderT");
   }
@@ -366,6 +370,8 @@ export function dotaunitorderTToJSON(object: dotaunitorderT): string {
       return "DOTA_UNIT_ORDER_CAST_TOGGLE_ALT";
     case dotaunitorderT.DOTA_UNIT_ORDER_CONSUME_ITEM:
       return "DOTA_UNIT_ORDER_CONSUME_ITEM";
+    case dotaunitorderT.DOTA_UNIT_ORDER_SET_ITEM_MARK_FOR_SELL:
+      return "DOTA_UNIT_ORDER_SET_ITEM_MARK_FOR_SELL";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum dotaunitorderT");
   }
@@ -1403,8 +1409,9 @@ export const CDOTAMsgUnitOrder = {
     message.units = object.units?.map((e) => e) || [];
     message.targetIndex = object.targetIndex ?? 0;
     message.abilityIndex = object.abilityIndex ?? -1;
-    message.position =
-      object.position !== undefined && object.position !== null ? CMsgVector.fromPartial(object.position) : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CMsgVector.fromPartial(object.position)
+      : undefined;
     message.sequenceNumber = object.sequenceNumber ?? 0;
     message.flags = object.flags ?? 0;
     return message;
@@ -1709,15 +1716,11 @@ export const VersusScenePlaybackRate = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

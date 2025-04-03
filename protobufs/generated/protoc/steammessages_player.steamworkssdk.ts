@@ -43,7 +43,8 @@ export function eNotificationSettingToJSON(object: ENotificationSetting): string
   }
 }
 
-export interface CPlayerGetMutualFriendsForIncomingInvitesRequest {}
+export interface CPlayerGetMutualFriendsForIncomingInvitesRequest {
+}
 
 export interface CPlayerIncomingInviteMutualFriendList {
   steamid?: string | undefined;
@@ -112,11 +113,14 @@ export interface CPlayerGetLastPlayedTimesResponse_Game {
   firstPlaytime?: number | undefined;
 }
 
-export interface CPlayerAcceptSSARequest {}
+export interface CPlayerAcceptSSARequest {
+}
 
-export interface CPlayerAcceptSSAResponse {}
+export interface CPlayerAcceptSSAResponse {
+}
 
-export interface CPlayerGetNicknameListRequest {}
+export interface CPlayerGetNicknameListRequest {
+}
 
 export interface CPlayerGetNicknameListResponse {
   nicknames: CPlayerGetNicknameListResponse_PlayerNickname[];
@@ -127,7 +131,8 @@ export interface CPlayerGetNicknameListResponse_PlayerNickname {
   nickname?: string | undefined;
 }
 
-export interface CPlayerGetPerFriendPreferencesRequest {}
+export interface CPlayerGetPerFriendPreferencesRequest {
+}
 
 export interface PerFriendPreferences {
   accountid?: number | undefined;
@@ -149,7 +154,8 @@ export interface CPlayerSetPerFriendPreferencesRequest {
   preferences?: PerFriendPreferences | undefined;
 }
 
-export interface CPlayerSetPerFriendPreferencesResponse {}
+export interface CPlayerSetPerFriendPreferencesResponse {
+}
 
 export interface CPlayerAddFriendRequest {
   steamid?: string | undefined;
@@ -177,7 +183,8 @@ export interface CPlayerIgnoreFriendResponse {
   friendRelationship?: number | undefined;
 }
 
-export interface CPlayerGetCommunityPreferencesRequest {}
+export interface CPlayerGetCommunityPreferencesRequest {
+}
 
 export interface CPlayerCommunityPreferences {
   hideAdultContentViolence?: boolean | undefined;
@@ -194,7 +201,8 @@ export interface CPlayerSetCommunityPreferencesRequest {
   preferences?: CPlayerCommunityPreferences | undefined;
 }
 
-export interface CPlayerSetCommunityPreferencesResponse {}
+export interface CPlayerSetCommunityPreferencesResponse {
+}
 
 export interface CPlayerGetNewSteamAnnouncementStateRequest {
   language?: number | undefined;
@@ -213,7 +221,8 @@ export interface CPlayerUpdateSteamAnnouncementLastReadRequest {
   timePosted?: number | undefined;
 }
 
-export interface CPlayerUpdateSteamAnnouncementLastReadResponse {}
+export interface CPlayerUpdateSteamAnnouncementLastReadResponse {
+}
 
 function createBaseCPlayerGetMutualFriendsForIncomingInvitesRequest(): CPlayerGetMutualFriendsForIncomingInvitesRequest {
   return {};
@@ -402,7 +411,7 @@ export const CPlayerGetMutualFriendsForIncomingInvitesResponse = {
     const obj: any = {};
     if (message.incomingInviteMutualFriendsLists?.length) {
       obj.incomingInviteMutualFriendsLists = message.incomingInviteMutualFriendsLists.map((e) =>
-        CPlayerIncomingInviteMutualFriendList.toJSON(e),
+        CPlayerIncomingInviteMutualFriendList.toJSON(e)
       );
     }
     return obj;
@@ -606,12 +615,12 @@ export const CPlayerGetFriendsGameplayInfoResponse = {
     }
     if (message.playedRecently?.length) {
       obj.playedRecently = message.playedRecently.map((e) =>
-        CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.toJSON(e),
+        CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.toJSON(e)
       );
     }
     if (message.playedEver?.length) {
       obj.playedEver = message.playedEver.map((e) =>
-        CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.toJSON(e),
+        CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.toJSON(e)
       );
     }
     if (message.owns?.length) {
@@ -619,7 +628,7 @@ export const CPlayerGetFriendsGameplayInfoResponse = {
     }
     if (message.inWishlist?.length) {
       obj.inWishlist = message.inWishlist.map((e) =>
-        CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.toJSON(e),
+        CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.toJSON(e)
       );
     }
     return obj;
@@ -630,18 +639,17 @@ export const CPlayerGetFriendsGameplayInfoResponse = {
   },
   fromPartial(object: DeepPartial<CPlayerGetFriendsGameplayInfoResponse>): CPlayerGetFriendsGameplayInfoResponse {
     const message = createBaseCPlayerGetFriendsGameplayInfoResponse();
-    message.yourInfo =
-      object.yourInfo !== undefined && object.yourInfo !== null
-        ? CPlayerGetFriendsGameplayInfoResponse_OwnGameplayInfo.fromPartial(object.yourInfo)
-        : undefined;
+    message.yourInfo = (object.yourInfo !== undefined && object.yourInfo !== null)
+      ? CPlayerGetFriendsGameplayInfoResponse_OwnGameplayInfo.fromPartial(object.yourInfo)
+      : undefined;
     message.inGame =
       object.inGame?.map((e) => CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.fromPartial(e)) || [];
     message.playedRecently =
       object.playedRecently?.map((e) => CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.fromPartial(e)) || [];
     message.playedEver =
       object.playedEver?.map((e) => CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.fromPartial(e)) || [];
-    message.owns =
-      object.owns?.map((e) => CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.fromPartial(e)) || [];
+    message.owns = object.owns?.map((e) => CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.fromPartial(e)) ||
+      [];
     message.inWishlist =
       object.inWishlist?.map((e) => CPlayerGetFriendsGameplayInfoResponse_FriendsGameplayInfo.fromPartial(e)) || [];
     return message;
@@ -1514,8 +1522,8 @@ export const CPlayerGetNicknameListResponse = {
   },
   fromPartial(object: DeepPartial<CPlayerGetNicknameListResponse>): CPlayerGetNicknameListResponse {
     const message = createBaseCPlayerGetNicknameListResponse();
-    message.nicknames =
-      object.nicknames?.map((e) => CPlayerGetNicknameListResponse_PlayerNickname.fromPartial(e)) || [];
+    message.nicknames = object.nicknames?.map((e) => CPlayerGetNicknameListResponse_PlayerNickname.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -1953,10 +1961,9 @@ export const CPlayerSetPerFriendPreferencesRequest = {
   },
   fromPartial(object: DeepPartial<CPlayerSetPerFriendPreferencesRequest>): CPlayerSetPerFriendPreferencesRequest {
     const message = createBaseCPlayerSetPerFriendPreferencesRequest();
-    message.preferences =
-      object.preferences !== undefined && object.preferences !== null
-        ? PerFriendPreferences.fromPartial(object.preferences)
-        : undefined;
+    message.preferences = (object.preferences !== undefined && object.preferences !== null)
+      ? PerFriendPreferences.fromPartial(object.preferences)
+      : undefined;
     return message;
   },
 };
@@ -2590,10 +2597,9 @@ export const CPlayerGetCommunityPreferencesResponse = {
   },
   fromPartial(object: DeepPartial<CPlayerGetCommunityPreferencesResponse>): CPlayerGetCommunityPreferencesResponse {
     const message = createBaseCPlayerGetCommunityPreferencesResponse();
-    message.preferences =
-      object.preferences !== undefined && object.preferences !== null
-        ? CPlayerCommunityPreferences.fromPartial(object.preferences)
-        : undefined;
+    message.preferences = (object.preferences !== undefined && object.preferences !== null)
+      ? CPlayerCommunityPreferences.fromPartial(object.preferences)
+      : undefined;
     return message;
   },
 };
@@ -2652,10 +2658,9 @@ export const CPlayerSetCommunityPreferencesRequest = {
   },
   fromPartial(object: DeepPartial<CPlayerSetCommunityPreferencesRequest>): CPlayerSetCommunityPreferencesRequest {
     const message = createBaseCPlayerSetCommunityPreferencesRequest();
-    message.preferences =
-      object.preferences !== undefined && object.preferences !== null
-        ? CPlayerCommunityPreferences.fromPartial(object.preferences)
-        : undefined;
+    message.preferences = (object.preferences !== undefined && object.preferences !== null)
+      ? CPlayerCommunityPreferences.fromPartial(object.preferences)
+      : undefined;
     return message;
   },
 };
@@ -3176,15 +3181,11 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

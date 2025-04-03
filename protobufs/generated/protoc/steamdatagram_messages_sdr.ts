@@ -262,11 +262,16 @@ export interface CMsgSteamDatagramRouterPingReply {
   challenge?: string | undefined;
   secondsUntilShutdown?: number | undefined;
   clientCookie?: number | undefined;
+  recvTos?: number | undefined;
+  echoSentTos?: number | undefined;
+  sentTos?: number | undefined;
+  echoRequestReplyTos?: number | undefined;
   scoringPenaltyRelayCluster?: number | undefined;
   flags?: number | undefined;
   routeExceptions: CMsgSteamDatagramRouterPingReply_RouteException[];
   altAddresses: CMsgSteamDatagramRouterPingReply_AltAddress[];
   dummyPad?: Buffer | undefined;
+  dummyVarint?: string | undefined;
 }
 
 export enum CMsgSteamDatagramRouterPingReply_Flags {
@@ -318,7 +323,6 @@ export interface CMsgSteamDatagramRouterPingReply_AltAddress {
 
 export enum CMsgSteamDatagramRouterPingReply_AltAddress_Protocol {
   DefaultProtocol = 0,
-  NetworkNext = 1,
 }
 
 export function cMsgSteamDatagramRouterPingReply_AltAddress_ProtocolFromJSON(
@@ -328,9 +332,6 @@ export function cMsgSteamDatagramRouterPingReply_AltAddress_ProtocolFromJSON(
     case 0:
     case "DefaultProtocol":
       return CMsgSteamDatagramRouterPingReply_AltAddress_Protocol.DefaultProtocol;
-    case 1:
-    case "NetworkNext":
-      return CMsgSteamDatagramRouterPingReply_AltAddress_Protocol.NetworkNext;
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMsgSteamDatagramRouterPingReply_AltAddress_Protocol",
@@ -344,8 +345,6 @@ export function cMsgSteamDatagramRouterPingReply_AltAddress_ProtocolToJSON(
   switch (object) {
     case CMsgSteamDatagramRouterPingReply_AltAddress_Protocol.DefaultProtocol:
       return "DefaultProtocol";
-    case CMsgSteamDatagramRouterPingReply_AltAddress_Protocol.NetworkNext:
-      return "NetworkNext";
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMsgSteamDatagramRouterPingReply_AltAddress_Protocol",
@@ -405,6 +404,12 @@ export interface CMsgSteamDatagramNoSessionRelayToPeer {
   kludgePad?: string | undefined;
 }
 
+export interface CMsgTOSTreatment {
+  l4sDetect?: string | undefined;
+  upEcn1?: string | undefined;
+  downDscp45?: string | undefined;
+}
+
 export interface CMsgSteamDatagramClientPingSampleRequest {
   connectionId?: number | undefined;
 }
@@ -412,6 +417,7 @@ export interface CMsgSteamDatagramClientPingSampleRequest {
 export interface CMsgSteamDatagramClientPingSampleReply {
   connectionId?: number | undefined;
   relayOverrideActive?: boolean | undefined;
+  tos?: CMsgTOSTreatment | undefined;
   pops: CMsgSteamDatagramClientPingSampleReply_POP[];
   legacyDataCenters: CMsgSteamDatagramClientPingSampleReply_LegacyDataCenter[];
 }
@@ -1249,10 +1255,9 @@ export const CMsgSteamDatagramSignedMessageGeneric = {
   },
   fromPartial(object: DeepPartial<CMsgSteamDatagramSignedMessageGeneric>): CMsgSteamDatagramSignedMessageGeneric {
     const message = createBaseCMsgSteamDatagramSignedMessageGeneric();
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     message.signedData = object.signedData ?? Buffer.alloc(0);
     message.signature = object.signature ?? Buffer.alloc(0);
     message.dummyPad = object.dummyPad ?? Buffer.alloc(0);
@@ -1273,11 +1278,16 @@ function createBaseCMsgSteamDatagramRouterPingReply(): CMsgSteamDatagramRouterPi
     challenge: "0",
     secondsUntilShutdown: 0,
     clientCookie: 0,
+    recvTos: 0,
+    echoSentTos: 0,
+    sentTos: 0,
+    echoRequestReplyTos: 0,
     scoringPenaltyRelayCluster: 0,
     flags: 0,
     routeExceptions: [],
     altAddresses: [],
     dummyPad: Buffer.alloc(0),
+    dummyVarint: "0",
   };
 }
 
@@ -1324,6 +1334,18 @@ export const CMsgSteamDatagramRouterPingReply = {
     if (message.clientCookie !== undefined && message.clientCookie !== 0) {
       writer.uint32(69).fixed32(message.clientCookie);
     }
+    if (message.recvTos !== undefined && message.recvTos !== 0) {
+      writer.uint32(128).uint32(message.recvTos);
+    }
+    if (message.echoSentTos !== undefined && message.echoSentTos !== 0) {
+      writer.uint32(136).uint32(message.echoSentTos);
+    }
+    if (message.sentTos !== undefined && message.sentTos !== 0) {
+      writer.uint32(144).uint32(message.sentTos);
+    }
+    if (message.echoRequestReplyTos !== undefined && message.echoRequestReplyTos !== 0) {
+      writer.uint32(152).uint32(message.echoRequestReplyTos);
+    }
     if (message.scoringPenaltyRelayCluster !== undefined && message.scoringPenaltyRelayCluster !== 0) {
       writer.uint32(72).uint32(message.scoringPenaltyRelayCluster);
     }
@@ -1338,6 +1360,9 @@ export const CMsgSteamDatagramRouterPingReply = {
     }
     if (message.dummyPad !== undefined && message.dummyPad.length !== 0) {
       writer.uint32(794).bytes(message.dummyPad);
+    }
+    if (message.dummyVarint !== undefined && message.dummyVarint !== "0") {
+      writer.uint32(800).uint64(message.dummyVarint);
     }
     return writer;
   },
@@ -1466,6 +1491,34 @@ export const CMsgSteamDatagramRouterPingReply = {
 
           message.clientCookie = reader.fixed32();
           continue;
+        case 16:
+          if (tag !== 128) {
+            break;
+          }
+
+          message.recvTos = reader.uint32();
+          continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.echoSentTos = reader.uint32();
+          continue;
+        case 18:
+          if (tag !== 144) {
+            break;
+          }
+
+          message.sentTos = reader.uint32();
+          continue;
+        case 19:
+          if (tag !== 152) {
+            break;
+          }
+
+          message.echoRequestReplyTos = reader.uint32();
+          continue;
         case 9:
           if (tag !== 72) {
             break;
@@ -1501,6 +1554,13 @@ export const CMsgSteamDatagramRouterPingReply = {
 
           message.dummyPad = reader.bytes() as Buffer;
           continue;
+        case 100:
+          if (tag !== 800) {
+            break;
+          }
+
+          message.dummyVarint = longToString(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1531,6 +1591,10 @@ export const CMsgSteamDatagramRouterPingReply = {
       challenge: isSet(object.challenge) ? globalThis.String(object.challenge) : "0",
       secondsUntilShutdown: isSet(object.secondsUntilShutdown) ? globalThis.Number(object.secondsUntilShutdown) : 0,
       clientCookie: isSet(object.clientCookie) ? globalThis.Number(object.clientCookie) : 0,
+      recvTos: isSet(object.recvTos) ? globalThis.Number(object.recvTos) : 0,
+      echoSentTos: isSet(object.echoSentTos) ? globalThis.Number(object.echoSentTos) : 0,
+      sentTos: isSet(object.sentTos) ? globalThis.Number(object.sentTos) : 0,
+      echoRequestReplyTos: isSet(object.echoRequestReplyTos) ? globalThis.Number(object.echoRequestReplyTos) : 0,
       scoringPenaltyRelayCluster: isSet(object.scoringPenaltyRelayCluster)
         ? globalThis.Number(object.scoringPenaltyRelayCluster)
         : 0,
@@ -1542,6 +1606,7 @@ export const CMsgSteamDatagramRouterPingReply = {
         ? object.altAddresses.map((e: any) => CMsgSteamDatagramRouterPingReply_AltAddress.fromJSON(e))
         : [],
       dummyPad: isSet(object.dummyPad) ? Buffer.from(bytesFromBase64(object.dummyPad)) : Buffer.alloc(0),
+      dummyVarint: isSet(object.dummyVarint) ? globalThis.String(object.dummyVarint) : "0",
     };
   },
 
@@ -1580,6 +1645,18 @@ export const CMsgSteamDatagramRouterPingReply = {
     if (message.clientCookie !== undefined && message.clientCookie !== 0) {
       obj.clientCookie = Math.round(message.clientCookie);
     }
+    if (message.recvTos !== undefined && message.recvTos !== 0) {
+      obj.recvTos = Math.round(message.recvTos);
+    }
+    if (message.echoSentTos !== undefined && message.echoSentTos !== 0) {
+      obj.echoSentTos = Math.round(message.echoSentTos);
+    }
+    if (message.sentTos !== undefined && message.sentTos !== 0) {
+      obj.sentTos = Math.round(message.sentTos);
+    }
+    if (message.echoRequestReplyTos !== undefined && message.echoRequestReplyTos !== 0) {
+      obj.echoRequestReplyTos = Math.round(message.echoRequestReplyTos);
+    }
     if (message.scoringPenaltyRelayCluster !== undefined && message.scoringPenaltyRelayCluster !== 0) {
       obj.scoringPenaltyRelayCluster = Math.round(message.scoringPenaltyRelayCluster);
     }
@@ -1588,7 +1665,7 @@ export const CMsgSteamDatagramRouterPingReply = {
     }
     if (message.routeExceptions?.length) {
       obj.routeExceptions = message.routeExceptions.map((e) =>
-        CMsgSteamDatagramRouterPingReply_RouteException.toJSON(e),
+        CMsgSteamDatagramRouterPingReply_RouteException.toJSON(e)
       );
     }
     if (message.altAddresses?.length) {
@@ -1596,6 +1673,9 @@ export const CMsgSteamDatagramRouterPingReply = {
     }
     if (message.dummyPad !== undefined && message.dummyPad.length !== 0) {
       obj.dummyPad = base64FromBytes(message.dummyPad);
+    }
+    if (message.dummyVarint !== undefined && message.dummyVarint !== "0") {
+      obj.dummyVarint = message.dummyVarint;
     }
     return obj;
   },
@@ -1616,6 +1696,10 @@ export const CMsgSteamDatagramRouterPingReply = {
     message.challenge = object.challenge ?? "0";
     message.secondsUntilShutdown = object.secondsUntilShutdown ?? 0;
     message.clientCookie = object.clientCookie ?? 0;
+    message.recvTos = object.recvTos ?? 0;
+    message.echoSentTos = object.echoSentTos ?? 0;
+    message.sentTos = object.sentTos ?? 0;
+    message.echoRequestReplyTos = object.echoRequestReplyTos ?? 0;
     message.scoringPenaltyRelayCluster = object.scoringPenaltyRelayCluster ?? 0;
     message.flags = object.flags ?? 0;
     message.routeExceptions =
@@ -1623,6 +1707,7 @@ export const CMsgSteamDatagramRouterPingReply = {
     message.altAddresses =
       object.altAddresses?.map((e) => CMsgSteamDatagramRouterPingReply_AltAddress.fromPartial(e)) || [];
     message.dummyPad = object.dummyPad ?? Buffer.alloc(0);
+    message.dummyVarint = object.dummyVarint ?? "0";
     return message;
   },
 };
@@ -1997,10 +2082,9 @@ export const CMsgSteamDatagramGameserverPingRequestBody = {
   ): CMsgSteamDatagramGameserverPingRequestBody {
     const message = createBaseCMsgSteamDatagramGameserverPingRequestBody();
     message.relayPopid = object.relayPopid ?? 0;
-    message.yourPublicIp =
-      object.yourPublicIp !== undefined && object.yourPublicIp !== null
-        ? CMsgSteamNetworkingIPAddress.fromPartial(object.yourPublicIp)
-        : undefined;
+    message.yourPublicIp = (object.yourPublicIp !== undefined && object.yourPublicIp !== null)
+      ? CMsgSteamNetworkingIPAddress.fromPartial(object.yourPublicIp)
+      : undefined;
     message.yourPublicPort = object.yourPublicPort ?? 0;
     message.relayUnixTime = object.relayUnixTime ?? "0";
     message.routingSecret = object.routingSecret ?? "0";
@@ -2193,10 +2277,9 @@ export const CMsgSteamDatagramGameserverPingRequestEnvelope = {
     object: DeepPartial<CMsgSteamDatagramGameserverPingRequestEnvelope>,
   ): CMsgSteamDatagramGameserverPingRequestEnvelope {
     const message = createBaseCMsgSteamDatagramGameserverPingRequestEnvelope();
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     message.signedData = object.signedData ?? Buffer.alloc(0);
     message.signature = object.signature ?? Buffer.alloc(0);
     message.legacyYourPublicIp = object.legacyYourPublicIp ?? 0;
@@ -2675,6 +2758,95 @@ export const CMsgSteamDatagramNoSessionRelayToPeer = {
   },
 };
 
+function createBaseCMsgTOSTreatment(): CMsgTOSTreatment {
+  return { l4sDetect: "", upEcn1: "", downDscp45: "" };
+}
+
+export const CMsgTOSTreatment = {
+  encode(message: CMsgTOSTreatment, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.l4sDetect !== undefined && message.l4sDetect !== "") {
+      writer.uint32(10).string(message.l4sDetect);
+    }
+    if (message.upEcn1 !== undefined && message.upEcn1 !== "") {
+      writer.uint32(18).string(message.upEcn1);
+    }
+    if (message.downDscp45 !== undefined && message.downDscp45 !== "") {
+      writer.uint32(26).string(message.downDscp45);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgTOSTreatment {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgTOSTreatment();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.l4sDetect = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.upEcn1 = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.downDscp45 = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgTOSTreatment {
+    return {
+      l4sDetect: isSet(object.l4sDetect) ? globalThis.String(object.l4sDetect) : "",
+      upEcn1: isSet(object.upEcn1) ? globalThis.String(object.upEcn1) : "",
+      downDscp45: isSet(object.downDscp45) ? globalThis.String(object.downDscp45) : "",
+    };
+  },
+
+  toJSON(message: CMsgTOSTreatment): unknown {
+    const obj: any = {};
+    if (message.l4sDetect !== undefined && message.l4sDetect !== "") {
+      obj.l4sDetect = message.l4sDetect;
+    }
+    if (message.upEcn1 !== undefined && message.upEcn1 !== "") {
+      obj.upEcn1 = message.upEcn1;
+    }
+    if (message.downDscp45 !== undefined && message.downDscp45 !== "") {
+      obj.downDscp45 = message.downDscp45;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgTOSTreatment>): CMsgTOSTreatment {
+    return CMsgTOSTreatment.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgTOSTreatment>): CMsgTOSTreatment {
+    const message = createBaseCMsgTOSTreatment();
+    message.l4sDetect = object.l4sDetect ?? "";
+    message.upEcn1 = object.upEcn1 ?? "";
+    message.downDscp45 = object.downDscp45 ?? "";
+    return message;
+  },
+};
+
 function createBaseCMsgSteamDatagramClientPingSampleRequest(): CMsgSteamDatagramClientPingSampleRequest {
   return { connectionId: 0 };
 }
@@ -2733,7 +2905,7 @@ export const CMsgSteamDatagramClientPingSampleRequest = {
 };
 
 function createBaseCMsgSteamDatagramClientPingSampleReply(): CMsgSteamDatagramClientPingSampleReply {
-  return { connectionId: 0, relayOverrideActive: false, pops: [], legacyDataCenters: [] };
+  return { connectionId: 0, relayOverrideActive: false, tos: undefined, pops: [], legacyDataCenters: [] };
 }
 
 export const CMsgSteamDatagramClientPingSampleReply = {
@@ -2743,6 +2915,9 @@ export const CMsgSteamDatagramClientPingSampleReply = {
     }
     if (message.relayOverrideActive !== undefined && message.relayOverrideActive !== false) {
       writer.uint32(40).bool(message.relayOverrideActive);
+    }
+    if (message.tos !== undefined) {
+      CMsgTOSTreatment.encode(message.tos, writer.uint32(50).fork()).ldelim();
     }
     for (const v of message.pops) {
       CMsgSteamDatagramClientPingSampleReply_POP.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -2774,6 +2949,13 @@ export const CMsgSteamDatagramClientPingSampleReply = {
 
           message.relayOverrideActive = reader.bool();
           continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.tos = CMsgTOSTreatment.decode(reader, reader.uint32());
+          continue;
         case 2:
           if (tag !== 18) {
             break;
@@ -2803,6 +2985,7 @@ export const CMsgSteamDatagramClientPingSampleReply = {
     return {
       connectionId: isSet(object.connectionId) ? globalThis.Number(object.connectionId) : 0,
       relayOverrideActive: isSet(object.relayOverrideActive) ? globalThis.Boolean(object.relayOverrideActive) : false,
+      tos: isSet(object.tos) ? CMsgTOSTreatment.fromJSON(object.tos) : undefined,
       pops: globalThis.Array.isArray(object?.pops)
         ? object.pops.map((e: any) => CMsgSteamDatagramClientPingSampleReply_POP.fromJSON(e))
         : [],
@@ -2820,12 +3003,15 @@ export const CMsgSteamDatagramClientPingSampleReply = {
     if (message.relayOverrideActive !== undefined && message.relayOverrideActive !== false) {
       obj.relayOverrideActive = message.relayOverrideActive;
     }
+    if (message.tos !== undefined) {
+      obj.tos = CMsgTOSTreatment.toJSON(message.tos);
+    }
     if (message.pops?.length) {
       obj.pops = message.pops.map((e) => CMsgSteamDatagramClientPingSampleReply_POP.toJSON(e));
     }
     if (message.legacyDataCenters?.length) {
       obj.legacyDataCenters = message.legacyDataCenters.map((e) =>
-        CMsgSteamDatagramClientPingSampleReply_LegacyDataCenter.toJSON(e),
+        CMsgSteamDatagramClientPingSampleReply_LegacyDataCenter.toJSON(e)
       );
     }
     return obj;
@@ -2838,6 +3024,9 @@ export const CMsgSteamDatagramClientPingSampleReply = {
     const message = createBaseCMsgSteamDatagramClientPingSampleReply();
     message.connectionId = object.connectionId ?? 0;
     message.relayOverrideActive = object.relayOverrideActive ?? false;
+    message.tos = (object.tos !== undefined && object.tos !== null)
+      ? CMsgTOSTreatment.fromPartial(object.tos)
+      : undefined;
     message.pops = object.pops?.map((e) => CMsgSteamDatagramClientPingSampleReply_POP.fromPartial(e)) || [];
     message.legacyDataCenters =
       object.legacyDataCenters?.map((e) => CMsgSteamDatagramClientPingSampleReply_LegacyDataCenter.fromPartial(e)) ||
@@ -3088,7 +3277,7 @@ export const CMsgSteamDatagramClientPingSampleReply_POP = {
     }
     if (message.altAddresses?.length) {
       obj.altAddresses = message.altAddresses.map((e) =>
-        CMsgSteamDatagramClientPingSampleReply_POP_AltAddress.toJSON(e),
+        CMsgSteamDatagramClientPingSampleReply_POP_AltAddress.toJSON(e)
       );
     }
     if (message.defaultE2ePingMs !== undefined && message.defaultE2ePingMs !== 0) {
@@ -3394,28 +3583,20 @@ export const CMsgSteamDatagramClientSwitchedPrimary = {
       writer.uint32(64).uint32(message.gapMs);
     }
     if (message.fromQualityNow !== undefined) {
-      CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.encode(
-        message.fromQualityNow,
-        writer.uint32(74).fork(),
-      ).ldelim();
+      CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.encode(message.fromQualityNow, writer.uint32(74).fork())
+        .ldelim();
     }
     if (message.toQualityNow !== undefined) {
-      CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.encode(
-        message.toQualityNow,
-        writer.uint32(82).fork(),
-      ).ldelim();
+      CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.encode(message.toQualityNow, writer.uint32(82).fork())
+        .ldelim();
     }
     if (message.fromQualityThen !== undefined) {
-      CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.encode(
-        message.fromQualityThen,
-        writer.uint32(90).fork(),
-      ).ldelim();
+      CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.encode(message.fromQualityThen, writer.uint32(90).fork())
+        .ldelim();
     }
     if (message.toQualityThen !== undefined) {
-      CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.encode(
-        message.toQualityThen,
-        writer.uint32(98).fork(),
-      ).ldelim();
+      CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.encode(message.toQualityThen, writer.uint32(98).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -3602,22 +3783,18 @@ export const CMsgSteamDatagramClientSwitchedPrimary = {
     message.fromActivePacketsRecv = object.fromActivePacketsRecv ?? 0;
     message.fromDroppedReason = object.fromDroppedReason ?? "";
     message.gapMs = object.gapMs ?? 0;
-    message.fromQualityNow =
-      object.fromQualityNow !== undefined && object.fromQualityNow !== null
-        ? CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.fromPartial(object.fromQualityNow)
-        : undefined;
-    message.toQualityNow =
-      object.toQualityNow !== undefined && object.toQualityNow !== null
-        ? CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.fromPartial(object.toQualityNow)
-        : undefined;
-    message.fromQualityThen =
-      object.fromQualityThen !== undefined && object.fromQualityThen !== null
-        ? CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.fromPartial(object.fromQualityThen)
-        : undefined;
-    message.toQualityThen =
-      object.toQualityThen !== undefined && object.toQualityThen !== null
-        ? CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.fromPartial(object.toQualityThen)
-        : undefined;
+    message.fromQualityNow = (object.fromQualityNow !== undefined && object.fromQualityNow !== null)
+      ? CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.fromPartial(object.fromQualityNow)
+      : undefined;
+    message.toQualityNow = (object.toQualityNow !== undefined && object.toQualityNow !== null)
+      ? CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.fromPartial(object.toQualityNow)
+      : undefined;
+    message.fromQualityThen = (object.fromQualityThen !== undefined && object.fromQualityThen !== null)
+      ? CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.fromPartial(object.fromQualityThen)
+      : undefined;
+    message.toQualityThen = (object.toQualityThen !== undefined && object.toQualityThen !== null)
+      ? CMsgSteamDatagramClientSwitchedPrimary_RouterQuality.fromPartial(object.toQualityThen)
+      : undefined;
     return message;
   },
 };
@@ -3916,14 +4093,12 @@ export const CMsgSteamDatagramConnectRequest = {
     message.pingEstMs = object.pingEstMs ?? 0;
     message.virtualPort = object.virtualPort ?? 0;
     message.gameserverRelaySessionId = object.gameserverRelaySessionId ?? 0;
-    message.crypt =
-      object.crypt !== undefined && object.crypt !== null
-        ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
-        : undefined;
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.crypt = (object.crypt !== undefined && object.crypt !== null)
+      ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
+      : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     message.routingSecret = object.routingSecret ?? "0";
     message.legacyClientSteamId = object.legacyClientSteamId ?? "0";
     return message;
@@ -4083,14 +4258,12 @@ export const CMsgSteamDatagramConnectOK = {
     message.yourTimestamp = object.yourTimestamp ?? "0";
     message.delayTimeUsec = object.delayTimeUsec ?? 0;
     message.gameserverRelaySessionId = object.gameserverRelaySessionId ?? 0;
-    message.crypt =
-      object.crypt !== undefined && object.crypt !== null
-        ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
-        : undefined;
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.crypt = (object.crypt !== undefined && object.crypt !== null)
+      ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
+      : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     return message;
   },
 };
@@ -4450,14 +4623,12 @@ export const CMsgSteamDatagramP2PRoutingSummary = {
   },
   fromPartial(object: DeepPartial<CMsgSteamDatagramP2PRoutingSummary>): CMsgSteamDatagramP2PRoutingSummary {
     const message = createBaseCMsgSteamDatagramP2PRoutingSummary();
-    message.ice =
-      object.ice !== undefined && object.ice !== null
-        ? CMsgSteamNetworkingICESessionSummary.fromPartial(object.ice)
-        : undefined;
-    message.sdr =
-      object.sdr !== undefined && object.sdr !== null
-        ? CMsgSteamNetworkingP2PSDRRoutingSummary.fromPartial(object.sdr)
-        : undefined;
+    message.ice = (object.ice !== undefined && object.ice !== null)
+      ? CMsgSteamNetworkingICESessionSummary.fromPartial(object.ice)
+      : undefined;
+    message.sdr = (object.sdr !== undefined && object.sdr !== null)
+      ? CMsgSteamNetworkingP2PSDRRoutingSummary.fromPartial(object.sdr)
+      : undefined;
     return message;
   },
 };
@@ -4499,10 +4670,8 @@ export const CMsgSteamDatagramConnectionClosed = {
       writer.uint32(122).string(message.fromIdentityString);
     }
     if (message.legacyFromIdentityBinary !== undefined) {
-      CMsgSteamNetworkingIdentityLegacyBinary.encode(
-        message.legacyFromIdentityBinary,
-        writer.uint32(106).fork(),
-      ).ldelim();
+      CMsgSteamNetworkingIdentityLegacyBinary.encode(message.legacyFromIdentityBinary, writer.uint32(106).fork())
+        .ldelim();
     }
     if (message.legacyFromSteamId !== undefined && message.legacyFromSteamId !== "0") {
       writer.uint32(25).fixed64(message.legacyFromSteamId);
@@ -4820,7 +4989,7 @@ export const CMsgSteamDatagramConnectionClosed = {
     message.fromConnectionId = object.fromConnectionId ?? 0;
     message.fromIdentityString = object.fromIdentityString ?? "";
     message.legacyFromIdentityBinary =
-      object.legacyFromIdentityBinary !== undefined && object.legacyFromIdentityBinary !== null
+      (object.legacyFromIdentityBinary !== undefined && object.legacyFromIdentityBinary !== null)
         ? CMsgSteamNetworkingIdentityLegacyBinary.fromPartial(object.legacyFromIdentityBinary)
         : undefined;
     message.legacyFromSteamId = object.legacyFromSteamId ?? "0";
@@ -4836,18 +5005,15 @@ export const CMsgSteamDatagramConnectionClosed = {
     message.notPrimarySession = object.notPrimarySession ?? false;
     message.notPrimaryTransport = object.notPrimaryTransport ?? false;
     message.relayOverrideActive = object.relayOverrideActive ?? false;
-    message.qualityRelay =
-      object.qualityRelay !== undefined && object.qualityRelay !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
-        : undefined;
-    message.qualityE2e =
-      object.qualityE2e !== undefined && object.qualityE2e !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
-        : undefined;
-    message.p2pRoutingSummary =
-      object.p2pRoutingSummary !== undefined && object.p2pRoutingSummary !== null
-        ? CMsgSteamDatagramP2PRoutingSummary.fromPartial(object.p2pRoutingSummary)
-        : undefined;
+    message.qualityRelay = (object.qualityRelay !== undefined && object.qualityRelay !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
+      : undefined;
+    message.qualityE2e = (object.qualityE2e !== undefined && object.qualityE2e !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
+      : undefined;
+    message.p2pRoutingSummary = (object.p2pRoutingSummary !== undefined && object.p2pRoutingSummary !== null)
+      ? CMsgSteamDatagramP2PRoutingSummary.fromPartial(object.p2pRoutingSummary)
+      : undefined;
     return message;
   },
 };
@@ -5150,18 +5316,15 @@ export const CMsgSteamDatagramNoConnection = {
     message.notPrimarySession = object.notPrimarySession ?? false;
     message.notPrimaryTransport = object.notPrimaryTransport ?? false;
     message.relayOverrideActive = object.relayOverrideActive ?? false;
-    message.qualityRelay =
-      object.qualityRelay !== undefined && object.qualityRelay !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
-        : undefined;
-    message.qualityE2e =
-      object.qualityE2e !== undefined && object.qualityE2e !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
-        : undefined;
-    message.p2pRoutingSummary =
-      object.p2pRoutingSummary !== undefined && object.p2pRoutingSummary !== null
-        ? CMsgSteamDatagramP2PRoutingSummary.fromPartial(object.p2pRoutingSummary)
-        : undefined;
+    message.qualityRelay = (object.qualityRelay !== undefined && object.qualityRelay !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
+      : undefined;
+    message.qualityE2e = (object.qualityE2e !== undefined && object.qualityE2e !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
+      : undefined;
+    message.p2pRoutingSummary = (object.p2pRoutingSummary !== undefined && object.p2pRoutingSummary !== null)
+      ? CMsgSteamDatagramP2PRoutingSummary.fromPartial(object.p2pRoutingSummary)
+      : undefined;
     message.routingSecret = object.routingSecret ?? "0";
     message.dummyPad = object.dummyPad ?? 0;
     return message;
@@ -5388,10 +5551,9 @@ export const CMsgSteamDatagramGameserverSessionRequest = {
     message.platform = object.platform ?? "";
     message.build = object.build ?? "";
     message.devGameserverIdentity = object.devGameserverIdentity ?? "";
-    message.devClientCert =
-      object.devClientCert !== undefined && object.devClientCert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.devClientCert)
-        : undefined;
+    message.devClientCert = (object.devClientCert !== undefined && object.devClientCert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.devClientCert)
+      : undefined;
     return message;
   },
 };
@@ -5743,14 +5905,12 @@ export const CMsgSteamDatagramConnectionStatsClientToRouter = {
     object: DeepPartial<CMsgSteamDatagramConnectionStatsClientToRouter>,
   ): CMsgSteamDatagramConnectionStatsClientToRouter {
     const message = createBaseCMsgSteamDatagramConnectionStatsClientToRouter();
-    message.qualityRelay =
-      object.qualityRelay !== undefined && object.qualityRelay !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
-        : undefined;
-    message.qualityE2e =
-      object.qualityE2e !== undefined && object.qualityE2e !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
-        : undefined;
+    message.qualityRelay = (object.qualityRelay !== undefined && object.qualityRelay !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
+      : undefined;
+    message.qualityE2e = (object.qualityE2e !== undefined && object.qualityE2e !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
+      : undefined;
     message.ackRelay = object.ackRelay?.map((e) => e) || [];
     message.legacyAckE2e = object.legacyAckE2e?.map((e) => e) || [];
     message.flags = object.flags ?? 0;
@@ -6019,14 +6179,12 @@ export const CMsgSteamDatagramConnectionStatsRouterToClient = {
     object: DeepPartial<CMsgSteamDatagramConnectionStatsRouterToClient>,
   ): CMsgSteamDatagramConnectionStatsRouterToClient {
     const message = createBaseCMsgSteamDatagramConnectionStatsRouterToClient();
-    message.qualityRelay =
-      object.qualityRelay !== undefined && object.qualityRelay !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
-        : undefined;
-    message.qualityE2e =
-      object.qualityE2e !== undefined && object.qualityE2e !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
-        : undefined;
+    message.qualityRelay = (object.qualityRelay !== undefined && object.qualityRelay !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
+      : undefined;
+    message.qualityE2e = (object.qualityE2e !== undefined && object.qualityE2e !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
+      : undefined;
     message.secondsUntilShutdown = object.secondsUntilShutdown ?? 0;
     message.migrateRequestIp = object.migrateRequestIp ?? 0;
     message.migrateRequestPort = object.migrateRequestPort ?? 0;
@@ -6312,14 +6470,12 @@ export const CMsgSteamDatagramConnectionStatsRouterToServer = {
     object: DeepPartial<CMsgSteamDatagramConnectionStatsRouterToServer>,
   ): CMsgSteamDatagramConnectionStatsRouterToServer {
     const message = createBaseCMsgSteamDatagramConnectionStatsRouterToServer();
-    message.qualityRelay =
-      object.qualityRelay !== undefined && object.qualityRelay !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
-        : undefined;
-    message.qualityE2e =
-      object.qualityE2e !== undefined && object.qualityE2e !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
-        : undefined;
+    message.qualityRelay = (object.qualityRelay !== undefined && object.qualityRelay !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
+      : undefined;
+    message.qualityE2e = (object.qualityE2e !== undefined && object.qualityE2e !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
+      : undefined;
     message.ackRelay = object.ackRelay?.map((e) => e) || [];
     message.legacyAckE2e = object.legacyAckE2e?.map((e) => e) || [];
     message.flags = object.flags ?? 0;
@@ -6561,14 +6717,12 @@ export const CMsgSteamDatagramConnectionStatsServerToRouter = {
     object: DeepPartial<CMsgSteamDatagramConnectionStatsServerToRouter>,
   ): CMsgSteamDatagramConnectionStatsServerToRouter {
     const message = createBaseCMsgSteamDatagramConnectionStatsServerToRouter();
-    message.qualityRelay =
-      object.qualityRelay !== undefined && object.qualityRelay !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
-        : undefined;
-    message.qualityE2e =
-      object.qualityE2e !== undefined && object.qualityE2e !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
-        : undefined;
+    message.qualityRelay = (object.qualityRelay !== undefined && object.qualityRelay !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
+      : undefined;
+    message.qualityE2e = (object.qualityE2e !== undefined && object.qualityE2e !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
+      : undefined;
     message.ackRelay = object.ackRelay?.map((e) => e) || [];
     message.legacyAckE2e = object.legacyAckE2e?.map((e) => e) || [];
     message.flags = object.flags ?? 0;
@@ -6984,10 +7138,9 @@ export const CMsgSteamDatagramP2PSessionRequest = {
   },
   fromPartial(object: DeepPartial<CMsgSteamDatagramP2PSessionRequest>): CMsgSteamDatagramP2PSessionRequest {
     const message = createBaseCMsgSteamDatagramP2PSessionRequest();
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     message.body = object.body ?? Buffer.alloc(0);
     message.signature = object.signature ?? Buffer.alloc(0);
     return message;
@@ -7375,18 +7528,15 @@ export const CMsgSteamDatagramConnectionStatsP2PClientToRouter = {
     object: DeepPartial<CMsgSteamDatagramConnectionStatsP2PClientToRouter>,
   ): CMsgSteamDatagramConnectionStatsP2PClientToRouter {
     const message = createBaseCMsgSteamDatagramConnectionStatsP2PClientToRouter();
-    message.qualityRelay =
-      object.qualityRelay !== undefined && object.qualityRelay !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
-        : undefined;
-    message.qualityE2e =
-      object.qualityE2e !== undefined && object.qualityE2e !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
-        : undefined;
-    message.p2pRoutingSummary =
-      object.p2pRoutingSummary !== undefined && object.p2pRoutingSummary !== null
-        ? CMsgSteamDatagramP2PRoutingSummary.fromPartial(object.p2pRoutingSummary)
-        : undefined;
+    message.qualityRelay = (object.qualityRelay !== undefined && object.qualityRelay !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
+      : undefined;
+    message.qualityE2e = (object.qualityE2e !== undefined && object.qualityE2e !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
+      : undefined;
+    message.p2pRoutingSummary = (object.p2pRoutingSummary !== undefined && object.p2pRoutingSummary !== null)
+      ? CMsgSteamDatagramP2PRoutingSummary.fromPartial(object.p2pRoutingSummary)
+      : undefined;
     message.ackRelay = object.ackRelay?.map((e) => e) || [];
     message.legacyAckE2e = object.legacyAckE2e?.map((e) => e) || [];
     message.flags = object.flags ?? 0;
@@ -7706,14 +7856,12 @@ export const CMsgSteamDatagramConnectionStatsP2PRouterToClient = {
     object: DeepPartial<CMsgSteamDatagramConnectionStatsP2PRouterToClient>,
   ): CMsgSteamDatagramConnectionStatsP2PRouterToClient {
     const message = createBaseCMsgSteamDatagramConnectionStatsP2PRouterToClient();
-    message.qualityRelay =
-      object.qualityRelay !== undefined && object.qualityRelay !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
-        : undefined;
-    message.qualityE2e =
-      object.qualityE2e !== undefined && object.qualityE2e !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
-        : undefined;
+    message.qualityRelay = (object.qualityRelay !== undefined && object.qualityRelay !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityRelay)
+      : undefined;
+    message.qualityE2e = (object.qualityE2e !== undefined && object.qualityE2e !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.qualityE2e)
+      : undefined;
     message.secondsUntilShutdown = object.secondsUntilShutdown ?? 0;
     message.migrateRequestIp = object.migrateRequestIp ?? 0;
     message.migrateRequestPort = object.migrateRequestPort ?? 0;
@@ -7927,8 +8075,8 @@ export const CMsgSteamDatagramP2PRoutes = {
   },
   fromPartial(object: DeepPartial<CMsgSteamDatagramP2PRoutes>): CMsgSteamDatagramP2PRoutes {
     const message = createBaseCMsgSteamDatagramP2PRoutes();
-    message.relayClusters =
-      object.relayClusters?.map((e) => CMsgSteamDatagramP2PRoutes_RelayCluster.fromPartial(e)) || [];
+    message.relayClusters = object.relayClusters?.map((e) => CMsgSteamDatagramP2PRoutes_RelayCluster.fromPartial(e)) ||
+      [];
     message.routes = object.routes?.map((e) => CMsgSteamDatagramP2PRoutes_Route.fromPartial(e)) || [];
     message.revision = object.revision ?? 0;
     return message;
@@ -8376,15 +8524,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

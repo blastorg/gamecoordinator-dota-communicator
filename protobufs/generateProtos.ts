@@ -3,7 +3,7 @@ import { mkdirSync, existsSync, readdirSync } from "fs";
 import { basename, extname, join, resolve } from "path";
 import { promises as fs } from "fs";
 
-const tsProtoBin = resolve(__dirname, "../../node_modules/.bin/protoc-gen-ts_proto");
+const tsProtoBin = resolve(__dirname, "../node_modules/.bin/protoc-gen-ts_proto");
 const outDir = resolve(__dirname, "generated/protoc");
 const protoDirs = [resolve(__dirname, "Protobufs/dota2")];
 const outputFileLocation = resolve(__dirname, "generated/protoc/index.ts");

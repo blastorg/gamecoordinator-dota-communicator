@@ -10,7 +10,8 @@ import _m0 from "protobufjs/minimal";
 import { CMsgSteamDatagramP2PRoutingSummary } from "./steamdatagram_messages_sdr";
 import { CMsgSteamDatagramConnectionQuality } from "./steamnetworkingsockets_messages";
 
-export interface CGameNetworkingUIGlobalState {}
+export interface CGameNetworkingUIGlobalState {
+}
 
 export interface CGameNetworkingUIConnectionState {
   connectionKey?: string | undefined;
@@ -218,8 +219,7 @@ export const CGameNetworkingUIConnectionState = {
       CMsgSteamDatagramConnectionQuality.encode(message.frontQualityRemote, writer.uint32(330).fork()).ldelim();
     }
     if (
-      message.frontQualityRemoteInstantaneousTime !== undefined &&
-      message.frontQualityRemoteInstantaneousTime !== "0"
+      message.frontQualityRemoteInstantaneousTime !== undefined && message.frontQualityRemoteInstantaneousTime !== "0"
     ) {
       writer.uint32(336).uint64(message.frontQualityRemoteInstantaneousTime);
     }
@@ -562,8 +562,7 @@ export const CGameNetworkingUIConnectionState = {
       obj.frontQualityRemote = CMsgSteamDatagramConnectionQuality.toJSON(message.frontQualityRemote);
     }
     if (
-      message.frontQualityRemoteInstantaneousTime !== undefined &&
-      message.frontQualityRemoteInstantaneousTime !== "0"
+      message.frontQualityRemoteInstantaneousTime !== undefined && message.frontQualityRemoteInstantaneousTime !== "0"
     ) {
       obj.frontQualityRemoteInstantaneousTime = message.frontQualityRemoteInstantaneousTime;
     }
@@ -593,31 +592,26 @@ export const CGameNetworkingUIConnectionState = {
     message.sdrpopidLocal = object.sdrpopidLocal ?? "";
     message.sdrpopidRemote = object.sdrpopidRemote ?? "";
     message.addressRemote = object.addressRemote ?? "";
-    message.p2pRouting =
-      object.p2pRouting !== undefined && object.p2pRouting !== null
-        ? CMsgSteamDatagramP2PRoutingSummary.fromPartial(object.p2pRouting)
-        : undefined;
+    message.p2pRouting = (object.p2pRouting !== undefined && object.p2pRouting !== null)
+      ? CMsgSteamDatagramP2PRoutingSummary.fromPartial(object.p2pRouting)
+      : undefined;
     message.pingInterior = object.pingInterior ?? 0;
     message.pingRemoteFront = object.pingRemoteFront ?? 0;
     message.pingDefaultInternetRoute = object.pingDefaultInternetRoute ?? 0;
-    message.e2eQualityLocal =
-      object.e2eQualityLocal !== undefined && object.e2eQualityLocal !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.e2eQualityLocal)
-        : undefined;
-    message.e2eQualityRemote =
-      object.e2eQualityRemote !== undefined && object.e2eQualityRemote !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.e2eQualityRemote)
-        : undefined;
+    message.e2eQualityLocal = (object.e2eQualityLocal !== undefined && object.e2eQualityLocal !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.e2eQualityLocal)
+      : undefined;
+    message.e2eQualityRemote = (object.e2eQualityRemote !== undefined && object.e2eQualityRemote !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.e2eQualityRemote)
+      : undefined;
     message.e2eQualityRemoteInstantaneousTime = object.e2eQualityRemoteInstantaneousTime ?? "0";
     message.e2eQualityRemoteLifetimeTime = object.e2eQualityRemoteLifetimeTime ?? "0";
-    message.frontQualityLocal =
-      object.frontQualityLocal !== undefined && object.frontQualityLocal !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.frontQualityLocal)
-        : undefined;
-    message.frontQualityRemote =
-      object.frontQualityRemote !== undefined && object.frontQualityRemote !== null
-        ? CMsgSteamDatagramConnectionQuality.fromPartial(object.frontQualityRemote)
-        : undefined;
+    message.frontQualityLocal = (object.frontQualityLocal !== undefined && object.frontQualityLocal !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.frontQualityLocal)
+      : undefined;
+    message.frontQualityRemote = (object.frontQualityRemote !== undefined && object.frontQualityRemote !== null)
+      ? CMsgSteamDatagramConnectionQuality.fromPartial(object.frontQualityRemote)
+      : undefined;
     message.frontQualityRemoteInstantaneousTime = object.frontQualityRemoteInstantaneousTime ?? "0";
     message.frontQualityRemoteLifetimeTime = object.frontQualityRemoteLifetimeTime ?? "0";
     return message;
@@ -984,25 +978,20 @@ export const CGameNetworkingUIAppSummary = {
     message.ipWasSharedWithFriend = object.ipWasSharedWithFriend ?? false;
     message.ipWasSharedWithNonfriend = object.ipWasSharedWithNonfriend ?? false;
     message.activeConnections = object.activeConnections ?? 0;
-    message.mainCxn =
-      object.mainCxn !== undefined && object.mainCxn !== null
-        ? CGameNetworkingUIConnectionSummary.fromPartial(object.mainCxn)
-        : undefined;
+    message.mainCxn = (object.mainCxn !== undefined && object.mainCxn !== null)
+      ? CGameNetworkingUIConnectionSummary.fromPartial(object.mainCxn)
+      : undefined;
     return message;
   },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

@@ -9,7 +9,8 @@ import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { CMsgIPAddress } from "./steammessages_base";
 
-export interface CMsgClientHeartBeat {}
+export interface CMsgClientHeartBeat {
+}
 
 export interface CMsgClientServerTimestampRequest {
   clientRequestTimestamp?: string | undefined;
@@ -120,7 +121,8 @@ export interface CMsgClientRequestWebAPIAuthenticateUserNonceResponse {
   tokenType?: number | undefined;
 }
 
-export interface CMsgClientLogOff {}
+export interface CMsgClientLogOff {
+}
 
 export interface CMsgClientLoggedOff {
   eresult?: number | undefined;
@@ -631,8 +633,7 @@ export const CMsgClientLogon = {
       writer.uint32(730).string(message.sonyPsnServiceId);
     }
     if (
-      message.createNewPsnLinkedAccountIfNeeded !== undefined &&
-      message.createNewPsnLinkedAccountIfNeeded !== false
+      message.createNewPsnLinkedAccountIfNeeded !== undefined && message.createNewPsnLinkedAccountIfNeeded !== false
     ) {
       writer.uint32(736).bool(message.createNewPsnLinkedAccountIfNeeded);
     }
@@ -1256,8 +1257,7 @@ export const CMsgClientLogon = {
       obj.sonyPsnServiceId = message.sonyPsnServiceId;
     }
     if (
-      message.createNewPsnLinkedAccountIfNeeded !== undefined &&
-      message.createNewPsnLinkedAccountIfNeeded !== false
+      message.createNewPsnLinkedAccountIfNeeded !== undefined && message.createNewPsnLinkedAccountIfNeeded !== false
     ) {
       obj.createNewPsnLinkedAccountIfNeeded = message.createNewPsnLinkedAccountIfNeeded;
     }
@@ -1318,17 +1318,15 @@ export const CMsgClientLogon = {
     message.shouldRememberPassword = object.shouldRememberPassword ?? false;
     message.wineVersion = object.wineVersion ?? "";
     message.deprecated10 = object.deprecated10 ?? 0;
-    message.obfuscatedPrivateIp =
-      object.obfuscatedPrivateIp !== undefined && object.obfuscatedPrivateIp !== null
-        ? CMsgIPAddress.fromPartial(object.obfuscatedPrivateIp)
-        : undefined;
+    message.obfuscatedPrivateIp = (object.obfuscatedPrivateIp !== undefined && object.obfuscatedPrivateIp !== null)
+      ? CMsgIPAddress.fromPartial(object.obfuscatedPrivateIp)
+      : undefined;
     message.deprecatedPublicIp = object.deprecatedPublicIp ?? 0;
     message.qosLevel = object.qosLevel ?? 0;
     message.clientSuppliedSteamId = object.clientSuppliedSteamId ?? "0";
-    message.publicIp =
-      object.publicIp !== undefined && object.publicIp !== null
-        ? CMsgIPAddress.fromPartial(object.publicIp)
-        : undefined;
+    message.publicIp = (object.publicIp !== undefined && object.publicIp !== null)
+      ? CMsgIPAddress.fromPartial(object.publicIp)
+      : undefined;
     message.machineId = object.machineId ?? Buffer.alloc(0);
     message.launcherType = object.launcherType ?? 0;
     message.uiMode = object.uiMode ?? 0;
@@ -1365,10 +1363,9 @@ export const CMsgClientLogon = {
     message.supportsRateLimitResponse = object.supportsRateLimitResponse ?? false;
     message.webLogonNonce = object.webLogonNonce ?? "";
     message.priorityReason = object.priorityReason ?? 0;
-    message.embeddedClientSecret =
-      object.embeddedClientSecret !== undefined && object.embeddedClientSecret !== null
-        ? CMsgClientSecret.fromPartial(object.embeddedClientSecret)
-        : undefined;
+    message.embeddedClientSecret = (object.embeddedClientSecret !== undefined && object.embeddedClientSecret !== null)
+      ? CMsgClientSecret.fromPartial(object.embeddedClientSecret)
+      : undefined;
     return message;
   },
 };
@@ -1808,10 +1805,9 @@ export const CMsgClientLogonResponse = {
     message.cellIdPingThreshold = object.cellIdPingThreshold ?? 0;
     message.usePics = object.usePics ?? false;
     message.vanityUrl = object.vanityUrl ?? "";
-    message.publicIp =
-      object.publicIp !== undefined && object.publicIp !== null
-        ? CMsgIPAddress.fromPartial(object.publicIp)
-        : undefined;
+    message.publicIp = (object.publicIp !== undefined && object.publicIp !== null)
+      ? CMsgIPAddress.fromPartial(object.publicIp)
+      : undefined;
     message.clientSuppliedSteamid = object.clientSuppliedSteamid ?? "0";
     message.ipCountryCode = object.ipCountryCode ?? "";
     message.parentalSettings = object.parentalSettings ?? Buffer.alloc(0);
@@ -2582,15 +2578,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

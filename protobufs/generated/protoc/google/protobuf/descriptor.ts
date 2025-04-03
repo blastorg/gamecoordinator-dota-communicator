@@ -124,9 +124,13 @@ export interface FileDescriptorSet {
 /** Describes a complete .proto file. */
 export interface FileDescriptorProto {
   /** file name, relative to root of source tree */
-  name?: string | undefined;
+  name?:
+    | string
+    | undefined;
   /** e.g. "foo", "foo.bar", etc. */
-  package?: string | undefined;
+  package?:
+    | string
+    | undefined;
   /** Names of files imported by this file. */
   dependency: string[];
   /** Indexes of the public imported files in the dependency list above. */
@@ -141,21 +145,27 @@ export interface FileDescriptorProto {
   enumType: EnumDescriptorProto[];
   service: ServiceDescriptorProto[];
   extension: FieldDescriptorProto[];
-  options?: FileOptions | undefined;
+  options?:
+    | FileOptions
+    | undefined;
   /**
    * This field contains optional information about the original source code.
    * You may safely remove this entire field without harming runtime
    * functionality of the descriptors -- the information is needed only by
    * development tools.
    */
-  sourceCodeInfo?: SourceCodeInfo | undefined;
+  sourceCodeInfo?:
+    | SourceCodeInfo
+    | undefined;
   /**
    * The syntax of the proto file.
    * The supported values are "proto2", "proto3", and "editions".
    *
    * If `edition` is present, this value must be "editions".
    */
-  syntax?: string | undefined;
+  syntax?:
+    | string
+    | undefined;
   /** The edition of the proto file. */
   edition?: Edition | undefined;
 }
@@ -180,7 +190,9 @@ export interface DescriptorProto {
 
 export interface DescriptorProto_ExtensionRange {
   /** Inclusive. */
-  start?: number | undefined;
+  start?:
+    | number
+    | undefined;
   /** Exclusive. */
   end?: number | undefined;
   options?: ExtensionRangeOptions | undefined;
@@ -193,7 +205,9 @@ export interface DescriptorProto_ExtensionRange {
  */
 export interface DescriptorProto_ReservedRange {
   /** Inclusive. */
-  start?: number | undefined;
+  start?:
+    | number
+    | undefined;
   /** Exclusive. */
   end?: number | undefined;
 }
@@ -208,7 +222,9 @@ export interface ExtensionRangeOptions {
    */
   declaration: ExtensionRangeOptions_Declaration[];
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /**
    * The verification state of the range.
    * TODO: flip the default to DECLARATION once all empty ranges
@@ -254,24 +270,32 @@ export function extensionRangeOptions_VerificationStateToJSON(object: ExtensionR
 
 export interface ExtensionRangeOptions_Declaration {
   /** The extension number declared within the extension range. */
-  number?: number | undefined;
+  number?:
+    | number
+    | undefined;
   /**
    * The fully-qualified name of the extension field. There must be a leading
    * dot in front of the full name.
    */
-  fullName?: string | undefined;
+  fullName?:
+    | string
+    | undefined;
   /**
    * The fully-qualified type name of the extension field. Unlike
    * Metadata.type, Declaration.type must have a leading dot for messages
    * and enums.
    */
-  type?: string | undefined;
+  type?:
+    | string
+    | undefined;
   /**
    * If true, indicates that the number is reserved in the extension range,
    * and any extension field with the number will fail to compile. Set this
    * when a declared extension field is deleted.
    */
-  reserved?: boolean | undefined;
+  reserved?:
+    | boolean
+    | undefined;
   /**
    * If true, indicates that the extension must be defined as repeated.
    * Otherwise the extension must be defined as optional.
@@ -283,12 +307,16 @@ export interface ExtensionRangeOptions_Declaration {
 export interface FieldDescriptorProto {
   name?: string | undefined;
   number?: number | undefined;
-  label?: FieldDescriptorProto_Label | undefined;
+  label?:
+    | FieldDescriptorProto_Label
+    | undefined;
   /**
    * If type_name is set, this need not be set.  If both this and type_name
    * are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or TYPE_GROUP.
    */
-  type?: FieldDescriptorProto_Type | undefined;
+  type?:
+    | FieldDescriptorProto_Type
+    | undefined;
   /**
    * For message and enum types, this is the name of the type.  If the name
    * starts with a '.', it is fully-qualified.  Otherwise, C++-like scoping
@@ -296,24 +324,32 @@ export interface FieldDescriptorProto {
    * message are searched, then within the parent, on up to the root
    * namespace).
    */
-  typeName?: string | undefined;
+  typeName?:
+    | string
+    | undefined;
   /**
    * For extensions, this is the name of the type being extended.  It is
    * resolved in the same manner as type_name.
    */
-  extendee?: string | undefined;
+  extendee?:
+    | string
+    | undefined;
   /**
    * For numeric types, contains the original text representation of the value.
    * For booleans, "true" or "false".
    * For strings, contains the default text contents (not escaped in any way).
    * For bytes, contains the C escaped value.  All bytes >= 128 are escaped.
    */
-  defaultValue?: string | undefined;
+  defaultValue?:
+    | string
+    | undefined;
   /**
    * If set, gives the index of a oneof in the containing type's oneof_decl
    * list.  This field is a member of that oneof.
    */
-  oneofIndex?: number | undefined;
+  oneofIndex?:
+    | number
+    | undefined;
   /**
    * JSON name of this field. The value is set by protocol compiler. If the
    * user has set a "json_name" option on this field, that option's value
@@ -321,7 +357,9 @@ export interface FieldDescriptorProto {
    * it to camelCase.
    */
   jsonName?: string | undefined;
-  options?: FieldOptions | undefined;
+  options?:
+    | FieldOptions
+    | undefined;
   /**
    * If true, this is a proto3 "optional". When a proto3 field is optional, it
    * tracks presence regardless of field type.
@@ -547,7 +585,9 @@ export interface OneofDescriptorProto {
 export interface EnumDescriptorProto {
   name?: string | undefined;
   value: EnumValueDescriptorProto[];
-  options?: EnumOptions | undefined;
+  options?:
+    | EnumOptions
+    | undefined;
   /**
    * Range of reserved numeric values. Reserved numeric values may not be used
    * by enum values in the same enum declaration. Reserved ranges may not
@@ -571,7 +611,9 @@ export interface EnumDescriptorProto {
  */
 export interface EnumDescriptorProto_EnumReservedRange {
   /** Inclusive. */
-  start?: number | undefined;
+  start?:
+    | number
+    | undefined;
   /** Inclusive. */
   end?: number | undefined;
 }
@@ -592,16 +634,22 @@ export interface ServiceDescriptorProto {
 
 /** Describes a method of a service. */
 export interface MethodDescriptorProto {
-  name?: string | undefined;
+  name?:
+    | string
+    | undefined;
   /**
    * Input and output type names.  These are resolved in the same way as
    * FieldDescriptorProto.type_name, but must refer to a message type.
    */
   inputType?: string | undefined;
   outputType?: string | undefined;
-  options?: MethodOptions | undefined;
+  options?:
+    | MethodOptions
+    | undefined;
   /** Identifies if client streams multiple client messages */
-  clientStreaming?: boolean | undefined;
+  clientStreaming?:
+    | boolean
+    | undefined;
   /** Identifies if server streams multiple server messages */
   serverStreaming?: boolean | undefined;
 }
@@ -613,7 +661,9 @@ export interface FileOptions {
    * inappropriate because proto packages do not normally start with backwards
    * domain names.
    */
-  javaPackage?: string | undefined;
+  javaPackage?:
+    | string
+    | undefined;
   /**
    * Controls the name of the wrapper Java class generated for the .proto file.
    * That class will always contain the .proto file's getDescriptor() method as
@@ -621,7 +671,9 @@ export interface FileOptions {
    * If java_multiple_files is disabled, then all the other classes from the
    * .proto file will be nested inside the single wrapper outer class.
    */
-  javaOuterClassname?: string | undefined;
+  javaOuterClassname?:
+    | string
+    | undefined;
   /**
    * If enabled, then the Java code generator will generate a separate .java
    * file for each top-level message, enum, and service defined in the .proto
@@ -630,13 +682,17 @@ export interface FileOptions {
    * generated to contain the file's getDescriptor() method as well as any
    * top-level extensions defined in the file.
    */
-  javaMultipleFiles?: boolean | undefined;
+  javaMultipleFiles?:
+    | boolean
+    | undefined;
   /**
    * This option does nothing.
    *
    * @deprecated
    */
-  javaGenerateEqualsAndHash?: boolean | undefined;
+  javaGenerateEqualsAndHash?:
+    | boolean
+    | undefined;
   /**
    * If set true, then the Java2 code generator will generate code that
    * throws an exception whenever an attempt is made to assign a non-UTF-8
@@ -646,7 +702,9 @@ export interface FileOptions {
    * This option has no effect on when used with the lite runtime.
    */
   javaStringCheckUtf8?: boolean | undefined;
-  optimizeFor?: FileOptions_OptimizeMode | undefined;
+  optimizeFor?:
+    | FileOptions_OptimizeMode
+    | undefined;
   /**
    * Sets the Go package where structs generated from this .proto will be
    * placed. If omitted, the Go package will be derived from the following:
@@ -654,7 +712,9 @@ export interface FileOptions {
    *   - Otherwise, the package statement in the .proto file, if present.
    *   - Otherwise, the basename of the .proto file, without extension.
    */
-  goPackage?: string | undefined;
+  goPackage?:
+    | string
+    | undefined;
   /**
    * Should generic services be generated in each language?  "Generic" services
    * are not specific to any particular RPC system.  They are generated by the
@@ -669,58 +729,80 @@ export interface FileOptions {
    */
   ccGenericServices?: boolean | undefined;
   javaGenericServices?: boolean | undefined;
-  pyGenericServices?: boolean | undefined;
+  pyGenericServices?:
+    | boolean
+    | undefined;
   /**
    * Is this file deprecated?
    * Depending on the target platform, this can emit Deprecated annotations
    * for everything in the file, or it will be completely ignored; in the very
    * least, this is a formalization for deprecating files.
    */
-  deprecated?: boolean | undefined;
+  deprecated?:
+    | boolean
+    | undefined;
   /**
    * Enables the use of arenas for the proto messages in this file. This applies
    * only to generated classes for C++.
    */
-  ccEnableArenas?: boolean | undefined;
+  ccEnableArenas?:
+    | boolean
+    | undefined;
   /**
    * Sets the objective c class prefix which is prepended to all objective c
    * generated classes from this .proto. There is no default.
    */
-  objcClassPrefix?: string | undefined;
+  objcClassPrefix?:
+    | string
+    | undefined;
   /** Namespace for generated classes; defaults to the package. */
-  csharpNamespace?: string | undefined;
+  csharpNamespace?:
+    | string
+    | undefined;
   /**
    * By default Swift generators will take the proto package and CamelCase it
    * replacing '.' with underscore and use that to prefix the types/symbols
    * defined. When this options is provided, they will use this value instead
    * to prefix the types/symbols defined.
    */
-  swiftPrefix?: string | undefined;
+  swiftPrefix?:
+    | string
+    | undefined;
   /**
    * Sets the php class prefix which is prepended to all php generated classes
    * from this .proto. Default is empty.
    */
-  phpClassPrefix?: string | undefined;
+  phpClassPrefix?:
+    | string
+    | undefined;
   /**
    * Use this option to change the namespace of php generated classes. Default
    * is empty. When this option is empty, the package name will be used for
    * determining the namespace.
    */
-  phpNamespace?: string | undefined;
+  phpNamespace?:
+    | string
+    | undefined;
   /**
    * Use this option to change the namespace of php generated metadata classes.
    * Default is empty. When this option is empty, the proto file name will be
    * used for determining the namespace.
    */
-  phpMetadataNamespace?: string | undefined;
+  phpMetadataNamespace?:
+    | string
+    | undefined;
   /**
    * Use this option to change the package of ruby generated classes. Default
    * is empty. When this option is not set, the package name will be used for
    * determining the ruby package.
    */
-  rubyPackage?: string | undefined;
+  rubyPackage?:
+    | string
+    | undefined;
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /**
    * The parser stores options it doesn't recognize here.
    * See the documentation for the "Options" section above.
@@ -788,20 +870,26 @@ export interface MessageOptions {
    * Because this is an option, the above two restrictions are not enforced by
    * the protocol compiler.
    */
-  messageSetWireFormat?: boolean | undefined;
+  messageSetWireFormat?:
+    | boolean
+    | undefined;
   /**
    * Disables the generation of the standard "descriptor()" accessor, which can
    * conflict with a field of the same name.  This is meant to make migration
    * from proto1 easier; new code should avoid fields named "descriptor".
    */
-  noStandardDescriptorAccessor?: boolean | undefined;
+  noStandardDescriptorAccessor?:
+    | boolean
+    | undefined;
   /**
    * Is this message deprecated?
    * Depending on the target platform, this can emit Deprecated annotations
    * for the message, or it will be completely ignored; in the very least,
    * this is a formalization for deprecating messages.
    */
-  deprecated?: boolean | undefined;
+  deprecated?:
+    | boolean
+    | undefined;
   /**
    * Whether the message is an automatically generated map entry type for the
    * maps field.
@@ -825,7 +913,9 @@ export interface MessageOptions {
    * instead. The option should only be implicitly set by the proto compiler
    * parser.
    */
-  mapEntry?: boolean | undefined;
+  mapEntry?:
+    | boolean
+    | undefined;
   /**
    * Enable the legacy handling of JSON field name conflicts.  This lowercases
    * and strips underscored from the fields before comparison in proto3 only.
@@ -840,9 +930,13 @@ export interface MessageOptions {
    *
    * @deprecated
    */
-  deprecatedLegacyJsonFieldConflicts?: boolean | undefined;
+  deprecatedLegacyJsonFieldConflicts?:
+    | boolean
+    | undefined;
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
 }
@@ -856,7 +950,9 @@ export interface FieldOptions {
    * type "bytes" in the open source release -- sorry, we'll try to include
    * other types in a future version!
    */
-  ctype?: FieldOptions_CType | undefined;
+  ctype?:
+    | FieldOptions_CType
+    | undefined;
   /**
    * The packed option can be enabled for repeated primitive fields to enable
    * a more efficient representation on the wire. Rather than repeatedly
@@ -866,7 +962,9 @@ export interface FieldOptions {
    * Editions, but the `repeated_field_encoding` feature can be used to control
    * the behavior.
    */
-  packed?: boolean | undefined;
+  packed?:
+    | boolean
+    | undefined;
   /**
    * The jstype option determines the JavaScript type used for values of the
    * field.  The option is permitted only for 64 bit integral and fixed types
@@ -880,7 +978,9 @@ export interface FieldOptions {
    * This option is an enum to permit additional types to be added, e.g.
    * goog.math.Integer.
    */
-  jstype?: FieldOptions_JSType | undefined;
+  jstype?:
+    | FieldOptions_JSType
+    | undefined;
   /**
    * Should this field be parsed lazily?  Lazy applies only to message-type
    * fields.  It means that when the outer message is initially parsed, the
@@ -905,22 +1005,30 @@ export interface FieldOptions {
    * fields. Failed verification would result in parsing failure (except when
    * uninitialized messages are acceptable).
    */
-  lazy?: boolean | undefined;
+  lazy?:
+    | boolean
+    | undefined;
   /**
    * unverified_lazy does no correctness checks on the byte stream. This should
    * only be used where lazy with verification is prohibitive for performance
    * reasons.
    */
-  unverifiedLazy?: boolean | undefined;
+  unverifiedLazy?:
+    | boolean
+    | undefined;
   /**
    * Is this field deprecated?
    * Depending on the target platform, this can emit Deprecated annotations
    * for accessors, or it will be completely ignored; in the very least, this
    * is a formalization for deprecating fields.
    */
-  deprecated?: boolean | undefined;
+  deprecated?:
+    | boolean
+    | undefined;
   /** For Google-internal migration only. Do not use. */
-  weak?: boolean | undefined;
+  weak?:
+    | boolean
+    | undefined;
   /**
    * Indicate that the field value should not be printed out when using debug
    * formats, e.g. when the field contains sensitive credentials.
@@ -930,7 +1038,9 @@ export interface FieldOptions {
   targets: FieldOptions_OptionTargetType[];
   editionDefaults: FieldOptions_EditionDefault[];
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
 }
@@ -1141,14 +1251,18 @@ export function fieldOptions_OptionTargetTypeToJSON(object: FieldOptions_OptionT
 }
 
 export interface FieldOptions_EditionDefault {
-  edition?: Edition | undefined;
+  edition?:
+    | Edition
+    | undefined;
   /** Textproto value. */
   value?: string | undefined;
 }
 
 export interface OneofOptions {
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
 }
@@ -1158,14 +1272,18 @@ export interface EnumOptions {
    * Set this option to true to allow mapping different tag names to the same
    * value.
    */
-  allowAlias?: boolean | undefined;
+  allowAlias?:
+    | boolean
+    | undefined;
   /**
    * Is this enum deprecated?
    * Depending on the target platform, this can emit Deprecated annotations
    * for the enum, or it will be completely ignored; in the very least, this
    * is a formalization for deprecating enums.
    */
-  deprecated?: boolean | undefined;
+  deprecated?:
+    | boolean
+    | undefined;
   /**
    * Enable the legacy handling of JSON field name conflicts.  This lowercases
    * and strips underscored from the fields before comparison in proto3 only.
@@ -1176,9 +1294,13 @@ export interface EnumOptions {
    *
    * @deprecated
    */
-  deprecatedLegacyJsonFieldConflicts?: boolean | undefined;
+  deprecatedLegacyJsonFieldConflicts?:
+    | boolean
+    | undefined;
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
 }
@@ -1190,29 +1312,39 @@ export interface EnumValueOptions {
    * for the enum value, or it will be completely ignored; in the very least,
    * this is a formalization for deprecating enum values.
    */
-  deprecated?: boolean | undefined;
+  deprecated?:
+    | boolean
+    | undefined;
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /**
    * Indicate that fields annotated with this enum value should not be printed
    * out when using debug formats, e.g. when the field contains sensitive
    * credentials.
    */
-  debugRedact?: boolean | undefined;
+  debugRedact?:
+    | boolean
+    | undefined;
   /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
 }
 
 export interface ServiceOptions {
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /**
    * Is this service deprecated?
    * Depending on the target platform, this can emit Deprecated annotations
    * for the service, or it will be completely ignored; in the very least,
    * this is a formalization for deprecating services.
    */
-  deprecated?: boolean | undefined;
+  deprecated?:
+    | boolean
+    | undefined;
   /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
 }
@@ -1225,9 +1357,13 @@ export interface MethodOptions {
    * this is a formalization for deprecating methods.
    */
   deprecated?: boolean | undefined;
-  idempotencyLevel?: MethodOptions_IdempotencyLevel | undefined;
+  idempotencyLevel?:
+    | MethodOptions_IdempotencyLevel
+    | undefined;
   /** Any features defined in the specific edition. */
-  features?: FeatureSet | undefined;
+  features?:
+    | FeatureSet
+    | undefined;
   /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
 }
@@ -1553,7 +1689,9 @@ export interface FeatureSetDefaults {
    * The minimum supported edition (inclusive) when this was constructed.
    * Editions before this will not have defaults.
    */
-  minimumEdition?: Edition | undefined;
+  minimumEdition?:
+    | Edition
+    | undefined;
   /**
    * The maximum known edition (inclusive) when this was constructed. Editions
    * after this will not have reliable defaults.
@@ -1734,12 +1872,16 @@ export interface GeneratedCodeInfo_Annotation {
    */
   path: number[];
   /** Identifies the filesystem path to the original source .proto. */
-  sourceFile?: string | undefined;
+  sourceFile?:
+    | string
+    | undefined;
   /**
    * Identifies the starting offset in bytes in the generated code
    * that relates to the identified object.
    */
-  begin?: number | undefined;
+  begin?:
+    | number
+    | undefined;
   /**
    * Identifies the ending offset in bytes in the generated code that
    * relates to the identified object. The end offset should be one past
@@ -2137,12 +2279,12 @@ export const FileDescriptorProto = {
     message.enumType = object.enumType?.map((e) => EnumDescriptorProto.fromPartial(e)) || [];
     message.service = object.service?.map((e) => ServiceDescriptorProto.fromPartial(e)) || [];
     message.extension = object.extension?.map((e) => FieldDescriptorProto.fromPartial(e)) || [];
-    message.options =
-      object.options !== undefined && object.options !== null ? FileOptions.fromPartial(object.options) : undefined;
-    message.sourceCodeInfo =
-      object.sourceCodeInfo !== undefined && object.sourceCodeInfo !== null
-        ? SourceCodeInfo.fromPartial(object.sourceCodeInfo)
-        : undefined;
+    message.options = (object.options !== undefined && object.options !== null)
+      ? FileOptions.fromPartial(object.options)
+      : undefined;
+    message.sourceCodeInfo = (object.sourceCodeInfo !== undefined && object.sourceCodeInfo !== null)
+      ? SourceCodeInfo.fromPartial(object.sourceCodeInfo)
+      : undefined;
     message.syntax = object.syntax ?? "";
     message.edition = object.edition ?? 0;
     return message;
@@ -2363,8 +2505,9 @@ export const DescriptorProto = {
     message.enumType = object.enumType?.map((e) => EnumDescriptorProto.fromPartial(e)) || [];
     message.extensionRange = object.extensionRange?.map((e) => DescriptorProto_ExtensionRange.fromPartial(e)) || [];
     message.oneofDecl = object.oneofDecl?.map((e) => OneofDescriptorProto.fromPartial(e)) || [];
-    message.options =
-      object.options !== undefined && object.options !== null ? MessageOptions.fromPartial(object.options) : undefined;
+    message.options = (object.options !== undefined && object.options !== null)
+      ? MessageOptions.fromPartial(object.options)
+      : undefined;
     message.reservedRange = object.reservedRange?.map((e) => DescriptorProto_ReservedRange.fromPartial(e)) || [];
     message.reservedName = object.reservedName?.map((e) => e) || [];
     return message;
@@ -2455,10 +2598,9 @@ export const DescriptorProto_ExtensionRange = {
     const message = createBaseDescriptorProto_ExtensionRange();
     message.start = object.start ?? 0;
     message.end = object.end ?? 0;
-    message.options =
-      object.options !== undefined && object.options !== null
-        ? ExtensionRangeOptions.fromPartial(object.options)
-        : undefined;
+    message.options = (object.options !== undefined && object.options !== null)
+      ? ExtensionRangeOptions.fromPartial(object.options)
+      : undefined;
     return message;
   },
 };
@@ -2641,8 +2783,9 @@ export const ExtensionRangeOptions = {
     const message = createBaseExtensionRangeOptions();
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     message.declaration = object.declaration?.map((e) => ExtensionRangeOptions_Declaration.fromPartial(e)) || [];
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.verification = object.verification ?? 1;
     return message;
   },
@@ -2982,8 +3125,9 @@ export const FieldDescriptorProto = {
     message.defaultValue = object.defaultValue ?? "";
     message.oneofIndex = object.oneofIndex ?? 0;
     message.jsonName = object.jsonName ?? "";
-    message.options =
-      object.options !== undefined && object.options !== null ? FieldOptions.fromPartial(object.options) : undefined;
+    message.options = (object.options !== undefined && object.options !== null)
+      ? FieldOptions.fromPartial(object.options)
+      : undefined;
     message.proto3Optional = object.proto3Optional ?? false;
     return message;
   },
@@ -3058,8 +3202,9 @@ export const OneofDescriptorProto = {
   fromPartial(object: DeepPartial<OneofDescriptorProto>): OneofDescriptorProto {
     const message = createBaseOneofDescriptorProto();
     message.name = object.name ?? "";
-    message.options =
-      object.options !== undefined && object.options !== null ? OneofOptions.fromPartial(object.options) : undefined;
+    message.options = (object.options !== undefined && object.options !== null)
+      ? OneofOptions.fromPartial(object.options)
+      : undefined;
     return message;
   },
 };
@@ -3182,10 +3327,11 @@ export const EnumDescriptorProto = {
     const message = createBaseEnumDescriptorProto();
     message.name = object.name ?? "";
     message.value = object.value?.map((e) => EnumValueDescriptorProto.fromPartial(e)) || [];
-    message.options =
-      object.options !== undefined && object.options !== null ? EnumOptions.fromPartial(object.options) : undefined;
-    message.reservedRange =
-      object.reservedRange?.map((e) => EnumDescriptorProto_EnumReservedRange.fromPartial(e)) || [];
+    message.options = (object.options !== undefined && object.options !== null)
+      ? EnumOptions.fromPartial(object.options)
+      : undefined;
+    message.reservedRange = object.reservedRange?.map((e) => EnumDescriptorProto_EnumReservedRange.fromPartial(e)) ||
+      [];
     message.reservedName = object.reservedName?.map((e) => e) || [];
     return message;
   },
@@ -3349,10 +3495,9 @@ export const EnumValueDescriptorProto = {
     const message = createBaseEnumValueDescriptorProto();
     message.name = object.name ?? "";
     message.number = object.number ?? 0;
-    message.options =
-      object.options !== undefined && object.options !== null
-        ? EnumValueOptions.fromPartial(object.options)
-        : undefined;
+    message.options = (object.options !== undefined && object.options !== null)
+      ? EnumValueOptions.fromPartial(object.options)
+      : undefined;
     return message;
   },
 };
@@ -3443,8 +3588,9 @@ export const ServiceDescriptorProto = {
     const message = createBaseServiceDescriptorProto();
     message.name = object.name ?? "";
     message.method = object.method?.map((e) => MethodDescriptorProto.fromPartial(e)) || [];
-    message.options =
-      object.options !== undefined && object.options !== null ? ServiceOptions.fromPartial(object.options) : undefined;
+    message.options = (object.options !== undefined && object.options !== null)
+      ? ServiceOptions.fromPartial(object.options)
+      : undefined;
     return message;
   },
 };
@@ -3583,8 +3729,9 @@ export const MethodDescriptorProto = {
     message.name = object.name ?? "";
     message.inputType = object.inputType ?? "";
     message.outputType = object.outputType ?? "";
-    message.options =
-      object.options !== undefined && object.options !== null ? MethodOptions.fromPartial(object.options) : undefined;
+    message.options = (object.options !== undefined && object.options !== null)
+      ? MethodOptions.fromPartial(object.options)
+      : undefined;
     message.clientStreaming = object.clientStreaming ?? false;
     message.serverStreaming = object.serverStreaming ?? false;
     return message;
@@ -3970,8 +4117,9 @@ export const FileOptions = {
     message.phpNamespace = object.phpNamespace ?? "";
     message.phpMetadataNamespace = object.phpMetadataNamespace ?? "";
     message.rubyPackage = object.rubyPackage ?? "";
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     return message;
   },
@@ -4004,8 +4152,7 @@ export const MessageOptions = {
       writer.uint32(56).bool(message.mapEntry);
     }
     if (
-      message.deprecatedLegacyJsonFieldConflicts !== undefined &&
-      message.deprecatedLegacyJsonFieldConflicts !== false
+      message.deprecatedLegacyJsonFieldConflicts !== undefined && message.deprecatedLegacyJsonFieldConflicts !== false
     ) {
       writer.uint32(88).bool(message.deprecatedLegacyJsonFieldConflicts);
     }
@@ -4118,8 +4265,7 @@ export const MessageOptions = {
       obj.mapEntry = message.mapEntry;
     }
     if (
-      message.deprecatedLegacyJsonFieldConflicts !== undefined &&
-      message.deprecatedLegacyJsonFieldConflicts !== false
+      message.deprecatedLegacyJsonFieldConflicts !== undefined && message.deprecatedLegacyJsonFieldConflicts !== false
     ) {
       obj.deprecatedLegacyJsonFieldConflicts = message.deprecatedLegacyJsonFieldConflicts;
     }
@@ -4142,8 +4288,9 @@ export const MessageOptions = {
     message.deprecated = object.deprecated ?? false;
     message.mapEntry = object.mapEntry ?? false;
     message.deprecatedLegacyJsonFieldConflicts = object.deprecatedLegacyJsonFieldConflicts ?? false;
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     return message;
   },
@@ -4414,8 +4561,9 @@ export const FieldOptions = {
     message.retention = object.retention ?? 0;
     message.targets = object.targets?.map((e) => e) || [];
     message.editionDefaults = object.editionDefaults?.map((e) => FieldOptions_EditionDefault.fromPartial(e)) || [];
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     return message;
   },
@@ -4565,8 +4713,9 @@ export const OneofOptions = {
   },
   fromPartial(object: DeepPartial<OneofOptions>): OneofOptions {
     const message = createBaseOneofOptions();
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     return message;
   },
@@ -4591,8 +4740,7 @@ export const EnumOptions = {
       writer.uint32(24).bool(message.deprecated);
     }
     if (
-      message.deprecatedLegacyJsonFieldConflicts !== undefined &&
-      message.deprecatedLegacyJsonFieldConflicts !== false
+      message.deprecatedLegacyJsonFieldConflicts !== undefined && message.deprecatedLegacyJsonFieldConflicts !== false
     ) {
       writer.uint32(48).bool(message.deprecatedLegacyJsonFieldConflicts);
     }
@@ -4679,8 +4827,7 @@ export const EnumOptions = {
       obj.deprecated = message.deprecated;
     }
     if (
-      message.deprecatedLegacyJsonFieldConflicts !== undefined &&
-      message.deprecatedLegacyJsonFieldConflicts !== false
+      message.deprecatedLegacyJsonFieldConflicts !== undefined && message.deprecatedLegacyJsonFieldConflicts !== false
     ) {
       obj.deprecatedLegacyJsonFieldConflicts = message.deprecatedLegacyJsonFieldConflicts;
     }
@@ -4701,8 +4848,9 @@ export const EnumOptions = {
     message.allowAlias = object.allowAlias ?? false;
     message.deprecated = object.deprecated ?? false;
     message.deprecatedLegacyJsonFieldConflicts = object.deprecatedLegacyJsonFieldConflicts ?? false;
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     return message;
   },
@@ -4807,8 +4955,9 @@ export const EnumValueOptions = {
   fromPartial(object: DeepPartial<EnumValueOptions>): EnumValueOptions {
     const message = createBaseEnumValueOptions();
     message.deprecated = object.deprecated ?? false;
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.debugRedact = object.debugRedact ?? false;
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     return message;
@@ -4899,8 +5048,9 @@ export const ServiceOptions = {
   },
   fromPartial(object: DeepPartial<ServiceOptions>): ServiceOptions {
     const message = createBaseServiceOptions();
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.deprecated = object.deprecated ?? false;
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     return message;
@@ -5009,8 +5159,9 @@ export const MethodOptions = {
     const message = createBaseMethodOptions();
     message.deprecated = object.deprecated ?? false;
     message.idempotencyLevel = object.idempotencyLevel ?? 0;
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     message.uninterpretedOption = object.uninterpretedOption?.map((e) => UninterpretedOption.fromPartial(e)) || [];
     return message;
   },
@@ -5554,8 +5705,9 @@ export const FeatureSetDefaults_FeatureSetEditionDefault = {
   ): FeatureSetDefaults_FeatureSetEditionDefault {
     const message = createBaseFeatureSetDefaults_FeatureSetEditionDefault();
     message.edition = object.edition ?? 0;
-    message.features =
-      object.features !== undefined && object.features !== null ? FeatureSet.fromPartial(object.features) : undefined;
+    message.features = (object.features !== undefined && object.features !== null)
+      ? FeatureSet.fromPartial(object.features)
+      : undefined;
     return message;
   },
 };
@@ -5968,15 +6120,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

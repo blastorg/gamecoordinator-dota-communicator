@@ -1600,14 +1600,12 @@ export const CMsgSteamDatagramConnectionQuality = {
   },
   fromPartial(object: DeepPartial<CMsgSteamDatagramConnectionQuality>): CMsgSteamDatagramConnectionQuality {
     const message = createBaseCMsgSteamDatagramConnectionQuality();
-    message.instantaneous =
-      object.instantaneous !== undefined && object.instantaneous !== null
-        ? CMsgSteamDatagramLinkInstantaneousStats.fromPartial(object.instantaneous)
-        : undefined;
-    message.lifetime =
-      object.lifetime !== undefined && object.lifetime !== null
-        ? CMsgSteamDatagramLinkLifetimeStats.fromPartial(object.lifetime)
-        : undefined;
+    message.instantaneous = (object.instantaneous !== undefined && object.instantaneous !== null)
+      ? CMsgSteamDatagramLinkInstantaneousStats.fromPartial(object.instantaneous)
+      : undefined;
+    message.lifetime = (object.lifetime !== undefined && object.lifetime !== null)
+      ? CMsgSteamDatagramLinkLifetimeStats.fromPartial(object.lifetime)
+      : undefined;
     return message;
   },
 };
@@ -1737,12 +1735,12 @@ export const CMsgICERendezvous = {
   },
   fromPartial(object: DeepPartial<CMsgICERendezvous>): CMsgICERendezvous {
     const message = createBaseCMsgICERendezvous();
-    message.auth =
-      object.auth !== undefined && object.auth !== null ? CMsgICERendezvous_Auth.fromPartial(object.auth) : undefined;
-    message.addCandidate =
-      object.addCandidate !== undefined && object.addCandidate !== null
-        ? CMsgICECandidate.fromPartial(object.addCandidate)
-        : undefined;
+    message.auth = (object.auth !== undefined && object.auth !== null)
+      ? CMsgICERendezvous_Auth.fromPartial(object.auth)
+      : undefined;
+    message.addCandidate = (object.addCandidate !== undefined && object.addCandidate !== null)
+      ? CMsgICECandidate.fromPartial(object.addCandidate)
+      : undefined;
     return message;
   },
 };
@@ -1857,10 +1855,8 @@ export const CMsgSteamNetworkingP2PRendezvous = {
       CMsgSteamNetworkingP2PRendezvous_ConnectOK.encode(message.connectOk, writer.uint32(42).fork()).ldelim();
     }
     if (message.connectionClosed !== undefined) {
-      CMsgSteamNetworkingP2PRendezvous_ConnectionClosed.encode(
-        message.connectionClosed,
-        writer.uint32(50).fork(),
-      ).ldelim();
+      CMsgSteamNetworkingP2PRendezvous_ConnectionClosed.encode(message.connectionClosed, writer.uint32(50).fork())
+        .ldelim();
     }
     if (message.ackReliableMsg !== undefined && message.ackReliableMsg !== 0) {
       writer.uint32(88).uint32(message.ackReliableMsg);
@@ -2077,12 +2073,12 @@ export const CMsgSteamNetworkingP2PRendezvous = {
     }
     if (message.reliableMessages?.length) {
       obj.reliableMessages = message.reliableMessages.map((e) =>
-        CMsgSteamNetworkingP2PRendezvous_ReliableMessage.toJSON(e),
+        CMsgSteamNetworkingP2PRendezvous_ReliableMessage.toJSON(e)
       );
     }
     if (message.applicationMessages?.length) {
       obj.applicationMessages = message.applicationMessages.map((e) =>
-        CMsgSteamNetworkingP2PRendezvous_ApplicationMessage.toJSON(e),
+        CMsgSteamNetworkingP2PRendezvous_ApplicationMessage.toJSON(e)
       );
     }
     return obj;
@@ -2101,18 +2097,15 @@ export const CMsgSteamNetworkingP2PRendezvous = {
     message.ackPeerRoutesRevision = object.ackPeerRoutesRevision ?? 0;
     message.iceEnabled = object.iceEnabled ?? false;
     message.hostedServerTicket = object.hostedServerTicket ?? Buffer.alloc(0);
-    message.connectRequest =
-      object.connectRequest !== undefined && object.connectRequest !== null
-        ? CMsgSteamNetworkingP2PRendezvous_ConnectRequest.fromPartial(object.connectRequest)
-        : undefined;
-    message.connectOk =
-      object.connectOk !== undefined && object.connectOk !== null
-        ? CMsgSteamNetworkingP2PRendezvous_ConnectOK.fromPartial(object.connectOk)
-        : undefined;
-    message.connectionClosed =
-      object.connectionClosed !== undefined && object.connectionClosed !== null
-        ? CMsgSteamNetworkingP2PRendezvous_ConnectionClosed.fromPartial(object.connectionClosed)
-        : undefined;
+    message.connectRequest = (object.connectRequest !== undefined && object.connectRequest !== null)
+      ? CMsgSteamNetworkingP2PRendezvous_ConnectRequest.fromPartial(object.connectRequest)
+      : undefined;
+    message.connectOk = (object.connectOk !== undefined && object.connectOk !== null)
+      ? CMsgSteamNetworkingP2PRendezvous_ConnectOK.fromPartial(object.connectOk)
+      : undefined;
+    message.connectionClosed = (object.connectionClosed !== undefined && object.connectionClosed !== null)
+      ? CMsgSteamNetworkingP2PRendezvous_ConnectionClosed.fromPartial(object.connectionClosed)
+      : undefined;
     message.ackReliableMsg = object.ackReliableMsg ?? 0;
     message.firstReliableMsg = object.firstReliableMsg ?? 0;
     message.reliableMessages =
@@ -2240,14 +2233,12 @@ export const CMsgSteamNetworkingP2PRendezvous_ConnectRequest = {
     object: DeepPartial<CMsgSteamNetworkingP2PRendezvous_ConnectRequest>,
   ): CMsgSteamNetworkingP2PRendezvous_ConnectRequest {
     const message = createBaseCMsgSteamNetworkingP2PRendezvous_ConnectRequest();
-    message.crypt =
-      object.crypt !== undefined && object.crypt !== null
-        ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
-        : undefined;
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.crypt = (object.crypt !== undefined && object.crypt !== null)
+      ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
+      : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     message.toVirtualPort = object.toVirtualPort ?? 0;
     message.fromVirtualPort = object.fromVirtualPort ?? 0;
     message.fromFakeip = object.fromFakeip ?? "";
@@ -2325,14 +2316,12 @@ export const CMsgSteamNetworkingP2PRendezvous_ConnectOK = {
     object: DeepPartial<CMsgSteamNetworkingP2PRendezvous_ConnectOK>,
   ): CMsgSteamNetworkingP2PRendezvous_ConnectOK {
     const message = createBaseCMsgSteamNetworkingP2PRendezvous_ConnectOK();
-    message.crypt =
-      object.crypt !== undefined && object.crypt !== null
-        ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
-        : undefined;
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.crypt = (object.crypt !== undefined && object.crypt !== null)
+      ? CMsgSteamDatagramSessionCryptInfoSigned.fromPartial(object.crypt)
+      : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     return message;
   },
 };
@@ -2477,8 +2466,9 @@ export const CMsgSteamNetworkingP2PRendezvous_ReliableMessage = {
     object: DeepPartial<CMsgSteamNetworkingP2PRendezvous_ReliableMessage>,
   ): CMsgSteamNetworkingP2PRendezvous_ReliableMessage {
     const message = createBaseCMsgSteamNetworkingP2PRendezvous_ReliableMessage();
-    message.ice =
-      object.ice !== undefined && object.ice !== null ? CMsgICERendezvous.fromPartial(object.ice) : undefined;
+    message.ice = (object.ice !== undefined && object.ice !== null)
+      ? CMsgICERendezvous.fromPartial(object.ice)
+      : undefined;
     return message;
   },
 };
@@ -2891,15 +2881,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

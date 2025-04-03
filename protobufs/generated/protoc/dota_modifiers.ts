@@ -725,9 +725,12 @@ export const CDOTAModifierBuffTableEntry = {
     message.fadeTime = object.fadeTime ?? 0;
     message.subtle = object.subtle ?? false;
     message.channelTime = object.channelTime ?? 0;
-    message.vStart =
-      object.vStart !== undefined && object.vStart !== null ? CMsgVector.fromPartial(object.vStart) : undefined;
-    message.vEnd = object.vEnd !== undefined && object.vEnd !== null ? CMsgVector.fromPartial(object.vEnd) : undefined;
+    message.vStart = (object.vStart !== undefined && object.vStart !== null)
+      ? CMsgVector.fromPartial(object.vStart)
+      : undefined;
+    message.vEnd = (object.vEnd !== undefined && object.vEnd !== null)
+      ? CMsgVector.fromPartial(object.vEnd)
+      : undefined;
     message.portalLoopAppear = object.portalLoopAppear ?? "";
     message.portalLoopDisappear = object.portalLoopDisappear ?? "";
     message.heroLoopAppear = object.heroLoopAppear ?? "";
@@ -830,15 +833,11 @@ export const CDOTALuaModifierEntry = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

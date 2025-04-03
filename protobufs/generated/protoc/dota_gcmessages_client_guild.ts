@@ -657,7 +657,8 @@ export interface CMsgGCToClientGuildMembersDataUpdated {
   membersData: CMsgGuildMember[];
 }
 
-export interface CMsgClientToGCRequestGuildMembership {}
+export interface CMsgClientToGCRequestGuildMembership {
+}
 
 export interface CMsgClientToGCRequestGuildMembershipResponse {
   result?: CMsgClientToGCRequestGuildMembershipResponse_EResponse | undefined;
@@ -2361,8 +2362,7 @@ export function cMsgClientToGCRequestAccountGuildPersonaInfoResponse_EResponseFr
       return CMsgClientToGCRequestAccountGuildPersonaInfoResponse_EResponse.k_eInvalidAccount;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRequestAccountGuildPersonaInfoResponse_EResponse",
       );
   }
@@ -2386,8 +2386,7 @@ export function cMsgClientToGCRequestAccountGuildPersonaInfoResponse_EResponseTo
       return "k_eInvalidAccount";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRequestAccountGuildPersonaInfoResponse_EResponse",
       );
   }
@@ -2435,8 +2434,7 @@ export function cMsgClientToGCRequestAccountGuildPersonaInfoBatchResponse_ERespo
       return CMsgClientToGCRequestAccountGuildPersonaInfoBatchResponse_EResponse.k_eInvalidRequest;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRequestAccountGuildPersonaInfoBatchResponse_EResponse",
       );
   }
@@ -2460,8 +2458,7 @@ export function cMsgClientToGCRequestAccountGuildPersonaInfoBatchResponse_ERespo
       return "k_eInvalidRequest";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRequestAccountGuildPersonaInfoBatchResponse_EResponse",
       );
   }
@@ -2870,10 +2867,9 @@ export const CMsgGuildSummary = {
   },
   fromPartial(object: DeepPartial<CMsgGuildSummary>): CMsgGuildSummary {
     const message = createBaseCMsgGuildSummary();
-    message.guildInfo =
-      object.guildInfo !== undefined && object.guildInfo !== null
-        ? CMsgGuildInfo.fromPartial(object.guildInfo)
-        : undefined;
+    message.guildInfo = (object.guildInfo !== undefined && object.guildInfo !== null)
+      ? CMsgGuildInfo.fromPartial(object.guildInfo)
+      : undefined;
     message.memberCount = object.memberCount ?? 0;
     message.eventPoints = object.eventPoints?.map((e) => CMsgGuildSummary_EventPoints.fromPartial(e)) || [];
     return message;
@@ -3439,10 +3435,9 @@ export const CMsgGuildData = {
   fromPartial(object: DeepPartial<CMsgGuildData>): CMsgGuildData {
     const message = createBaseCMsgGuildData();
     message.guildId = object.guildId ?? 0;
-    message.guildInfo =
-      object.guildInfo !== undefined && object.guildInfo !== null
-        ? CMsgGuildInfo.fromPartial(object.guildInfo)
-        : undefined;
+    message.guildInfo = (object.guildInfo !== undefined && object.guildInfo !== null)
+      ? CMsgGuildInfo.fromPartial(object.guildInfo)
+      : undefined;
     message.guildRoles = object.guildRoles?.map((e) => CMsgGuildRole.fromPartial(e)) || [];
     message.guildMembers = object.guildMembers?.map((e) => CMsgGuildMember.fromPartial(e)) || [];
     message.guildInvites = object.guildInvites?.map((e) => CMsgGuildInvite.fromPartial(e)) || [];
@@ -3979,10 +3974,9 @@ export const CMsgClientToGCCreateGuild = {
   },
   fromPartial(object: DeepPartial<CMsgClientToGCCreateGuild>): CMsgClientToGCCreateGuild {
     const message = createBaseCMsgClientToGCCreateGuild();
-    message.guildInfo =
-      object.guildInfo !== undefined && object.guildInfo !== null
-        ? CMsgGuildInfo.fromPartial(object.guildInfo)
-        : undefined;
+    message.guildInfo = (object.guildInfo !== undefined && object.guildInfo !== null)
+      ? CMsgGuildInfo.fromPartial(object.guildInfo)
+      : undefined;
     message.guildChatType = object.guildChatType ?? 0;
     return message;
   },
@@ -4145,10 +4139,9 @@ export const CMsgClientToGCSetGuildInfo = {
   fromPartial(object: DeepPartial<CMsgClientToGCSetGuildInfo>): CMsgClientToGCSetGuildInfo {
     const message = createBaseCMsgClientToGCSetGuildInfo();
     message.guildId = object.guildId ?? 0;
-    message.guildInfo =
-      object.guildInfo !== undefined && object.guildInfo !== null
-        ? CMsgGuildInfo.fromPartial(object.guildInfo)
-        : undefined;
+    message.guildInfo = (object.guildInfo !== undefined && object.guildInfo !== null)
+      ? CMsgGuildInfo.fromPartial(object.guildInfo)
+      : undefined;
     message.guildChatType = object.guildChatType ?? 0;
     return message;
   },
@@ -4337,10 +4330,9 @@ export const CMsgClientToGCRequestGuildDataResponse = {
   fromPartial(object: DeepPartial<CMsgClientToGCRequestGuildDataResponse>): CMsgClientToGCRequestGuildDataResponse {
     const message = createBaseCMsgClientToGCRequestGuildDataResponse();
     message.result = object.result ?? 0;
-    message.guildData =
-      object.guildData !== undefined && object.guildData !== null
-        ? CMsgGuildData.fromPartial(object.guildData)
-        : undefined;
+    message.guildData = (object.guildData !== undefined && object.guildData !== null)
+      ? CMsgGuildData.fromPartial(object.guildData)
+      : undefined;
     return message;
   },
 };
@@ -4413,10 +4405,9 @@ export const CMsgGCToClientGuildDataUpdated = {
   },
   fromPartial(object: DeepPartial<CMsgGCToClientGuildDataUpdated>): CMsgGCToClientGuildDataUpdated {
     const message = createBaseCMsgGCToClientGuildDataUpdated();
-    message.guildData =
-      object.guildData !== undefined && object.guildData !== null
-        ? CMsgGuildData.fromPartial(object.guildData)
-        : undefined;
+    message.guildData = (object.guildData !== undefined && object.guildData !== null)
+      ? CMsgGuildData.fromPartial(object.guildData)
+      : undefined;
     message.updateFlags = object.updateFlags ?? 0;
     return message;
   },
@@ -4616,10 +4607,9 @@ export const CMsgClientToGCRequestGuildMembershipResponse = {
   ): CMsgClientToGCRequestGuildMembershipResponse {
     const message = createBaseCMsgClientToGCRequestGuildMembershipResponse();
     message.result = object.result ?? 0;
-    message.guildMemberships =
-      object.guildMemberships !== undefined && object.guildMemberships !== null
-        ? CMsgAccountGuildMemberships.fromPartial(object.guildMemberships)
-        : undefined;
+    message.guildMemberships = (object.guildMemberships !== undefined && object.guildMemberships !== null)
+      ? CMsgAccountGuildMemberships.fromPartial(object.guildMemberships)
+      : undefined;
     return message;
   },
 };
@@ -4680,10 +4670,9 @@ export const CMsgGCToClientGuildMembershipUpdated = {
   },
   fromPartial(object: DeepPartial<CMsgGCToClientGuildMembershipUpdated>): CMsgGCToClientGuildMembershipUpdated {
     const message = createBaseCMsgGCToClientGuildMembershipUpdated();
-    message.guildMemberships =
-      object.guildMemberships !== undefined && object.guildMemberships !== null
-        ? CMsgAccountGuildMemberships.fromPartial(object.guildMemberships)
-        : undefined;
+    message.guildMemberships = (object.guildMemberships !== undefined && object.guildMemberships !== null)
+      ? CMsgAccountGuildMemberships.fromPartial(object.guildMemberships)
+      : undefined;
     return message;
   },
 };
@@ -6787,10 +6776,9 @@ export const CMsgFindGuildByTagResponse = {
     const message = createBaseCMsgFindGuildByTagResponse();
     message.result = object.result ?? 0;
     message.guildId = object.guildId ?? 0;
-    message.guildSummary =
-      object.guildSummary !== undefined && object.guildSummary !== null
-        ? CMsgGuildSummary.fromPartial(object.guildSummary)
-        : undefined;
+    message.guildSummary = (object.guildSummary !== undefined && object.guildSummary !== null)
+      ? CMsgGuildSummary.fromPartial(object.guildSummary)
+      : undefined;
     return message;
   },
 };
@@ -6960,10 +6948,9 @@ export const CMsgSearchForOpenGuildsResponse_SearchResult = {
   ): CMsgSearchForOpenGuildsResponse_SearchResult {
     const message = createBaseCMsgSearchForOpenGuildsResponse_SearchResult();
     message.guildId = object.guildId ?? 0;
-    message.guildSummary =
-      object.guildSummary !== undefined && object.guildSummary !== null
-        ? CMsgGuildSummary.fromPartial(object.guildSummary)
-        : undefined;
+    message.guildSummary = (object.guildSummary !== undefined && object.guildSummary !== null)
+      ? CMsgGuildSummary.fromPartial(object.guildSummary)
+      : undefined;
     return message;
   },
 };
@@ -7240,10 +7227,9 @@ export const CMsgClientToGCRequestAccountGuildPersonaInfoResponse = {
   ): CMsgClientToGCRequestAccountGuildPersonaInfoResponse {
     const message = createBaseCMsgClientToGCRequestAccountGuildPersonaInfoResponse();
     message.result = object.result ?? 0;
-    message.personaInfo =
-      object.personaInfo !== undefined && object.personaInfo !== null
-        ? CMsgAccountGuildsPersonaInfo.fromPartial(object.personaInfo)
-        : undefined;
+    message.personaInfo = (object.personaInfo !== undefined && object.personaInfo !== null)
+      ? CMsgAccountGuildsPersonaInfo.fromPartial(object.personaInfo)
+      : undefined;
     return message;
   },
 };
@@ -7415,15 +7401,11 @@ export const CMsgClientToGCRequestAccountGuildPersonaInfoBatchResponse = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

@@ -92,6 +92,8 @@ export enum EStartFindingMatchResult {
   k_EStartFindingMatchResult_SteamChinaBanned = 133,
   k_EStartFindingMatchResult_SteamChinaInvalidMixedParty = 134,
   k_EStartFindingMatchResult_RestrictedFromRanked = 135,
+  k_EStartFindingMatchResult_RankPreventsParties = 136,
+  k_EStartFindingMatchResult_RegisteredNameRequired = 137,
 }
 
 export function eStartFindingMatchResultFromJSON(object: any): EStartFindingMatchResult {
@@ -213,6 +215,12 @@ export function eStartFindingMatchResultFromJSON(object: any): EStartFindingMatc
     case 135:
     case "k_EStartFindingMatchResult_RestrictedFromRanked":
       return EStartFindingMatchResult.k_EStartFindingMatchResult_RestrictedFromRanked;
+    case 136:
+    case "k_EStartFindingMatchResult_RankPreventsParties":
+      return EStartFindingMatchResult.k_EStartFindingMatchResult_RankPreventsParties;
+    case 137:
+    case "k_EStartFindingMatchResult_RegisteredNameRequired":
+      return EStartFindingMatchResult.k_EStartFindingMatchResult_RegisteredNameRequired;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EStartFindingMatchResult");
   }
@@ -298,6 +306,10 @@ export function eStartFindingMatchResultToJSON(object: EStartFindingMatchResult)
       return "k_EStartFindingMatchResult_SteamChinaInvalidMixedParty";
     case EStartFindingMatchResult.k_EStartFindingMatchResult_RestrictedFromRanked:
       return "k_EStartFindingMatchResult_RestrictedFromRanked";
+    case EStartFindingMatchResult.k_EStartFindingMatchResult_RankPreventsParties:
+      return "k_EStartFindingMatchResult_RankPreventsParties";
+    case EStartFindingMatchResult.k_EStartFindingMatchResult_RegisteredNameRequired:
+      return "k_EStartFindingMatchResult_RegisteredNameRequired";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EStartFindingMatchResult");
   }
@@ -362,7 +374,8 @@ export interface CMsgReadyUpStatus {
   localReadyState?: DOTALobbyReadyState | undefined;
 }
 
-export interface CMsgAbandonCurrentGame {}
+export interface CMsgAbandonCurrentGame {
+}
 
 export interface CMsgLobbyScenarioSave {
   version?: number | undefined;
@@ -379,13 +392,11 @@ export interface CMsgPracticeLobbySetDetails {
   botDifficultyRadiant?: DOTABotDifficulty | undefined;
   allowCheats?: boolean | undefined;
   fillWithBots?: boolean | undefined;
-  introMode?: boolean | undefined;
   allowSpectating?: boolean | undefined;
   passKey?: string | undefined;
   leagueid?: number | undefined;
   penaltyLevelRadiant?: number | undefined;
   penaltyLevelDire?: number | undefined;
-  loadGameId?: number | undefined;
   seriesType?: number | undefined;
   radiantSeriesWins?: number | undefined;
   direSeriesWins?: number | undefined;
@@ -414,6 +425,7 @@ export interface CMsgPracticeLobbySetDetails {
   scenarioSave?: CMsgLobbyScenarioSave | undefined;
   abilityDraftSpecificDetails?: CMsgPracticeLobbySetDetails_AbilityDraftSpecificDetails | undefined;
   doPlayerDraft?: boolean | undefined;
+  requestedHeroTeams: number[];
 }
 
 export interface CMsgPracticeLobbySetDetails_AbilityDraftSpecificDetails {
@@ -425,14 +437,6 @@ export interface CMsgPracticeLobbyCreate {
   passKey?: string | undefined;
   clientVersion?: number | undefined;
   lobbyDetails?: CMsgPracticeLobbySetDetails | undefined;
-  saveGame?: CMsgPracticeLobbyCreate_SaveGame | undefined;
-}
-
-export interface CMsgPracticeLobbyCreate_SaveGame {
-  data?: Buffer | undefined;
-  version?: number | undefined;
-  steamId?: string | undefined;
-  signature?: string | undefined;
 }
 
 export interface CMsgPracticeLobbySetTeamSlot {
@@ -456,7 +460,8 @@ export interface CMsgPracticeLobbyCloseBroadcastChannel {
   channel?: number | undefined;
 }
 
-export interface CMsgPracticeLobbyToggleBroadcastChannelCameramanStatus {}
+export interface CMsgPracticeLobbyToggleBroadcastChannelCameramanStatus {
+}
 
 export interface CMsgPracticeLobbyKick {
   accountId?: number | undefined;
@@ -466,7 +471,8 @@ export interface CMsgPracticeLobbyKickFromTeam {
   accountId?: number | undefined;
 }
 
-export interface CMsgPracticeLobbyLeave {}
+export interface CMsgPracticeLobbyLeave {
+}
 
 export interface CMsgPracticeLobbyLaunch {
   clientVersion?: number | undefined;
@@ -671,7 +677,8 @@ export interface CMsgCreateSpectatorLobby {
   details?: CMsgSetSpectatorLobbyDetails | undefined;
 }
 
-export interface CMsgSpectatorLobbyList {}
+export interface CMsgSpectatorLobbyList {
+}
 
 export interface CMsgSpectatorLobbyListResponse {
   lobbies: CMsgSpectatorLobbyListResponse_SpectatorLobby[];
@@ -707,14 +714,16 @@ export interface CMsgGCToClientSteamDatagramTicket {
   serializedTicket?: Buffer | undefined;
 }
 
-export interface CMsgGCToClientRequestLaneSelection {}
+export interface CMsgGCToClientRequestLaneSelection {
+}
 
 export interface CMsgGCToClientRequestLaneSelectionResponse {
   laneSelectionFlags?: number | undefined;
   highPriorityDisabled?: boolean | undefined;
 }
 
-export interface CMsgGCToClientRequestMMInfo {}
+export interface CMsgGCToClientRequestMMInfo {
+}
 
 export interface CMsgClientToGCMMInfo {
   laneSelectionFlags?: number | undefined;
@@ -1077,10 +1086,9 @@ export const CMsgStartFindingMatch = {
     message.teamId = object.teamId ?? 0;
     message.gameLanguageEnum = object.gameLanguageEnum ?? 0;
     message.gameLanguageName = object.gameLanguageName ?? "";
-    message.pingData =
-      object.pingData !== undefined && object.pingData !== null
-        ? CMsgClientPingData.fromPartial(object.pingData)
-        : undefined;
+    message.pingData = (object.pingData !== undefined && object.pingData !== null)
+      ? CMsgClientPingData.fromPartial(object.pingData)
+      : undefined;
     message.regionSelectFlags = object.regionSelectFlags ?? 0;
     message.soloQueue = object.soloQueue ?? false;
     message.steamClanAccountId = object.steamClanAccountId ?? 0;
@@ -1510,10 +1518,9 @@ export const CMsgReadyUp = {
     const message = createBaseCMsgReadyUp();
     message.state = object.state ?? 0;
     message.readyUpKey = object.readyUpKey ?? "0";
-    message.hardwareSpecs =
-      object.hardwareSpecs !== undefined && object.hardwareSpecs !== null
-        ? CDOTAClientHardwareSpecs.fromPartial(object.hardwareSpecs)
-        : undefined;
+    message.hardwareSpecs = (object.hardwareSpecs !== undefined && object.hardwareSpecs !== null)
+      ? CDOTAClientHardwareSpecs.fromPartial(object.hardwareSpecs)
+      : undefined;
     return message;
   },
 };
@@ -1843,13 +1850,11 @@ function createBaseCMsgPracticeLobbySetDetails(): CMsgPracticeLobbySetDetails {
     botDifficultyRadiant: 0,
     allowCheats: false,
     fillWithBots: false,
-    introMode: false,
     allowSpectating: false,
     passKey: "",
     leagueid: 0,
     penaltyLevelRadiant: 0,
     penaltyLevelDire: 0,
-    loadGameId: 0,
     seriesType: 0,
     radiantSeriesWins: 0,
     direSeriesWins: 0,
@@ -1878,6 +1883,7 @@ function createBaseCMsgPracticeLobbySetDetails(): CMsgPracticeLobbySetDetails {
     scenarioSave: undefined,
     abilityDraftSpecificDetails: undefined,
     doPlayerDraft: false,
+    requestedHeroTeams: [],
   };
 }
 
@@ -1910,9 +1916,6 @@ export const CMsgPracticeLobbySetDetails = {
     if (message.fillWithBots !== undefined && message.fillWithBots !== false) {
       writer.uint32(88).bool(message.fillWithBots);
     }
-    if (message.introMode !== undefined && message.introMode !== false) {
-      writer.uint32(96).bool(message.introMode);
-    }
     if (message.allowSpectating !== undefined && message.allowSpectating !== false) {
       writer.uint32(104).bool(message.allowSpectating);
     }
@@ -1927,9 +1930,6 @@ export const CMsgPracticeLobbySetDetails = {
     }
     if (message.penaltyLevelDire !== undefined && message.penaltyLevelDire !== 0) {
       writer.uint32(144).uint32(message.penaltyLevelDire);
-    }
-    if (message.loadGameId !== undefined && message.loadGameId !== 0) {
-      writer.uint32(152).uint32(message.loadGameId);
     }
     if (message.seriesType !== undefined && message.seriesType !== 0) {
       writer.uint32(160).uint32(message.seriesType);
@@ -2005,7 +2005,7 @@ export const CMsgPracticeLobbySetDetails = {
     }
     writer.uint32(402).fork();
     for (const v of message.requestedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     if (message.scenarioSave !== undefined) {
@@ -2020,6 +2020,11 @@ export const CMsgPracticeLobbySetDetails = {
     if (message.doPlayerDraft !== undefined && message.doPlayerDraft !== false) {
       writer.uint32(424).bool(message.doPlayerDraft);
     }
+    writer.uint32(434).fork();
+    for (const v of message.requestedHeroTeams) {
+      writer.int32(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
@@ -2093,13 +2098,6 @@ export const CMsgPracticeLobbySetDetails = {
 
           message.fillWithBots = reader.bool();
           continue;
-        case 12:
-          if (tag !== 96) {
-            break;
-          }
-
-          message.introMode = reader.bool();
-          continue;
         case 13:
           if (tag !== 104) {
             break;
@@ -2134,13 +2132,6 @@ export const CMsgPracticeLobbySetDetails = {
           }
 
           message.penaltyLevelDire = reader.uint32();
-          continue;
-        case 19:
-          if (tag !== 152) {
-            break;
-          }
-
-          message.loadGameId = reader.uint32();
           continue;
         case 20:
           if (tag !== 160) {
@@ -2312,7 +2303,7 @@ export const CMsgPracticeLobbySetDetails = {
           continue;
         case 50:
           if (tag === 400) {
-            message.requestedHeroIds.push(reader.uint32());
+            message.requestedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -2320,7 +2311,7 @@ export const CMsgPracticeLobbySetDetails = {
           if (tag === 402) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.requestedHeroIds.push(reader.uint32());
+              message.requestedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -2351,6 +2342,23 @@ export const CMsgPracticeLobbySetDetails = {
 
           message.doPlayerDraft = reader.bool();
           continue;
+        case 54:
+          if (tag === 432) {
+            message.requestedHeroTeams.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 434) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.requestedHeroTeams.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2375,13 +2383,11 @@ export const CMsgPracticeLobbySetDetails = {
         : 0,
       allowCheats: isSet(object.allowCheats) ? globalThis.Boolean(object.allowCheats) : false,
       fillWithBots: isSet(object.fillWithBots) ? globalThis.Boolean(object.fillWithBots) : false,
-      introMode: isSet(object.introMode) ? globalThis.Boolean(object.introMode) : false,
       allowSpectating: isSet(object.allowSpectating) ? globalThis.Boolean(object.allowSpectating) : false,
       passKey: isSet(object.passKey) ? globalThis.String(object.passKey) : "",
       leagueid: isSet(object.leagueid) ? globalThis.Number(object.leagueid) : 0,
       penaltyLevelRadiant: isSet(object.penaltyLevelRadiant) ? globalThis.Number(object.penaltyLevelRadiant) : 0,
       penaltyLevelDire: isSet(object.penaltyLevelDire) ? globalThis.Number(object.penaltyLevelDire) : 0,
-      loadGameId: isSet(object.loadGameId) ? globalThis.Number(object.loadGameId) : 0,
       seriesType: isSet(object.seriesType) ? globalThis.Number(object.seriesType) : 0,
       radiantSeriesWins: isSet(object.radiantSeriesWins) ? globalThis.Number(object.radiantSeriesWins) : 0,
       direSeriesWins: isSet(object.direSeriesWins) ? globalThis.Number(object.direSeriesWins) : 0,
@@ -2418,6 +2424,9 @@ export const CMsgPracticeLobbySetDetails = {
         ? CMsgPracticeLobbySetDetails_AbilityDraftSpecificDetails.fromJSON(object.abilityDraftSpecificDetails)
         : undefined,
       doPlayerDraft: isSet(object.doPlayerDraft) ? globalThis.Boolean(object.doPlayerDraft) : false,
+      requestedHeroTeams: globalThis.Array.isArray(object?.requestedHeroTeams)
+        ? object.requestedHeroTeams.map((e: any) => globalThis.Number(e))
+        : [],
     };
   },
 
@@ -2450,9 +2459,6 @@ export const CMsgPracticeLobbySetDetails = {
     if (message.fillWithBots !== undefined && message.fillWithBots !== false) {
       obj.fillWithBots = message.fillWithBots;
     }
-    if (message.introMode !== undefined && message.introMode !== false) {
-      obj.introMode = message.introMode;
-    }
     if (message.allowSpectating !== undefined && message.allowSpectating !== false) {
       obj.allowSpectating = message.allowSpectating;
     }
@@ -2467,9 +2473,6 @@ export const CMsgPracticeLobbySetDetails = {
     }
     if (message.penaltyLevelDire !== undefined && message.penaltyLevelDire !== 0) {
       obj.penaltyLevelDire = Math.round(message.penaltyLevelDire);
-    }
-    if (message.loadGameId !== undefined && message.loadGameId !== 0) {
-      obj.loadGameId = Math.round(message.loadGameId);
     }
     if (message.seriesType !== undefined && message.seriesType !== 0) {
       obj.seriesType = Math.round(message.seriesType);
@@ -2557,6 +2560,9 @@ export const CMsgPracticeLobbySetDetails = {
     if (message.doPlayerDraft !== undefined && message.doPlayerDraft !== false) {
       obj.doPlayerDraft = message.doPlayerDraft;
     }
+    if (message.requestedHeroTeams?.length) {
+      obj.requestedHeroTeams = message.requestedHeroTeams.map((e) => Math.round(e));
+    }
     return obj;
   },
 
@@ -2574,13 +2580,11 @@ export const CMsgPracticeLobbySetDetails = {
     message.botDifficultyRadiant = object.botDifficultyRadiant ?? 0;
     message.allowCheats = object.allowCheats ?? false;
     message.fillWithBots = object.fillWithBots ?? false;
-    message.introMode = object.introMode ?? false;
     message.allowSpectating = object.allowSpectating ?? false;
     message.passKey = object.passKey ?? "";
     message.leagueid = object.leagueid ?? 0;
     message.penaltyLevelRadiant = object.penaltyLevelRadiant ?? 0;
     message.penaltyLevelDire = object.penaltyLevelDire ?? 0;
-    message.loadGameId = object.loadGameId ?? 0;
     message.seriesType = object.seriesType ?? 0;
     message.radiantSeriesWins = object.radiantSeriesWins ?? 0;
     message.direSeriesWins = object.direSeriesWins ?? 0;
@@ -2606,15 +2610,15 @@ export const CMsgPracticeLobbySetDetails = {
     message.lanHostPingLocation = object.lanHostPingLocation ?? "";
     message.leagueNodeId = object.leagueNodeId ?? 0;
     message.requestedHeroIds = object.requestedHeroIds?.map((e) => e) || [];
-    message.scenarioSave =
-      object.scenarioSave !== undefined && object.scenarioSave !== null
-        ? CMsgLobbyScenarioSave.fromPartial(object.scenarioSave)
-        : undefined;
+    message.scenarioSave = (object.scenarioSave !== undefined && object.scenarioSave !== null)
+      ? CMsgLobbyScenarioSave.fromPartial(object.scenarioSave)
+      : undefined;
     message.abilityDraftSpecificDetails =
-      object.abilityDraftSpecificDetails !== undefined && object.abilityDraftSpecificDetails !== null
+      (object.abilityDraftSpecificDetails !== undefined && object.abilityDraftSpecificDetails !== null)
         ? CMsgPracticeLobbySetDetails_AbilityDraftSpecificDetails.fromPartial(object.abilityDraftSpecificDetails)
         : undefined;
     message.doPlayerDraft = object.doPlayerDraft ?? false;
+    message.requestedHeroTeams = object.requestedHeroTeams?.map((e) => e) || [];
     return message;
   },
 };
@@ -2686,7 +2690,7 @@ export const CMsgPracticeLobbySetDetails_AbilityDraftSpecificDetails = {
 };
 
 function createBaseCMsgPracticeLobbyCreate(): CMsgPracticeLobbyCreate {
-  return { searchKey: "", passKey: "", clientVersion: 0, lobbyDetails: undefined, saveGame: undefined };
+  return { searchKey: "", passKey: "", clientVersion: 0, lobbyDetails: undefined };
 }
 
 export const CMsgPracticeLobbyCreate = {
@@ -2702,9 +2706,6 @@ export const CMsgPracticeLobbyCreate = {
     }
     if (message.lobbyDetails !== undefined) {
       CMsgPracticeLobbySetDetails.encode(message.lobbyDetails, writer.uint32(58).fork()).ldelim();
-    }
-    if (message.saveGame !== undefined) {
-      CMsgPracticeLobbyCreate_SaveGame.encode(message.saveGame, writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
@@ -2744,13 +2745,6 @@ export const CMsgPracticeLobbyCreate = {
 
           message.lobbyDetails = CMsgPracticeLobbySetDetails.decode(reader, reader.uint32());
           continue;
-        case 8:
-          if (tag !== 66) {
-            break;
-          }
-
-          message.saveGame = CMsgPracticeLobbyCreate_SaveGame.decode(reader, reader.uint32());
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2766,7 +2760,6 @@ export const CMsgPracticeLobbyCreate = {
       passKey: isSet(object.passKey) ? globalThis.String(object.passKey) : "",
       clientVersion: isSet(object.clientVersion) ? globalThis.Number(object.clientVersion) : 0,
       lobbyDetails: isSet(object.lobbyDetails) ? CMsgPracticeLobbySetDetails.fromJSON(object.lobbyDetails) : undefined,
-      saveGame: isSet(object.saveGame) ? CMsgPracticeLobbyCreate_SaveGame.fromJSON(object.saveGame) : undefined,
     };
   },
 
@@ -2784,9 +2777,6 @@ export const CMsgPracticeLobbyCreate = {
     if (message.lobbyDetails !== undefined) {
       obj.lobbyDetails = CMsgPracticeLobbySetDetails.toJSON(message.lobbyDetails);
     }
-    if (message.saveGame !== undefined) {
-      obj.saveGame = CMsgPracticeLobbyCreate_SaveGame.toJSON(message.saveGame);
-    }
     return obj;
   },
 
@@ -2798,118 +2788,9 @@ export const CMsgPracticeLobbyCreate = {
     message.searchKey = object.searchKey ?? "";
     message.passKey = object.passKey ?? "";
     message.clientVersion = object.clientVersion ?? 0;
-    message.lobbyDetails =
-      object.lobbyDetails !== undefined && object.lobbyDetails !== null
-        ? CMsgPracticeLobbySetDetails.fromPartial(object.lobbyDetails)
-        : undefined;
-    message.saveGame =
-      object.saveGame !== undefined && object.saveGame !== null
-        ? CMsgPracticeLobbyCreate_SaveGame.fromPartial(object.saveGame)
-        : undefined;
-    return message;
-  },
-};
-
-function createBaseCMsgPracticeLobbyCreate_SaveGame(): CMsgPracticeLobbyCreate_SaveGame {
-  return { data: Buffer.alloc(0), version: 0, steamId: "0", signature: "0" };
-}
-
-export const CMsgPracticeLobbyCreate_SaveGame = {
-  encode(message: CMsgPracticeLobbyCreate_SaveGame, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.data !== undefined && message.data.length !== 0) {
-      writer.uint32(10).bytes(message.data);
-    }
-    if (message.version !== undefined && message.version !== 0) {
-      writer.uint32(16).int32(message.version);
-    }
-    if (message.steamId !== undefined && message.steamId !== "0") {
-      writer.uint32(25).fixed64(message.steamId);
-    }
-    if (message.signature !== undefined && message.signature !== "0") {
-      writer.uint32(33).fixed64(message.signature);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgPracticeLobbyCreate_SaveGame {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgPracticeLobbyCreate_SaveGame();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.data = reader.bytes() as Buffer;
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.version = reader.int32();
-          continue;
-        case 3:
-          if (tag !== 25) {
-            break;
-          }
-
-          message.steamId = longToString(reader.fixed64() as Long);
-          continue;
-        case 4:
-          if (tag !== 33) {
-            break;
-          }
-
-          message.signature = longToString(reader.fixed64() as Long);
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgPracticeLobbyCreate_SaveGame {
-    return {
-      data: isSet(object.data) ? Buffer.from(bytesFromBase64(object.data)) : Buffer.alloc(0),
-      version: isSet(object.version) ? globalThis.Number(object.version) : 0,
-      steamId: isSet(object.steamId) ? globalThis.String(object.steamId) : "0",
-      signature: isSet(object.signature) ? globalThis.String(object.signature) : "0",
-    };
-  },
-
-  toJSON(message: CMsgPracticeLobbyCreate_SaveGame): unknown {
-    const obj: any = {};
-    if (message.data !== undefined && message.data.length !== 0) {
-      obj.data = base64FromBytes(message.data);
-    }
-    if (message.version !== undefined && message.version !== 0) {
-      obj.version = Math.round(message.version);
-    }
-    if (message.steamId !== undefined && message.steamId !== "0") {
-      obj.steamId = message.steamId;
-    }
-    if (message.signature !== undefined && message.signature !== "0") {
-      obj.signature = message.signature;
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgPracticeLobbyCreate_SaveGame>): CMsgPracticeLobbyCreate_SaveGame {
-    return CMsgPracticeLobbyCreate_SaveGame.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CMsgPracticeLobbyCreate_SaveGame>): CMsgPracticeLobbyCreate_SaveGame {
-    const message = createBaseCMsgPracticeLobbyCreate_SaveGame();
-    message.data = object.data ?? Buffer.alloc(0);
-    message.version = object.version ?? 0;
-    message.steamId = object.steamId ?? "0";
-    message.signature = object.signature ?? "0";
+    message.lobbyDetails = (object.lobbyDetails !== undefined && object.lobbyDetails !== null)
+      ? CMsgPracticeLobbySetDetails.fromPartial(object.lobbyDetails)
+      : undefined;
     return message;
   },
 };
@@ -5315,17 +5196,15 @@ export const CMsgQuickJoinCustomLobby = {
     message.legacyServerRegion = object.legacyServerRegion ?? 0;
     message.customGameId = object.customGameId ?? "0";
     message.clientVersion = object.clientVersion ?? 0;
-    message.createLobbyDetails =
-      object.createLobbyDetails !== undefined && object.createLobbyDetails !== null
-        ? CMsgPracticeLobbySetDetails.fromPartial(object.createLobbyDetails)
-        : undefined;
+    message.createLobbyDetails = (object.createLobbyDetails !== undefined && object.createLobbyDetails !== null)
+      ? CMsgPracticeLobbySetDetails.fromPartial(object.createLobbyDetails)
+      : undefined;
     message.allowAnyMap = object.allowAnyMap ?? false;
     message.legacyRegionPings =
       object.legacyRegionPings?.map((e) => CMsgQuickJoinCustomLobby_LegacyRegionPing.fromPartial(e)) || [];
-    message.pingData =
-      object.pingData !== undefined && object.pingData !== null
-        ? CMsgClientPingData.fromPartial(object.pingData)
-        : undefined;
+    message.pingData = (object.pingData !== undefined && object.pingData !== null)
+      ? CMsgClientPingData.fromPartial(object.pingData)
+      : undefined;
     return message;
   },
 };
@@ -6274,14 +6153,12 @@ export const CMsgSpectatorLobbyGameDetails = {
     message.leagueId = object.leagueId ?? 0;
     message.seriesType = object.seriesType ?? 0;
     message.seriesGame = object.seriesGame ?? 0;
-    message.radiantTeam =
-      object.radiantTeam !== undefined && object.radiantTeam !== null
-        ? CMsgSpectatorLobbyGameDetails_Team.fromPartial(object.radiantTeam)
-        : undefined;
-    message.direTeam =
-      object.direTeam !== undefined && object.direTeam !== null
-        ? CMsgSpectatorLobbyGameDetails_Team.fromPartial(object.direTeam)
-        : undefined;
+    message.radiantTeam = (object.radiantTeam !== undefined && object.radiantTeam !== null)
+      ? CMsgSpectatorLobbyGameDetails_Team.fromPartial(object.radiantTeam)
+      : undefined;
+    message.direTeam = (object.direTeam !== undefined && object.direTeam !== null)
+      ? CMsgSpectatorLobbyGameDetails_Team.fromPartial(object.direTeam)
+      : undefined;
     return message;
   },
 };
@@ -6474,10 +6351,9 @@ export const CMsgSetSpectatorLobbyDetails = {
     message.lobbyId = object.lobbyId ?? "0";
     message.lobbyName = object.lobbyName ?? "";
     message.passKey = object.passKey ?? "";
-    message.gameDetails =
-      object.gameDetails !== undefined && object.gameDetails !== null
-        ? CMsgSpectatorLobbyGameDetails.fromPartial(object.gameDetails)
-        : undefined;
+    message.gameDetails = (object.gameDetails !== undefined && object.gameDetails !== null)
+      ? CMsgSpectatorLobbyGameDetails.fromPartial(object.gameDetails)
+      : undefined;
     return message;
   },
 };
@@ -6551,10 +6427,9 @@ export const CMsgCreateSpectatorLobby = {
   fromPartial(object: DeepPartial<CMsgCreateSpectatorLobby>): CMsgCreateSpectatorLobby {
     const message = createBaseCMsgCreateSpectatorLobby();
     message.clientVersion = object.clientVersion ?? 0;
-    message.details =
-      object.details !== undefined && object.details !== null
-        ? CMsgSetSpectatorLobbyDetails.fromPartial(object.details)
-        : undefined;
+    message.details = (object.details !== undefined && object.details !== null)
+      ? CMsgSetSpectatorLobbyDetails.fromPartial(object.details)
+      : undefined;
     return message;
   },
 };
@@ -6803,10 +6678,9 @@ export const CMsgSpectatorLobbyListResponse_SpectatorLobby = {
     message.requiresPassKey = object.requiresPassKey ?? false;
     message.leaderAccountId = object.leaderAccountId ?? 0;
     message.memberCount = object.memberCount ?? 0;
-    message.gameDetails =
-      object.gameDetails !== undefined && object.gameDetails !== null
-        ? CMsgSpectatorLobbyGameDetails.fromPartial(object.gameDetails)
-        : undefined;
+    message.gameDetails = (object.gameDetails !== undefined && object.gameDetails !== null)
+      ? CMsgSpectatorLobbyGameDetails.fromPartial(object.gameDetails)
+      : undefined;
     return message;
   },
 };
@@ -7404,15 +7278,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

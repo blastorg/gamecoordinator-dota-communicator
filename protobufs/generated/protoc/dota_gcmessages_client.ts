@@ -65,6 +65,9 @@ import {
   eDPCFavoriteTypeFromJSON,
   eDPCFavoriteTypeToJSON,
   EEvent,
+  EEventActionScoreMode,
+  eEventActionScoreModeFromJSON,
+  eEventActionScoreModeToJSON,
   eEventFromJSON,
   eEventToJSON,
   ELeagueRegion,
@@ -703,7 +706,8 @@ export interface CMsgClientSuspended {
   timeEnd?: number | undefined;
 }
 
-export interface CMsgBalancedShuffleLobby {}
+export interface CMsgBalancedShuffleLobby {
+}
 
 export interface CMsgInitialQuestionnaireResponse {
   initialSkill?: number | undefined;
@@ -1130,7 +1134,8 @@ export function cMsgDOTAPopup_PopupIDToJSON(object: CMsgDOTAPopup_PopupID): stri
   }
 }
 
-export interface CMsgDOTAReportsRemainingRequest {}
+export interface CMsgDOTAReportsRemainingRequest {
+}
 
 export interface CMsgDOTAReportsRemainingResponse {
   numPositiveReportsRemaining?: number | undefined;
@@ -1502,7 +1507,8 @@ export interface CMsgMatchmakingMatchGroupInfo {
   status?: EMatchGroupServerStatus | undefined;
 }
 
-export interface CMsgDOTAMatchmakingStatsRequest {}
+export interface CMsgDOTAMatchmakingStatsRequest {
+}
 
 export interface CMsgDOTAMatchmakingStatsResponse {
   matchgroupsVersion?: number | undefined;
@@ -1544,16 +1550,19 @@ export interface CMsgUpgradeLeagueItem {
   leagueId?: number | undefined;
 }
 
-export interface CMsgUpgradeLeagueItemResponse {}
+export interface CMsgUpgradeLeagueItemResponse {
+}
 
 export interface CMsgGCWatchDownloadedReplay {
   matchId?: string | undefined;
   watchType?: DOTAWatchReplayType | undefined;
 }
 
-export interface CMsgClientsRejoinChatChannels {}
+export interface CMsgClientsRejoinChatChannels {
+}
 
-export interface CMsgGCGetHeroStandings {}
+export interface CMsgGCGetHeroStandings {
+}
 
 export interface CMsgGCGetHeroStandingsResponse {
   standings: CMsgGCGetHeroStandingsResponse_Hero[];
@@ -1640,7 +1649,8 @@ export interface CMsgGCGetHeroTimedStatsResponse_RankChunkedStats {
   timedStats: CMsgGCGetHeroTimedStatsResponse_TimedStatsContainer[];
 }
 
-export interface CMsgGCItemEditorReservationsRequest {}
+export interface CMsgGCItemEditorReservationsRequest {
+}
 
 export interface CMsgGCItemEditorReservation {
   defIndex?: number | undefined;
@@ -1672,7 +1682,8 @@ export interface CMsgGCItemEditorReleaseReservationResponse {
   released?: boolean | undefined;
 }
 
-export interface CMsgFlipLobbyTeams {}
+export interface CMsgFlipLobbyTeams {
+}
 
 export interface CMsgGCLobbyUpdateBroadcastChannelInfo {
   channelId?: number | undefined;
@@ -1695,6 +1706,7 @@ export interface CMsgDOTAClaimEventAction {
   actionId?: number | undefined;
   quantity?: number | undefined;
   data?: CMsgDOTAClaimEventActionData | undefined;
+  scoreMode?: EEventActionScoreMode | undefined;
 }
 
 export interface CMsgClientToGCClaimEventActionUsingItem {
@@ -1762,6 +1774,14 @@ export interface CMsgDOTACompendiumSelectionResponse {
   eresult?: number | undefined;
 }
 
+export interface CMsgDOTACompendiumRemoveAllSelections {
+  leagueid?: number | undefined;
+}
+
+export interface CMsgDOTACompendiumRemoveAllSelectionsResponse {
+  eresult?: number | undefined;
+}
+
 export interface CMsgDOTACompendiumData {
   selections: CMsgDOTACompendiumSelection[];
 }
@@ -1819,7 +1839,8 @@ export interface CMsgDOTAGetPlayerMatchHistoryResponse_Match {
   selectedFacet?: number | undefined;
 }
 
-export interface CMsgGCNotificationsRequest {}
+export interface CMsgGCNotificationsRequest {
+}
 
 export interface CMsgGCNotificationsNotification {
   id?: string | undefined;
@@ -1870,7 +1891,8 @@ export interface CMsgGCNotificationsResponse {
   update?: CMsgGCNotificationsUpdate | undefined;
 }
 
-export interface CMsgGCNotificationsMarkReadRequest {}
+export interface CMsgGCNotificationsMarkReadRequest {
+}
 
 export interface CMsgGCPlayerInfoSubmit {
   name?: string | undefined;
@@ -1934,7 +1956,8 @@ export interface CMsgDOTAEmoticonAccessSDO {
   unlockedEmoticons?: Buffer | undefined;
 }
 
-export interface CMsgClientToGCEmoticonDataRequest {}
+export interface CMsgClientToGCEmoticonDataRequest {
+}
 
 export interface CMsgGCToClientEmoticonData {
   emoticonAccess?: CMsgDOTAEmoticonAccessSDO | undefined;
@@ -1945,7 +1968,8 @@ export interface CMsgGCToClientTournamentItemDrop {
   eventType?: number | undefined;
 }
 
-export interface CMsgClientToGCGetAllHeroOrder {}
+export interface CMsgClientToGCGetAllHeroOrder {
+}
 
 export interface CMsgClientToGCGetAllHeroOrderResponse {
   heroIds: number[];
@@ -2069,7 +2093,8 @@ export interface CMsgClientToGCSetProfileCardSlots_CardSlot {
   slotValue?: string | undefined;
 }
 
-export interface CMsgClientToGCGetProfileCardStats {}
+export interface CMsgClientToGCGetProfileCardStats {
+}
 
 export interface CMsgClientToGCCreateHeroStatue {
   sourceItemId?: string | undefined;
@@ -2117,7 +2142,8 @@ export interface CMsgGCToClientPlayerStatsResponse {
   rapiersPurchased?: number | undefined;
 }
 
-export interface CMsgClientToGCCustomGamesFriendsPlayedRequest {}
+export interface CMsgClientToGCCustomGamesFriendsPlayedRequest {
+}
 
 export interface CMsgGCToClientCustomGamesFriendsPlayedResponse {
   accountId?: number | undefined;
@@ -2217,7 +2243,8 @@ export interface CMsgClientToGCApplyGemCombiner {
   itemId2?: string | undefined;
 }
 
-export interface CMsgClientToGCH264Unsupported {}
+export interface CMsgClientToGCH264Unsupported {
+}
 
 export interface CMsgClientToGCGetQuestProgress {
   questIds: number[];
@@ -2253,9 +2280,60 @@ export interface CMsgGCGetHeroStatsHistory {
 export interface CMsgGCGetHeroStatsHistoryResponse {
   heroId?: number | undefined;
   records: CMsgDOTASDOHeroStatsHistory[];
+  result?: CMsgGCGetHeroStatsHistoryResponse_EResponse | undefined;
 }
 
-export interface CMsgPlayerConductScorecardRequest {}
+export enum CMsgGCGetHeroStatsHistoryResponse_EResponse {
+  k_eInternalError = 0,
+  k_eSuccess = 1,
+  k_eTooBusy = 2,
+  k_eDisabled = 3,
+}
+
+export function cMsgGCGetHeroStatsHistoryResponse_EResponseFromJSON(
+  object: any,
+): CMsgGCGetHeroStatsHistoryResponse_EResponse {
+  switch (object) {
+    case 0:
+    case "k_eInternalError":
+      return CMsgGCGetHeroStatsHistoryResponse_EResponse.k_eInternalError;
+    case 1:
+    case "k_eSuccess":
+      return CMsgGCGetHeroStatsHistoryResponse_EResponse.k_eSuccess;
+    case 2:
+    case "k_eTooBusy":
+      return CMsgGCGetHeroStatsHistoryResponse_EResponse.k_eTooBusy;
+    case 3:
+    case "k_eDisabled":
+      return CMsgGCGetHeroStatsHistoryResponse_EResponse.k_eDisabled;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgGCGetHeroStatsHistoryResponse_EResponse",
+      );
+  }
+}
+
+export function cMsgGCGetHeroStatsHistoryResponse_EResponseToJSON(
+  object: CMsgGCGetHeroStatsHistoryResponse_EResponse,
+): string {
+  switch (object) {
+    case CMsgGCGetHeroStatsHistoryResponse_EResponse.k_eInternalError:
+      return "k_eInternalError";
+    case CMsgGCGetHeroStatsHistoryResponse_EResponse.k_eSuccess:
+      return "k_eSuccess";
+    case CMsgGCGetHeroStatsHistoryResponse_EResponse.k_eTooBusy:
+      return "k_eTooBusy";
+    case CMsgGCGetHeroStatsHistoryResponse_EResponse.k_eDisabled:
+      return "k_eDisabled";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgGCGetHeroStatsHistoryResponse_EResponse",
+      );
+  }
+}
+
+export interface CMsgPlayerConductScorecardRequest {
+}
 
 export interface CMsgPlayerConductScorecard {
   accountId?: number | undefined;
@@ -2423,7 +2501,8 @@ export interface CMsgClientToGCMVPVoteTimeoutResponse {
   result?: boolean | undefined;
 }
 
-export interface CMsgClientToGCTeammateStatsRequest {}
+export interface CMsgClientToGCTeammateStatsRequest {
+}
 
 export interface CMsgClientToGCTeammateStatsResponse {
   success?: boolean | undefined;
@@ -2490,7 +2569,8 @@ export function cMsgClientToGCVoteForArcanaResponse_ResultToJSON(
   }
 }
 
-export interface CMsgClientToGCRequestArcanaVotesRemaining {}
+export interface CMsgClientToGCRequestArcanaVotesRemaining {
+}
 
 export interface CMsgClientToGCRequestArcanaVotesRemainingResponse {
   result?: boolean | undefined;
@@ -2629,8 +2709,7 @@ export function cMsgClientToGCSelectCompendiumInGamePredictionResponse_EResultFr
       return CMsgClientToGCSelectCompendiumInGamePredictionResponse_EResult.OTHER_ERROR;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCSelectCompendiumInGamePredictionResponse_EResult",
       );
   }
@@ -2650,8 +2729,7 @@ export function cMsgClientToGCSelectCompendiumInGamePredictionResponse_EResultTo
       return "OTHER_ERROR";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCSelectCompendiumInGamePredictionResponse_EResult",
       );
   }
@@ -3336,14 +3414,16 @@ export interface CMsgDOTASubmitTriviaQuestionAnswerResponse {
   result?: EDOTATriviaAnswerResult | undefined;
 }
 
-export interface CMsgDOTAStartTriviaSession {}
+export interface CMsgDOTAStartTriviaSession {
+}
 
 export interface CMsgDOTAStartTriviaSessionResponse {
   triviaEnabled?: boolean | undefined;
   currentTimestamp?: number | undefined;
 }
 
-export interface CMsgDOTAAnchorPhoneNumberRequest {}
+export interface CMsgDOTAAnchorPhoneNumberRequest {
+}
 
 export interface CMsgDOTAAnchorPhoneNumberResponse {
   result?: CMsgDOTAAnchorPhoneNumberResponse_Result | undefined;
@@ -3410,7 +3490,8 @@ export function cMsgDOTAAnchorPhoneNumberResponse_ResultToJSON(
   }
 }
 
-export interface CMsgDOTAUnanchorPhoneNumberRequest {}
+export interface CMsgDOTAUnanchorPhoneNumberRequest {
+}
 
 export interface CMsgDOTAUnanchorPhoneNumberResponse {
   result?: CMsgDOTAUnanchorPhoneNumberResponse_Result | undefined;
@@ -3574,7 +3655,8 @@ export function cMsgDOTAGameAutographRewardResponse_ResultToJSON(
   }
 }
 
-export interface CMsgDOTADestroyLobbyRequest {}
+export interface CMsgDOTADestroyLobbyRequest {
+}
 
 export interface CMsgDOTADestroyLobbyResponse {
   result?: CMsgDOTADestroyLobbyResponse_Result | undefined;
@@ -3609,7 +3691,8 @@ export function cMsgDOTADestroyLobbyResponse_ResultToJSON(object: CMsgDOTADestro
   }
 }
 
-export interface CMsgDOTAGetRecentPlayTimeFriendsRequest {}
+export interface CMsgDOTAGetRecentPlayTimeFriendsRequest {
+}
 
 export interface CMsgDOTAGetRecentPlayTimeFriendsResponse {
   accountIds: number[];
@@ -3750,7 +3833,8 @@ export interface CMsgClientToGCRequestPlusWeeklyChallengeResult {
   week?: number | undefined;
 }
 
-export interface CMsgClientToGCRequestPlusWeeklyChallengeResultResponse {}
+export interface CMsgClientToGCRequestPlusWeeklyChallengeResultResponse {
+}
 
 export interface CMsgProfileRequest {
   accountId?: number | undefined;
@@ -4751,7 +4835,8 @@ export interface CMsgConsumeEventSupportGrantItemResponse {
   result?: ESupportEventRequestResult | undefined;
 }
 
-export interface CMsgClientToGCGetFilteredPlayers {}
+export interface CMsgClientToGCGetFilteredPlayers {
+}
 
 export interface CMsgGCToClientGetFilteredPlayersResponse {
   result?: CMsgGCToClientGetFilteredPlayersResponse_Result | undefined;
@@ -5014,7 +5099,8 @@ export function cMsgClientToGCUpdatePartyBeacon_ActionToJSON(object: CMsgClientT
   }
 }
 
-export interface CMsgClientToGCRequestActiveBeaconParties {}
+export interface CMsgClientToGCRequestActiveBeaconParties {
+}
 
 export interface CMsgGCToClientRequestActiveBeaconPartiesResponse {
   response?: CMsgGCToClientRequestActiveBeaconPartiesResponse_EResponse | undefined;
@@ -5331,8 +5417,7 @@ export function cMsgClientToGCRequestPlayerRecentAccomplishmentsResponse_ERespon
       return CMsgClientToGCRequestPlayerRecentAccomplishmentsResponse_EResponse.k_eDisabled;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRequestPlayerRecentAccomplishmentsResponse_EResponse",
       );
   }
@@ -5352,8 +5437,7 @@ export function cMsgClientToGCRequestPlayerRecentAccomplishmentsResponse_ERespon
       return "k_eDisabled";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRequestPlayerRecentAccomplishmentsResponse_EResponse",
       );
   }
@@ -5394,8 +5478,7 @@ export function cMsgClientToGCRequestPlayerHeroRecentAccomplishmentsResponse_ERe
       return CMsgClientToGCRequestPlayerHeroRecentAccomplishmentsResponse_EResponse.k_eDisabled;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRequestPlayerHeroRecentAccomplishmentsResponse_EResponse",
       );
   }
@@ -5415,8 +5498,7 @@ export function cMsgClientToGCRequestPlayerHeroRecentAccomplishmentsResponse_ERe
       return "k_eDisabled";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRequestPlayerHeroRecentAccomplishmentsResponse_EResponse",
       );
   }
@@ -5494,7 +5576,8 @@ export function cMsgClientToGCSubmitPlayerMatchSurveyResponse_EResponseToJSON(
   }
 }
 
-export interface CMsgGCToClientVACReminder {}
+export interface CMsgGCToClientVACReminder {
+}
 
 export interface CMsgClientToGCUnderDraftRequest {
   accountId?: number | undefined;
@@ -5581,7 +5664,8 @@ export interface CMsgDraftTriviaVoteCount {
   direVotes?: number | undefined;
 }
 
-export interface CMsgClientToGCRequestReporterUpdates {}
+export interface CMsgClientToGCRequestReporterUpdates {
+}
 
 export interface CMsgClientToGCRequestReporterUpdatesResponse {
   enumResult?: CMsgClientToGCRequestReporterUpdatesResponse_EResponse | undefined;
@@ -5668,7 +5752,8 @@ export interface CMsgClientToGCAcknowledgeReporterUpdates {
   matchIds: string[];
 }
 
-export interface CMsgClientToGCRecalibrateMMR {}
+export interface CMsgClientToGCRecalibrateMMR {
+}
 
 export interface CMsgClientToGCRecalibrateMMRResponse {
   result?: CMsgClientToGCRecalibrateMMRResponse_EResponse | undefined;
@@ -5747,7 +5832,8 @@ export interface CMsgDOTAPostGameItemAwardNotification {
   actionId?: number | undefined;
 }
 
-export interface CMsgClientToGCGetOWMatchDetails {}
+export interface CMsgClientToGCGetOWMatchDetails {
+}
 
 export interface CMsgClientToGCGetOWMatchDetailsResponse {
   result?: CMsgClientToGCGetOWMatchDetailsResponse_EResponse | undefined;
@@ -5914,13 +6000,15 @@ export function cMsgClientToGCSubmitOWConvictionResponse_EResponseToJSON(
   }
 }
 
-export interface CMsgClientToGCChinaSSAURLRequest {}
+export interface CMsgClientToGCChinaSSAURLRequest {
+}
 
 export interface CMsgClientToGCChinaSSAURLResponse {
   agreementUrl?: string | undefined;
 }
 
-export interface CMsgClientToGCChinaSSAAcceptedRequest {}
+export interface CMsgClientToGCChinaSSAAcceptedRequest {
+}
 
 export interface CMsgClientToGCChinaSSAAcceptedResponse {
   agreementAccepted?: boolean | undefined;
@@ -5944,7 +6032,8 @@ export interface CMsgClientToGCOverwatchReplayError {
   overwatchReplayId?: string | undefined;
 }
 
-export interface CMsgClientToGCGetDPCFavorites {}
+export interface CMsgClientToGCGetDPCFavorites {
+}
 
 export interface CMsgClientToGCGetDPCFavoritesResponse {
   result?: CMsgClientToGCGetDPCFavoritesResponse_EResponse | undefined;
@@ -6806,7 +6895,8 @@ export function cMsgClientToGCSetHeroStickerResponse_EResponseToJSON(
   }
 }
 
-export interface CMsgClientToGCGetHeroStickers {}
+export interface CMsgClientToGCGetHeroStickers {
+}
 
 export interface CMsgClientToGCGetHeroStickersResponse {
   response?: CMsgClientToGCGetHeroStickersResponse_EResponse | undefined;
@@ -7051,8 +7141,7 @@ export function cMsgGCToClientCollectorsCacheAvailableDataResponse_Vote_EVoteTyp
       return CMsgGCToClientCollectorsCacheAvailableDataResponse_Vote_EVoteType.k_eDown;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgGCToClientCollectorsCacheAvailableDataResponse_Vote_EVoteType",
       );
   }
@@ -7068,8 +7157,7 @@ export function cMsgGCToClientCollectorsCacheAvailableDataResponse_Vote_EVoteTyp
       return "k_eDown";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgGCToClientCollectorsCacheAvailableDataResponse_Vote_EVoteType",
       );
   }
@@ -7132,7 +7220,8 @@ export function cMsgGCToClientUploadMatchClipResponse_EResponseToJSON(
   }
 }
 
-export interface CMsgClientToGCMapStatsRequest {}
+export interface CMsgClientToGCMapStatsRequest {
+}
 
 export interface CMsgGCToClientMapStatsResponse {
   response?: CMsgGCToClientMapStatsResponse_EResponse | undefined;
@@ -7459,6 +7548,51 @@ export interface CMsgClientToGCUpdateComicBookStats_LanguageStats {
   comicId?: number | undefined;
   clientLanguage?: number | undefined;
   clientComicLanguage?: number | undefined;
+}
+
+export interface CMsgGCRankedPlayerInfoSubmit {
+  name?: string | undefined;
+}
+
+export interface CMsgGCRankedPlayerInfoSubmitResponse {
+  result?: CMsgGCRankedPlayerInfoSubmitResponse_EResult | undefined;
+}
+
+export enum CMsgGCRankedPlayerInfoSubmitResponse_EResult {
+  SUCCESS = 0,
+  ERROR_UNSPECIFIED = 1,
+}
+
+export function cMsgGCRankedPlayerInfoSubmitResponse_EResultFromJSON(
+  object: any,
+): CMsgGCRankedPlayerInfoSubmitResponse_EResult {
+  switch (object) {
+    case 0:
+    case "SUCCESS":
+      return CMsgGCRankedPlayerInfoSubmitResponse_EResult.SUCCESS;
+    case 1:
+    case "ERROR_UNSPECIFIED":
+      return CMsgGCRankedPlayerInfoSubmitResponse_EResult.ERROR_UNSPECIFIED;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgGCRankedPlayerInfoSubmitResponse_EResult",
+      );
+  }
+}
+
+export function cMsgGCRankedPlayerInfoSubmitResponse_EResultToJSON(
+  object: CMsgGCRankedPlayerInfoSubmitResponse_EResult,
+): string {
+  switch (object) {
+    case CMsgGCRankedPlayerInfoSubmitResponse_EResult.SUCCESS:
+      return "SUCCESS";
+    case CMsgGCRankedPlayerInfoSubmitResponse_EResult.ERROR_UNSPECIFIED:
+      return "ERROR_UNSPECIFIED";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgGCRankedPlayerInfoSubmitResponse_EResult",
+      );
+  }
 }
 
 function createBaseCMsgClientSuspended(): CMsgClientSuspended {
@@ -9287,8 +9421,9 @@ export const CMsgGCMatchDetailsResponse = {
   fromPartial(object: DeepPartial<CMsgGCMatchDetailsResponse>): CMsgGCMatchDetailsResponse {
     const message = createBaseCMsgGCMatchDetailsResponse();
     message.result = object.result ?? 0;
-    message.match =
-      object.match !== undefined && object.match !== null ? CMsgDOTAMatch.fromPartial(object.match) : undefined;
+    message.match = (object.match !== undefined && object.match !== null)
+      ? CMsgDOTAMatch.fromPartial(object.match)
+      : undefined;
     message.vote = object.vote ?? 0;
     return message;
   },
@@ -9921,7 +10056,7 @@ export const CMsgDOTAWelcome = {
     message.additionalUserMessage = object.additionalUserMessage ?? 0;
     message.customGameWhitelistVersion = object.customGameWhitelistVersion ?? 0;
     message.partySearchFriendInvites =
-      object.partySearchFriendInvites !== undefined && object.partySearchFriendInvites !== null
+      (object.partySearchFriendInvites !== undefined && object.partySearchFriendInvites !== null)
         ? CMsgGCToClientPartySearchInvites.fromPartial(object.partySearchFriendInvites)
         : undefined;
     message.remainingPlaytime = object.remainingPlaytime ?? -1;
@@ -10015,7 +10150,7 @@ export const CSODOTAGameHeroFavorites = {
       writer.uint32(8).uint32(message.accountId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     return writer;
   },
@@ -10039,7 +10174,7 @@ export const CSODOTAGameHeroFavorites = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -10537,10 +10672,9 @@ export const CMsgDOTAUpdateMatchmakingStats = {
   },
   fromPartial(object: DeepPartial<CMsgDOTAUpdateMatchmakingStats>): CMsgDOTAUpdateMatchmakingStats {
     const message = createBaseCMsgDOTAUpdateMatchmakingStats();
-    message.stats =
-      object.stats !== undefined && object.stats !== null
-        ? CMsgDOTAMatchmakingStatsResponse.fromPartial(object.stats)
-        : undefined;
+    message.stats = (object.stats !== undefined && object.stats !== null)
+      ? CMsgDOTAMatchmakingStatsResponse.fromPartial(object.stats)
+      : undefined;
     return message;
   },
 };
@@ -10597,10 +10731,9 @@ export const CMsgDOTAUpdateMatchManagementStats = {
   },
   fromPartial(object: DeepPartial<CMsgDOTAUpdateMatchManagementStats>): CMsgDOTAUpdateMatchManagementStats {
     const message = createBaseCMsgDOTAUpdateMatchManagementStats();
-    message.stats =
-      object.stats !== undefined && object.stats !== null
-        ? CMsgDOTAMatchmakingStatsResponse.fromPartial(object.stats)
-        : undefined;
+    message.stats = (object.stats !== undefined && object.stats !== null)
+      ? CMsgDOTAMatchmakingStatsResponse.fromPartial(object.stats)
+      : undefined;
     return message;
   },
 };
@@ -11284,7 +11417,7 @@ function createBaseCMsgGCGetHeroStandingsResponse_Hero(): CMsgGCGetHeroStandings
 export const CMsgGCGetHeroStandingsResponse_Hero = {
   encode(message: CMsgGCGetHeroStandingsResponse_Hero, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.wins !== undefined && message.wins !== 0) {
       writer.uint32(16).uint32(message.wins);
@@ -11379,7 +11512,7 @@ export const CMsgGCGetHeroStandingsResponse_Hero = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -12239,7 +12372,7 @@ function createBaseCMsgGCGetHeroTimedStatsResponse(): CMsgGCGetHeroTimedStatsRes
 export const CMsgGCGetHeroTimedStatsResponse = {
   encode(message: CMsgGCGetHeroTimedStatsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     for (const v of message.rankChunkedStats) {
       CMsgGCGetHeroTimedStatsResponse_RankChunkedStats.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -12259,7 +12392,7 @@ export const CMsgGCGetHeroTimedStatsResponse = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 18) {
@@ -12295,7 +12428,7 @@ export const CMsgGCGetHeroTimedStatsResponse = {
     }
     if (message.rankChunkedStats?.length) {
       obj.rankChunkedStats = message.rankChunkedStats.map((e) =>
-        CMsgGCGetHeroTimedStatsResponse_RankChunkedStats.toJSON(e),
+        CMsgGCGetHeroTimedStatsResponse_RankChunkedStats.toJSON(e)
       );
     }
     return obj;
@@ -12458,26 +12591,21 @@ export const CMsgGCGetHeroTimedStatsResponse_TimedStatsContainer = {
   ): CMsgGCGetHeroTimedStatsResponse_TimedStatsContainer {
     const message = createBaseCMsgGCGetHeroTimedStatsResponse_TimedStatsContainer();
     message.time = object.time ?? 0;
-    message.allStats =
-      object.allStats !== undefined && object.allStats !== null
-        ? CMatchPlayerTimedStatAverages.fromPartial(object.allStats)
-        : undefined;
-    message.winningStats =
-      object.winningStats !== undefined && object.winningStats !== null
-        ? CMatchPlayerTimedStatAverages.fromPartial(object.winningStats)
-        : undefined;
-    message.losingStats =
-      object.losingStats !== undefined && object.losingStats !== null
-        ? CMatchPlayerTimedStatAverages.fromPartial(object.losingStats)
-        : undefined;
-    message.winningStddevs =
-      object.winningStddevs !== undefined && object.winningStddevs !== null
-        ? CMatchPlayerTimedStatStdDeviations.fromPartial(object.winningStddevs)
-        : undefined;
-    message.losingStddevs =
-      object.losingStddevs !== undefined && object.losingStddevs !== null
-        ? CMatchPlayerTimedStatStdDeviations.fromPartial(object.losingStddevs)
-        : undefined;
+    message.allStats = (object.allStats !== undefined && object.allStats !== null)
+      ? CMatchPlayerTimedStatAverages.fromPartial(object.allStats)
+      : undefined;
+    message.winningStats = (object.winningStats !== undefined && object.winningStats !== null)
+      ? CMatchPlayerTimedStatAverages.fromPartial(object.winningStats)
+      : undefined;
+    message.losingStats = (object.losingStats !== undefined && object.losingStats !== null)
+      ? CMatchPlayerTimedStatAverages.fromPartial(object.losingStats)
+      : undefined;
+    message.winningStddevs = (object.winningStddevs !== undefined && object.winningStddevs !== null)
+      ? CMatchPlayerTimedStatStdDeviations.fromPartial(object.winningStddevs)
+      : undefined;
+    message.losingStddevs = (object.losingStddevs !== undefined && object.losingStddevs !== null)
+      ? CMatchPlayerTimedStatStdDeviations.fromPartial(object.losingStddevs)
+      : undefined;
     return message;
   },
 };
@@ -13211,10 +13339,8 @@ function createBaseCMsgDOTAClaimEventActionData(): CMsgDOTAClaimEventActionData 
 export const CMsgDOTAClaimEventActionData = {
   encode(message: CMsgDOTAClaimEventActionData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.grantItemGiftData !== undefined) {
-      CMsgDOTAClaimEventActionData_GrantItemGiftData.encode(
-        message.grantItemGiftData,
-        writer.uint32(34).fork(),
-      ).ldelim();
+      CMsgDOTAClaimEventActionData_GrantItemGiftData.encode(message.grantItemGiftData, writer.uint32(34).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -13263,10 +13389,9 @@ export const CMsgDOTAClaimEventActionData = {
   },
   fromPartial(object: DeepPartial<CMsgDOTAClaimEventActionData>): CMsgDOTAClaimEventActionData {
     const message = createBaseCMsgDOTAClaimEventActionData();
-    message.grantItemGiftData =
-      object.grantItemGiftData !== undefined && object.grantItemGiftData !== null
-        ? CMsgDOTAClaimEventActionData_GrantItemGiftData.fromPartial(object.grantItemGiftData)
-        : undefined;
+    message.grantItemGiftData = (object.grantItemGiftData !== undefined && object.grantItemGiftData !== null)
+      ? CMsgDOTAClaimEventActionData_GrantItemGiftData.fromPartial(object.grantItemGiftData)
+      : undefined;
     return message;
   },
 };
@@ -13353,7 +13478,7 @@ export const CMsgDOTAClaimEventActionData_GrantItemGiftData = {
 };
 
 function createBaseCMsgDOTAClaimEventAction(): CMsgDOTAClaimEventAction {
-  return { eventId: 0, actionId: 0, quantity: 0, data: undefined };
+  return { eventId: 0, actionId: 0, quantity: 0, data: undefined, scoreMode: 0 };
 }
 
 export const CMsgDOTAClaimEventAction = {
@@ -13369,6 +13494,9 @@ export const CMsgDOTAClaimEventAction = {
     }
     if (message.data !== undefined) {
       CMsgDOTAClaimEventActionData.encode(message.data, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.scoreMode !== undefined && message.scoreMode !== 0) {
+      writer.uint32(40).int32(message.scoreMode);
     }
     return writer;
   },
@@ -13408,6 +13536,13 @@ export const CMsgDOTAClaimEventAction = {
 
           message.data = CMsgDOTAClaimEventActionData.decode(reader, reader.uint32());
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.scoreMode = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -13423,6 +13558,7 @@ export const CMsgDOTAClaimEventAction = {
       actionId: isSet(object.actionId) ? globalThis.Number(object.actionId) : 0,
       quantity: isSet(object.quantity) ? globalThis.Number(object.quantity) : 0,
       data: isSet(object.data) ? CMsgDOTAClaimEventActionData.fromJSON(object.data) : undefined,
+      scoreMode: isSet(object.scoreMode) ? eEventActionScoreModeFromJSON(object.scoreMode) : 0,
     };
   },
 
@@ -13440,6 +13576,9 @@ export const CMsgDOTAClaimEventAction = {
     if (message.data !== undefined) {
       obj.data = CMsgDOTAClaimEventActionData.toJSON(message.data);
     }
+    if (message.scoreMode !== undefined && message.scoreMode !== 0) {
+      obj.scoreMode = eEventActionScoreModeToJSON(message.scoreMode);
+    }
     return obj;
   },
 
@@ -13451,10 +13590,10 @@ export const CMsgDOTAClaimEventAction = {
     message.eventId = object.eventId ?? 0;
     message.actionId = object.actionId ?? 0;
     message.quantity = object.quantity ?? 0;
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgDOTAClaimEventActionData.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgDOTAClaimEventActionData.fromPartial(object.data)
+      : undefined;
+    message.scoreMode = object.scoreMode ?? 0;
     return message;
   },
 };
@@ -13626,10 +13765,9 @@ export const CMsgClientToGCClaimEventActionUsingItemResponse = {
     object: DeepPartial<CMsgClientToGCClaimEventActionUsingItemResponse>,
   ): CMsgClientToGCClaimEventActionUsingItemResponse {
     const message = createBaseCMsgClientToGCClaimEventActionUsingItemResponse();
-    message.actionResults =
-      object.actionResults !== undefined && object.actionResults !== null
-        ? CMsgDOTAClaimEventActionResponse.fromPartial(object.actionResults)
-        : undefined;
+    message.actionResults = (object.actionResults !== undefined && object.actionResults !== null)
+      ? CMsgDOTAClaimEventActionResponse.fromPartial(object.actionResults)
+      : undefined;
     return message;
   },
 };
@@ -13712,10 +13850,9 @@ export const CMsgGCToClientClaimEventActionUsingItemCompleted = {
   ): CMsgGCToClientClaimEventActionUsingItemCompleted {
     const message = createBaseCMsgGCToClientClaimEventActionUsingItemCompleted();
     message.itemId = object.itemId ?? "0";
-    message.actionResults =
-      object.actionResults !== undefined && object.actionResults !== null
-        ? CMsgDOTAClaimEventActionResponse.fromPartial(object.actionResults)
-        : undefined;
+    message.actionResults = (object.actionResults !== undefined && object.actionResults !== null)
+      ? CMsgDOTAClaimEventActionResponse.fromPartial(object.actionResults)
+      : undefined;
     return message;
   },
 };
@@ -14311,12 +14448,11 @@ export const CMsgDOTAPeriodicResourceUpdated = {
   },
   fromPartial(object: DeepPartial<CMsgDOTAPeriodicResourceUpdated>): CMsgDOTAPeriodicResourceUpdated {
     const message = createBaseCMsgDOTAPeriodicResourceUpdated();
-    message.periodicResourceKey =
-      object.periodicResourceKey !== undefined && object.periodicResourceKey !== null
-        ? CMsgDOTAGetPeriodicResource.fromPartial(object.periodicResourceKey)
-        : undefined;
+    message.periodicResourceKey = (object.periodicResourceKey !== undefined && object.periodicResourceKey !== null)
+      ? CMsgDOTAGetPeriodicResource.fromPartial(object.periodicResourceKey)
+      : undefined;
     message.periodicResourceValue =
-      object.periodicResourceValue !== undefined && object.periodicResourceValue !== null
+      (object.periodicResourceValue !== undefined && object.periodicResourceValue !== null)
         ? CMsgDOTAGetPeriodicResourceResponse.fromPartial(object.periodicResourceValue)
         : undefined;
     return message;
@@ -14464,6 +14600,124 @@ export const CMsgDOTACompendiumSelectionResponse = {
   },
   fromPartial(object: DeepPartial<CMsgDOTACompendiumSelectionResponse>): CMsgDOTACompendiumSelectionResponse {
     const message = createBaseCMsgDOTACompendiumSelectionResponse();
+    message.eresult = object.eresult ?? 2;
+    return message;
+  },
+};
+
+function createBaseCMsgDOTACompendiumRemoveAllSelections(): CMsgDOTACompendiumRemoveAllSelections {
+  return { leagueid: 0 };
+}
+
+export const CMsgDOTACompendiumRemoveAllSelections = {
+  encode(message: CMsgDOTACompendiumRemoveAllSelections, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.leagueid !== undefined && message.leagueid !== 0) {
+      writer.uint32(8).uint32(message.leagueid);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgDOTACompendiumRemoveAllSelections {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgDOTACompendiumRemoveAllSelections();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.leagueid = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgDOTACompendiumRemoveAllSelections {
+    return { leagueid: isSet(object.leagueid) ? globalThis.Number(object.leagueid) : 0 };
+  },
+
+  toJSON(message: CMsgDOTACompendiumRemoveAllSelections): unknown {
+    const obj: any = {};
+    if (message.leagueid !== undefined && message.leagueid !== 0) {
+      obj.leagueid = Math.round(message.leagueid);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgDOTACompendiumRemoveAllSelections>): CMsgDOTACompendiumRemoveAllSelections {
+    return CMsgDOTACompendiumRemoveAllSelections.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgDOTACompendiumRemoveAllSelections>): CMsgDOTACompendiumRemoveAllSelections {
+    const message = createBaseCMsgDOTACompendiumRemoveAllSelections();
+    message.leagueid = object.leagueid ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgDOTACompendiumRemoveAllSelectionsResponse(): CMsgDOTACompendiumRemoveAllSelectionsResponse {
+  return { eresult: 2 };
+}
+
+export const CMsgDOTACompendiumRemoveAllSelectionsResponse = {
+  encode(message: CMsgDOTACompendiumRemoveAllSelectionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.eresult !== undefined && message.eresult !== 2) {
+      writer.uint32(8).uint32(message.eresult);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgDOTACompendiumRemoveAllSelectionsResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgDOTACompendiumRemoveAllSelectionsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.eresult = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgDOTACompendiumRemoveAllSelectionsResponse {
+    return { eresult: isSet(object.eresult) ? globalThis.Number(object.eresult) : 2 };
+  },
+
+  toJSON(message: CMsgDOTACompendiumRemoveAllSelectionsResponse): unknown {
+    const obj: any = {};
+    if (message.eresult !== undefined && message.eresult !== 2) {
+      obj.eresult = Math.round(message.eresult);
+    }
+    return obj;
+  },
+
+  create(
+    base?: DeepPartial<CMsgDOTACompendiumRemoveAllSelectionsResponse>,
+  ): CMsgDOTACompendiumRemoveAllSelectionsResponse {
+    return CMsgDOTACompendiumRemoveAllSelectionsResponse.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CMsgDOTACompendiumRemoveAllSelectionsResponse>,
+  ): CMsgDOTACompendiumRemoveAllSelectionsResponse {
+    const message = createBaseCMsgDOTACompendiumRemoveAllSelectionsResponse();
     message.eresult = object.eresult ?? 2;
     return message;
   },
@@ -14703,10 +14957,9 @@ export const CMsgDOTACompendiumDataResponse = {
     message.accountId = object.accountId ?? 0;
     message.leagueid = object.leagueid ?? 0;
     message.result = object.result ?? 2;
-    message.compendiumData =
-      object.compendiumData !== undefined && object.compendiumData !== null
-        ? CMsgDOTACompendiumData.fromPartial(object.compendiumData)
-        : undefined;
+    message.compendiumData = (object.compendiumData !== undefined && object.compendiumData !== null)
+      ? CMsgDOTACompendiumData.fromPartial(object.compendiumData)
+      : undefined;
     return message;
   },
 };
@@ -14736,7 +14989,7 @@ export const CMsgDOTAGetPlayerMatchHistory = {
       writer.uint32(24).uint32(message.matchesRequested);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     if (message.requestId !== undefined && message.requestId !== 0) {
       writer.uint32(40).uint32(message.requestId);
@@ -14786,7 +15039,7 @@ export const CMsgDOTAGetPlayerMatchHistory = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -14998,7 +15251,7 @@ export const CMsgDOTAGetPlayerMatchHistoryResponse_Match = {
       writer.uint32(16).uint32(message.startTime);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     if (message.winner !== undefined && message.winner !== false) {
       writer.uint32(32).bool(message.winner);
@@ -15086,7 +15339,7 @@ export const CMsgDOTAGetPlayerMatchHistoryResponse_Match = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag !== 32) {
@@ -15698,10 +15951,9 @@ export const CMsgGCNotificationsResponse = {
   },
   fromPartial(object: DeepPartial<CMsgGCNotificationsResponse>): CMsgGCNotificationsResponse {
     const message = createBaseCMsgGCNotificationsResponse();
-    message.update =
-      object.update !== undefined && object.update !== null
-        ? CMsgGCNotificationsUpdate.fromPartial(object.update)
-        : undefined;
+    message.update = (object.update !== undefined && object.update !== null)
+      ? CMsgGCNotificationsUpdate.fromPartial(object.update)
+      : undefined;
     return message;
   },
 };
@@ -16100,10 +16352,9 @@ export const CMsgGCToClientEmoticonData = {
   },
   fromPartial(object: DeepPartial<CMsgGCToClientEmoticonData>): CMsgGCToClientEmoticonData {
     const message = createBaseCMsgGCToClientEmoticonData();
-    message.emoticonAccess =
-      object.emoticonAccess !== undefined && object.emoticonAccess !== null
-        ? CMsgDOTAEmoticonAccessSDO.fromPartial(object.emoticonAccess)
-        : undefined;
+    message.emoticonAccess = (object.emoticonAccess !== undefined && object.emoticonAccess !== null)
+      ? CMsgDOTAEmoticonAccessSDO.fromPartial(object.emoticonAccess)
+      : undefined;
     return message;
   },
 };
@@ -16233,7 +16484,7 @@ export const CMsgClientToGCGetAllHeroOrderResponse = {
   encode(message: CMsgClientToGCGetAllHeroOrderResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).fork();
     for (const v of message.heroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     return writer;
@@ -16248,7 +16499,7 @@ export const CMsgClientToGCGetAllHeroOrderResponse = {
       switch (tag >>> 3) {
         case 1:
           if (tag === 8) {
-            message.heroIds.push(reader.uint32());
+            message.heroIds.push(reader.int32());
 
             continue;
           }
@@ -16256,7 +16507,7 @@ export const CMsgClientToGCGetAllHeroOrderResponse = {
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.heroIds.push(reader.uint32());
+              message.heroIds.push(reader.int32());
             }
 
             continue;
@@ -16384,7 +16635,7 @@ export const CMsgClientToGCGetAllHeroProgressResponse = {
       writer.uint32(8).uint32(message.accountId);
     }
     if (message.currHeroId !== undefined && message.currHeroId !== 0) {
-      writer.uint32(16).uint32(message.currHeroId);
+      writer.uint32(16).int32(message.currHeroId);
     }
     if (message.lapsCompleted !== undefined && message.lapsCompleted !== 0) {
       writer.uint32(24).uint32(message.lapsCompleted);
@@ -16411,10 +16662,10 @@ export const CMsgClientToGCGetAllHeroProgressResponse = {
       writer.uint32(80).uint32(message.lapHeroesRemaining);
     }
     if (message.nextHeroId !== undefined && message.nextHeroId !== 0) {
-      writer.uint32(88).uint32(message.nextHeroId);
+      writer.uint32(88).int32(message.nextHeroId);
     }
     if (message.prevHeroId !== undefined && message.prevHeroId !== 0) {
-      writer.uint32(96).uint32(message.prevHeroId);
+      writer.uint32(96).int32(message.prevHeroId);
     }
     if (message.prevHeroGames !== undefined && message.prevHeroGames !== 0) {
       writer.uint32(104).uint32(message.prevHeroGames);
@@ -16438,7 +16689,7 @@ export const CMsgClientToGCGetAllHeroProgressResponse = {
       writer.uint32(154).string(message.profileName);
     }
     if (message.startHeroId !== undefined && message.startHeroId !== 0) {
-      writer.uint32(160).uint32(message.startHeroId);
+      writer.uint32(160).int32(message.startHeroId);
     }
     return writer;
   },
@@ -16462,7 +16713,7 @@ export const CMsgClientToGCGetAllHeroProgressResponse = {
             break;
           }
 
-          message.currHeroId = reader.uint32();
+          message.currHeroId = reader.int32();
           continue;
         case 3:
           if (tag !== 24) {
@@ -16525,14 +16776,14 @@ export const CMsgClientToGCGetAllHeroProgressResponse = {
             break;
           }
 
-          message.nextHeroId = reader.uint32();
+          message.nextHeroId = reader.int32();
           continue;
         case 12:
           if (tag !== 96) {
             break;
           }
 
-          message.prevHeroId = reader.uint32();
+          message.prevHeroId = reader.int32();
           continue;
         case 13:
           if (tag !== 104) {
@@ -16588,7 +16839,7 @@ export const CMsgClientToGCGetAllHeroProgressResponse = {
             break;
           }
 
-          message.startHeroId = reader.uint32();
+          message.startHeroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -17276,10 +17527,9 @@ export const CMsgGCToClientRankUpdate = {
   fromPartial(object: DeepPartial<CMsgGCToClientRankUpdate>): CMsgGCToClientRankUpdate {
     const message = createBaseCMsgGCToClientRankUpdate();
     message.rankType = object.rankType ?? 0;
-    message.rankInfo =
-      object.rankInfo !== undefined && object.rankInfo !== null
-        ? CMsgGCToClientRankResponse.fromPartial(object.rankInfo)
-        : undefined;
+    message.rankInfo = (object.rankInfo !== undefined && object.rankInfo !== null)
+      ? CMsgGCToClientRankResponse.fromPartial(object.rankInfo)
+      : undefined;
     return message;
   },
 };
@@ -17556,7 +17806,7 @@ export const CMsgClientToGCCreateHeroStatue = {
       writer.uint32(8).uint64(message.sourceItemId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     if (message.sequenceName !== undefined && message.sequenceName !== "") {
       writer.uint32(34).string(message.sequenceName);
@@ -17605,7 +17855,7 @@ export const CMsgClientToGCCreateHeroStatue = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag !== 34) {
@@ -19144,10 +19394,9 @@ export const CMsgDOTAPartyRichPresence = {
     message.teamName = object.teamName ?? "";
     message.ugcTeamUiLogo = object.ugcTeamUiLogo ?? "0";
     message.members = object.members?.map((e) => CMsgDOTAPartyRichPresence_Member.fromPartial(e)) || [];
-    message.weekendTourney =
-      object.weekendTourney !== undefined && object.weekendTourney !== null
-        ? CMsgDOTAPartyRichPresence_WeekendTourney.fromPartial(object.weekendTourney)
-        : undefined;
+    message.weekendTourney = (object.weekendTourney !== undefined && object.weekendTourney !== null)
+      ? CMsgDOTAPartyRichPresence_WeekendTourney.fromPartial(object.weekendTourney)
+      : undefined;
     return message;
   },
 };
@@ -20103,7 +20352,7 @@ export const CMsgClientToGCGetQuestProgressResponse_Challenge = {
       writer.uint32(24).uint32(message.attempts);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     if (message.templateId !== undefined && message.templateId !== 0) {
       writer.uint32(40).uint32(message.templateId);
@@ -20147,7 +20396,7 @@ export const CMsgClientToGCGetQuestProgressResponse_Challenge = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -20288,7 +20537,7 @@ export const CMsgClientToGCGetQuestProgressResponse_Quest = {
     }
     if (message.completedChallenges?.length) {
       obj.completedChallenges = message.completedChallenges.map((e) =>
-        CMsgClientToGCGetQuestProgressResponse_Challenge.toJSON(e),
+        CMsgClientToGCGetQuestProgressResponse_Challenge.toJSON(e)
       );
     }
     return obj;
@@ -20374,7 +20623,7 @@ function createBaseCMsgGCGetHeroStatsHistory(): CMsgGCGetHeroStatsHistory {
 export const CMsgGCGetHeroStatsHistory = {
   encode(message: CMsgGCGetHeroStatsHistory, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     return writer;
   },
@@ -20391,7 +20640,7 @@ export const CMsgGCGetHeroStatsHistory = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -20425,16 +20674,19 @@ export const CMsgGCGetHeroStatsHistory = {
 };
 
 function createBaseCMsgGCGetHeroStatsHistoryResponse(): CMsgGCGetHeroStatsHistoryResponse {
-  return { heroId: 0, records: [] };
+  return { heroId: 0, records: [], result: 0 };
 }
 
 export const CMsgGCGetHeroStatsHistoryResponse = {
   encode(message: CMsgGCGetHeroStatsHistoryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     for (const v of message.records) {
       CMsgDOTASDOHeroStatsHistory.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.result !== undefined && message.result !== 0) {
+      writer.uint32(24).int32(message.result);
     }
     return writer;
   },
@@ -20451,7 +20703,7 @@ export const CMsgGCGetHeroStatsHistoryResponse = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 18) {
@@ -20459,6 +20711,13 @@ export const CMsgGCGetHeroStatsHistoryResponse = {
           }
 
           message.records.push(CMsgDOTASDOHeroStatsHistory.decode(reader, reader.uint32()));
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.result = reader.int32() as any;
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -20475,6 +20734,7 @@ export const CMsgGCGetHeroStatsHistoryResponse = {
       records: globalThis.Array.isArray(object?.records)
         ? object.records.map((e: any) => CMsgDOTASDOHeroStatsHistory.fromJSON(e))
         : [],
+      result: isSet(object.result) ? cMsgGCGetHeroStatsHistoryResponse_EResponseFromJSON(object.result) : 0,
     };
   },
 
@@ -20486,6 +20746,9 @@ export const CMsgGCGetHeroStatsHistoryResponse = {
     if (message.records?.length) {
       obj.records = message.records.map((e) => CMsgDOTASDOHeroStatsHistory.toJSON(e));
     }
+    if (message.result !== undefined && message.result !== 0) {
+      obj.result = cMsgGCGetHeroStatsHistoryResponse_EResponseToJSON(message.result);
+    }
     return obj;
   },
 
@@ -20496,6 +20759,7 @@ export const CMsgGCGetHeroStatsHistoryResponse = {
     const message = createBaseCMsgGCGetHeroStatsHistoryResponse();
     message.heroId = object.heroId ?? 0;
     message.records = object.records?.map((e) => CMsgDOTASDOHeroStatsHistory.fromPartial(e)) || [];
+    message.result = object.result ?? 0;
     return message;
   },
 };
@@ -21245,10 +21509,9 @@ export const CMsgGCToClientWageringUpdate = {
   fromPartial(object: DeepPartial<CMsgGCToClientWageringUpdate>): CMsgGCToClientWageringUpdate {
     const message = createBaseCMsgGCToClientWageringUpdate();
     message.eventId = object.eventId ?? 0;
-    message.wageringInfo =
-      object.wageringInfo !== undefined && object.wageringInfo !== null
-        ? CMsgGCToClientWageringResponse.fromPartial(object.wageringInfo)
-        : undefined;
+    message.wageringInfo = (object.wageringInfo !== undefined && object.wageringInfo !== null)
+      ? CMsgGCToClientWageringResponse.fromPartial(object.wageringInfo)
+      : undefined;
     return message;
   },
 };
@@ -21324,10 +21587,9 @@ export const CMsgGCToClientArcanaVotesUpdate = {
   fromPartial(object: DeepPartial<CMsgGCToClientArcanaVotesUpdate>): CMsgGCToClientArcanaVotesUpdate {
     const message = createBaseCMsgGCToClientArcanaVotesUpdate();
     message.eventId = object.eventId ?? 0;
-    message.arcanaVotes =
-      object.arcanaVotes !== undefined && object.arcanaVotes !== null
-        ? CMsgClientToGCRequestArcanaVotesRemainingResponse.fromPartial(object.arcanaVotes)
-        : undefined;
+    message.arcanaVotes = (object.arcanaVotes !== undefined && object.arcanaVotes !== null)
+      ? CMsgClientToGCRequestArcanaVotesRemainingResponse.fromPartial(object.arcanaVotes)
+      : undefined;
     return message;
   },
 };
@@ -23535,7 +23797,7 @@ export const CMsgGCToClientQuestProgressUpdated = {
     }
     if (message.completedChallenges?.length) {
       obj.completedChallenges = message.completedChallenges.map((e) =>
-        CMsgGCToClientQuestProgressUpdated_Challenge.toJSON(e),
+        CMsgGCToClientQuestProgressUpdated_Challenge.toJSON(e)
       );
     }
     return obj;
@@ -23569,7 +23831,7 @@ export const CMsgGCToClientQuestProgressUpdated_Challenge = {
       writer.uint32(24).uint32(message.attempts);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     if (message.templateId !== undefined && message.templateId !== 0) {
       writer.uint32(40).uint32(message.templateId);
@@ -23616,7 +23878,7 @@ export const CMsgGCToClientQuestProgressUpdated_Challenge = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -23914,7 +24176,7 @@ export const CMsgClientToGCSelectCompendiumInGamePrediction = {
     }
     if (message.predictions?.length) {
       obj.predictions = message.predictions.map((e) =>
-        CMsgClientToGCSelectCompendiumInGamePrediction_Prediction.toJSON(e),
+        CMsgClientToGCSelectCompendiumInGamePrediction_Prediction.toJSON(e)
       );
     }
     if (message.leagueId !== undefined && message.leagueId !== 0) {
@@ -24789,10 +25051,8 @@ export const CMsgGCToClientBattlePassRollupInternational2016 = {
       CMsgGCToClientBattlePassRollupInternational2016_Questlines.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     if (message.wagering !== undefined) {
-      CMsgGCToClientBattlePassRollupInternational2016_Wagering.encode(
-        message.wagering,
-        writer.uint32(26).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupInternational2016_Wagering.encode(message.wagering, writer.uint32(26).fork())
+        .ldelim();
     }
     if (message.achievements !== undefined) {
       CMsgGCToClientBattlePassRollupInternational2016_Achievements.encode(
@@ -24801,22 +25061,16 @@ export const CMsgGCToClientBattlePassRollupInternational2016 = {
       ).ldelim();
     }
     if (message.battleCup !== undefined) {
-      CMsgGCToClientBattlePassRollupInternational2016_BattleCup.encode(
-        message.battleCup,
-        writer.uint32(42).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupInternational2016_BattleCup.encode(message.battleCup, writer.uint32(42).fork())
+        .ldelim();
     }
     if (message.predictions !== undefined) {
-      CMsgGCToClientBattlePassRollupInternational2016_Predictions.encode(
-        message.predictions,
-        writer.uint32(50).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupInternational2016_Predictions.encode(message.predictions, writer.uint32(50).fork())
+        .ldelim();
     }
     if (message.bracket !== undefined) {
-      CMsgGCToClientBattlePassRollupInternational2016_Bracket.encode(
-        message.bracket,
-        writer.uint32(58).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupInternational2016_Bracket.encode(message.bracket, writer.uint32(58).fork())
+        .ldelim();
     }
     for (const v of message.playerCards) {
       CMsgGCToClientBattlePassRollupInternational2016_PlayerCard.encode(v!, writer.uint32(66).fork()).ldelim();
@@ -24959,7 +25213,7 @@ export const CMsgGCToClientBattlePassRollupInternational2016 = {
     }
     if (message.questlines?.length) {
       obj.questlines = message.questlines.map((e) =>
-        CMsgGCToClientBattlePassRollupInternational2016_Questlines.toJSON(e),
+        CMsgGCToClientBattlePassRollupInternational2016_Questlines.toJSON(e)
       );
     }
     if (message.wagering !== undefined) {
@@ -24979,7 +25233,7 @@ export const CMsgGCToClientBattlePassRollupInternational2016 = {
     }
     if (message.playerCards?.length) {
       obj.playerCards = message.playerCards.map((e) =>
-        CMsgGCToClientBattlePassRollupInternational2016_PlayerCard.toJSON(e),
+        CMsgGCToClientBattlePassRollupInternational2016_PlayerCard.toJSON(e)
       );
     }
     if (message.fantasyChallenge !== undefined) {
@@ -25002,32 +25256,26 @@ export const CMsgGCToClientBattlePassRollupInternational2016 = {
     message.battlePassLevel = object.battlePassLevel ?? 0;
     message.questlines =
       object.questlines?.map((e) => CMsgGCToClientBattlePassRollupInternational2016_Questlines.fromPartial(e)) || [];
-    message.wagering =
-      object.wagering !== undefined && object.wagering !== null
-        ? CMsgGCToClientBattlePassRollupInternational2016_Wagering.fromPartial(object.wagering)
-        : undefined;
-    message.achievements =
-      object.achievements !== undefined && object.achievements !== null
-        ? CMsgGCToClientBattlePassRollupInternational2016_Achievements.fromPartial(object.achievements)
-        : undefined;
-    message.battleCup =
-      object.battleCup !== undefined && object.battleCup !== null
-        ? CMsgGCToClientBattlePassRollupInternational2016_BattleCup.fromPartial(object.battleCup)
-        : undefined;
-    message.predictions =
-      object.predictions !== undefined && object.predictions !== null
-        ? CMsgGCToClientBattlePassRollupInternational2016_Predictions.fromPartial(object.predictions)
-        : undefined;
-    message.bracket =
-      object.bracket !== undefined && object.bracket !== null
-        ? CMsgGCToClientBattlePassRollupInternational2016_Bracket.fromPartial(object.bracket)
-        : undefined;
+    message.wagering = (object.wagering !== undefined && object.wagering !== null)
+      ? CMsgGCToClientBattlePassRollupInternational2016_Wagering.fromPartial(object.wagering)
+      : undefined;
+    message.achievements = (object.achievements !== undefined && object.achievements !== null)
+      ? CMsgGCToClientBattlePassRollupInternational2016_Achievements.fromPartial(object.achievements)
+      : undefined;
+    message.battleCup = (object.battleCup !== undefined && object.battleCup !== null)
+      ? CMsgGCToClientBattlePassRollupInternational2016_BattleCup.fromPartial(object.battleCup)
+      : undefined;
+    message.predictions = (object.predictions !== undefined && object.predictions !== null)
+      ? CMsgGCToClientBattlePassRollupInternational2016_Predictions.fromPartial(object.predictions)
+      : undefined;
+    message.bracket = (object.bracket !== undefined && object.bracket !== null)
+      ? CMsgGCToClientBattlePassRollupInternational2016_Bracket.fromPartial(object.bracket)
+      : undefined;
     message.playerCards =
       object.playerCards?.map((e) => CMsgGCToClientBattlePassRollupInternational2016_PlayerCard.fromPartial(e)) || [];
-    message.fantasyChallenge =
-      object.fantasyChallenge !== undefined && object.fantasyChallenge !== null
-        ? CMsgGCToClientBattlePassRollupInternational2016_FantasyChallenge.fromPartial(object.fantasyChallenge)
-        : undefined;
+    message.fantasyChallenge = (object.fantasyChallenge !== undefined && object.fantasyChallenge !== null)
+      ? CMsgGCToClientBattlePassRollupInternational2016_FantasyChallenge.fromPartial(object.fantasyChallenge)
+      : undefined;
     return message;
   },
 };
@@ -25832,10 +26080,8 @@ export const CMsgGCToClientBattlePassRollupFall2016 = {
       CMsgGCToClientBattlePassRollupFall2016_Wagering.encode(message.wagering, writer.uint32(26).fork()).ldelim();
     }
     if (message.achievements !== undefined) {
-      CMsgGCToClientBattlePassRollupFall2016_Achievements.encode(
-        message.achievements,
-        writer.uint32(34).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupFall2016_Achievements.encode(message.achievements, writer.uint32(34).fork())
+        .ldelim();
     }
     if (message.battleCup !== undefined) {
       CMsgGCToClientBattlePassRollupFall2016_BattleCup.encode(message.battleCup, writer.uint32(42).fork()).ldelim();
@@ -25850,10 +26096,8 @@ export const CMsgGCToClientBattlePassRollupFall2016 = {
       CMsgGCToClientBattlePassRollupFall2016_PlayerCard.encode(v!, writer.uint32(66).fork()).ldelim();
     }
     if (message.fantasyChallenge !== undefined) {
-      CMsgGCToClientBattlePassRollupFall2016_FantasyChallenge.encode(
-        message.fantasyChallenge,
-        writer.uint32(74).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupFall2016_FantasyChallenge.encode(message.fantasyChallenge, writer.uint32(74).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -26010,32 +26254,26 @@ export const CMsgGCToClientBattlePassRollupFall2016 = {
     message.battlePassLevel = object.battlePassLevel ?? 0;
     message.questlines =
       object.questlines?.map((e) => CMsgGCToClientBattlePassRollupFall2016_Questlines.fromPartial(e)) || [];
-    message.wagering =
-      object.wagering !== undefined && object.wagering !== null
-        ? CMsgGCToClientBattlePassRollupFall2016_Wagering.fromPartial(object.wagering)
-        : undefined;
-    message.achievements =
-      object.achievements !== undefined && object.achievements !== null
-        ? CMsgGCToClientBattlePassRollupFall2016_Achievements.fromPartial(object.achievements)
-        : undefined;
-    message.battleCup =
-      object.battleCup !== undefined && object.battleCup !== null
-        ? CMsgGCToClientBattlePassRollupFall2016_BattleCup.fromPartial(object.battleCup)
-        : undefined;
-    message.predictions =
-      object.predictions !== undefined && object.predictions !== null
-        ? CMsgGCToClientBattlePassRollupFall2016_Predictions.fromPartial(object.predictions)
-        : undefined;
-    message.bracket =
-      object.bracket !== undefined && object.bracket !== null
-        ? CMsgGCToClientBattlePassRollupFall2016_Bracket.fromPartial(object.bracket)
-        : undefined;
+    message.wagering = (object.wagering !== undefined && object.wagering !== null)
+      ? CMsgGCToClientBattlePassRollupFall2016_Wagering.fromPartial(object.wagering)
+      : undefined;
+    message.achievements = (object.achievements !== undefined && object.achievements !== null)
+      ? CMsgGCToClientBattlePassRollupFall2016_Achievements.fromPartial(object.achievements)
+      : undefined;
+    message.battleCup = (object.battleCup !== undefined && object.battleCup !== null)
+      ? CMsgGCToClientBattlePassRollupFall2016_BattleCup.fromPartial(object.battleCup)
+      : undefined;
+    message.predictions = (object.predictions !== undefined && object.predictions !== null)
+      ? CMsgGCToClientBattlePassRollupFall2016_Predictions.fromPartial(object.predictions)
+      : undefined;
+    message.bracket = (object.bracket !== undefined && object.bracket !== null)
+      ? CMsgGCToClientBattlePassRollupFall2016_Bracket.fromPartial(object.bracket)
+      : undefined;
     message.playerCards =
       object.playerCards?.map((e) => CMsgGCToClientBattlePassRollupFall2016_PlayerCard.fromPartial(e)) || [];
-    message.fantasyChallenge =
-      object.fantasyChallenge !== undefined && object.fantasyChallenge !== null
-        ? CMsgGCToClientBattlePassRollupFall2016_FantasyChallenge.fromPartial(object.fantasyChallenge)
-        : undefined;
+    message.fantasyChallenge = (object.fantasyChallenge !== undefined && object.fantasyChallenge !== null)
+      ? CMsgGCToClientBattlePassRollupFall2016_FantasyChallenge.fromPartial(object.fantasyChallenge)
+      : undefined;
     return message;
   },
 };
@@ -26834,19 +27072,15 @@ export const CMsgGCToClientBattlePassRollupWinter2017 = {
       CMsgGCToClientBattlePassRollupWinter2017_Wagering.encode(message.wagering, writer.uint32(26).fork()).ldelim();
     }
     if (message.achievements !== undefined) {
-      CMsgGCToClientBattlePassRollupWinter2017_Achievements.encode(
-        message.achievements,
-        writer.uint32(34).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupWinter2017_Achievements.encode(message.achievements, writer.uint32(34).fork())
+        .ldelim();
     }
     if (message.battleCup !== undefined) {
       CMsgGCToClientBattlePassRollupWinter2017_BattleCup.encode(message.battleCup, writer.uint32(42).fork()).ldelim();
     }
     if (message.predictions !== undefined) {
-      CMsgGCToClientBattlePassRollupWinter2017_Predictions.encode(
-        message.predictions,
-        writer.uint32(50).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupWinter2017_Predictions.encode(message.predictions, writer.uint32(50).fork())
+        .ldelim();
     }
     if (message.bracket !== undefined) {
       CMsgGCToClientBattlePassRollupWinter2017_Bracket.encode(message.bracket, writer.uint32(58).fork()).ldelim();
@@ -27015,32 +27249,26 @@ export const CMsgGCToClientBattlePassRollupWinter2017 = {
     message.battlePassLevel = object.battlePassLevel ?? 0;
     message.questlines =
       object.questlines?.map((e) => CMsgGCToClientBattlePassRollupWinter2017_Questlines.fromPartial(e)) || [];
-    message.wagering =
-      object.wagering !== undefined && object.wagering !== null
-        ? CMsgGCToClientBattlePassRollupWinter2017_Wagering.fromPartial(object.wagering)
-        : undefined;
-    message.achievements =
-      object.achievements !== undefined && object.achievements !== null
-        ? CMsgGCToClientBattlePassRollupWinter2017_Achievements.fromPartial(object.achievements)
-        : undefined;
-    message.battleCup =
-      object.battleCup !== undefined && object.battleCup !== null
-        ? CMsgGCToClientBattlePassRollupWinter2017_BattleCup.fromPartial(object.battleCup)
-        : undefined;
-    message.predictions =
-      object.predictions !== undefined && object.predictions !== null
-        ? CMsgGCToClientBattlePassRollupWinter2017_Predictions.fromPartial(object.predictions)
-        : undefined;
-    message.bracket =
-      object.bracket !== undefined && object.bracket !== null
-        ? CMsgGCToClientBattlePassRollupWinter2017_Bracket.fromPartial(object.bracket)
-        : undefined;
+    message.wagering = (object.wagering !== undefined && object.wagering !== null)
+      ? CMsgGCToClientBattlePassRollupWinter2017_Wagering.fromPartial(object.wagering)
+      : undefined;
+    message.achievements = (object.achievements !== undefined && object.achievements !== null)
+      ? CMsgGCToClientBattlePassRollupWinter2017_Achievements.fromPartial(object.achievements)
+      : undefined;
+    message.battleCup = (object.battleCup !== undefined && object.battleCup !== null)
+      ? CMsgGCToClientBattlePassRollupWinter2017_BattleCup.fromPartial(object.battleCup)
+      : undefined;
+    message.predictions = (object.predictions !== undefined && object.predictions !== null)
+      ? CMsgGCToClientBattlePassRollupWinter2017_Predictions.fromPartial(object.predictions)
+      : undefined;
+    message.bracket = (object.bracket !== undefined && object.bracket !== null)
+      ? CMsgGCToClientBattlePassRollupWinter2017_Bracket.fromPartial(object.bracket)
+      : undefined;
     message.playerCards =
       object.playerCards?.map((e) => CMsgGCToClientBattlePassRollupWinter2017_PlayerCard.fromPartial(e)) || [];
-    message.fantasyChallenge =
-      object.fantasyChallenge !== undefined && object.fantasyChallenge !== null
-        ? CMsgGCToClientBattlePassRollupWinter2017_FantasyChallenge.fromPartial(object.fantasyChallenge)
-        : undefined;
+    message.fantasyChallenge = (object.fantasyChallenge !== undefined && object.fantasyChallenge !== null)
+      ? CMsgGCToClientBattlePassRollupWinter2017_FantasyChallenge.fromPartial(object.fantasyChallenge)
+      : undefined;
     return message;
   },
 };
@@ -27854,10 +28082,8 @@ export const CMsgGCToClientBattlePassRollupTI7 = {
       CMsgGCToClientBattlePassRollupTI7_PlayerCard.encode(v!, writer.uint32(66).fork()).ldelim();
     }
     if (message.fantasyChallenge !== undefined) {
-      CMsgGCToClientBattlePassRollupTI7_FantasyChallenge.encode(
-        message.fantasyChallenge,
-        writer.uint32(74).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupTI7_FantasyChallenge.encode(message.fantasyChallenge, writer.uint32(74).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -28007,34 +28233,28 @@ export const CMsgGCToClientBattlePassRollupTI7 = {
   fromPartial(object: DeepPartial<CMsgGCToClientBattlePassRollupTI7>): CMsgGCToClientBattlePassRollupTI7 {
     const message = createBaseCMsgGCToClientBattlePassRollupTI7();
     message.battlePassLevel = object.battlePassLevel ?? 0;
-    message.questlines =
-      object.questlines?.map((e) => CMsgGCToClientBattlePassRollupTI7_Questlines.fromPartial(e)) || [];
-    message.wagering =
-      object.wagering !== undefined && object.wagering !== null
-        ? CMsgGCToClientBattlePassRollupTI7_Wagering.fromPartial(object.wagering)
-        : undefined;
-    message.achievements =
-      object.achievements !== undefined && object.achievements !== null
-        ? CMsgGCToClientBattlePassRollupTI7_Achievements.fromPartial(object.achievements)
-        : undefined;
-    message.battleCup =
-      object.battleCup !== undefined && object.battleCup !== null
-        ? CMsgGCToClientBattlePassRollupTI7_BattleCup.fromPartial(object.battleCup)
-        : undefined;
-    message.predictions =
-      object.predictions !== undefined && object.predictions !== null
-        ? CMsgGCToClientBattlePassRollupTI7_Predictions.fromPartial(object.predictions)
-        : undefined;
-    message.bracket =
-      object.bracket !== undefined && object.bracket !== null
-        ? CMsgGCToClientBattlePassRollupTI7_Bracket.fromPartial(object.bracket)
-        : undefined;
-    message.playerCards =
-      object.playerCards?.map((e) => CMsgGCToClientBattlePassRollupTI7_PlayerCard.fromPartial(e)) || [];
-    message.fantasyChallenge =
-      object.fantasyChallenge !== undefined && object.fantasyChallenge !== null
-        ? CMsgGCToClientBattlePassRollupTI7_FantasyChallenge.fromPartial(object.fantasyChallenge)
-        : undefined;
+    message.questlines = object.questlines?.map((e) => CMsgGCToClientBattlePassRollupTI7_Questlines.fromPartial(e)) ||
+      [];
+    message.wagering = (object.wagering !== undefined && object.wagering !== null)
+      ? CMsgGCToClientBattlePassRollupTI7_Wagering.fromPartial(object.wagering)
+      : undefined;
+    message.achievements = (object.achievements !== undefined && object.achievements !== null)
+      ? CMsgGCToClientBattlePassRollupTI7_Achievements.fromPartial(object.achievements)
+      : undefined;
+    message.battleCup = (object.battleCup !== undefined && object.battleCup !== null)
+      ? CMsgGCToClientBattlePassRollupTI7_BattleCup.fromPartial(object.battleCup)
+      : undefined;
+    message.predictions = (object.predictions !== undefined && object.predictions !== null)
+      ? CMsgGCToClientBattlePassRollupTI7_Predictions.fromPartial(object.predictions)
+      : undefined;
+    message.bracket = (object.bracket !== undefined && object.bracket !== null)
+      ? CMsgGCToClientBattlePassRollupTI7_Bracket.fromPartial(object.bracket)
+      : undefined;
+    message.playerCards = object.playerCards?.map((e) => CMsgGCToClientBattlePassRollupTI7_PlayerCard.fromPartial(e)) ||
+      [];
+    message.fantasyChallenge = (object.fantasyChallenge !== undefined && object.fantasyChallenge !== null)
+      ? CMsgGCToClientBattlePassRollupTI7_FantasyChallenge.fromPartial(object.fantasyChallenge)
+      : undefined;
     return message;
   },
 };
@@ -28820,10 +29040,8 @@ export const CMsgGCToClientBattlePassRollupTI8 = {
       CMsgGCToClientBattlePassRollupTI8_PlayerCard.encode(v!, writer.uint32(66).fork()).ldelim();
     }
     if (message.fantasyChallenge !== undefined) {
-      CMsgGCToClientBattlePassRollupTI8_FantasyChallenge.encode(
-        message.fantasyChallenge,
-        writer.uint32(74).fork(),
-      ).ldelim();
+      CMsgGCToClientBattlePassRollupTI8_FantasyChallenge.encode(message.fantasyChallenge, writer.uint32(74).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -28960,32 +29178,26 @@ export const CMsgGCToClientBattlePassRollupTI8 = {
   fromPartial(object: DeepPartial<CMsgGCToClientBattlePassRollupTI8>): CMsgGCToClientBattlePassRollupTI8 {
     const message = createBaseCMsgGCToClientBattlePassRollupTI8();
     message.battlePassLevel = object.battlePassLevel ?? 0;
-    message.cavernCrawl =
-      object.cavernCrawl !== undefined && object.cavernCrawl !== null
-        ? CMsgGCToClientBattlePassRollupTI8_CavernCrawl.fromPartial(object.cavernCrawl)
-        : undefined;
-    message.wagering =
-      object.wagering !== undefined && object.wagering !== null
-        ? CMsgGCToClientBattlePassRollupTI8_Wagering.fromPartial(object.wagering)
-        : undefined;
-    message.achievements =
-      object.achievements !== undefined && object.achievements !== null
-        ? CMsgGCToClientBattlePassRollupTI8_Achievements.fromPartial(object.achievements)
-        : undefined;
-    message.predictions =
-      object.predictions !== undefined && object.predictions !== null
-        ? CMsgGCToClientBattlePassRollupTI8_Predictions.fromPartial(object.predictions)
-        : undefined;
-    message.bracket =
-      object.bracket !== undefined && object.bracket !== null
-        ? CMsgGCToClientBattlePassRollupTI8_Bracket.fromPartial(object.bracket)
-        : undefined;
-    message.playerCards =
-      object.playerCards?.map((e) => CMsgGCToClientBattlePassRollupTI8_PlayerCard.fromPartial(e)) || [];
-    message.fantasyChallenge =
-      object.fantasyChallenge !== undefined && object.fantasyChallenge !== null
-        ? CMsgGCToClientBattlePassRollupTI8_FantasyChallenge.fromPartial(object.fantasyChallenge)
-        : undefined;
+    message.cavernCrawl = (object.cavernCrawl !== undefined && object.cavernCrawl !== null)
+      ? CMsgGCToClientBattlePassRollupTI8_CavernCrawl.fromPartial(object.cavernCrawl)
+      : undefined;
+    message.wagering = (object.wagering !== undefined && object.wagering !== null)
+      ? CMsgGCToClientBattlePassRollupTI8_Wagering.fromPartial(object.wagering)
+      : undefined;
+    message.achievements = (object.achievements !== undefined && object.achievements !== null)
+      ? CMsgGCToClientBattlePassRollupTI8_Achievements.fromPartial(object.achievements)
+      : undefined;
+    message.predictions = (object.predictions !== undefined && object.predictions !== null)
+      ? CMsgGCToClientBattlePassRollupTI8_Predictions.fromPartial(object.predictions)
+      : undefined;
+    message.bracket = (object.bracket !== undefined && object.bracket !== null)
+      ? CMsgGCToClientBattlePassRollupTI8_Bracket.fromPartial(object.bracket)
+      : undefined;
+    message.playerCards = object.playerCards?.map((e) => CMsgGCToClientBattlePassRollupTI8_PlayerCard.fromPartial(e)) ||
+      [];
+    message.fantasyChallenge = (object.fantasyChallenge !== undefined && object.fantasyChallenge !== null)
+      ? CMsgGCToClientBattlePassRollupTI8_FantasyChallenge.fromPartial(object.fantasyChallenge)
+      : undefined;
     return message;
   },
 };
@@ -29983,34 +30195,27 @@ export const CMsgGCToClientBattlePassRollupResponse = {
   },
   fromPartial(object: DeepPartial<CMsgGCToClientBattlePassRollupResponse>): CMsgGCToClientBattlePassRollupResponse {
     const message = createBaseCMsgGCToClientBattlePassRollupResponse();
-    message.eventTi6 =
-      object.eventTi6 !== undefined && object.eventTi6 !== null
-        ? CMsgGCToClientBattlePassRollupInternational2016.fromPartial(object.eventTi6)
-        : undefined;
-    message.eventFall2016 =
-      object.eventFall2016 !== undefined && object.eventFall2016 !== null
-        ? CMsgGCToClientBattlePassRollupFall2016.fromPartial(object.eventFall2016)
-        : undefined;
-    message.eventWinter2017 =
-      object.eventWinter2017 !== undefined && object.eventWinter2017 !== null
-        ? CMsgGCToClientBattlePassRollupWinter2017.fromPartial(object.eventWinter2017)
-        : undefined;
-    message.eventTi7 =
-      object.eventTi7 !== undefined && object.eventTi7 !== null
-        ? CMsgGCToClientBattlePassRollupTI7.fromPartial(object.eventTi7)
-        : undefined;
-    message.eventTi8 =
-      object.eventTi8 !== undefined && object.eventTi8 !== null
-        ? CMsgGCToClientBattlePassRollupTI8.fromPartial(object.eventTi8)
-        : undefined;
-    message.eventTi9 =
-      object.eventTi9 !== undefined && object.eventTi9 !== null
-        ? CMsgGCToClientBattlePassRollupTI9.fromPartial(object.eventTi9)
-        : undefined;
-    message.eventTi10 =
-      object.eventTi10 !== undefined && object.eventTi10 !== null
-        ? CMsgGCToClientBattlePassRollupTI10.fromPartial(object.eventTi10)
-        : undefined;
+    message.eventTi6 = (object.eventTi6 !== undefined && object.eventTi6 !== null)
+      ? CMsgGCToClientBattlePassRollupInternational2016.fromPartial(object.eventTi6)
+      : undefined;
+    message.eventFall2016 = (object.eventFall2016 !== undefined && object.eventFall2016 !== null)
+      ? CMsgGCToClientBattlePassRollupFall2016.fromPartial(object.eventFall2016)
+      : undefined;
+    message.eventWinter2017 = (object.eventWinter2017 !== undefined && object.eventWinter2017 !== null)
+      ? CMsgGCToClientBattlePassRollupWinter2017.fromPartial(object.eventWinter2017)
+      : undefined;
+    message.eventTi7 = (object.eventTi7 !== undefined && object.eventTi7 !== null)
+      ? CMsgGCToClientBattlePassRollupTI7.fromPartial(object.eventTi7)
+      : undefined;
+    message.eventTi8 = (object.eventTi8 !== undefined && object.eventTi8 !== null)
+      ? CMsgGCToClientBattlePassRollupTI8.fromPartial(object.eventTi8)
+      : undefined;
+    message.eventTi9 = (object.eventTi9 !== undefined && object.eventTi9 !== null)
+      ? CMsgGCToClientBattlePassRollupTI9.fromPartial(object.eventTi9)
+      : undefined;
+    message.eventTi10 = (object.eventTi10 !== undefined && object.eventTi10 !== null)
+      ? CMsgGCToClientBattlePassRollupTI10.fromPartial(object.eventTi10)
+      : undefined;
     return message;
   },
 };
@@ -31122,7 +31327,7 @@ export const CMsgGCToClientCommendNotification = {
       writer.uint32(24).uint32(message.flags);
     }
     if (message.commenderHeroId !== undefined && message.commenderHeroId !== 0) {
-      writer.uint32(32).uint32(message.commenderHeroId);
+      writer.uint32(32).int32(message.commenderHeroId);
     }
     return writer;
   },
@@ -31160,7 +31365,7 @@ export const CMsgGCToClientCommendNotification = {
             break;
           }
 
-          message.commenderHeroId = reader.uint32();
+          message.commenderHeroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -31220,7 +31425,7 @@ export const CMsgDOTAClientToGCQuickStatsRequest = {
       writer.uint32(8).uint32(message.playerAccountId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     if (message.itemId !== undefined && message.itemId !== -1) {
       writer.uint32(24).int32(message.itemId);
@@ -31250,7 +31455,7 @@ export const CMsgDOTAClientToGCQuickStatsRequest = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag !== 24) {
@@ -31341,16 +31546,12 @@ export const CMsgDOTAClientToGCQuickStatsResponse = {
       CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.encode(message.itemHeroStats, writer.uint32(34).fork()).ldelim();
     }
     if (message.itemPlayerStats !== undefined) {
-      CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.encode(
-        message.itemPlayerStats,
-        writer.uint32(42).fork(),
-      ).ldelim();
+      CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.encode(message.itemPlayerStats, writer.uint32(42).fork())
+        .ldelim();
     }
     if (message.heroPlayerStats !== undefined) {
-      CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.encode(
-        message.heroPlayerStats,
-        writer.uint32(50).fork(),
-      ).ldelim();
+      CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.encode(message.heroPlayerStats, writer.uint32(50).fork())
+        .ldelim();
     }
     if (message.fullSetStats !== undefined) {
       CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.encode(message.fullSetStats, writer.uint32(58).fork()).ldelim();
@@ -31480,34 +31681,27 @@ export const CMsgDOTAClientToGCQuickStatsResponse = {
   },
   fromPartial(object: DeepPartial<CMsgDOTAClientToGCQuickStatsResponse>): CMsgDOTAClientToGCQuickStatsResponse {
     const message = createBaseCMsgDOTAClientToGCQuickStatsResponse();
-    message.originalRequest =
-      object.originalRequest !== undefined && object.originalRequest !== null
-        ? CMsgDOTAClientToGCQuickStatsRequest.fromPartial(object.originalRequest)
-        : undefined;
-    message.heroStats =
-      object.heroStats !== undefined && object.heroStats !== null
-        ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.heroStats)
-        : undefined;
-    message.itemStats =
-      object.itemStats !== undefined && object.itemStats !== null
-        ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.itemStats)
-        : undefined;
-    message.itemHeroStats =
-      object.itemHeroStats !== undefined && object.itemHeroStats !== null
-        ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.itemHeroStats)
-        : undefined;
-    message.itemPlayerStats =
-      object.itemPlayerStats !== undefined && object.itemPlayerStats !== null
-        ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.itemPlayerStats)
-        : undefined;
-    message.heroPlayerStats =
-      object.heroPlayerStats !== undefined && object.heroPlayerStats !== null
-        ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.heroPlayerStats)
-        : undefined;
-    message.fullSetStats =
-      object.fullSetStats !== undefined && object.fullSetStats !== null
-        ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.fullSetStats)
-        : undefined;
+    message.originalRequest = (object.originalRequest !== undefined && object.originalRequest !== null)
+      ? CMsgDOTAClientToGCQuickStatsRequest.fromPartial(object.originalRequest)
+      : undefined;
+    message.heroStats = (object.heroStats !== undefined && object.heroStats !== null)
+      ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.heroStats)
+      : undefined;
+    message.itemStats = (object.itemStats !== undefined && object.itemStats !== null)
+      ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.itemStats)
+      : undefined;
+    message.itemHeroStats = (object.itemHeroStats !== undefined && object.itemHeroStats !== null)
+      ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.itemHeroStats)
+      : undefined;
+    message.itemPlayerStats = (object.itemPlayerStats !== undefined && object.itemPlayerStats !== null)
+      ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.itemPlayerStats)
+      : undefined;
+    message.heroPlayerStats = (object.heroPlayerStats !== undefined && object.heroPlayerStats !== null)
+      ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.heroPlayerStats)
+      : undefined;
+    message.fullSetStats = (object.fullSetStats !== undefined && object.fullSetStats !== null)
+      ? CMsgDOTAClientToGCQuickStatsResponse_SimpleStats.fromPartial(object.fullSetStats)
+      : undefined;
     return message;
   },
 };
@@ -32235,7 +32429,7 @@ function createBaseCMsgPurchaseHeroRandomRelic(): CMsgPurchaseHeroRandomRelic {
 export const CMsgPurchaseHeroRandomRelic = {
   encode(message: CMsgPurchaseHeroRandomRelic, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.relicRarity !== undefined && message.relicRarity !== -1) {
       writer.uint32(16).int32(message.relicRarity);
@@ -32255,7 +32449,7 @@ export const CMsgPurchaseHeroRandomRelic = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -32718,22 +32912,19 @@ export const CMsgProfileResponse = {
   },
   fromPartial(object: DeepPartial<CMsgProfileResponse>): CMsgProfileResponse {
     const message = createBaseCMsgProfileResponse();
-    message.backgroundItem =
-      object.backgroundItem !== undefined && object.backgroundItem !== null
-        ? CSOEconItem.fromPartial(object.backgroundItem)
-        : undefined;
+    message.backgroundItem = (object.backgroundItem !== undefined && object.backgroundItem !== null)
+      ? CSOEconItem.fromPartial(object.backgroundItem)
+      : undefined;
     message.featuredHeroes = object.featuredHeroes?.map((e) => CMsgProfileResponse_FeaturedHero.fromPartial(e)) || [];
     message.recentMatches = object.recentMatches?.map((e) => CMsgProfileResponse_MatchInfo.fromPartial(e)) || [];
     message.successfulHeroes = object.successfulHeroes?.map((e) => CMsgSuccessfulHero.fromPartial(e)) || [];
-    message.recentMatchDetails =
-      object.recentMatchDetails !== undefined && object.recentMatchDetails !== null
-        ? CMsgRecentMatchInfo.fromPartial(object.recentMatchDetails)
-        : undefined;
+    message.recentMatchDetails = (object.recentMatchDetails !== undefined && object.recentMatchDetails !== null)
+      ? CMsgRecentMatchInfo.fromPartial(object.recentMatchDetails)
+      : undefined;
     message.result = object.result ?? 0;
-    message.stickerbookPage =
-      object.stickerbookPage !== undefined && object.stickerbookPage !== null
-        ? CMsgStickerbookPage.fromPartial(object.stickerbookPage)
-        : undefined;
+    message.stickerbookPage = (object.stickerbookPage !== undefined && object.stickerbookPage !== null)
+      ? CMsgStickerbookPage.fromPartial(object.stickerbookPage)
+      : undefined;
     return message;
   },
 };
@@ -32745,7 +32936,7 @@ function createBaseCMsgProfileResponse_FeaturedHero(): CMsgProfileResponse_Featu
 export const CMsgProfileResponse_FeaturedHero = {
   encode(message: CMsgProfileResponse_FeaturedHero, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     for (const v of message.equippedEconItems) {
       CSOEconItem.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -32774,7 +32965,7 @@ export const CMsgProfileResponse_FeaturedHero = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 18) {
@@ -32856,10 +33047,9 @@ export const CMsgProfileResponse_FeaturedHero = {
     message.equippedEconItems = object.equippedEconItems?.map((e) => CSOEconItem.fromPartial(e)) || [];
     message.manuallySet = object.manuallySet ?? false;
     message.plusHeroXp = object.plusHeroXp ?? 0;
-    message.plusHeroRelicsItem =
-      object.plusHeroRelicsItem !== undefined && object.plusHeroRelicsItem !== null
-        ? CSOEconItem.fromPartial(object.plusHeroRelicsItem)
-        : undefined;
+    message.plusHeroRelicsItem = (object.plusHeroRelicsItem !== undefined && object.plusHeroRelicsItem !== null)
+      ? CSOEconItem.fromPartial(object.plusHeroRelicsItem)
+      : undefined;
     return message;
   },
 };
@@ -32880,7 +33070,7 @@ export const CMsgProfileResponse_MatchInfo = {
       writer.uint32(24).sint32(message.performanceRating);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     if (message.wonMatch !== undefined && message.wonMatch !== false) {
       writer.uint32(40).bool(message.wonMatch);
@@ -32921,7 +33111,7 @@ export const CMsgProfileResponse_MatchInfo = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -32994,7 +33184,7 @@ export const CMsgProfileUpdate = {
     }
     writer.uint32(18).fork();
     for (const v of message.featuredHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     return writer;
@@ -33016,7 +33206,7 @@ export const CMsgProfileUpdate = {
           continue;
         case 2:
           if (tag === 16) {
-            message.featuredHeroIds.push(reader.uint32());
+            message.featuredHeroIds.push(reader.int32());
 
             continue;
           }
@@ -33024,7 +33214,7 @@ export const CMsgProfileUpdate = {
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.featuredHeroIds.push(reader.uint32());
+              message.featuredHeroIds.push(reader.int32());
             }
 
             continue;
@@ -33428,7 +33618,7 @@ function createBaseCMsgHeroGlobalDataRequest(): CMsgHeroGlobalDataRequest {
 export const CMsgHeroGlobalDataRequest = {
   encode(message: CMsgHeroGlobalDataRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     return writer;
   },
@@ -33445,7 +33635,7 @@ export const CMsgHeroGlobalDataRequest = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -33485,7 +33675,7 @@ function createBaseCMsgHeroGlobalDataResponse(): CMsgHeroGlobalDataResponse {
 export const CMsgHeroGlobalDataResponse = {
   encode(message: CMsgHeroGlobalDataResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     for (const v of message.heroDataPerChunk) {
       CMsgHeroGlobalDataResponse_HeroDataPerRankChunk.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -33505,7 +33695,7 @@ export const CMsgHeroGlobalDataResponse = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 18) {
@@ -33541,7 +33731,7 @@ export const CMsgHeroGlobalDataResponse = {
     }
     if (message.heroDataPerChunk?.length) {
       obj.heroDataPerChunk = message.heroDataPerChunk.map((e) =>
-        CMsgHeroGlobalDataResponse_HeroDataPerRankChunk.toJSON(e),
+        CMsgHeroGlobalDataResponse_HeroDataPerRankChunk.toJSON(e)
       );
     }
     return obj;
@@ -33892,10 +34082,9 @@ export const CMsgHeroGlobalDataResponse_HeroDataPerRankChunk = {
     const message = createBaseCMsgHeroGlobalDataResponse_HeroDataPerRankChunk();
     message.rankChunk = object.rankChunk ?? 0;
     message.talentWinRates = object.talentWinRates?.map((e) => CMsgTalentWinRates.fromPartial(e)) || [];
-    message.heroAverages =
-      object.heroAverages !== undefined && object.heroAverages !== null
-        ? CMsgGlobalHeroAverages.fromPartial(object.heroAverages)
-        : undefined;
+    message.heroAverages = (object.heroAverages !== undefined && object.heroAverages !== null)
+      ? CMsgGlobalHeroAverages.fromPartial(object.heroAverages)
+      : undefined;
     message.graphData = object.graphData?.map((e) => CMsgHeroGlobalDataResponse_GraphData.fromPartial(e)) || [];
     message.weekData = object.weekData?.map((e) => CMsgHeroGlobalDataResponse_WeekData.fromPartial(e)) || [];
     return message;
@@ -34012,7 +34201,7 @@ export const CMsgHeroGlobalDataHeroesAlliesAndEnemies = {
     const obj: any = {};
     if (message.rankedHeroData?.length) {
       obj.rankedHeroData = message.rankedHeroData.map((e) =>
-        CMsgHeroGlobalDataHeroesAlliesAndEnemies_RankedHeroData.toJSON(e),
+        CMsgHeroGlobalDataHeroesAlliesAndEnemies_RankedHeroData.toJSON(e)
       );
     }
     return obj;
@@ -34039,13 +34228,13 @@ export const CMsgHeroGlobalDataHeroesAlliesAndEnemies_HeroData = {
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.winRate !== undefined && message.winRate !== 0) {
       writer.uint32(16).uint32(message.winRate);
     }
     if (message.firstOtherHeroId !== undefined && message.firstOtherHeroId !== 0) {
-      writer.uint32(24).uint32(message.firstOtherHeroId);
+      writer.uint32(24).int32(message.firstOtherHeroId);
     }
     writer.uint32(42).fork();
     for (const v of message.allyWinRate) {
@@ -34072,7 +34261,7 @@ export const CMsgHeroGlobalDataHeroesAlliesAndEnemies_HeroData = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -34086,7 +34275,7 @@ export const CMsgHeroGlobalDataHeroesAlliesAndEnemies_HeroData = {
             break;
           }
 
-          message.firstOtherHeroId = reader.uint32();
+          message.firstOtherHeroId = reader.int32();
           continue;
         case 5:
           if (tag === 40) {
@@ -34261,8 +34450,8 @@ export const CMsgHeroGlobalDataHeroesAlliesAndEnemies_RankedHeroData = {
   ): CMsgHeroGlobalDataHeroesAlliesAndEnemies_RankedHeroData {
     const message = createBaseCMsgHeroGlobalDataHeroesAlliesAndEnemies_RankedHeroData();
     message.rank = object.rank ?? 0;
-    message.heroData =
-      object.heroData?.map((e) => CMsgHeroGlobalDataHeroesAlliesAndEnemies_HeroData.fromPartial(e)) || [];
+    message.heroData = object.heroData?.map((e) => CMsgHeroGlobalDataHeroesAlliesAndEnemies_HeroData.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -34448,7 +34637,7 @@ export const CMsgGCToClientCavernCrawlMapPathCompleted = {
       writer.uint32(8).uint32(message.eventId);
     }
     if (message.heroIdCompleted !== undefined && message.heroIdCompleted !== 0) {
-      writer.uint32(16).uint32(message.heroIdCompleted);
+      writer.uint32(16).int32(message.heroIdCompleted);
     }
     for (const v of message.completedPaths) {
       CMsgGCToClientCavernCrawlMapPathCompleted_CompletedPathInfo.encode(v!, writer.uint32(26).fork()).ldelim();
@@ -34478,7 +34667,7 @@ export const CMsgGCToClientCavernCrawlMapPathCompleted = {
             break;
           }
 
-          message.heroIdCompleted = reader.uint32();
+          message.heroIdCompleted = reader.int32();
           continue;
         case 3:
           if (tag !== 26) {
@@ -34526,7 +34715,7 @@ export const CMsgGCToClientCavernCrawlMapPathCompleted = {
     }
     if (message.completedPaths?.length) {
       obj.completedPaths = message.completedPaths.map((e) =>
-        CMsgGCToClientCavernCrawlMapPathCompleted_CompletedPathInfo.toJSON(e),
+        CMsgGCToClientCavernCrawlMapPathCompleted_CompletedPathInfo.toJSON(e)
       );
     }
     if (message.mapVariant !== undefined && message.mapVariant !== 255) {
@@ -35334,8 +35523,8 @@ export const CMsgClientToGCCavernCrawlRequestMapStateResponse = {
         : 0,
       inventoryItem: globalThis.Array.isArray(object?.inventoryItem)
         ? object.inventoryItem.map((e: any) =>
-            CMsgClientToGCCavernCrawlRequestMapStateResponse_InventoryItem.fromJSON(e),
-          )
+          CMsgClientToGCCavernCrawlRequestMapStateResponse_InventoryItem.fromJSON(e)
+        )
         : [],
       mapVariants: globalThis.Array.isArray(object?.mapVariants)
         ? object.mapVariants.map((e: any) => CMsgClientToGCCavernCrawlRequestMapStateResponse_MapVariant.fromJSON(e))
@@ -35353,12 +35542,12 @@ export const CMsgClientToGCCavernCrawlRequestMapStateResponse = {
     }
     if (message.inventoryItem?.length) {
       obj.inventoryItem = message.inventoryItem.map((e) =>
-        CMsgClientToGCCavernCrawlRequestMapStateResponse_InventoryItem.toJSON(e),
+        CMsgClientToGCCavernCrawlRequestMapStateResponse_InventoryItem.toJSON(e)
       );
     }
     if (message.mapVariants?.length) {
       obj.mapVariants = message.mapVariants.map((e) =>
-        CMsgClientToGCCavernCrawlRequestMapStateResponse_MapVariant.toJSON(e),
+        CMsgClientToGCCavernCrawlRequestMapStateResponse_MapVariant.toJSON(e)
       );
     }
     return obj;
@@ -35862,8 +36051,8 @@ export const CMsgClientToGCCavernCrawlRequestMapStateResponse_MapVariant = {
       halfCompletedPaths4: isSet(object.halfCompletedPaths4) ? globalThis.String(object.halfCompletedPaths4) : "0",
       swappedChallenge: globalThis.Array.isArray(object?.swappedChallenge)
         ? object.swappedChallenge.map((e: any) =>
-            CMsgClientToGCCavernCrawlRequestMapStateResponse_SwappedChallenge.fromJSON(e),
-          )
+          CMsgClientToGCCavernCrawlRequestMapStateResponse_SwappedChallenge.fromJSON(e)
+        )
         : [],
       ultraRareRewardRoomNumber: isSet(object.ultraRareRewardRoomNumber)
         ? globalThis.Number(object.ultraRareRewardRoomNumber)
@@ -35917,7 +36106,7 @@ export const CMsgClientToGCCavernCrawlRequestMapStateResponse_MapVariant = {
     }
     if (message.swappedChallenge?.length) {
       obj.swappedChallenge = message.swappedChallenge.map((e) =>
-        CMsgClientToGCCavernCrawlRequestMapStateResponse_SwappedChallenge.toJSON(e),
+        CMsgClientToGCCavernCrawlRequestMapStateResponse_SwappedChallenge.toJSON(e)
       );
     }
     if (message.ultraRareRewardRoomNumber !== undefined && message.ultraRareRewardRoomNumber !== 255) {
@@ -35925,7 +36114,7 @@ export const CMsgClientToGCCavernCrawlRequestMapStateResponse_MapVariant = {
     }
     if (message.treasureMap?.length) {
       obj.treasureMap = message.treasureMap.map((e) =>
-        CMsgClientToGCCavernCrawlRequestMapStateResponse_TreasureMap.toJSON(e),
+        CMsgClientToGCCavernCrawlRequestMapStateResponse_TreasureMap.toJSON(e)
       );
     }
     return obj;
@@ -35955,7 +36144,7 @@ export const CMsgClientToGCCavernCrawlRequestMapStateResponse_MapVariant = {
     message.halfCompletedPaths4 = object.halfCompletedPaths4 ?? "0";
     message.swappedChallenge =
       object.swappedChallenge?.map((e) =>
-        CMsgClientToGCCavernCrawlRequestMapStateResponse_SwappedChallenge.fromPartial(e),
+        CMsgClientToGCCavernCrawlRequestMapStateResponse_SwappedChallenge.fromPartial(e)
       ) || [];
     message.ultraRareRewardRoomNumber = object.ultraRareRewardRoomNumber ?? 255;
     message.treasureMap =
@@ -36092,8 +36281,8 @@ export const CMsgClientToGCCavernCrawlGetClaimedRoomCountResponse = {
         : 0,
       mapVariants: globalThis.Array.isArray(object?.mapVariants)
         ? object.mapVariants.map((e: any) =>
-            CMsgClientToGCCavernCrawlGetClaimedRoomCountResponse_MapVariant.fromJSON(e),
-          )
+          CMsgClientToGCCavernCrawlGetClaimedRoomCountResponse_MapVariant.fromJSON(e)
+        )
         : [],
       availableMapVariantsMask: isSet(object.availableMapVariantsMask)
         ? globalThis.Number(object.availableMapVariantsMask)
@@ -36108,7 +36297,7 @@ export const CMsgClientToGCCavernCrawlGetClaimedRoomCountResponse = {
     }
     if (message.mapVariants?.length) {
       obj.mapVariants = message.mapVariants.map((e) =>
-        CMsgClientToGCCavernCrawlGetClaimedRoomCountResponse_MapVariant.toJSON(e),
+        CMsgClientToGCCavernCrawlGetClaimedRoomCountResponse_MapVariant.toJSON(e)
       );
     }
     if (message.availableMapVariantsMask !== undefined && message.availableMapVariantsMask !== 0) {
@@ -37092,8 +37281,8 @@ export const CMsgSocialFeedCommentsResponse = {
   fromPartial(object: DeepPartial<CMsgSocialFeedCommentsResponse>): CMsgSocialFeedCommentsResponse {
     const message = createBaseCMsgSocialFeedCommentsResponse();
     message.result = object.result ?? 0;
-    message.feedComments =
-      object.feedComments?.map((e) => CMsgSocialFeedCommentsResponse_FeedComment.fromPartial(e)) || [];
+    message.feedComments = object.feedComments?.map((e) => CMsgSocialFeedCommentsResponse_FeedComment.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -38567,7 +38756,7 @@ export const CMsgGCToClientGetFilteredPlayersResponse = {
     }
     if (message.filteredPlayers?.length) {
       obj.filteredPlayers = message.filteredPlayers.map((e) =>
-        CMsgGCToClientGetFilteredPlayersResponse_CFilterEntry.toJSON(e),
+        CMsgGCToClientGetFilteredPlayersResponse_CFilterEntry.toJSON(e)
       );
     }
     if (message.baseSlots !== undefined && message.baseSlots !== 0) {
@@ -39929,10 +40118,9 @@ export const CMsgGCToClientManageFavoritesResponse = {
     const message = createBaseCMsgGCToClientManageFavoritesResponse();
     message.response = object.response ?? 0;
     message.debugMessage = object.debugMessage ?? "";
-    message.player =
-      object.player !== undefined && object.player !== null
-        ? CMsgPartySearchPlayer.fromPartial(object.player)
-        : undefined;
+    message.player = (object.player !== undefined && object.player !== null)
+      ? CMsgPartySearchPlayer.fromPartial(object.player)
+      : undefined;
     return message;
   },
 };
@@ -40292,8 +40480,8 @@ export const CMsgGCToClientVerifyFavoritePlayersResponse = {
     object: DeepPartial<CMsgGCToClientVerifyFavoritePlayersResponse>,
   ): CMsgGCToClientVerifyFavoritePlayersResponse {
     const message = createBaseCMsgGCToClientVerifyFavoritePlayersResponse();
-    message.results =
-      object.results?.map((e) => CMsgGCToClientVerifyFavoritePlayersResponse_Result.fromPartial(e)) || [];
+    message.results = object.results?.map((e) => CMsgGCToClientVerifyFavoritePlayersResponse_Result.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -40373,10 +40561,9 @@ export const CMsgGCToClientVerifyFavoritePlayersResponse_Result = {
     object: DeepPartial<CMsgGCToClientVerifyFavoritePlayersResponse_Result>,
   ): CMsgGCToClientVerifyFavoritePlayersResponse_Result {
     const message = createBaseCMsgGCToClientVerifyFavoritePlayersResponse_Result();
-    message.player =
-      object.player !== undefined && object.player !== null
-        ? CMsgPartySearchPlayer.fromPartial(object.player)
-        : undefined;
+    message.player = (object.player !== undefined && object.player !== null)
+      ? CMsgPartySearchPlayer.fromPartial(object.player)
+      : undefined;
     message.isFavorite = object.isFavorite ?? false;
     return message;
   },
@@ -40527,7 +40714,7 @@ export const CMsgClientToGCRequestPlayerRecentAccomplishmentsResponse = {
     const message = createBaseCMsgClientToGCRequestPlayerRecentAccomplishmentsResponse();
     message.result = object.result ?? 0;
     message.playerAccomplishments =
-      object.playerAccomplishments !== undefined && object.playerAccomplishments !== null
+      (object.playerAccomplishments !== undefined && object.playerAccomplishments !== null)
         ? CMsgPlayerRecentAccomplishments.fromPartial(object.playerAccomplishments)
         : undefined;
     return message;
@@ -40547,7 +40734,7 @@ export const CMsgClientToGCRequestPlayerHeroRecentAccomplishments = {
       writer.uint32(8).uint32(message.accountId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     return writer;
   },
@@ -40571,7 +40758,7 @@ export const CMsgClientToGCRequestPlayerHeroRecentAccomplishments = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -40698,10 +40885,9 @@ export const CMsgClientToGCRequestPlayerHeroRecentAccomplishmentsResponse = {
   ): CMsgClientToGCRequestPlayerHeroRecentAccomplishmentsResponse {
     const message = createBaseCMsgClientToGCRequestPlayerHeroRecentAccomplishmentsResponse();
     message.result = object.result ?? 0;
-    message.heroAccomplishments =
-      object.heroAccomplishments !== undefined && object.heroAccomplishments !== null
-        ? CMsgPlayerHeroRecentAccomplishments.fromPartial(object.heroAccomplishments)
-        : undefined;
+    message.heroAccomplishments = (object.heroAccomplishments !== undefined && object.heroAccomplishments !== null)
+      ? CMsgPlayerHeroRecentAccomplishments.fromPartial(object.heroAccomplishments)
+      : undefined;
     return message;
   },
 };
@@ -41091,10 +41277,9 @@ export const CMsgClientToGCUnderDraftResponse = {
     message.result = object.result ?? 0;
     message.accountId = object.accountId ?? 0;
     message.eventId = object.eventId ?? 0;
-    message.draftData =
-      object.draftData !== undefined && object.draftData !== null
-        ? CMsgUnderDraftData.fromPartial(object.draftData)
-        : undefined;
+    message.draftData = (object.draftData !== undefined && object.draftData !== null)
+      ? CMsgUnderDraftData.fromPartial(object.draftData)
+      : undefined;
     return message;
   },
 };
@@ -41240,10 +41425,9 @@ export const CMsgClientToGCUnderDraftRerollResponse = {
     const message = createBaseCMsgClientToGCUnderDraftRerollResponse();
     message.result = object.result ?? 0;
     message.eventId = object.eventId ?? 0;
-    message.draftData =
-      object.draftData !== undefined && object.draftData !== null
-        ? CMsgUnderDraftData.fromPartial(object.draftData)
-        : undefined;
+    message.draftData = (object.draftData !== undefined && object.draftData !== null)
+      ? CMsgUnderDraftData.fromPartial(object.draftData)
+      : undefined;
     return message;
   },
 };
@@ -41478,10 +41662,9 @@ export const CMsgClientToGCUnderDraftBuyResponse = {
     message.result = object.result ?? 0;
     message.eventId = object.eventId ?? 0;
     message.slotId = object.slotId ?? 0;
-    message.draftData =
-      object.draftData !== undefined && object.draftData !== null
-        ? CMsgUnderDraftData.fromPartial(object.draftData)
-        : undefined;
+    message.draftData = (object.draftData !== undefined && object.draftData !== null)
+      ? CMsgUnderDraftData.fromPartial(object.draftData)
+      : undefined;
     return message;
   },
 };
@@ -41631,10 +41814,9 @@ export const CMsgClientToGCUnderDraftRollBackBenchResponse = {
     const message = createBaseCMsgClientToGCUnderDraftRollBackBenchResponse();
     message.result = object.result ?? 0;
     message.eventId = object.eventId ?? 0;
-    message.draftData =
-      object.draftData !== undefined && object.draftData !== null
-        ? CMsgUnderDraftData.fromPartial(object.draftData)
-        : undefined;
+    message.draftData = (object.draftData !== undefined && object.draftData !== null)
+      ? CMsgUnderDraftData.fromPartial(object.draftData)
+      : undefined;
     return message;
   },
 };
@@ -41812,10 +41994,9 @@ export const CMsgClientToGCUnderDraftSellResponse = {
     message.result = object.result ?? 0;
     message.eventId = object.eventId ?? 0;
     message.slotId = object.slotId ?? 0;
-    message.draftData =
-      object.draftData !== undefined && object.draftData !== null
-        ? CMsgUnderDraftData.fromPartial(object.draftData)
-        : undefined;
+    message.draftData = (object.draftData !== undefined && object.draftData !== null)
+      ? CMsgUnderDraftData.fromPartial(object.draftData)
+      : undefined;
     return message;
   },
 };
@@ -42372,7 +42553,7 @@ export const CMsgClientToGCRequestReporterUpdatesResponse_ReporterUpdate = {
       writer.uint32(8).uint64(message.matchId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     if (message.reportReason !== undefined && message.reportReason !== 0) {
       writer.uint32(24).uint32(message.reportReason);
@@ -42402,7 +42583,7 @@ export const CMsgClientToGCRequestReporterUpdatesResponse_ReporterUpdate = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag !== 24) {
@@ -42830,7 +43011,7 @@ export const CMsgClientToGCGetOWMatchDetailsResponse = {
       writer.uint32(64).int32(message.reportReason);
     }
     if (message.targetHeroId !== undefined && message.targetHeroId !== 0) {
-      writer.uint32(72).uint32(message.targetHeroId);
+      writer.uint32(72).int32(message.targetHeroId);
     }
     if (message.rankTier !== undefined && message.rankTier !== 0) {
       writer.uint32(80).uint32(message.rankTier);
@@ -42909,7 +43090,7 @@ export const CMsgClientToGCGetOWMatchDetailsResponse = {
             break;
           }
 
-          message.targetHeroId = reader.uint32();
+          message.targetHeroId = reader.int32();
           continue;
         case 10:
           if (tag !== 80) {
@@ -43851,8 +44032,8 @@ export const CMsgClientToGCGetDPCFavoritesResponse = {
   fromPartial(object: DeepPartial<CMsgClientToGCGetDPCFavoritesResponse>): CMsgClientToGCGetDPCFavoritesResponse {
     const message = createBaseCMsgClientToGCGetDPCFavoritesResponse();
     message.result = object.result ?? 0;
-    message.favorites =
-      object.favorites?.map((e) => CMsgClientToGCGetDPCFavoritesResponse_Favorite.fromPartial(e)) || [];
+    message.favorites = object.favorites?.map((e) => CMsgClientToGCGetDPCFavoritesResponse_Favorite.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -44537,10 +44718,9 @@ export const CMsgClientToGCGetStickerbookResponse = {
   fromPartial(object: DeepPartial<CMsgClientToGCGetStickerbookResponse>): CMsgClientToGCGetStickerbookResponse {
     const message = createBaseCMsgClientToGCGetStickerbookResponse();
     message.response = object.response ?? 0;
-    message.stickerbook =
-      object.stickerbook !== undefined && object.stickerbook !== null
-        ? CMsgStickerbook.fromPartial(object.stickerbook)
-        : undefined;
+    message.stickerbook = (object.stickerbook !== undefined && object.stickerbook !== null)
+      ? CMsgStickerbook.fromPartial(object.stickerbook)
+      : undefined;
     return message;
   },
 };
@@ -45006,10 +45186,9 @@ export const CMsgClientToGCPlaceStickersRequest_StickerItem = {
   ): CMsgClientToGCPlaceStickersRequest_StickerItem {
     const message = createBaseCMsgClientToGCPlaceStickersRequest_StickerItem();
     message.pageNum = object.pageNum ?? 0;
-    message.sticker =
-      object.sticker !== undefined && object.sticker !== null
-        ? CMsgStickerbookSticker.fromPartial(object.sticker)
-        : undefined;
+    message.sticker = (object.sticker !== undefined && object.sticker !== null)
+      ? CMsgStickerbookSticker.fromPartial(object.sticker)
+      : undefined;
     return message;
   },
 };
@@ -45389,10 +45568,9 @@ export const CMsgClientToGCOrderStickerbookTeamPageRequest = {
     object: DeepPartial<CMsgClientToGCOrderStickerbookTeamPageRequest>,
   ): CMsgClientToGCOrderStickerbookTeamPageRequest {
     const message = createBaseCMsgClientToGCOrderStickerbookTeamPageRequest();
-    message.pageOrderSequence =
-      object.pageOrderSequence !== undefined && object.pageOrderSequence !== null
-        ? CMsgStickerbookTeamPageOrderSequence.fromPartial(object.pageOrderSequence)
-        : undefined;
+    message.pageOrderSequence = (object.pageOrderSequence !== undefined && object.pageOrderSequence !== null)
+      ? CMsgStickerbookTeamPageOrderSequence.fromPartial(object.pageOrderSequence)
+      : undefined;
     return message;
   },
 };
@@ -45472,7 +45650,7 @@ function createBaseCMsgClientToGCSetHeroSticker(): CMsgClientToGCSetHeroSticker 
 export const CMsgClientToGCSetHeroSticker = {
   encode(message: CMsgClientToGCSetHeroSticker, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.newItemId !== undefined && message.newItemId !== "0") {
       writer.uint32(16).uint64(message.newItemId);
@@ -45495,7 +45673,7 @@ export const CMsgClientToGCSetHeroSticker = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -45725,10 +45903,9 @@ export const CMsgClientToGCGetHeroStickersResponse = {
   fromPartial(object: DeepPartial<CMsgClientToGCGetHeroStickersResponse>): CMsgClientToGCGetHeroStickersResponse {
     const message = createBaseCMsgClientToGCGetHeroStickersResponse();
     message.response = object.response ?? 0;
-    message.stickerHeroes =
-      object.stickerHeroes !== undefined && object.stickerHeroes !== null
-        ? CMsgStickerHeroes.fromPartial(object.stickerHeroes)
-        : undefined;
+    message.stickerHeroes = (object.stickerHeroes !== undefined && object.stickerHeroes !== null)
+      ? CMsgStickerHeroes.fromPartial(object.stickerHeroes)
+      : undefined;
     return message;
   },
 };
@@ -46141,8 +46318,8 @@ export const CMsgGCToClientCollectorsCacheAvailableDataResponse = {
     object: DeepPartial<CMsgGCToClientCollectorsCacheAvailableDataResponse>,
   ): CMsgGCToClientCollectorsCacheAvailableDataResponse {
     const message = createBaseCMsgGCToClientCollectorsCacheAvailableDataResponse();
-    message.votes =
-      object.votes?.map((e) => CMsgGCToClientCollectorsCacheAvailableDataResponse_Vote.fromPartial(e)) || [];
+    message.votes = object.votes?.map((e) => CMsgGCToClientCollectorsCacheAvailableDataResponse_Vote.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -46282,10 +46459,9 @@ export const CMsgClientToGCUploadMatchClip = {
   },
   fromPartial(object: DeepPartial<CMsgClientToGCUploadMatchClip>): CMsgClientToGCUploadMatchClip {
     const message = createBaseCMsgClientToGCUploadMatchClip();
-    message.matchClip =
-      object.matchClip !== undefined && object.matchClip !== null
-        ? CMatchClip.fromPartial(object.matchClip)
-        : undefined;
+    message.matchClip = (object.matchClip !== undefined && object.matchClip !== null)
+      ? CMatchClip.fromPartial(object.matchClip)
+      : undefined;
     return message;
   },
 };
@@ -46475,14 +46651,12 @@ export const CMsgGCToClientMapStatsResponse = {
   fromPartial(object: DeepPartial<CMsgGCToClientMapStatsResponse>): CMsgGCToClientMapStatsResponse {
     const message = createBaseCMsgGCToClientMapStatsResponse();
     message.response = object.response ?? 0;
-    message.personalStats =
-      object.personalStats !== undefined && object.personalStats !== null
-        ? CMsgMapStatsSnapshot.fromPartial(object.personalStats)
-        : undefined;
-    message.globalStats =
-      object.globalStats !== undefined && object.globalStats !== null
-        ? CMsgGlobalMapStats.fromPartial(object.globalStats)
-        : undefined;
+    message.personalStats = (object.personalStats !== undefined && object.personalStats !== null)
+      ? CMsgMapStatsSnapshot.fromPartial(object.personalStats)
+      : undefined;
+    message.globalStats = (object.globalStats !== undefined && object.globalStats !== null)
+      ? CMsgGlobalMapStats.fromPartial(object.globalStats)
+      : undefined;
     return message;
   },
 };
@@ -46793,10 +46967,9 @@ export const CMsgClientToGCRoadToTIGetQuestsResponse = {
   fromPartial(object: DeepPartial<CMsgClientToGCRoadToTIGetQuestsResponse>): CMsgClientToGCRoadToTIGetQuestsResponse {
     const message = createBaseCMsgClientToGCRoadToTIGetQuestsResponse();
     message.response = object.response ?? 0;
-    message.questData =
-      object.questData !== undefined && object.questData !== null
-        ? CMsgRoadToTIUserData.fromPartial(object.questData)
-        : undefined;
+    message.questData = (object.questData !== undefined && object.questData !== null)
+      ? CMsgRoadToTIUserData.fromPartial(object.questData)
+      : undefined;
     return message;
   },
 };
@@ -46933,10 +47106,9 @@ export const CMsgClientToGCRoadToTIGetActiveQuestResponse = {
   ): CMsgClientToGCRoadToTIGetActiveQuestResponse {
     const message = createBaseCMsgClientToGCRoadToTIGetActiveQuestResponse();
     message.response = object.response ?? 0;
-    message.questData =
-      object.questData !== undefined && object.questData !== null
-        ? CMsgRoadToTIAssignedQuest.fromPartial(object.questData)
-        : undefined;
+    message.questData = (object.questData !== undefined && object.questData !== null)
+      ? CMsgRoadToTIAssignedQuest.fromPartial(object.questData)
+      : undefined;
     return message;
   },
 };
@@ -47010,10 +47182,9 @@ export const CMsgGCToClientRoadToTIQuestDataUpdated = {
   fromPartial(object: DeepPartial<CMsgGCToClientRoadToTIQuestDataUpdated>): CMsgGCToClientRoadToTIQuestDataUpdated {
     const message = createBaseCMsgGCToClientRoadToTIQuestDataUpdated();
     message.eventId = object.eventId ?? 0;
-    message.questData =
-      object.questData !== undefined && object.questData !== null
-        ? CMsgRoadToTIUserData.fromPartial(object.questData)
-        : undefined;
+    message.questData = (object.questData !== undefined && object.questData !== null)
+      ? CMsgRoadToTIUserData.fromPartial(object.questData)
+      : undefined;
     return message;
   },
 };
@@ -47337,10 +47508,9 @@ export const CMsgLobbyRoadToTIMatchQuestData = {
   },
   fromPartial(object: DeepPartial<CMsgLobbyRoadToTIMatchQuestData>): CMsgLobbyRoadToTIMatchQuestData {
     const message = createBaseCMsgLobbyRoadToTIMatchQuestData();
-    message.questData =
-      object.questData !== undefined && object.questData !== null
-        ? CMsgRoadToTIAssignedQuest.fromPartial(object.questData)
-        : undefined;
+    message.questData = (object.questData !== undefined && object.questData !== null)
+      ? CMsgRoadToTIAssignedQuest.fromPartial(object.questData)
+      : undefined;
     message.questPeriod = object.questPeriod ?? 0;
     message.questNumber = object.questNumber ?? 0;
     return message;
@@ -47546,7 +47716,7 @@ export const CMsgClientToGCSetBannedHeroes = {
   encode(message: CMsgClientToGCSetBannedHeroes, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).fork();
     for (const v of message.bannedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     return writer;
@@ -47561,7 +47731,7 @@ export const CMsgClientToGCSetBannedHeroes = {
       switch (tag >>> 3) {
         case 1:
           if (tag === 8) {
-            message.bannedHeroIds.push(reader.uint32());
+            message.bannedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -47569,7 +47739,7 @@ export const CMsgClientToGCSetBannedHeroes = {
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.bannedHeroIds.push(reader.uint32());
+              message.bannedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -47699,10 +47869,9 @@ export const CMsgClientToGCUpdateComicBookStats = {
     const message = createBaseCMsgClientToGCUpdateComicBookStats();
     message.comicId = object.comicId ?? 0;
     message.stats = object.stats?.map((e) => CMsgClientToGCUpdateComicBookStats_SingleStat.fromPartial(e)) || [];
-    message.languageStats =
-      object.languageStats !== undefined && object.languageStats !== null
-        ? CMsgClientToGCUpdateComicBookStats_LanguageStats.fromPartial(object.languageStats)
-        : undefined;
+    message.languageStats = (object.languageStats !== undefined && object.languageStats !== null)
+      ? CMsgClientToGCUpdateComicBookStats_LanguageStats.fromPartial(object.languageStats)
+      : undefined;
     return message;
   },
 };
@@ -47881,6 +48050,120 @@ export const CMsgClientToGCUpdateComicBookStats_LanguageStats = {
   },
 };
 
+function createBaseCMsgGCRankedPlayerInfoSubmit(): CMsgGCRankedPlayerInfoSubmit {
+  return { name: "" };
+}
+
+export const CMsgGCRankedPlayerInfoSubmit = {
+  encode(message: CMsgGCRankedPlayerInfoSubmit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.name !== undefined && message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGCRankedPlayerInfoSubmit {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgGCRankedPlayerInfoSubmit();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgGCRankedPlayerInfoSubmit {
+    return { name: isSet(object.name) ? globalThis.String(object.name) : "" };
+  },
+
+  toJSON(message: CMsgGCRankedPlayerInfoSubmit): unknown {
+    const obj: any = {};
+    if (message.name !== undefined && message.name !== "") {
+      obj.name = message.name;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgGCRankedPlayerInfoSubmit>): CMsgGCRankedPlayerInfoSubmit {
+    return CMsgGCRankedPlayerInfoSubmit.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgGCRankedPlayerInfoSubmit>): CMsgGCRankedPlayerInfoSubmit {
+    const message = createBaseCMsgGCRankedPlayerInfoSubmit();
+    message.name = object.name ?? "";
+    return message;
+  },
+};
+
+function createBaseCMsgGCRankedPlayerInfoSubmitResponse(): CMsgGCRankedPlayerInfoSubmitResponse {
+  return { result: 0 };
+}
+
+export const CMsgGCRankedPlayerInfoSubmitResponse = {
+  encode(message: CMsgGCRankedPlayerInfoSubmitResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.result !== undefined && message.result !== 0) {
+      writer.uint32(8).int32(message.result);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGCRankedPlayerInfoSubmitResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgGCRankedPlayerInfoSubmitResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.result = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgGCRankedPlayerInfoSubmitResponse {
+    return { result: isSet(object.result) ? cMsgGCRankedPlayerInfoSubmitResponse_EResultFromJSON(object.result) : 0 };
+  },
+
+  toJSON(message: CMsgGCRankedPlayerInfoSubmitResponse): unknown {
+    const obj: any = {};
+    if (message.result !== undefined && message.result !== 0) {
+      obj.result = cMsgGCRankedPlayerInfoSubmitResponse_EResultToJSON(message.result);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgGCRankedPlayerInfoSubmitResponse>): CMsgGCRankedPlayerInfoSubmitResponse {
+    return CMsgGCRankedPlayerInfoSubmitResponse.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgGCRankedPlayerInfoSubmitResponse>): CMsgGCRankedPlayerInfoSubmitResponse {
+    const message = createBaseCMsgGCRankedPlayerInfoSubmitResponse();
+    message.result = object.result ?? 0;
+    return message;
+  },
+};
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -47891,15 +48174,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

@@ -46,7 +46,6 @@ export enum EBaseUserMessages {
   UM_AnimGraphUpdate = 149,
   UM_HapticsManagerPulse = 150,
   UM_HapticsManagerEffect = 151,
-  UM_CommandQueueState = 152,
   UM_UpdateCssClasses = 153,
   UM_ServerFrameTime = 154,
   UM_LagCompensationError = 155,
@@ -174,9 +173,6 @@ export function eBaseUserMessagesFromJSON(object: any): EBaseUserMessages {
     case 151:
     case "UM_HapticsManagerEffect":
       return EBaseUserMessages.UM_HapticsManagerEffect;
-    case 152:
-    case "UM_CommandQueueState":
-      return EBaseUserMessages.UM_CommandQueueState;
     case 153:
     case "UM_UpdateCssClasses":
       return EBaseUserMessages.UM_UpdateCssClasses;
@@ -301,8 +297,6 @@ export function eBaseUserMessagesToJSON(object: EBaseUserMessages): string {
       return "UM_HapticsManagerPulse";
     case EBaseUserMessages.UM_HapticsManagerEffect:
       return "UM_HapticsManagerEffect";
-    case EBaseUserMessages.UM_CommandQueueState:
-      return "UM_CommandQueueState";
     case EBaseUserMessages.UM_UpdateCssClasses:
       return "UM_UpdateCssClasses";
     case EBaseUserMessages.UM_ServerFrameTime:
@@ -473,6 +467,11 @@ export enum particleMessage {
   GAME_PARTICLE_MANAGER_EVENT_CLEAR_MODELLIST_OVERRIDE = 31,
   GAME_PARTICLE_MANAGER_EVENT_CREATE_PHYSICS_SIM = 32,
   GAME_PARTICLE_MANAGER_EVENT_DESTROY_PHYSICS_SIM = 33,
+  GAME_PARTICLE_MANAGER_EVENT_SET_VDATA = 34,
+  GAME_PARTICLE_MANAGER_EVENT_SET_MATERIAL_OVERRIDE = 35,
+  GAME_PARTICLE_MANAGER_EVENT_ADD_FAN = 36,
+  GAME_PARTICLE_MANAGER_EVENT_UPDATE_FAN = 37,
+  GAME_PARTICLE_MANAGER_EVENT_SET_CLUSTER_GROWTH = 38,
 }
 
 export function particleMessageFromJSON(object: any): particleMessage {
@@ -579,6 +578,21 @@ export function particleMessageFromJSON(object: any): particleMessage {
     case 33:
     case "GAME_PARTICLE_MANAGER_EVENT_DESTROY_PHYSICS_SIM":
       return particleMessage.GAME_PARTICLE_MANAGER_EVENT_DESTROY_PHYSICS_SIM;
+    case 34:
+    case "GAME_PARTICLE_MANAGER_EVENT_SET_VDATA":
+      return particleMessage.GAME_PARTICLE_MANAGER_EVENT_SET_VDATA;
+    case 35:
+    case "GAME_PARTICLE_MANAGER_EVENT_SET_MATERIAL_OVERRIDE":
+      return particleMessage.GAME_PARTICLE_MANAGER_EVENT_SET_MATERIAL_OVERRIDE;
+    case 36:
+    case "GAME_PARTICLE_MANAGER_EVENT_ADD_FAN":
+      return particleMessage.GAME_PARTICLE_MANAGER_EVENT_ADD_FAN;
+    case 37:
+    case "GAME_PARTICLE_MANAGER_EVENT_UPDATE_FAN":
+      return particleMessage.GAME_PARTICLE_MANAGER_EVENT_UPDATE_FAN;
+    case 38:
+    case "GAME_PARTICLE_MANAGER_EVENT_SET_CLUSTER_GROWTH":
+      return particleMessage.GAME_PARTICLE_MANAGER_EVENT_SET_CLUSTER_GROWTH;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum particleMessage");
   }
@@ -654,6 +668,16 @@ export function particleMessageToJSON(object: particleMessage): string {
       return "GAME_PARTICLE_MANAGER_EVENT_CREATE_PHYSICS_SIM";
     case particleMessage.GAME_PARTICLE_MANAGER_EVENT_DESTROY_PHYSICS_SIM:
       return "GAME_PARTICLE_MANAGER_EVENT_DESTROY_PHYSICS_SIM";
+    case particleMessage.GAME_PARTICLE_MANAGER_EVENT_SET_VDATA:
+      return "GAME_PARTICLE_MANAGER_EVENT_SET_VDATA";
+    case particleMessage.GAME_PARTICLE_MANAGER_EVENT_SET_MATERIAL_OVERRIDE:
+      return "GAME_PARTICLE_MANAGER_EVENT_SET_MATERIAL_OVERRIDE";
+    case particleMessage.GAME_PARTICLE_MANAGER_EVENT_ADD_FAN:
+      return "GAME_PARTICLE_MANAGER_EVENT_ADD_FAN";
+    case particleMessage.GAME_PARTICLE_MANAGER_EVENT_UPDATE_FAN:
+      return "GAME_PARTICLE_MANAGER_EVENT_UPDATE_FAN";
+    case particleMessage.GAME_PARTICLE_MANAGER_EVENT_SET_CLUSTER_GROWTH:
+      return "GAME_PARTICLE_MANAGER_EVENT_SET_CLUSTER_GROWTH";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum particleMessage");
   }
@@ -799,9 +823,11 @@ export interface CUserMessageTextMsg {
   param: string[];
 }
 
-export interface CUserMessageGameTitle {}
+export interface CUserMessageGameTitle {
+}
 
-export interface CUserMessageResetHUD {}
+export interface CUserMessageResetHUD {
+}
 
 export interface CUserMessageSendAudio {
   soundname?: string | undefined;
@@ -821,7 +847,8 @@ export interface CUserMessageVoiceMask {
   modEnable?: boolean | undefined;
 }
 
-export interface CUserMessageRequestState {}
+export interface CUserMessageRequestState {
+}
 
 export interface CUserMessageRumble {
   index?: number | undefined;
@@ -948,9 +975,15 @@ export interface CUserMsgParticleManager {
   clearModellistOverride?: CUserMsgParticleManager_ClearModellistOverride | undefined;
   createPhysicsSim?: CUserMsgParticleManager_CreatePhysicsSim | undefined;
   destroyPhysicsSim?: CUserMsgParticleManager_DestroyPhysicsSim | undefined;
+  setVdata?: CUserMsgParticleManager_SetVData | undefined;
+  setMaterialOverride?: CUserMsgParticleManager_SetMaterialOverride | undefined;
+  addFan?: CUserMsgParticleManager_AddFan | undefined;
+  updateFan?: CUserMsgParticleManager_UpdateFan | undefined;
+  setParticleClusterGrowth?: CUserMsgParticleManager_SetParticleClusterGrowth | undefined;
 }
 
-export interface CUserMsgParticleManager_ReleaseParticleIndex {}
+export interface CUserMsgParticleManager_ReleaseParticleIndex {
+}
 
 export interface CUserMsgParticleManager_CreateParticle {
   particleNameIndex?: string | undefined;
@@ -962,6 +995,7 @@ export interface CUserMsgParticleManager_CreateParticle {
   controlPointConfiguration?: string | undefined;
   cluster?: boolean | undefined;
   endcapTime?: number | undefined;
+  aggregationPosition?: CMsgVector | undefined;
 }
 
 export interface CUserMsgParticleManager_DestroyParticle {
@@ -1143,9 +1177,51 @@ export interface CUserMsgParticleManager_SetParticleNamedValueContext_EHandleCon
 
 export interface CUserMsgParticleManager_CreatePhysicsSim {
   propGroupName?: string | undefined;
+  useHighQualitySimulation?: boolean | undefined;
+  maxParticleCount?: number | undefined;
 }
 
-export interface CUserMsgParticleManager_DestroyPhysicsSim {}
+export interface CUserMsgParticleManager_DestroyPhysicsSim {
+}
+
+export interface CUserMsgParticleManager_SetVData {
+  vdataName?: string | undefined;
+}
+
+export interface CUserMsgParticleManager_SetMaterialOverride {
+  materialName?: string | undefined;
+  includeChildren?: boolean | undefined;
+}
+
+export interface CUserMsgParticleManager_AddFan {
+  active?: boolean | undefined;
+  boundsMins?: CMsgVector | undefined;
+  boundsMaxs?: CMsgVector | undefined;
+  fanOrigin?: CMsgVector | undefined;
+  fanOriginOffset?: CMsgVector | undefined;
+  fanDirection?: CMsgVector | undefined;
+  force?: number | undefined;
+  fanForceCurve?: string | undefined;
+  falloff?: boolean | undefined;
+  pullTowardsPoint?: boolean | undefined;
+  curveMinDist?: number | undefined;
+  curveMaxDist?: number | undefined;
+}
+
+export interface CUserMsgParticleManager_UpdateFan {
+  active?: boolean | undefined;
+  fanOrigin?: CMsgVector | undefined;
+  fanOriginOffset?: CMsgVector | undefined;
+  fanDirection?: CMsgVector | undefined;
+  fanRampRatio?: number | undefined;
+  boundsMins?: CMsgVector | undefined;
+  boundsMaxs?: CMsgVector | undefined;
+}
+
+export interface CUserMsgParticleManager_SetParticleClusterGrowth {
+  duration?: number | undefined;
+  origin?: CMsgVector | undefined;
+}
 
 export interface CUserMsgHudError {
   orderId?: number | undefined;
@@ -1344,6 +1420,13 @@ export interface CUserMessageNotifyResponseFound {
   responseValue?: string | undefined;
   responseConcept?: string | undefined;
   criteria: CUserMessageNotifyResponseFound_Criteria[];
+  intCriteriaNames: number[];
+  intCriteriaValues: number[];
+  floatCriteriaNames: number[];
+  floatCriteriaValues: number[];
+  symbolCriteriaNames: number[];
+  symbolCriteriaValues: number[];
+  speakResult?: number | undefined;
 }
 
 export interface CUserMessageNotifyResponseFound_Criteria {
@@ -1356,6 +1439,8 @@ export interface CUserMessagePlayResponseConditional {
   playerSlots: number[];
   response?: string | undefined;
   entOrigin?: CMsgVector | undefined;
+  preDelay?: number | undefined;
+  mixPriority?: number | undefined;
 }
 
 function createBaseCUserMessageAchievementEvent(): CUserMessageAchievementEvent {
@@ -2164,12 +2249,12 @@ export const CUserMessageShakeDir = {
   },
   fromPartial(object: DeepPartial<CUserMessageShakeDir>): CUserMessageShakeDir {
     const message = createBaseCUserMessageShakeDir();
-    message.shake =
-      object.shake !== undefined && object.shake !== null ? CUserMessageShake.fromPartial(object.shake) : undefined;
-    message.direction =
-      object.direction !== undefined && object.direction !== null
-        ? CMsgVector.fromPartial(object.direction)
-        : undefined;
+    message.shake = (object.shake !== undefined && object.shake !== null)
+      ? CUserMessageShake.fromPartial(object.shake)
+      : undefined;
+    message.direction = (object.direction !== undefined && object.direction !== null)
+      ? CMsgVector.fromPartial(object.direction)
+      : undefined;
     return message;
   },
 };
@@ -2390,8 +2475,9 @@ export const CUserMessageScreenTilt = {
     const message = createBaseCUserMessageScreenTilt();
     message.command = object.command ?? 0;
     message.easeInOut = object.easeInOut ?? false;
-    message.angle =
-      object.angle !== undefined && object.angle !== null ? CMsgVector.fromPartial(object.angle) : undefined;
+    message.angle = (object.angle !== undefined && object.angle !== null)
+      ? CMsgVector.fromPartial(object.angle)
+      : undefined;
     message.duration = object.duration ?? 0;
     message.time = object.time ?? 0;
     return message;
@@ -3994,10 +4080,9 @@ export const CEntityMessagePlayJingle = {
   },
   fromPartial(object: DeepPartial<CEntityMessagePlayJingle>): CEntityMessagePlayJingle {
     const message = createBaseCEntityMessagePlayJingle();
-    message.entityMsg =
-      object.entityMsg !== undefined && object.entityMsg !== null
-        ? CEntityMsg.fromPartial(object.entityMsg)
-        : undefined;
+    message.entityMsg = (object.entityMsg !== undefined && object.entityMsg !== null)
+      ? CEntityMsg.fromPartial(object.entityMsg)
+      : undefined;
     return message;
   },
 };
@@ -4071,10 +4156,9 @@ export const CEntityMessageScreenOverlay = {
   fromPartial(object: DeepPartial<CEntityMessageScreenOverlay>): CEntityMessageScreenOverlay {
     const message = createBaseCEntityMessageScreenOverlay();
     message.startEffect = object.startEffect ?? false;
-    message.entityMsg =
-      object.entityMsg !== undefined && object.entityMsg !== null
-        ? CEntityMsg.fromPartial(object.entityMsg)
-        : undefined;
+    message.entityMsg = (object.entityMsg !== undefined && object.entityMsg !== null)
+      ? CEntityMsg.fromPartial(object.entityMsg)
+      : undefined;
     return message;
   },
 };
@@ -4148,10 +4232,9 @@ export const CEntityMessageRemoveAllDecals = {
   fromPartial(object: DeepPartial<CEntityMessageRemoveAllDecals>): CEntityMessageRemoveAllDecals {
     const message = createBaseCEntityMessageRemoveAllDecals();
     message.removeDecals = object.removeDecals ?? false;
-    message.entityMsg =
-      object.entityMsg !== undefined && object.entityMsg !== null
-        ? CEntityMsg.fromPartial(object.entityMsg)
-        : undefined;
+    message.entityMsg = (object.entityMsg !== undefined && object.entityMsg !== null)
+      ? CEntityMsg.fromPartial(object.entityMsg)
+      : undefined;
     return message;
   },
 };
@@ -4224,12 +4307,12 @@ export const CEntityMessagePropagateForce = {
   },
   fromPartial(object: DeepPartial<CEntityMessagePropagateForce>): CEntityMessagePropagateForce {
     const message = createBaseCEntityMessagePropagateForce();
-    message.impulse =
-      object.impulse !== undefined && object.impulse !== null ? CMsgVector.fromPartial(object.impulse) : undefined;
-    message.entityMsg =
-      object.entityMsg !== undefined && object.entityMsg !== null
-        ? CEntityMsg.fromPartial(object.entityMsg)
-        : undefined;
+    message.impulse = (object.impulse !== undefined && object.impulse !== null)
+      ? CMsgVector.fromPartial(object.impulse)
+      : undefined;
+    message.entityMsg = (object.entityMsg !== undefined && object.entityMsg !== null)
+      ? CEntityMsg.fromPartial(object.entityMsg)
+      : undefined;
     return message;
   },
 };
@@ -4395,18 +4478,18 @@ export const CEntityMessageDoSpark = {
   },
   fromPartial(object: DeepPartial<CEntityMessageDoSpark>): CEntityMessageDoSpark {
     const message = createBaseCEntityMessageDoSpark();
-    message.origin =
-      object.origin !== undefined && object.origin !== null ? CMsgVector.fromPartial(object.origin) : undefined;
+    message.origin = (object.origin !== undefined && object.origin !== null)
+      ? CMsgVector.fromPartial(object.origin)
+      : undefined;
     message.entityindex = object.entityindex ?? -1;
     message.radius = object.radius ?? 0;
     message.color = object.color ?? 0;
     message.beams = object.beams ?? 0;
     message.thick = object.thick ?? 0;
     message.duration = object.duration ?? 0;
-    message.entityMsg =
-      object.entityMsg !== undefined && object.entityMsg !== null
-        ? CEntityMsg.fromPartial(object.entityMsg)
-        : undefined;
+    message.entityMsg = (object.entityMsg !== undefined && object.entityMsg !== null)
+      ? CEntityMsg.fromPartial(object.entityMsg)
+      : undefined;
     return message;
   },
 };
@@ -4494,12 +4577,12 @@ export const CEntityMessageFixAngle = {
   fromPartial(object: DeepPartial<CEntityMessageFixAngle>): CEntityMessageFixAngle {
     const message = createBaseCEntityMessageFixAngle();
     message.relative = object.relative ?? false;
-    message.angle =
-      object.angle !== undefined && object.angle !== null ? CMsgQAngle.fromPartial(object.angle) : undefined;
-    message.entityMsg =
-      object.entityMsg !== undefined && object.entityMsg !== null
-        ? CEntityMsg.fromPartial(object.entityMsg)
-        : undefined;
+    message.angle = (object.angle !== undefined && object.angle !== null)
+      ? CMsgQAngle.fromPartial(object.angle)
+      : undefined;
+    message.entityMsg = (object.entityMsg !== undefined && object.entityMsg !== null)
+      ? CEntityMsg.fromPartial(object.entityMsg)
+      : undefined;
     return message;
   },
 };
@@ -4517,10 +4600,8 @@ export const CUserMessageCameraTransition = {
       writer.uint32(21).float(message.duration);
     }
     if (message.paramsDataDriven !== undefined) {
-      CUserMessageCameraTransition_TransitionDataDriven.encode(
-        message.paramsDataDriven,
-        writer.uint32(26).fork(),
-      ).ldelim();
+      CUserMessageCameraTransition_TransitionDataDriven.encode(message.paramsDataDriven, writer.uint32(26).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -4593,10 +4674,9 @@ export const CUserMessageCameraTransition = {
     const message = createBaseCUserMessageCameraTransition();
     message.cameraType = object.cameraType ?? 0;
     message.duration = object.duration ?? 0;
-    message.paramsDataDriven =
-      object.paramsDataDriven !== undefined && object.paramsDataDriven !== null
-        ? CUserMessageCameraTransition_TransitionDataDriven.fromPartial(object.paramsDataDriven)
-        : undefined;
+    message.paramsDataDriven = (object.paramsDataDriven !== undefined && object.paramsDataDriven !== null)
+      ? CUserMessageCameraTransition_TransitionDataDriven.fromPartial(object.paramsDataDriven)
+      : undefined;
     return message;
   },
 };
@@ -4734,6 +4814,11 @@ function createBaseCUserMsgParticleManager(): CUserMsgParticleManager {
     clearModellistOverride: undefined,
     createPhysicsSim: undefined,
     destroyPhysicsSim: undefined,
+    setVdata: undefined,
+    setMaterialOverride: undefined,
+    addFan: undefined,
+    updateFan: undefined,
+    setParticleClusterGrowth: undefined,
   };
 }
 
@@ -4746,10 +4831,8 @@ export const CUserMsgParticleManager = {
       writer.uint32(16).uint32(message.index);
     }
     if (message.releaseParticleIndex !== undefined) {
-      CUserMsgParticleManager_ReleaseParticleIndex.encode(
-        message.releaseParticleIndex,
-        writer.uint32(26).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_ReleaseParticleIndex.encode(message.releaseParticleIndex, writer.uint32(26).fork())
+        .ldelim();
     }
     if (message.createParticle !== undefined) {
       CUserMsgParticleManager_CreateParticle.encode(message.createParticle, writer.uint32(34).fork()).ldelim();
@@ -4767,10 +4850,8 @@ export const CUserMsgParticleManager = {
       CUserMsgParticleManager_UpdateParticleOBSOLETE.encode(message.updateParticle, writer.uint32(58).fork()).ldelim();
     }
     if (message.updateParticleFwd !== undefined) {
-      CUserMsgParticleManager_UpdateParticleFwdOBSOLETE.encode(
-        message.updateParticleFwd,
-        writer.uint32(66).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_UpdateParticleFwdOBSOLETE.encode(message.updateParticleFwd, writer.uint32(66).fork())
+        .ldelim();
     }
     if (message.updateParticleOrient !== undefined) {
       CUserMsgParticleManager_UpdateParticleOrientOBSOLETE.encode(
@@ -4779,16 +4860,12 @@ export const CUserMsgParticleManager = {
       ).ldelim();
     }
     if (message.updateParticleFallback !== undefined) {
-      CUserMsgParticleManager_UpdateParticleFallback.encode(
-        message.updateParticleFallback,
-        writer.uint32(82).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_UpdateParticleFallback.encode(message.updateParticleFallback, writer.uint32(82).fork())
+        .ldelim();
     }
     if (message.updateParticleOffset !== undefined) {
-      CUserMsgParticleManager_UpdateParticleOffset.encode(
-        message.updateParticleOffset,
-        writer.uint32(90).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_UpdateParticleOffset.encode(message.updateParticleOffset, writer.uint32(90).fork())
+        .ldelim();
     }
     if (message.updateParticleEnt !== undefined) {
       CUserMsgParticleManager_UpdateParticleEnt.encode(message.updateParticleEnt, writer.uint32(98).fork()).ldelim();
@@ -4800,10 +4877,8 @@ export const CUserMsgParticleManager = {
       ).ldelim();
     }
     if (message.updateParticleSetFrozen !== undefined) {
-      CUserMsgParticleManager_UpdateParticleSetFrozen.encode(
-        message.updateParticleSetFrozen,
-        writer.uint32(122).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_UpdateParticleSetFrozen.encode(message.updateParticleSetFrozen, writer.uint32(122).fork())
+        .ldelim();
     }
     if (message.changeControlPointAttachment !== undefined) {
       CUserMsgParticleManager_ChangeControlPointAttachment.encode(
@@ -4812,10 +4887,8 @@ export const CUserMsgParticleManager = {
       ).ldelim();
     }
     if (message.updateEntityPosition !== undefined) {
-      CUserMsgParticleManager_UpdateEntityPosition.encode(
-        message.updateEntityPosition,
-        writer.uint32(138).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_UpdateEntityPosition.encode(message.updateEntityPosition, writer.uint32(138).fork())
+        .ldelim();
     }
     if (message.setParticleFowProperties !== undefined) {
       CUserMsgParticleManager_SetParticleFoWProperties.encode(
@@ -4833,22 +4906,16 @@ export const CUserMsgParticleManager = {
       ).ldelim();
     }
     if (message.setControlPointModel !== undefined) {
-      CUserMsgParticleManager_SetControlPointModel.encode(
-        message.setControlPointModel,
-        writer.uint32(170).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_SetControlPointModel.encode(message.setControlPointModel, writer.uint32(170).fork())
+        .ldelim();
     }
     if (message.setControlPointSnapshot !== undefined) {
-      CUserMsgParticleManager_SetControlPointSnapshot.encode(
-        message.setControlPointSnapshot,
-        writer.uint32(178).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_SetControlPointSnapshot.encode(message.setControlPointSnapshot, writer.uint32(178).fork())
+        .ldelim();
     }
     if (message.setTextureAttribute !== undefined) {
-      CUserMsgParticleManager_SetTextureAttribute.encode(
-        message.setTextureAttribute,
-        writer.uint32(186).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_SetTextureAttribute.encode(message.setTextureAttribute, writer.uint32(186).fork())
+        .ldelim();
     }
     if (message.setSceneObjectGenericFlag !== undefined) {
       CUserMsgParticleManager_SetSceneObjectGenericFlag.encode(
@@ -4863,10 +4930,8 @@ export const CUserMsgParticleManager = {
       ).ldelim();
     }
     if (message.destroyParticleNamed !== undefined) {
-      CUserMsgParticleManager_DestroyParticleNamed.encode(
-        message.destroyParticleNamed,
-        writer.uint32(210).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_DestroyParticleNamed.encode(message.destroyParticleNamed, writer.uint32(210).fork())
+        .ldelim();
     }
     if (message.particleSkipToTime !== undefined) {
       CUserMsgParticleManager_ParticleSkipToTime.encode(message.particleSkipToTime, writer.uint32(218).fork()).ldelim();
@@ -4881,10 +4946,8 @@ export const CUserMsgParticleManager = {
       ).ldelim();
     }
     if (message.updateParticleTransform !== undefined) {
-      CUserMsgParticleManager_UpdateParticleTransform.encode(
-        message.updateParticleTransform,
-        writer.uint32(242).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_UpdateParticleTransform.encode(message.updateParticleTransform, writer.uint32(242).fork())
+        .ldelim();
     }
     if (message.particleFreezeTransitionOverride !== undefined) {
       CUserMsgParticleManager_ParticleFreezeTransitionOverride.encode(
@@ -4893,10 +4956,8 @@ export const CUserMsgParticleManager = {
       ).ldelim();
     }
     if (message.freezeParticleInvolving !== undefined) {
-      CUserMsgParticleManager_FreezeParticleInvolving.encode(
-        message.freezeParticleInvolving,
-        writer.uint32(258).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_FreezeParticleInvolving.encode(message.freezeParticleInvolving, writer.uint32(258).fork())
+        .ldelim();
     }
     if (message.addModellistOverrideElement !== undefined) {
       CUserMsgParticleManager_AddModellistOverrideElement.encode(
@@ -4905,16 +4966,33 @@ export const CUserMsgParticleManager = {
       ).ldelim();
     }
     if (message.clearModellistOverride !== undefined) {
-      CUserMsgParticleManager_ClearModellistOverride.encode(
-        message.clearModellistOverride,
-        writer.uint32(274).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_ClearModellistOverride.encode(message.clearModellistOverride, writer.uint32(274).fork())
+        .ldelim();
     }
     if (message.createPhysicsSim !== undefined) {
       CUserMsgParticleManager_CreatePhysicsSim.encode(message.createPhysicsSim, writer.uint32(282).fork()).ldelim();
     }
     if (message.destroyPhysicsSim !== undefined) {
       CUserMsgParticleManager_DestroyPhysicsSim.encode(message.destroyPhysicsSim, writer.uint32(290).fork()).ldelim();
+    }
+    if (message.setVdata !== undefined) {
+      CUserMsgParticleManager_SetVData.encode(message.setVdata, writer.uint32(298).fork()).ldelim();
+    }
+    if (message.setMaterialOverride !== undefined) {
+      CUserMsgParticleManager_SetMaterialOverride.encode(message.setMaterialOverride, writer.uint32(306).fork())
+        .ldelim();
+    }
+    if (message.addFan !== undefined) {
+      CUserMsgParticleManager_AddFan.encode(message.addFan, writer.uint32(314).fork()).ldelim();
+    }
+    if (message.updateFan !== undefined) {
+      CUserMsgParticleManager_UpdateFan.encode(message.updateFan, writer.uint32(322).fork()).ldelim();
+    }
+    if (message.setParticleClusterGrowth !== undefined) {
+      CUserMsgParticleManager_SetParticleClusterGrowth.encode(
+        message.setParticleClusterGrowth,
+        writer.uint32(330).fork(),
+      ).ldelim();
     }
     return writer;
   },
@@ -5222,6 +5300,44 @@ export const CUserMsgParticleManager = {
 
           message.destroyPhysicsSim = CUserMsgParticleManager_DestroyPhysicsSim.decode(reader, reader.uint32());
           continue;
+        case 37:
+          if (tag !== 298) {
+            break;
+          }
+
+          message.setVdata = CUserMsgParticleManager_SetVData.decode(reader, reader.uint32());
+          continue;
+        case 38:
+          if (tag !== 306) {
+            break;
+          }
+
+          message.setMaterialOverride = CUserMsgParticleManager_SetMaterialOverride.decode(reader, reader.uint32());
+          continue;
+        case 39:
+          if (tag !== 314) {
+            break;
+          }
+
+          message.addFan = CUserMsgParticleManager_AddFan.decode(reader, reader.uint32());
+          continue;
+        case 40:
+          if (tag !== 322) {
+            break;
+          }
+
+          message.updateFan = CUserMsgParticleManager_UpdateFan.decode(reader, reader.uint32());
+          continue;
+        case 41:
+          if (tag !== 330) {
+            break;
+          }
+
+          message.setParticleClusterGrowth = CUserMsgParticleManager_SetParticleClusterGrowth.decode(
+            reader,
+            reader.uint32(),
+          );
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5333,6 +5449,15 @@ export const CUserMsgParticleManager = {
         : undefined,
       destroyPhysicsSim: isSet(object.destroyPhysicsSim)
         ? CUserMsgParticleManager_DestroyPhysicsSim.fromJSON(object.destroyPhysicsSim)
+        : undefined,
+      setVdata: isSet(object.setVdata) ? CUserMsgParticleManager_SetVData.fromJSON(object.setVdata) : undefined,
+      setMaterialOverride: isSet(object.setMaterialOverride)
+        ? CUserMsgParticleManager_SetMaterialOverride.fromJSON(object.setMaterialOverride)
+        : undefined,
+      addFan: isSet(object.addFan) ? CUserMsgParticleManager_AddFan.fromJSON(object.addFan) : undefined,
+      updateFan: isSet(object.updateFan) ? CUserMsgParticleManager_UpdateFan.fromJSON(object.updateFan) : undefined,
+      setParticleClusterGrowth: isSet(object.setParticleClusterGrowth)
+        ? CUserMsgParticleManager_SetParticleClusterGrowth.fromJSON(object.setParticleClusterGrowth)
         : undefined,
     };
   },
@@ -5478,6 +5603,23 @@ export const CUserMsgParticleManager = {
     if (message.destroyPhysicsSim !== undefined) {
       obj.destroyPhysicsSim = CUserMsgParticleManager_DestroyPhysicsSim.toJSON(message.destroyPhysicsSim);
     }
+    if (message.setVdata !== undefined) {
+      obj.setVdata = CUserMsgParticleManager_SetVData.toJSON(message.setVdata);
+    }
+    if (message.setMaterialOverride !== undefined) {
+      obj.setMaterialOverride = CUserMsgParticleManager_SetMaterialOverride.toJSON(message.setMaterialOverride);
+    }
+    if (message.addFan !== undefined) {
+      obj.addFan = CUserMsgParticleManager_AddFan.toJSON(message.addFan);
+    }
+    if (message.updateFan !== undefined) {
+      obj.updateFan = CUserMsgParticleManager_UpdateFan.toJSON(message.updateFan);
+    }
+    if (message.setParticleClusterGrowth !== undefined) {
+      obj.setParticleClusterGrowth = CUserMsgParticleManager_SetParticleClusterGrowth.toJSON(
+        message.setParticleClusterGrowth,
+      );
+    }
     return obj;
   },
 
@@ -5488,137 +5630,135 @@ export const CUserMsgParticleManager = {
     const message = createBaseCUserMsgParticleManager();
     message.type = object.type ?? 0;
     message.index = object.index ?? 0;
-    message.releaseParticleIndex =
-      object.releaseParticleIndex !== undefined && object.releaseParticleIndex !== null
-        ? CUserMsgParticleManager_ReleaseParticleIndex.fromPartial(object.releaseParticleIndex)
-        : undefined;
-    message.createParticle =
-      object.createParticle !== undefined && object.createParticle !== null
-        ? CUserMsgParticleManager_CreateParticle.fromPartial(object.createParticle)
-        : undefined;
-    message.destroyParticle =
-      object.destroyParticle !== undefined && object.destroyParticle !== null
-        ? CUserMsgParticleManager_DestroyParticle.fromPartial(object.destroyParticle)
-        : undefined;
+    message.releaseParticleIndex = (object.releaseParticleIndex !== undefined && object.releaseParticleIndex !== null)
+      ? CUserMsgParticleManager_ReleaseParticleIndex.fromPartial(object.releaseParticleIndex)
+      : undefined;
+    message.createParticle = (object.createParticle !== undefined && object.createParticle !== null)
+      ? CUserMsgParticleManager_CreateParticle.fromPartial(object.createParticle)
+      : undefined;
+    message.destroyParticle = (object.destroyParticle !== undefined && object.destroyParticle !== null)
+      ? CUserMsgParticleManager_DestroyParticle.fromPartial(object.destroyParticle)
+      : undefined;
     message.destroyParticleInvolving =
-      object.destroyParticleInvolving !== undefined && object.destroyParticleInvolving !== null
+      (object.destroyParticleInvolving !== undefined && object.destroyParticleInvolving !== null)
         ? CUserMsgParticleManager_DestroyParticleInvolving.fromPartial(object.destroyParticleInvolving)
         : undefined;
-    message.updateParticle =
-      object.updateParticle !== undefined && object.updateParticle !== null
-        ? CUserMsgParticleManager_UpdateParticleOBSOLETE.fromPartial(object.updateParticle)
-        : undefined;
-    message.updateParticleFwd =
-      object.updateParticleFwd !== undefined && object.updateParticleFwd !== null
-        ? CUserMsgParticleManager_UpdateParticleFwdOBSOLETE.fromPartial(object.updateParticleFwd)
-        : undefined;
-    message.updateParticleOrient =
-      object.updateParticleOrient !== undefined && object.updateParticleOrient !== null
-        ? CUserMsgParticleManager_UpdateParticleOrientOBSOLETE.fromPartial(object.updateParticleOrient)
-        : undefined;
+    message.updateParticle = (object.updateParticle !== undefined && object.updateParticle !== null)
+      ? CUserMsgParticleManager_UpdateParticleOBSOLETE.fromPartial(object.updateParticle)
+      : undefined;
+    message.updateParticleFwd = (object.updateParticleFwd !== undefined && object.updateParticleFwd !== null)
+      ? CUserMsgParticleManager_UpdateParticleFwdOBSOLETE.fromPartial(object.updateParticleFwd)
+      : undefined;
+    message.updateParticleOrient = (object.updateParticleOrient !== undefined && object.updateParticleOrient !== null)
+      ? CUserMsgParticleManager_UpdateParticleOrientOBSOLETE.fromPartial(object.updateParticleOrient)
+      : undefined;
     message.updateParticleFallback =
-      object.updateParticleFallback !== undefined && object.updateParticleFallback !== null
+      (object.updateParticleFallback !== undefined && object.updateParticleFallback !== null)
         ? CUserMsgParticleManager_UpdateParticleFallback.fromPartial(object.updateParticleFallback)
         : undefined;
-    message.updateParticleOffset =
-      object.updateParticleOffset !== undefined && object.updateParticleOffset !== null
-        ? CUserMsgParticleManager_UpdateParticleOffset.fromPartial(object.updateParticleOffset)
-        : undefined;
-    message.updateParticleEnt =
-      object.updateParticleEnt !== undefined && object.updateParticleEnt !== null
-        ? CUserMsgParticleManager_UpdateParticleEnt.fromPartial(object.updateParticleEnt)
-        : undefined;
+    message.updateParticleOffset = (object.updateParticleOffset !== undefined && object.updateParticleOffset !== null)
+      ? CUserMsgParticleManager_UpdateParticleOffset.fromPartial(object.updateParticleOffset)
+      : undefined;
+    message.updateParticleEnt = (object.updateParticleEnt !== undefined && object.updateParticleEnt !== null)
+      ? CUserMsgParticleManager_UpdateParticleEnt.fromPartial(object.updateParticleEnt)
+      : undefined;
     message.updateParticleShouldDraw =
-      object.updateParticleShouldDraw !== undefined && object.updateParticleShouldDraw !== null
+      (object.updateParticleShouldDraw !== undefined && object.updateParticleShouldDraw !== null)
         ? CUserMsgParticleManager_UpdateParticleShouldDraw.fromPartial(object.updateParticleShouldDraw)
         : undefined;
     message.updateParticleSetFrozen =
-      object.updateParticleSetFrozen !== undefined && object.updateParticleSetFrozen !== null
+      (object.updateParticleSetFrozen !== undefined && object.updateParticleSetFrozen !== null)
         ? CUserMsgParticleManager_UpdateParticleSetFrozen.fromPartial(object.updateParticleSetFrozen)
         : undefined;
     message.changeControlPointAttachment =
-      object.changeControlPointAttachment !== undefined && object.changeControlPointAttachment !== null
+      (object.changeControlPointAttachment !== undefined && object.changeControlPointAttachment !== null)
         ? CUserMsgParticleManager_ChangeControlPointAttachment.fromPartial(object.changeControlPointAttachment)
         : undefined;
-    message.updateEntityPosition =
-      object.updateEntityPosition !== undefined && object.updateEntityPosition !== null
-        ? CUserMsgParticleManager_UpdateEntityPosition.fromPartial(object.updateEntityPosition)
-        : undefined;
+    message.updateEntityPosition = (object.updateEntityPosition !== undefined && object.updateEntityPosition !== null)
+      ? CUserMsgParticleManager_UpdateEntityPosition.fromPartial(object.updateEntityPosition)
+      : undefined;
     message.setParticleFowProperties =
-      object.setParticleFowProperties !== undefined && object.setParticleFowProperties !== null
+      (object.setParticleFowProperties !== undefined && object.setParticleFowProperties !== null)
         ? CUserMsgParticleManager_SetParticleFoWProperties.fromPartial(object.setParticleFowProperties)
         : undefined;
-    message.setParticleText =
-      object.setParticleText !== undefined && object.setParticleText !== null
-        ? CUserMsgParticleManager_SetParticleText.fromPartial(object.setParticleText)
-        : undefined;
+    message.setParticleText = (object.setParticleText !== undefined && object.setParticleText !== null)
+      ? CUserMsgParticleManager_SetParticleText.fromPartial(object.setParticleText)
+      : undefined;
     message.setParticleShouldCheckFow =
-      object.setParticleShouldCheckFow !== undefined && object.setParticleShouldCheckFow !== null
+      (object.setParticleShouldCheckFow !== undefined && object.setParticleShouldCheckFow !== null)
         ? CUserMsgParticleManager_SetParticleShouldCheckFoW.fromPartial(object.setParticleShouldCheckFow)
         : undefined;
-    message.setControlPointModel =
-      object.setControlPointModel !== undefined && object.setControlPointModel !== null
-        ? CUserMsgParticleManager_SetControlPointModel.fromPartial(object.setControlPointModel)
-        : undefined;
+    message.setControlPointModel = (object.setControlPointModel !== undefined && object.setControlPointModel !== null)
+      ? CUserMsgParticleManager_SetControlPointModel.fromPartial(object.setControlPointModel)
+      : undefined;
     message.setControlPointSnapshot =
-      object.setControlPointSnapshot !== undefined && object.setControlPointSnapshot !== null
+      (object.setControlPointSnapshot !== undefined && object.setControlPointSnapshot !== null)
         ? CUserMsgParticleManager_SetControlPointSnapshot.fromPartial(object.setControlPointSnapshot)
         : undefined;
-    message.setTextureAttribute =
-      object.setTextureAttribute !== undefined && object.setTextureAttribute !== null
-        ? CUserMsgParticleManager_SetTextureAttribute.fromPartial(object.setTextureAttribute)
-        : undefined;
+    message.setTextureAttribute = (object.setTextureAttribute !== undefined && object.setTextureAttribute !== null)
+      ? CUserMsgParticleManager_SetTextureAttribute.fromPartial(object.setTextureAttribute)
+      : undefined;
     message.setSceneObjectGenericFlag =
-      object.setSceneObjectGenericFlag !== undefined && object.setSceneObjectGenericFlag !== null
+      (object.setSceneObjectGenericFlag !== undefined && object.setSceneObjectGenericFlag !== null)
         ? CUserMsgParticleManager_SetSceneObjectGenericFlag.fromPartial(object.setSceneObjectGenericFlag)
         : undefined;
     message.setSceneObjectTintAndDesat =
-      object.setSceneObjectTintAndDesat !== undefined && object.setSceneObjectTintAndDesat !== null
+      (object.setSceneObjectTintAndDesat !== undefined && object.setSceneObjectTintAndDesat !== null)
         ? CUserMsgParticleManager_SetSceneObjectTintAndDesat.fromPartial(object.setSceneObjectTintAndDesat)
         : undefined;
-    message.destroyParticleNamed =
-      object.destroyParticleNamed !== undefined && object.destroyParticleNamed !== null
-        ? CUserMsgParticleManager_DestroyParticleNamed.fromPartial(object.destroyParticleNamed)
-        : undefined;
-    message.particleSkipToTime =
-      object.particleSkipToTime !== undefined && object.particleSkipToTime !== null
-        ? CUserMsgParticleManager_ParticleSkipToTime.fromPartial(object.particleSkipToTime)
-        : undefined;
-    message.particleCanFreeze =
-      object.particleCanFreeze !== undefined && object.particleCanFreeze !== null
-        ? CUserMsgParticleManager_ParticleCanFreeze.fromPartial(object.particleCanFreeze)
-        : undefined;
-    message.setNamedValueContext =
-      object.setNamedValueContext !== undefined && object.setNamedValueContext !== null
-        ? CUserMsgParticleManager_SetParticleNamedValueContext.fromPartial(object.setNamedValueContext)
-        : undefined;
+    message.destroyParticleNamed = (object.destroyParticleNamed !== undefined && object.destroyParticleNamed !== null)
+      ? CUserMsgParticleManager_DestroyParticleNamed.fromPartial(object.destroyParticleNamed)
+      : undefined;
+    message.particleSkipToTime = (object.particleSkipToTime !== undefined && object.particleSkipToTime !== null)
+      ? CUserMsgParticleManager_ParticleSkipToTime.fromPartial(object.particleSkipToTime)
+      : undefined;
+    message.particleCanFreeze = (object.particleCanFreeze !== undefined && object.particleCanFreeze !== null)
+      ? CUserMsgParticleManager_ParticleCanFreeze.fromPartial(object.particleCanFreeze)
+      : undefined;
+    message.setNamedValueContext = (object.setNamedValueContext !== undefined && object.setNamedValueContext !== null)
+      ? CUserMsgParticleManager_SetParticleNamedValueContext.fromPartial(object.setNamedValueContext)
+      : undefined;
     message.updateParticleTransform =
-      object.updateParticleTransform !== undefined && object.updateParticleTransform !== null
+      (object.updateParticleTransform !== undefined && object.updateParticleTransform !== null)
         ? CUserMsgParticleManager_UpdateParticleTransform.fromPartial(object.updateParticleTransform)
         : undefined;
     message.particleFreezeTransitionOverride =
-      object.particleFreezeTransitionOverride !== undefined && object.particleFreezeTransitionOverride !== null
+      (object.particleFreezeTransitionOverride !== undefined && object.particleFreezeTransitionOverride !== null)
         ? CUserMsgParticleManager_ParticleFreezeTransitionOverride.fromPartial(object.particleFreezeTransitionOverride)
         : undefined;
     message.freezeParticleInvolving =
-      object.freezeParticleInvolving !== undefined && object.freezeParticleInvolving !== null
+      (object.freezeParticleInvolving !== undefined && object.freezeParticleInvolving !== null)
         ? CUserMsgParticleManager_FreezeParticleInvolving.fromPartial(object.freezeParticleInvolving)
         : undefined;
     message.addModellistOverrideElement =
-      object.addModellistOverrideElement !== undefined && object.addModellistOverrideElement !== null
+      (object.addModellistOverrideElement !== undefined && object.addModellistOverrideElement !== null)
         ? CUserMsgParticleManager_AddModellistOverrideElement.fromPartial(object.addModellistOverrideElement)
         : undefined;
     message.clearModellistOverride =
-      object.clearModellistOverride !== undefined && object.clearModellistOverride !== null
+      (object.clearModellistOverride !== undefined && object.clearModellistOverride !== null)
         ? CUserMsgParticleManager_ClearModellistOverride.fromPartial(object.clearModellistOverride)
         : undefined;
-    message.createPhysicsSim =
-      object.createPhysicsSim !== undefined && object.createPhysicsSim !== null
-        ? CUserMsgParticleManager_CreatePhysicsSim.fromPartial(object.createPhysicsSim)
-        : undefined;
-    message.destroyPhysicsSim =
-      object.destroyPhysicsSim !== undefined && object.destroyPhysicsSim !== null
-        ? CUserMsgParticleManager_DestroyPhysicsSim.fromPartial(object.destroyPhysicsSim)
+    message.createPhysicsSim = (object.createPhysicsSim !== undefined && object.createPhysicsSim !== null)
+      ? CUserMsgParticleManager_CreatePhysicsSim.fromPartial(object.createPhysicsSim)
+      : undefined;
+    message.destroyPhysicsSim = (object.destroyPhysicsSim !== undefined && object.destroyPhysicsSim !== null)
+      ? CUserMsgParticleManager_DestroyPhysicsSim.fromPartial(object.destroyPhysicsSim)
+      : undefined;
+    message.setVdata = (object.setVdata !== undefined && object.setVdata !== null)
+      ? CUserMsgParticleManager_SetVData.fromPartial(object.setVdata)
+      : undefined;
+    message.setMaterialOverride = (object.setMaterialOverride !== undefined && object.setMaterialOverride !== null)
+      ? CUserMsgParticleManager_SetMaterialOverride.fromPartial(object.setMaterialOverride)
+      : undefined;
+    message.addFan = (object.addFan !== undefined && object.addFan !== null)
+      ? CUserMsgParticleManager_AddFan.fromPartial(object.addFan)
+      : undefined;
+    message.updateFan = (object.updateFan !== undefined && object.updateFan !== null)
+      ? CUserMsgParticleManager_UpdateFan.fromPartial(object.updateFan)
+      : undefined;
+    message.setParticleClusterGrowth =
+      (object.setParticleClusterGrowth !== undefined && object.setParticleClusterGrowth !== null)
+        ? CUserMsgParticleManager_SetParticleClusterGrowth.fromPartial(object.setParticleClusterGrowth)
         : undefined;
     return message;
   },
@@ -5682,6 +5822,7 @@ function createBaseCUserMsgParticleManager_CreateParticle(): CUserMsgParticleMan
     controlPointConfiguration: "",
     cluster: false,
     endcapTime: 0,
+    aggregationPosition: undefined,
   };
 }
 
@@ -5713,6 +5854,9 @@ export const CUserMsgParticleManager_CreateParticle = {
     }
     if (message.endcapTime !== undefined && message.endcapTime !== 0) {
       writer.uint32(77).float(message.endcapTime);
+    }
+    if (message.aggregationPosition !== undefined) {
+      CMsgVector.encode(message.aggregationPosition, writer.uint32(82).fork()).ldelim();
     }
     return writer;
   },
@@ -5787,6 +5931,13 @@ export const CUserMsgParticleManager_CreateParticle = {
 
           message.endcapTime = reader.float();
           continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.aggregationPosition = CMsgVector.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5811,6 +5962,9 @@ export const CUserMsgParticleManager_CreateParticle = {
         : "",
       cluster: isSet(object.cluster) ? globalThis.Boolean(object.cluster) : false,
       endcapTime: isSet(object.endcapTime) ? globalThis.Number(object.endcapTime) : 0,
+      aggregationPosition: isSet(object.aggregationPosition)
+        ? CMsgVector.fromJSON(object.aggregationPosition)
+        : undefined,
     };
   },
 
@@ -5843,6 +5997,9 @@ export const CUserMsgParticleManager_CreateParticle = {
     if (message.endcapTime !== undefined && message.endcapTime !== 0) {
       obj.endcapTime = message.endcapTime;
     }
+    if (message.aggregationPosition !== undefined) {
+      obj.aggregationPosition = CMsgVector.toJSON(message.aggregationPosition);
+    }
     return obj;
   },
 
@@ -5860,6 +6017,9 @@ export const CUserMsgParticleManager_CreateParticle = {
     message.controlPointConfiguration = object.controlPointConfiguration ?? "";
     message.cluster = object.cluster ?? false;
     message.endcapTime = object.endcapTime ?? 0;
+    message.aggregationPosition = (object.aggregationPosition !== undefined && object.aggregationPosition !== null)
+      ? CMsgVector.fromPartial(object.aggregationPosition)
+      : undefined;
     return message;
   },
 };
@@ -6188,8 +6348,9 @@ export const CUserMsgParticleManager_UpdateParticleOBSOLETE = {
   ): CUserMsgParticleManager_UpdateParticleOBSOLETE {
     const message = createBaseCUserMsgParticleManager_UpdateParticleOBSOLETE();
     message.controlPoint = object.controlPoint ?? 0;
-    message.position =
-      object.position !== undefined && object.position !== null ? CMsgVector.fromPartial(object.position) : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CMsgVector.fromPartial(object.position)
+      : undefined;
     return message;
   },
 };
@@ -6270,8 +6431,9 @@ export const CUserMsgParticleManager_UpdateParticleFwdOBSOLETE = {
   ): CUserMsgParticleManager_UpdateParticleFwdOBSOLETE {
     const message = createBaseCUserMsgParticleManager_UpdateParticleFwdOBSOLETE();
     message.controlPoint = object.controlPoint ?? 0;
-    message.forward =
-      object.forward !== undefined && object.forward !== null ? CMsgVector.fromPartial(object.forward) : undefined;
+    message.forward = (object.forward !== undefined && object.forward !== null)
+      ? CMsgVector.fromPartial(object.forward)
+      : undefined;
     return message;
   },
 };
@@ -6394,14 +6556,16 @@ export const CUserMsgParticleManager_UpdateParticleOrientOBSOLETE = {
   ): CUserMsgParticleManager_UpdateParticleOrientOBSOLETE {
     const message = createBaseCUserMsgParticleManager_UpdateParticleOrientOBSOLETE();
     message.controlPoint = object.controlPoint ?? 0;
-    message.forward =
-      object.forward !== undefined && object.forward !== null ? CMsgVector.fromPartial(object.forward) : undefined;
-    message.deprecatedRight =
-      object.deprecatedRight !== undefined && object.deprecatedRight !== null
-        ? CMsgVector.fromPartial(object.deprecatedRight)
-        : undefined;
-    message.up = object.up !== undefined && object.up !== null ? CMsgVector.fromPartial(object.up) : undefined;
-    message.left = object.left !== undefined && object.left !== null ? CMsgVector.fromPartial(object.left) : undefined;
+    message.forward = (object.forward !== undefined && object.forward !== null)
+      ? CMsgVector.fromPartial(object.forward)
+      : undefined;
+    message.deprecatedRight = (object.deprecatedRight !== undefined && object.deprecatedRight !== null)
+      ? CMsgVector.fromPartial(object.deprecatedRight)
+      : undefined;
+    message.up = (object.up !== undefined && object.up !== null) ? CMsgVector.fromPartial(object.up) : undefined;
+    message.left = (object.left !== undefined && object.left !== null)
+      ? CMsgVector.fromPartial(object.left)
+      : undefined;
     return message;
   },
 };
@@ -6510,12 +6674,12 @@ export const CUserMsgParticleManager_UpdateParticleTransform = {
   ): CUserMsgParticleManager_UpdateParticleTransform {
     const message = createBaseCUserMsgParticleManager_UpdateParticleTransform();
     message.controlPoint = object.controlPoint ?? 0;
-    message.position =
-      object.position !== undefined && object.position !== null ? CMsgVector.fromPartial(object.position) : undefined;
-    message.orientation =
-      object.orientation !== undefined && object.orientation !== null
-        ? CMsgQuaternion.fromPartial(object.orientation)
-        : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CMsgVector.fromPartial(object.position)
+      : undefined;
+    message.orientation = (object.orientation !== undefined && object.orientation !== null)
+      ? CMsgQuaternion.fromPartial(object.orientation)
+      : undefined;
     message.interpolationInterval = object.interpolationInterval ?? 0;
     return message;
   },
@@ -6597,8 +6761,9 @@ export const CUserMsgParticleManager_UpdateParticleFallback = {
   ): CUserMsgParticleManager_UpdateParticleFallback {
     const message = createBaseCUserMsgParticleManager_UpdateParticleFallback();
     message.controlPoint = object.controlPoint ?? 0;
-    message.position =
-      object.position !== undefined && object.position !== null ? CMsgVector.fromPartial(object.position) : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CMsgVector.fromPartial(object.position)
+      : undefined;
     return message;
   },
 };
@@ -6690,14 +6855,12 @@ export const CUserMsgParticleManager_UpdateParticleOffset = {
   ): CUserMsgParticleManager_UpdateParticleOffset {
     const message = createBaseCUserMsgParticleManager_UpdateParticleOffset();
     message.controlPoint = object.controlPoint ?? 0;
-    message.originOffset =
-      object.originOffset !== undefined && object.originOffset !== null
-        ? CMsgVector.fromPartial(object.originOffset)
-        : undefined;
-    message.angleOffset =
-      object.angleOffset !== undefined && object.angleOffset !== null
-        ? CMsgQAngle.fromPartial(object.angleOffset)
-        : undefined;
+    message.originOffset = (object.originOffset !== undefined && object.originOffset !== null)
+      ? CMsgVector.fromPartial(object.originOffset)
+      : undefined;
+    message.angleOffset = (object.angleOffset !== undefined && object.angleOffset !== null)
+      ? CMsgQAngle.fromPartial(object.angleOffset)
+      : undefined;
     return message;
   },
 };
@@ -6869,19 +7032,16 @@ export const CUserMsgParticleManager_UpdateParticleEnt = {
     message.entityHandle = object.entityHandle ?? 16777215;
     message.attachType = object.attachType ?? 0;
     message.attachment = object.attachment ?? 0;
-    message.fallbackPosition =
-      object.fallbackPosition !== undefined && object.fallbackPosition !== null
-        ? CMsgVector.fromPartial(object.fallbackPosition)
-        : undefined;
+    message.fallbackPosition = (object.fallbackPosition !== undefined && object.fallbackPosition !== null)
+      ? CMsgVector.fromPartial(object.fallbackPosition)
+      : undefined;
     message.includeWearables = object.includeWearables ?? false;
-    message.offsetPosition =
-      object.offsetPosition !== undefined && object.offsetPosition !== null
-        ? CMsgVector.fromPartial(object.offsetPosition)
-        : undefined;
-    message.offsetAngles =
-      object.offsetAngles !== undefined && object.offsetAngles !== null
-        ? CMsgQAngle.fromPartial(object.offsetAngles)
-        : undefined;
+    message.offsetPosition = (object.offsetPosition !== undefined && object.offsetPosition !== null)
+      ? CMsgVector.fromPartial(object.offsetPosition)
+      : undefined;
+    message.offsetAngles = (object.offsetAngles !== undefined && object.offsetAngles !== null)
+      ? CMsgQAngle.fromPartial(object.offsetAngles)
+      : undefined;
     return message;
   },
 };
@@ -7200,8 +7360,9 @@ export const CUserMsgParticleManager_UpdateEntityPosition = {
   ): CUserMsgParticleManager_UpdateEntityPosition {
     const message = createBaseCUserMsgParticleManager_UpdateEntityPosition();
     message.entityHandle = object.entityHandle ?? 16777215;
-    message.position =
-      object.position !== undefined && object.position !== null ? CMsgVector.fromPartial(object.position) : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CMsgVector.fromPartial(object.position)
+      : undefined;
     return message;
   },
 };
@@ -8255,22 +8416,16 @@ export const CUserMsgParticleManager_SetParticleNamedValueContext = {
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     for (const v of message.floatValues) {
-      CUserMsgParticleManager_SetParticleNamedValueContext_FloatContextValue.encode(
-        v!,
-        writer.uint32(10).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_SetParticleNamedValueContext_FloatContextValue.encode(v!, writer.uint32(10).fork())
+        .ldelim();
     }
     for (const v of message.vectorValues) {
-      CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue.encode(
-        v!,
-        writer.uint32(18).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue.encode(v!, writer.uint32(18).fork())
+        .ldelim();
     }
     for (const v of message.transformValues) {
-      CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue.encode(
-        v!,
-        writer.uint32(26).fork(),
-      ).ldelim();
+      CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue.encode(v!, writer.uint32(26).fork())
+        .ldelim();
     }
     for (const v of message.ehandleValues) {
       CUserMsgParticleManager_SetParticleNamedValueContext_EHandleContext.encode(v!, writer.uint32(34).fork()).ldelim();
@@ -8334,23 +8489,23 @@ export const CUserMsgParticleManager_SetParticleNamedValueContext = {
     return {
       floatValues: globalThis.Array.isArray(object?.floatValues)
         ? object.floatValues.map((e: any) =>
-            CUserMsgParticleManager_SetParticleNamedValueContext_FloatContextValue.fromJSON(e),
-          )
+          CUserMsgParticleManager_SetParticleNamedValueContext_FloatContextValue.fromJSON(e)
+        )
         : [],
       vectorValues: globalThis.Array.isArray(object?.vectorValues)
         ? object.vectorValues.map((e: any) =>
-            CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue.fromJSON(e),
-          )
+          CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue.fromJSON(e)
+        )
         : [],
       transformValues: globalThis.Array.isArray(object?.transformValues)
         ? object.transformValues.map((e: any) =>
-            CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue.fromJSON(e),
-          )
+          CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue.fromJSON(e)
+        )
         : [],
       ehandleValues: globalThis.Array.isArray(object?.ehandleValues)
         ? object.ehandleValues.map((e: any) =>
-            CUserMsgParticleManager_SetParticleNamedValueContext_EHandleContext.fromJSON(e),
-          )
+          CUserMsgParticleManager_SetParticleNamedValueContext_EHandleContext.fromJSON(e)
+        )
         : [],
     };
   },
@@ -8359,22 +8514,22 @@ export const CUserMsgParticleManager_SetParticleNamedValueContext = {
     const obj: any = {};
     if (message.floatValues?.length) {
       obj.floatValues = message.floatValues.map((e) =>
-        CUserMsgParticleManager_SetParticleNamedValueContext_FloatContextValue.toJSON(e),
+        CUserMsgParticleManager_SetParticleNamedValueContext_FloatContextValue.toJSON(e)
       );
     }
     if (message.vectorValues?.length) {
       obj.vectorValues = message.vectorValues.map((e) =>
-        CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue.toJSON(e),
+        CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue.toJSON(e)
       );
     }
     if (message.transformValues?.length) {
       obj.transformValues = message.transformValues.map((e) =>
-        CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue.toJSON(e),
+        CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue.toJSON(e)
       );
     }
     if (message.ehandleValues?.length) {
       obj.ehandleValues = message.ehandleValues.map((e) =>
-        CUserMsgParticleManager_SetParticleNamedValueContext_EHandleContext.toJSON(e),
+        CUserMsgParticleManager_SetParticleNamedValueContext_EHandleContext.toJSON(e)
       );
     }
     return obj;
@@ -8391,19 +8546,19 @@ export const CUserMsgParticleManager_SetParticleNamedValueContext = {
     const message = createBaseCUserMsgParticleManager_SetParticleNamedValueContext();
     message.floatValues =
       object.floatValues?.map((e) =>
-        CUserMsgParticleManager_SetParticleNamedValueContext_FloatContextValue.fromPartial(e),
+        CUserMsgParticleManager_SetParticleNamedValueContext_FloatContextValue.fromPartial(e)
       ) || [];
     message.vectorValues =
       object.vectorValues?.map((e) =>
-        CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue.fromPartial(e),
+        CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue.fromPartial(e)
       ) || [];
     message.transformValues =
       object.transformValues?.map((e) =>
-        CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue.fromPartial(e),
+        CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue.fromPartial(e)
       ) || [];
     message.ehandleValues =
       object.ehandleValues?.map((e) =>
-        CUserMsgParticleManager_SetParticleNamedValueContext_EHandleContext.fromPartial(e),
+        CUserMsgParticleManager_SetParticleNamedValueContext_EHandleContext.fromPartial(e)
       ) || [];
     return message;
   },
@@ -8572,8 +8727,9 @@ export const CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextV
   ): CUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue {
     const message = createBaseCUserMsgParticleManager_SetParticleNamedValueContext_VectorContextValue();
     message.valueNameHash = object.valueNameHash ?? 0;
-    message.value =
-      object.value !== undefined && object.value !== null ? CMsgVector.fromPartial(object.value) : undefined;
+    message.value = (object.value !== undefined && object.value !== null)
+      ? CMsgVector.fromPartial(object.value)
+      : undefined;
     return message;
   },
 };
@@ -8671,12 +8827,12 @@ export const CUserMsgParticleManager_SetParticleNamedValueContext_TransformConte
   ): CUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue {
     const message = createBaseCUserMsgParticleManager_SetParticleNamedValueContext_TransformContextValue();
     message.valueNameHash = object.valueNameHash ?? 0;
-    message.angles =
-      object.angles !== undefined && object.angles !== null ? CMsgQAngle.fromPartial(object.angles) : undefined;
-    message.translation =
-      object.translation !== undefined && object.translation !== null
-        ? CMsgVector.fromPartial(object.translation)
-        : undefined;
+    message.angles = (object.angles !== undefined && object.angles !== null)
+      ? CMsgQAngle.fromPartial(object.angles)
+      : undefined;
+    message.translation = (object.translation !== undefined && object.translation !== null)
+      ? CMsgVector.fromPartial(object.translation)
+      : undefined;
     return message;
   },
 };
@@ -8766,13 +8922,19 @@ export const CUserMsgParticleManager_SetParticleNamedValueContext_EHandleContext
 };
 
 function createBaseCUserMsgParticleManager_CreatePhysicsSim(): CUserMsgParticleManager_CreatePhysicsSim {
-  return { propGroupName: "" };
+  return { propGroupName: "", useHighQualitySimulation: false, maxParticleCount: 0 };
 }
 
 export const CUserMsgParticleManager_CreatePhysicsSim = {
   encode(message: CUserMsgParticleManager_CreatePhysicsSim, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.propGroupName !== undefined && message.propGroupName !== "") {
       writer.uint32(10).string(message.propGroupName);
+    }
+    if (message.useHighQualitySimulation !== undefined && message.useHighQualitySimulation !== false) {
+      writer.uint32(16).bool(message.useHighQualitySimulation);
+    }
+    if (message.maxParticleCount !== undefined && message.maxParticleCount !== 0) {
+      writer.uint32(24).uint32(message.maxParticleCount);
     }
     return writer;
   },
@@ -8791,6 +8953,20 @@ export const CUserMsgParticleManager_CreatePhysicsSim = {
 
           message.propGroupName = reader.string();
           continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.useHighQualitySimulation = reader.bool();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.maxParticleCount = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -8801,13 +8977,25 @@ export const CUserMsgParticleManager_CreatePhysicsSim = {
   },
 
   fromJSON(object: any): CUserMsgParticleManager_CreatePhysicsSim {
-    return { propGroupName: isSet(object.propGroupName) ? globalThis.String(object.propGroupName) : "" };
+    return {
+      propGroupName: isSet(object.propGroupName) ? globalThis.String(object.propGroupName) : "",
+      useHighQualitySimulation: isSet(object.useHighQualitySimulation)
+        ? globalThis.Boolean(object.useHighQualitySimulation)
+        : false,
+      maxParticleCount: isSet(object.maxParticleCount) ? globalThis.Number(object.maxParticleCount) : 0,
+    };
   },
 
   toJSON(message: CUserMsgParticleManager_CreatePhysicsSim): unknown {
     const obj: any = {};
     if (message.propGroupName !== undefined && message.propGroupName !== "") {
       obj.propGroupName = message.propGroupName;
+    }
+    if (message.useHighQualitySimulation !== undefined && message.useHighQualitySimulation !== false) {
+      obj.useHighQualitySimulation = message.useHighQualitySimulation;
+    }
+    if (message.maxParticleCount !== undefined && message.maxParticleCount !== 0) {
+      obj.maxParticleCount = Math.round(message.maxParticleCount);
     }
     return obj;
   },
@@ -8818,6 +9006,8 @@ export const CUserMsgParticleManager_CreatePhysicsSim = {
   fromPartial(object: DeepPartial<CUserMsgParticleManager_CreatePhysicsSim>): CUserMsgParticleManager_CreatePhysicsSim {
     const message = createBaseCUserMsgParticleManager_CreatePhysicsSim();
     message.propGroupName = object.propGroupName ?? "";
+    message.useHighQualitySimulation = object.useHighQualitySimulation ?? false;
+    message.maxParticleCount = object.maxParticleCount ?? 0;
     return message;
   },
 };
@@ -8861,6 +9051,636 @@ export const CUserMsgParticleManager_DestroyPhysicsSim = {
   },
   fromPartial(_: DeepPartial<CUserMsgParticleManager_DestroyPhysicsSim>): CUserMsgParticleManager_DestroyPhysicsSim {
     const message = createBaseCUserMsgParticleManager_DestroyPhysicsSim();
+    return message;
+  },
+};
+
+function createBaseCUserMsgParticleManager_SetVData(): CUserMsgParticleManager_SetVData {
+  return { vdataName: "" };
+}
+
+export const CUserMsgParticleManager_SetVData = {
+  encode(message: CUserMsgParticleManager_SetVData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.vdataName !== undefined && message.vdataName !== "") {
+      writer.uint32(10).string(message.vdataName);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CUserMsgParticleManager_SetVData {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCUserMsgParticleManager_SetVData();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.vdataName = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CUserMsgParticleManager_SetVData {
+    return { vdataName: isSet(object.vdataName) ? globalThis.String(object.vdataName) : "" };
+  },
+
+  toJSON(message: CUserMsgParticleManager_SetVData): unknown {
+    const obj: any = {};
+    if (message.vdataName !== undefined && message.vdataName !== "") {
+      obj.vdataName = message.vdataName;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CUserMsgParticleManager_SetVData>): CUserMsgParticleManager_SetVData {
+    return CUserMsgParticleManager_SetVData.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CUserMsgParticleManager_SetVData>): CUserMsgParticleManager_SetVData {
+    const message = createBaseCUserMsgParticleManager_SetVData();
+    message.vdataName = object.vdataName ?? "";
+    return message;
+  },
+};
+
+function createBaseCUserMsgParticleManager_SetMaterialOverride(): CUserMsgParticleManager_SetMaterialOverride {
+  return { materialName: "", includeChildren: false };
+}
+
+export const CUserMsgParticleManager_SetMaterialOverride = {
+  encode(message: CUserMsgParticleManager_SetMaterialOverride, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.materialName !== undefined && message.materialName !== "") {
+      writer.uint32(10).string(message.materialName);
+    }
+    if (message.includeChildren !== undefined && message.includeChildren !== false) {
+      writer.uint32(16).bool(message.includeChildren);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CUserMsgParticleManager_SetMaterialOverride {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCUserMsgParticleManager_SetMaterialOverride();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.materialName = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.includeChildren = reader.bool();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CUserMsgParticleManager_SetMaterialOverride {
+    return {
+      materialName: isSet(object.materialName) ? globalThis.String(object.materialName) : "",
+      includeChildren: isSet(object.includeChildren) ? globalThis.Boolean(object.includeChildren) : false,
+    };
+  },
+
+  toJSON(message: CUserMsgParticleManager_SetMaterialOverride): unknown {
+    const obj: any = {};
+    if (message.materialName !== undefined && message.materialName !== "") {
+      obj.materialName = message.materialName;
+    }
+    if (message.includeChildren !== undefined && message.includeChildren !== false) {
+      obj.includeChildren = message.includeChildren;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CUserMsgParticleManager_SetMaterialOverride>): CUserMsgParticleManager_SetMaterialOverride {
+    return CUserMsgParticleManager_SetMaterialOverride.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CUserMsgParticleManager_SetMaterialOverride>,
+  ): CUserMsgParticleManager_SetMaterialOverride {
+    const message = createBaseCUserMsgParticleManager_SetMaterialOverride();
+    message.materialName = object.materialName ?? "";
+    message.includeChildren = object.includeChildren ?? false;
+    return message;
+  },
+};
+
+function createBaseCUserMsgParticleManager_AddFan(): CUserMsgParticleManager_AddFan {
+  return {
+    active: false,
+    boundsMins: undefined,
+    boundsMaxs: undefined,
+    fanOrigin: undefined,
+    fanOriginOffset: undefined,
+    fanDirection: undefined,
+    force: 0,
+    fanForceCurve: "",
+    falloff: false,
+    pullTowardsPoint: false,
+    curveMinDist: 0,
+    curveMaxDist: 0,
+  };
+}
+
+export const CUserMsgParticleManager_AddFan = {
+  encode(message: CUserMsgParticleManager_AddFan, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.active !== undefined && message.active !== false) {
+      writer.uint32(8).bool(message.active);
+    }
+    if (message.boundsMins !== undefined) {
+      CMsgVector.encode(message.boundsMins, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.boundsMaxs !== undefined) {
+      CMsgVector.encode(message.boundsMaxs, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.fanOrigin !== undefined) {
+      CMsgVector.encode(message.fanOrigin, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.fanOriginOffset !== undefined) {
+      CMsgVector.encode(message.fanOriginOffset, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.fanDirection !== undefined) {
+      CMsgVector.encode(message.fanDirection, writer.uint32(50).fork()).ldelim();
+    }
+    if (message.force !== undefined && message.force !== 0) {
+      writer.uint32(61).float(message.force);
+    }
+    if (message.fanForceCurve !== undefined && message.fanForceCurve !== "") {
+      writer.uint32(66).string(message.fanForceCurve);
+    }
+    if (message.falloff !== undefined && message.falloff !== false) {
+      writer.uint32(72).bool(message.falloff);
+    }
+    if (message.pullTowardsPoint !== undefined && message.pullTowardsPoint !== false) {
+      writer.uint32(80).bool(message.pullTowardsPoint);
+    }
+    if (message.curveMinDist !== undefined && message.curveMinDist !== 0) {
+      writer.uint32(93).float(message.curveMinDist);
+    }
+    if (message.curveMaxDist !== undefined && message.curveMaxDist !== 0) {
+      writer.uint32(101).float(message.curveMaxDist);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CUserMsgParticleManager_AddFan {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCUserMsgParticleManager_AddFan();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.active = reader.bool();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.boundsMins = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.boundsMaxs = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.fanOrigin = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.fanOriginOffset = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.fanDirection = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 7:
+          if (tag !== 61) {
+            break;
+          }
+
+          message.force = reader.float();
+          continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
+
+          message.fanForceCurve = reader.string();
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.falloff = reader.bool();
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.pullTowardsPoint = reader.bool();
+          continue;
+        case 11:
+          if (tag !== 93) {
+            break;
+          }
+
+          message.curveMinDist = reader.float();
+          continue;
+        case 12:
+          if (tag !== 101) {
+            break;
+          }
+
+          message.curveMaxDist = reader.float();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CUserMsgParticleManager_AddFan {
+    return {
+      active: isSet(object.active) ? globalThis.Boolean(object.active) : false,
+      boundsMins: isSet(object.boundsMins) ? CMsgVector.fromJSON(object.boundsMins) : undefined,
+      boundsMaxs: isSet(object.boundsMaxs) ? CMsgVector.fromJSON(object.boundsMaxs) : undefined,
+      fanOrigin: isSet(object.fanOrigin) ? CMsgVector.fromJSON(object.fanOrigin) : undefined,
+      fanOriginOffset: isSet(object.fanOriginOffset) ? CMsgVector.fromJSON(object.fanOriginOffset) : undefined,
+      fanDirection: isSet(object.fanDirection) ? CMsgVector.fromJSON(object.fanDirection) : undefined,
+      force: isSet(object.force) ? globalThis.Number(object.force) : 0,
+      fanForceCurve: isSet(object.fanForceCurve) ? globalThis.String(object.fanForceCurve) : "",
+      falloff: isSet(object.falloff) ? globalThis.Boolean(object.falloff) : false,
+      pullTowardsPoint: isSet(object.pullTowardsPoint) ? globalThis.Boolean(object.pullTowardsPoint) : false,
+      curveMinDist: isSet(object.curveMinDist) ? globalThis.Number(object.curveMinDist) : 0,
+      curveMaxDist: isSet(object.curveMaxDist) ? globalThis.Number(object.curveMaxDist) : 0,
+    };
+  },
+
+  toJSON(message: CUserMsgParticleManager_AddFan): unknown {
+    const obj: any = {};
+    if (message.active !== undefined && message.active !== false) {
+      obj.active = message.active;
+    }
+    if (message.boundsMins !== undefined) {
+      obj.boundsMins = CMsgVector.toJSON(message.boundsMins);
+    }
+    if (message.boundsMaxs !== undefined) {
+      obj.boundsMaxs = CMsgVector.toJSON(message.boundsMaxs);
+    }
+    if (message.fanOrigin !== undefined) {
+      obj.fanOrigin = CMsgVector.toJSON(message.fanOrigin);
+    }
+    if (message.fanOriginOffset !== undefined) {
+      obj.fanOriginOffset = CMsgVector.toJSON(message.fanOriginOffset);
+    }
+    if (message.fanDirection !== undefined) {
+      obj.fanDirection = CMsgVector.toJSON(message.fanDirection);
+    }
+    if (message.force !== undefined && message.force !== 0) {
+      obj.force = message.force;
+    }
+    if (message.fanForceCurve !== undefined && message.fanForceCurve !== "") {
+      obj.fanForceCurve = message.fanForceCurve;
+    }
+    if (message.falloff !== undefined && message.falloff !== false) {
+      obj.falloff = message.falloff;
+    }
+    if (message.pullTowardsPoint !== undefined && message.pullTowardsPoint !== false) {
+      obj.pullTowardsPoint = message.pullTowardsPoint;
+    }
+    if (message.curveMinDist !== undefined && message.curveMinDist !== 0) {
+      obj.curveMinDist = message.curveMinDist;
+    }
+    if (message.curveMaxDist !== undefined && message.curveMaxDist !== 0) {
+      obj.curveMaxDist = message.curveMaxDist;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CUserMsgParticleManager_AddFan>): CUserMsgParticleManager_AddFan {
+    return CUserMsgParticleManager_AddFan.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CUserMsgParticleManager_AddFan>): CUserMsgParticleManager_AddFan {
+    const message = createBaseCUserMsgParticleManager_AddFan();
+    message.active = object.active ?? false;
+    message.boundsMins = (object.boundsMins !== undefined && object.boundsMins !== null)
+      ? CMsgVector.fromPartial(object.boundsMins)
+      : undefined;
+    message.boundsMaxs = (object.boundsMaxs !== undefined && object.boundsMaxs !== null)
+      ? CMsgVector.fromPartial(object.boundsMaxs)
+      : undefined;
+    message.fanOrigin = (object.fanOrigin !== undefined && object.fanOrigin !== null)
+      ? CMsgVector.fromPartial(object.fanOrigin)
+      : undefined;
+    message.fanOriginOffset = (object.fanOriginOffset !== undefined && object.fanOriginOffset !== null)
+      ? CMsgVector.fromPartial(object.fanOriginOffset)
+      : undefined;
+    message.fanDirection = (object.fanDirection !== undefined && object.fanDirection !== null)
+      ? CMsgVector.fromPartial(object.fanDirection)
+      : undefined;
+    message.force = object.force ?? 0;
+    message.fanForceCurve = object.fanForceCurve ?? "";
+    message.falloff = object.falloff ?? false;
+    message.pullTowardsPoint = object.pullTowardsPoint ?? false;
+    message.curveMinDist = object.curveMinDist ?? 0;
+    message.curveMaxDist = object.curveMaxDist ?? 0;
+    return message;
+  },
+};
+
+function createBaseCUserMsgParticleManager_UpdateFan(): CUserMsgParticleManager_UpdateFan {
+  return {
+    active: false,
+    fanOrigin: undefined,
+    fanOriginOffset: undefined,
+    fanDirection: undefined,
+    fanRampRatio: 0,
+    boundsMins: undefined,
+    boundsMaxs: undefined,
+  };
+}
+
+export const CUserMsgParticleManager_UpdateFan = {
+  encode(message: CUserMsgParticleManager_UpdateFan, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.active !== undefined && message.active !== false) {
+      writer.uint32(8).bool(message.active);
+    }
+    if (message.fanOrigin !== undefined) {
+      CMsgVector.encode(message.fanOrigin, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.fanOriginOffset !== undefined) {
+      CMsgVector.encode(message.fanOriginOffset, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.fanDirection !== undefined) {
+      CMsgVector.encode(message.fanDirection, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.fanRampRatio !== undefined && message.fanRampRatio !== 0) {
+      writer.uint32(61).float(message.fanRampRatio);
+    }
+    if (message.boundsMins !== undefined) {
+      CMsgVector.encode(message.boundsMins, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.boundsMaxs !== undefined) {
+      CMsgVector.encode(message.boundsMaxs, writer.uint32(50).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CUserMsgParticleManager_UpdateFan {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCUserMsgParticleManager_UpdateFan();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.active = reader.bool();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.fanOrigin = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.fanOriginOffset = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.fanDirection = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 7:
+          if (tag !== 61) {
+            break;
+          }
+
+          message.fanRampRatio = reader.float();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.boundsMins = CMsgVector.decode(reader, reader.uint32());
+          continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.boundsMaxs = CMsgVector.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CUserMsgParticleManager_UpdateFan {
+    return {
+      active: isSet(object.active) ? globalThis.Boolean(object.active) : false,
+      fanOrigin: isSet(object.fanOrigin) ? CMsgVector.fromJSON(object.fanOrigin) : undefined,
+      fanOriginOffset: isSet(object.fanOriginOffset) ? CMsgVector.fromJSON(object.fanOriginOffset) : undefined,
+      fanDirection: isSet(object.fanDirection) ? CMsgVector.fromJSON(object.fanDirection) : undefined,
+      fanRampRatio: isSet(object.fanRampRatio) ? globalThis.Number(object.fanRampRatio) : 0,
+      boundsMins: isSet(object.boundsMins) ? CMsgVector.fromJSON(object.boundsMins) : undefined,
+      boundsMaxs: isSet(object.boundsMaxs) ? CMsgVector.fromJSON(object.boundsMaxs) : undefined,
+    };
+  },
+
+  toJSON(message: CUserMsgParticleManager_UpdateFan): unknown {
+    const obj: any = {};
+    if (message.active !== undefined && message.active !== false) {
+      obj.active = message.active;
+    }
+    if (message.fanOrigin !== undefined) {
+      obj.fanOrigin = CMsgVector.toJSON(message.fanOrigin);
+    }
+    if (message.fanOriginOffset !== undefined) {
+      obj.fanOriginOffset = CMsgVector.toJSON(message.fanOriginOffset);
+    }
+    if (message.fanDirection !== undefined) {
+      obj.fanDirection = CMsgVector.toJSON(message.fanDirection);
+    }
+    if (message.fanRampRatio !== undefined && message.fanRampRatio !== 0) {
+      obj.fanRampRatio = message.fanRampRatio;
+    }
+    if (message.boundsMins !== undefined) {
+      obj.boundsMins = CMsgVector.toJSON(message.boundsMins);
+    }
+    if (message.boundsMaxs !== undefined) {
+      obj.boundsMaxs = CMsgVector.toJSON(message.boundsMaxs);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CUserMsgParticleManager_UpdateFan>): CUserMsgParticleManager_UpdateFan {
+    return CUserMsgParticleManager_UpdateFan.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CUserMsgParticleManager_UpdateFan>): CUserMsgParticleManager_UpdateFan {
+    const message = createBaseCUserMsgParticleManager_UpdateFan();
+    message.active = object.active ?? false;
+    message.fanOrigin = (object.fanOrigin !== undefined && object.fanOrigin !== null)
+      ? CMsgVector.fromPartial(object.fanOrigin)
+      : undefined;
+    message.fanOriginOffset = (object.fanOriginOffset !== undefined && object.fanOriginOffset !== null)
+      ? CMsgVector.fromPartial(object.fanOriginOffset)
+      : undefined;
+    message.fanDirection = (object.fanDirection !== undefined && object.fanDirection !== null)
+      ? CMsgVector.fromPartial(object.fanDirection)
+      : undefined;
+    message.fanRampRatio = object.fanRampRatio ?? 0;
+    message.boundsMins = (object.boundsMins !== undefined && object.boundsMins !== null)
+      ? CMsgVector.fromPartial(object.boundsMins)
+      : undefined;
+    message.boundsMaxs = (object.boundsMaxs !== undefined && object.boundsMaxs !== null)
+      ? CMsgVector.fromPartial(object.boundsMaxs)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseCUserMsgParticleManager_SetParticleClusterGrowth(): CUserMsgParticleManager_SetParticleClusterGrowth {
+  return { duration: 0, origin: undefined };
+}
+
+export const CUserMsgParticleManager_SetParticleClusterGrowth = {
+  encode(
+    message: CUserMsgParticleManager_SetParticleClusterGrowth,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.duration !== undefined && message.duration !== 0) {
+      writer.uint32(13).float(message.duration);
+    }
+    if (message.origin !== undefined) {
+      CMsgVector.encode(message.origin, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CUserMsgParticleManager_SetParticleClusterGrowth {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCUserMsgParticleManager_SetParticleClusterGrowth();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 13) {
+            break;
+          }
+
+          message.duration = reader.float();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.origin = CMsgVector.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CUserMsgParticleManager_SetParticleClusterGrowth {
+    return {
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
+      origin: isSet(object.origin) ? CMsgVector.fromJSON(object.origin) : undefined,
+    };
+  },
+
+  toJSON(message: CUserMsgParticleManager_SetParticleClusterGrowth): unknown {
+    const obj: any = {};
+    if (message.duration !== undefined && message.duration !== 0) {
+      obj.duration = message.duration;
+    }
+    if (message.origin !== undefined) {
+      obj.origin = CMsgVector.toJSON(message.origin);
+    }
+    return obj;
+  },
+
+  create(
+    base?: DeepPartial<CUserMsgParticleManager_SetParticleClusterGrowth>,
+  ): CUserMsgParticleManager_SetParticleClusterGrowth {
+    return CUserMsgParticleManager_SetParticleClusterGrowth.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CUserMsgParticleManager_SetParticleClusterGrowth>,
+  ): CUserMsgParticleManager_SetParticleClusterGrowth {
+    const message = createBaseCUserMsgParticleManager_SetParticleClusterGrowth();
+    message.duration = object.duration ?? 0;
+    message.origin = (object.origin !== undefined && object.origin !== null)
+      ? CMsgVector.fromPartial(object.origin)
+      : undefined;
     return message;
   },
 };
@@ -11411,8 +12231,8 @@ export const CUserMessageDiagnosticResponse = {
   },
   fromPartial(object: DeepPartial<CUserMessageDiagnosticResponse>): CUserMessageDiagnosticResponse {
     const message = createBaseCUserMessageDiagnosticResponse();
-    message.diagnostics =
-      object.diagnostics?.map((e) => CUserMessageDiagnosticResponse_Diagnostic.fromPartial(e)) || [];
+    message.diagnostics = object.diagnostics?.map((e) => CUserMessageDiagnosticResponse_Diagnostic.fromPartial(e)) ||
+      [];
     message.buildVersion = object.buildVersion ?? 0;
     message.instance = object.instance ?? 0;
     message.startTime = object.startTime ?? "0";
@@ -11833,7 +12653,20 @@ export const CUserMessageExtraUserData = {
 };
 
 function createBaseCUserMessageNotifyResponseFound(): CUserMessageNotifyResponseFound {
-  return { entIndex: -1, ruleName: "", responseValue: "", responseConcept: "", criteria: [] };
+  return {
+    entIndex: -1,
+    ruleName: "",
+    responseValue: "",
+    responseConcept: "",
+    criteria: [],
+    intCriteriaNames: [],
+    intCriteriaValues: [],
+    floatCriteriaNames: [],
+    floatCriteriaValues: [],
+    symbolCriteriaNames: [],
+    symbolCriteriaValues: [],
+    speakResult: 0,
+  };
 }
 
 export const CUserMessageNotifyResponseFound = {
@@ -11852,6 +12685,39 @@ export const CUserMessageNotifyResponseFound = {
     }
     for (const v of message.criteria) {
       CUserMessageNotifyResponseFound_Criteria.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
+    writer.uint32(50).fork();
+    for (const v of message.intCriteriaNames) {
+      writer.uint32(v);
+    }
+    writer.ldelim();
+    writer.uint32(58).fork();
+    for (const v of message.intCriteriaValues) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    writer.uint32(66).fork();
+    for (const v of message.floatCriteriaNames) {
+      writer.uint32(v);
+    }
+    writer.ldelim();
+    writer.uint32(74).fork();
+    for (const v of message.floatCriteriaValues) {
+      writer.float(v);
+    }
+    writer.ldelim();
+    writer.uint32(82).fork();
+    for (const v of message.symbolCriteriaNames) {
+      writer.uint32(v);
+    }
+    writer.ldelim();
+    writer.uint32(90).fork();
+    for (const v of message.symbolCriteriaValues) {
+      writer.uint32(v);
+    }
+    writer.ldelim();
+    if (message.speakResult !== undefined && message.speakResult !== 0) {
+      writer.uint32(96).int32(message.speakResult);
     }
     return writer;
   },
@@ -11898,6 +12764,115 @@ export const CUserMessageNotifyResponseFound = {
 
           message.criteria.push(CUserMessageNotifyResponseFound_Criteria.decode(reader, reader.uint32()));
           continue;
+        case 6:
+          if (tag === 48) {
+            message.intCriteriaNames.push(reader.uint32());
+
+            continue;
+          }
+
+          if (tag === 50) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.intCriteriaNames.push(reader.uint32());
+            }
+
+            continue;
+          }
+
+          break;
+        case 7:
+          if (tag === 56) {
+            message.intCriteriaValues.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 58) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.intCriteriaValues.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
+        case 8:
+          if (tag === 64) {
+            message.floatCriteriaNames.push(reader.uint32());
+
+            continue;
+          }
+
+          if (tag === 66) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.floatCriteriaNames.push(reader.uint32());
+            }
+
+            continue;
+          }
+
+          break;
+        case 9:
+          if (tag === 77) {
+            message.floatCriteriaValues.push(reader.float());
+
+            continue;
+          }
+
+          if (tag === 74) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.floatCriteriaValues.push(reader.float());
+            }
+
+            continue;
+          }
+
+          break;
+        case 10:
+          if (tag === 80) {
+            message.symbolCriteriaNames.push(reader.uint32());
+
+            continue;
+          }
+
+          if (tag === 82) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.symbolCriteriaNames.push(reader.uint32());
+            }
+
+            continue;
+          }
+
+          break;
+        case 11:
+          if (tag === 88) {
+            message.symbolCriteriaValues.push(reader.uint32());
+
+            continue;
+          }
+
+          if (tag === 90) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.symbolCriteriaValues.push(reader.uint32());
+            }
+
+            continue;
+          }
+
+          break;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.speakResult = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -11916,6 +12891,25 @@ export const CUserMessageNotifyResponseFound = {
       criteria: globalThis.Array.isArray(object?.criteria)
         ? object.criteria.map((e: any) => CUserMessageNotifyResponseFound_Criteria.fromJSON(e))
         : [],
+      intCriteriaNames: globalThis.Array.isArray(object?.intCriteriaNames)
+        ? object.intCriteriaNames.map((e: any) => globalThis.Number(e))
+        : [],
+      intCriteriaValues: globalThis.Array.isArray(object?.intCriteriaValues)
+        ? object.intCriteriaValues.map((e: any) => globalThis.Number(e))
+        : [],
+      floatCriteriaNames: globalThis.Array.isArray(object?.floatCriteriaNames)
+        ? object.floatCriteriaNames.map((e: any) => globalThis.Number(e))
+        : [],
+      floatCriteriaValues: globalThis.Array.isArray(object?.floatCriteriaValues)
+        ? object.floatCriteriaValues.map((e: any) => globalThis.Number(e))
+        : [],
+      symbolCriteriaNames: globalThis.Array.isArray(object?.symbolCriteriaNames)
+        ? object.symbolCriteriaNames.map((e: any) => globalThis.Number(e))
+        : [],
+      symbolCriteriaValues: globalThis.Array.isArray(object?.symbolCriteriaValues)
+        ? object.symbolCriteriaValues.map((e: any) => globalThis.Number(e))
+        : [],
+      speakResult: isSet(object.speakResult) ? globalThis.Number(object.speakResult) : 0,
     };
   },
 
@@ -11936,6 +12930,27 @@ export const CUserMessageNotifyResponseFound = {
     if (message.criteria?.length) {
       obj.criteria = message.criteria.map((e) => CUserMessageNotifyResponseFound_Criteria.toJSON(e));
     }
+    if (message.intCriteriaNames?.length) {
+      obj.intCriteriaNames = message.intCriteriaNames.map((e) => Math.round(e));
+    }
+    if (message.intCriteriaValues?.length) {
+      obj.intCriteriaValues = message.intCriteriaValues.map((e) => Math.round(e));
+    }
+    if (message.floatCriteriaNames?.length) {
+      obj.floatCriteriaNames = message.floatCriteriaNames.map((e) => Math.round(e));
+    }
+    if (message.floatCriteriaValues?.length) {
+      obj.floatCriteriaValues = message.floatCriteriaValues;
+    }
+    if (message.symbolCriteriaNames?.length) {
+      obj.symbolCriteriaNames = message.symbolCriteriaNames.map((e) => Math.round(e));
+    }
+    if (message.symbolCriteriaValues?.length) {
+      obj.symbolCriteriaValues = message.symbolCriteriaValues.map((e) => Math.round(e));
+    }
+    if (message.speakResult !== undefined && message.speakResult !== 0) {
+      obj.speakResult = Math.round(message.speakResult);
+    }
     return obj;
   },
 
@@ -11949,6 +12964,13 @@ export const CUserMessageNotifyResponseFound = {
     message.responseValue = object.responseValue ?? "";
     message.responseConcept = object.responseConcept ?? "";
     message.criteria = object.criteria?.map((e) => CUserMessageNotifyResponseFound_Criteria.fromPartial(e)) || [];
+    message.intCriteriaNames = object.intCriteriaNames?.map((e) => e) || [];
+    message.intCriteriaValues = object.intCriteriaValues?.map((e) => e) || [];
+    message.floatCriteriaNames = object.floatCriteriaNames?.map((e) => e) || [];
+    message.floatCriteriaValues = object.floatCriteriaValues?.map((e) => e) || [];
+    message.symbolCriteriaNames = object.symbolCriteriaNames?.map((e) => e) || [];
+    message.symbolCriteriaValues = object.symbolCriteriaValues?.map((e) => e) || [];
+    message.speakResult = object.speakResult ?? 0;
     return message;
   },
 };
@@ -12028,7 +13050,7 @@ export const CUserMessageNotifyResponseFound_Criteria = {
 };
 
 function createBaseCUserMessagePlayResponseConditional(): CUserMessagePlayResponseConditional {
-  return { entIndex: -1, playerSlots: [], response: "", entOrigin: undefined };
+  return { entIndex: -1, playerSlots: [], response: "", entOrigin: undefined, preDelay: 0, mixPriority: 0 };
 }
 
 export const CUserMessagePlayResponseConditional = {
@@ -12046,6 +13068,12 @@ export const CUserMessagePlayResponseConditional = {
     }
     if (message.entOrigin !== undefined) {
       CMsgVector.encode(message.entOrigin, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.preDelay !== undefined && message.preDelay !== 0) {
+      writer.uint32(45).float(message.preDelay);
+    }
+    if (message.mixPriority !== undefined && message.mixPriority !== 0) {
+      writer.uint32(48).int32(message.mixPriority);
     }
     return writer;
   },
@@ -12095,6 +13123,20 @@ export const CUserMessagePlayResponseConditional = {
 
           message.entOrigin = CMsgVector.decode(reader, reader.uint32());
           continue;
+        case 5:
+          if (tag !== 45) {
+            break;
+          }
+
+          message.preDelay = reader.float();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.mixPriority = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -12112,6 +13154,8 @@ export const CUserMessagePlayResponseConditional = {
         : [],
       response: isSet(object.response) ? globalThis.String(object.response) : "",
       entOrigin: isSet(object.entOrigin) ? CMsgVector.fromJSON(object.entOrigin) : undefined,
+      preDelay: isSet(object.preDelay) ? globalThis.Number(object.preDelay) : 0,
+      mixPriority: isSet(object.mixPriority) ? globalThis.Number(object.mixPriority) : 0,
     };
   },
 
@@ -12129,6 +13173,12 @@ export const CUserMessagePlayResponseConditional = {
     if (message.entOrigin !== undefined) {
       obj.entOrigin = CMsgVector.toJSON(message.entOrigin);
     }
+    if (message.preDelay !== undefined && message.preDelay !== 0) {
+      obj.preDelay = message.preDelay;
+    }
+    if (message.mixPriority !== undefined && message.mixPriority !== 0) {
+      obj.mixPriority = Math.round(message.mixPriority);
+    }
     return obj;
   },
 
@@ -12140,10 +13190,11 @@ export const CUserMessagePlayResponseConditional = {
     message.entIndex = object.entIndex ?? -1;
     message.playerSlots = object.playerSlots?.map((e) => e) || [];
     message.response = object.response ?? "";
-    message.entOrigin =
-      object.entOrigin !== undefined && object.entOrigin !== null
-        ? CMsgVector.fromPartial(object.entOrigin)
-        : undefined;
+    message.entOrigin = (object.entOrigin !== undefined && object.entOrigin !== null)
+      ? CMsgVector.fromPartial(object.entOrigin)
+      : undefined;
+    message.preDelay = object.preDelay ?? 0;
+    message.mixPriority = object.mixPriority ?? 0;
     return message;
   },
 };
@@ -12158,15 +13209,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

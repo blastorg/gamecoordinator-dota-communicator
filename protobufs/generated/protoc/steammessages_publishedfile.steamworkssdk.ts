@@ -15,7 +15,8 @@ export interface CPublishedFileSubscribeRequest {
   notifyClient?: boolean | undefined;
 }
 
-export interface CPublishedFileSubscribeResponse {}
+export interface CPublishedFileSubscribeResponse {
+}
 
 export interface CPublishedFileUnsubscribeRequest {
   publishedfileid?: string | undefined;
@@ -24,7 +25,8 @@ export interface CPublishedFileUnsubscribeRequest {
   notifyClient?: boolean | undefined;
 }
 
-export interface CPublishedFileUnsubscribeResponse {}
+export interface CPublishedFileUnsubscribeResponse {
+}
 
 export interface CPublishedFilePublishRequest {
   appid?: number | undefined;
@@ -191,7 +193,8 @@ export interface CPublishedFileUpdateRequest {
   previewFilename?: string | undefined;
 }
 
-export interface CPublishedFileUpdateResponse {}
+export interface CPublishedFileUpdateResponse {
+}
 
 export interface CPublishedFileRefreshVotingQueueRequest {
   appid?: number | undefined;
@@ -202,7 +205,8 @@ export interface CPublishedFileRefreshVotingQueueRequest {
   desiredQueueSize?: number | undefined;
 }
 
-export interface CPublishedFileRefreshVotingQueueResponse {}
+export interface CPublishedFileRefreshVotingQueueResponse {
+}
 
 function createBaseCPublishedFileSubscribeRequest(): CPublishedFileSubscribeRequest {
   return { publishedfileid: "0", listType: 0, appid: 0, notifyClient: false };
@@ -1989,10 +1993,9 @@ export const PublishedFileDetails = {
     message.tags = object.tags?.map((e) => PublishedFileDetails_Tag.fromPartial(e)) || [];
     message.children = object.children?.map((e) => PublishedFileDetails_Child.fromPartial(e)) || [];
     message.kvtags = object.kvtags?.map((e) => PublishedFileDetails_KVTag.fromPartial(e)) || [];
-    message.voteData =
-      object.voteData !== undefined && object.voteData !== null
-        ? PublishedFileDetails_VoteData.fromPartial(object.voteData)
-        : undefined;
+    message.voteData = (object.voteData !== undefined && object.voteData !== null)
+      ? PublishedFileDetails_VoteData.fromPartial(object.voteData)
+      : undefined;
     message.timeSubscribed = object.timeSubscribed ?? 0;
     return message;
   },
@@ -3397,15 +3400,11 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

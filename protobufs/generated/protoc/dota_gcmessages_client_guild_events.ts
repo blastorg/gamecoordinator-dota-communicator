@@ -943,10 +943,9 @@ export const CMsgGuildContractSlot = {
   },
   fromPartial(object: DeepPartial<CMsgGuildContractSlot>): CMsgGuildContractSlot {
     const message = createBaseCMsgGuildContractSlot();
-    message.contract =
-      object.contract !== undefined && object.contract !== null
-        ? CMsgGuildContract.fromPartial(object.contract)
-        : undefined;
+    message.contract = (object.contract !== undefined && object.contract !== null)
+      ? CMsgGuildContract.fromPartial(object.contract)
+      : undefined;
     return message;
   },
 };
@@ -1598,10 +1597,9 @@ export const CMsgClientToGCRequestAccountGuildEventDataResponse = {
     const message = createBaseCMsgClientToGCRequestAccountGuildEventDataResponse();
     message.result = object.result ?? 0;
     message.eventId = object.eventId ?? 0;
-    message.eventData =
-      object.eventData !== undefined && object.eventData !== null
-        ? CMsgAccountGuildEventData.fromPartial(object.eventData)
-        : undefined;
+    message.eventData = (object.eventData !== undefined && object.eventData !== null)
+      ? CMsgAccountGuildEventData.fromPartial(object.eventData)
+      : undefined;
     return message;
   },
 };
@@ -1723,10 +1721,9 @@ export const CMsgGCToClientAccountGuildEventDataUpdated = {
     message.guildId = object.guildId ?? 0;
     message.eventId = object.eventId ?? 0;
     message.updateFlags = object.updateFlags ?? 0;
-    message.guildEventData =
-      object.guildEventData !== undefined && object.guildEventData !== null
-        ? CMsgAccountGuildEventData.fromPartial(object.guildEventData)
-        : undefined;
+    message.guildEventData = (object.guildEventData !== undefined && object.guildEventData !== null)
+      ? CMsgAccountGuildEventData.fromPartial(object.guildEventData)
+      : undefined;
     message.contractsUpdated = object.contractsUpdated ?? false;
     return message;
   },
@@ -1904,14 +1901,12 @@ export const CMsgClientToGCRequestActiveGuildContractsResponse = {
   ): CMsgClientToGCRequestActiveGuildContractsResponse {
     const message = createBaseCMsgClientToGCRequestActiveGuildContractsResponse();
     message.result = object.result ?? 0;
-    message.activeContracts =
-      object.activeContracts !== undefined && object.activeContracts !== null
-        ? CMsgGuildActiveContracts.fromPartial(object.activeContracts)
-        : undefined;
-    message.activeChallenges =
-      object.activeChallenges !== undefined && object.activeChallenges !== null
-        ? CMsgGuildChallenge.fromPartial(object.activeChallenges)
-        : undefined;
+    message.activeContracts = (object.activeContracts !== undefined && object.activeContracts !== null)
+      ? CMsgGuildActiveContracts.fromPartial(object.activeContracts)
+      : undefined;
+    message.activeChallenges = (object.activeChallenges !== undefined && object.activeChallenges !== null)
+      ? CMsgGuildChallenge.fromPartial(object.activeChallenges)
+      : undefined;
     return message;
   },
 };
@@ -2311,10 +2306,9 @@ export const CMsgClientToGCRequestActiveGuildChallengeResponse = {
   ): CMsgClientToGCRequestActiveGuildChallengeResponse {
     const message = createBaseCMsgClientToGCRequestActiveGuildChallengeResponse();
     message.result = object.result ?? 0;
-    message.activeChallenge =
-      object.activeChallenge !== undefined && object.activeChallenge !== null
-        ? CMsgGuildChallenge.fromPartial(object.activeChallenge)
-        : undefined;
+    message.activeChallenge = (object.activeChallenge !== undefined && object.activeChallenge !== null)
+      ? CMsgGuildChallenge.fromPartial(object.activeChallenge)
+      : undefined;
     return message;
   },
 };
@@ -2405,10 +2399,9 @@ export const CMsgGCToClientActiveGuildChallengeUpdated = {
     const message = createBaseCMsgGCToClientActiveGuildChallengeUpdated();
     message.guildId = object.guildId ?? 0;
     message.eventId = object.eventId ?? 0;
-    message.activeChallenge =
-      object.activeChallenge !== undefined && object.activeChallenge !== null
-        ? CMsgGuildChallenge.fromPartial(object.activeChallenge)
-        : undefined;
+    message.activeChallenge = (object.activeChallenge !== undefined && object.activeChallenge !== null)
+      ? CMsgGuildChallenge.fromPartial(object.activeChallenge)
+      : undefined;
     return message;
   },
 };
@@ -2963,15 +2956,11 @@ export const CMsgClientToGCClaimLeaderboardRewardsResponse = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

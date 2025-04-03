@@ -82,10 +82,6 @@ export enum EDOTAGCMsg {
   k_EMsgGC_TournamentItemEventResponse = 7151,
   k_EMsgTeamFanfare = 7156,
   k_EMsgResponseTeamFanfare = 7157,
-  k_EMsgGC_GameServerUploadSaveGame = 7158,
-  k_EMsgGC_GameServerSaveGameResult = 7159,
-  k_EMsgGC_GameServerGetLoadGame = 7160,
-  k_EMsgGC_GameServerGetLoadGameResult = 7161,
   k_EMsgGCEditTeamDetails = 7166,
   k_EMsgGCEditTeamDetailsResponse = 7167,
   k_EMsgGCReadyUpStatus = 7170,
@@ -178,6 +174,8 @@ export enum EDOTAGCMsg {
   k_EMsgServerToGCRequestBatchPlayerResources = 7450,
   k_EMsgServerToGCRequestBatchPlayerResourcesResponse = 7451,
   k_EMsgGCCompendiumSetSelectionResponse = 7453,
+  k_EMsgGCRankedPlayerInfoSubmit = 7454,
+  k_EMsgGCRankedPlayerInfoSubmitResponse = 7455,
   k_EMsgGCPlayerInfoSubmit = 7456,
   k_EMsgGCPlayerInfoSubmitResponse = 7457,
   k_EMsgGCToGCGetAccountLevel = 7458,
@@ -826,7 +824,6 @@ export enum EDOTAGCMsg {
   k_EMsgGCToClientCollectorsCacheAvailableDataResponse = 8872,
   k_EMsgClientToGCUploadMatchClip = 8873,
   k_EMsgGCToClientUploadMatchClipResponse = 8874,
-  k_EMsgGCToServerSteamLearnAccessTokensChanged = 8876,
   k_EMsgSignOutMuertaMinigame = 8877,
   k_EMsgGCToServerLobbyHeroRoleStats = 8878,
   k_EMsgClientToGCRankRequest = 8879,
@@ -937,6 +934,38 @@ export enum EDOTAGCMsg {
   k_EMsgOverworldEncounterPitFighterRewardData = 8987,
   k_EMsgClientToGCOverworldGetDynamicImage = 8988,
   k_EMsgClientToGCOverworldGetDynamicImageResponse = 8989,
+  k_EMsgClientToGCFightingGameChallengeFriend = 8990,
+  k_EMsgClientToGCFightingGameChallengeFriendResponse = 8991,
+  k_EMsgClientToGCFightingGameCancelChallengeFriend = 8992,
+  k_EMsgClientToGCFightingGameAnswerChallenge = 8993,
+  k_EMsgClientToGCFightingGameAnswerChallengeResponse = 8994,
+  k_EMsgGCToClientFightingGameChallenge = 8995,
+  k_EMsgGCToClientFightingGameStartMatch = 8996,
+  k_EMsgGCToClientFightingGameChallengeCanceled = 8997,
+  k_EMsgClientToGCBingoShuffleCard = 8999,
+  k_EMsgClientToGCBingoShuffleCardResponse = 9000,
+  k_EMsgClientToGCBingoModifySquare = 9001,
+  k_EMsgClientToGCBingoModifySquareResponse = 9002,
+  k_EMsgClientToGCBingoDevAddTokens = 9003,
+  k_EMsgClientToGCBingoDevAddTokensResponse = 9004,
+  k_EMsgClientToGCBingoDevClearInventory = 9005,
+  k_EMsgClientToGCBingoDevClearInventoryResponse = 9006,
+  k_EMsgGCCompendiumRemoveAllSelections = 9007,
+  k_EMsgGCCompendiumRemoveAllSelectionsResponse = 9008,
+  k_EMsgClientToGCOverworldMinigameAction = 9009,
+  k_EMsgClientToGCOverworldMinigameActionResponse = 9010,
+  k_EMsgClientToGCSurvivorsTelemetry = 9011,
+  k_EMsgClientToGCSurvivorsTelemetryResponse = 9012,
+  k_EMsgClientToGCOverworldRequestTokensNeededByFriend = 9013,
+  k_EMsgClientToGCOverworldRequestTokensNeededByFriendResponse = 9014,
+  k_EMsgClientToGCCraftworksGetUserData = 9015,
+  k_EMsgClientToGCCraftworksGetUserDataResponse = 9016,
+  k_EMsgGCToClientCraftworksUserDataUpdated = 9017,
+  k_EMsgClientToGCCraftworksCraftRecipe = 9018,
+  k_EMsgClientToGCCraftworksCraftRecipeResponse = 9019,
+  k_EMsgClientToGCCraftworksDevModifyComponents = 9020,
+  k_EMsgClientToGCCraftworksDevModifyComponentsResponse = 9021,
+  k_EMsgSignOutCraftworks = 9022,
 }
 
 export function eDOTAGCMsgFromJSON(object: any): EDOTAGCMsg {
@@ -1166,18 +1195,6 @@ export function eDOTAGCMsgFromJSON(object: any): EDOTAGCMsg {
     case 7157:
     case "k_EMsgResponseTeamFanfare":
       return EDOTAGCMsg.k_EMsgResponseTeamFanfare;
-    case 7158:
-    case "k_EMsgGC_GameServerUploadSaveGame":
-      return EDOTAGCMsg.k_EMsgGC_GameServerUploadSaveGame;
-    case 7159:
-    case "k_EMsgGC_GameServerSaveGameResult":
-      return EDOTAGCMsg.k_EMsgGC_GameServerSaveGameResult;
-    case 7160:
-    case "k_EMsgGC_GameServerGetLoadGame":
-      return EDOTAGCMsg.k_EMsgGC_GameServerGetLoadGame;
-    case 7161:
-    case "k_EMsgGC_GameServerGetLoadGameResult":
-      return EDOTAGCMsg.k_EMsgGC_GameServerGetLoadGameResult;
     case 7166:
     case "k_EMsgGCEditTeamDetails":
       return EDOTAGCMsg.k_EMsgGCEditTeamDetails;
@@ -1454,6 +1471,12 @@ export function eDOTAGCMsgFromJSON(object: any): EDOTAGCMsg {
     case 7453:
     case "k_EMsgGCCompendiumSetSelectionResponse":
       return EDOTAGCMsg.k_EMsgGCCompendiumSetSelectionResponse;
+    case 7454:
+    case "k_EMsgGCRankedPlayerInfoSubmit":
+      return EDOTAGCMsg.k_EMsgGCRankedPlayerInfoSubmit;
+    case 7455:
+    case "k_EMsgGCRankedPlayerInfoSubmitResponse":
+      return EDOTAGCMsg.k_EMsgGCRankedPlayerInfoSubmitResponse;
     case 7456:
     case "k_EMsgGCPlayerInfoSubmit":
       return EDOTAGCMsg.k_EMsgGCPlayerInfoSubmit;
@@ -3398,9 +3421,6 @@ export function eDOTAGCMsgFromJSON(object: any): EDOTAGCMsg {
     case 8874:
     case "k_EMsgGCToClientUploadMatchClipResponse":
       return EDOTAGCMsg.k_EMsgGCToClientUploadMatchClipResponse;
-    case 8876:
-    case "k_EMsgGCToServerSteamLearnAccessTokensChanged":
-      return EDOTAGCMsg.k_EMsgGCToServerSteamLearnAccessTokensChanged;
     case 8877:
     case "k_EMsgSignOutMuertaMinigame":
       return EDOTAGCMsg.k_EMsgSignOutMuertaMinigame;
@@ -3731,6 +3751,102 @@ export function eDOTAGCMsgFromJSON(object: any): EDOTAGCMsg {
     case 8989:
     case "k_EMsgClientToGCOverworldGetDynamicImageResponse":
       return EDOTAGCMsg.k_EMsgClientToGCOverworldGetDynamicImageResponse;
+    case 8990:
+    case "k_EMsgClientToGCFightingGameChallengeFriend":
+      return EDOTAGCMsg.k_EMsgClientToGCFightingGameChallengeFriend;
+    case 8991:
+    case "k_EMsgClientToGCFightingGameChallengeFriendResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCFightingGameChallengeFriendResponse;
+    case 8992:
+    case "k_EMsgClientToGCFightingGameCancelChallengeFriend":
+      return EDOTAGCMsg.k_EMsgClientToGCFightingGameCancelChallengeFriend;
+    case 8993:
+    case "k_EMsgClientToGCFightingGameAnswerChallenge":
+      return EDOTAGCMsg.k_EMsgClientToGCFightingGameAnswerChallenge;
+    case 8994:
+    case "k_EMsgClientToGCFightingGameAnswerChallengeResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCFightingGameAnswerChallengeResponse;
+    case 8995:
+    case "k_EMsgGCToClientFightingGameChallenge":
+      return EDOTAGCMsg.k_EMsgGCToClientFightingGameChallenge;
+    case 8996:
+    case "k_EMsgGCToClientFightingGameStartMatch":
+      return EDOTAGCMsg.k_EMsgGCToClientFightingGameStartMatch;
+    case 8997:
+    case "k_EMsgGCToClientFightingGameChallengeCanceled":
+      return EDOTAGCMsg.k_EMsgGCToClientFightingGameChallengeCanceled;
+    case 8999:
+    case "k_EMsgClientToGCBingoShuffleCard":
+      return EDOTAGCMsg.k_EMsgClientToGCBingoShuffleCard;
+    case 9000:
+    case "k_EMsgClientToGCBingoShuffleCardResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCBingoShuffleCardResponse;
+    case 9001:
+    case "k_EMsgClientToGCBingoModifySquare":
+      return EDOTAGCMsg.k_EMsgClientToGCBingoModifySquare;
+    case 9002:
+    case "k_EMsgClientToGCBingoModifySquareResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCBingoModifySquareResponse;
+    case 9003:
+    case "k_EMsgClientToGCBingoDevAddTokens":
+      return EDOTAGCMsg.k_EMsgClientToGCBingoDevAddTokens;
+    case 9004:
+    case "k_EMsgClientToGCBingoDevAddTokensResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCBingoDevAddTokensResponse;
+    case 9005:
+    case "k_EMsgClientToGCBingoDevClearInventory":
+      return EDOTAGCMsg.k_EMsgClientToGCBingoDevClearInventory;
+    case 9006:
+    case "k_EMsgClientToGCBingoDevClearInventoryResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCBingoDevClearInventoryResponse;
+    case 9007:
+    case "k_EMsgGCCompendiumRemoveAllSelections":
+      return EDOTAGCMsg.k_EMsgGCCompendiumRemoveAllSelections;
+    case 9008:
+    case "k_EMsgGCCompendiumRemoveAllSelectionsResponse":
+      return EDOTAGCMsg.k_EMsgGCCompendiumRemoveAllSelectionsResponse;
+    case 9009:
+    case "k_EMsgClientToGCOverworldMinigameAction":
+      return EDOTAGCMsg.k_EMsgClientToGCOverworldMinigameAction;
+    case 9010:
+    case "k_EMsgClientToGCOverworldMinigameActionResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCOverworldMinigameActionResponse;
+    case 9011:
+    case "k_EMsgClientToGCSurvivorsTelemetry":
+      return EDOTAGCMsg.k_EMsgClientToGCSurvivorsTelemetry;
+    case 9012:
+    case "k_EMsgClientToGCSurvivorsTelemetryResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCSurvivorsTelemetryResponse;
+    case 9013:
+    case "k_EMsgClientToGCOverworldRequestTokensNeededByFriend":
+      return EDOTAGCMsg.k_EMsgClientToGCOverworldRequestTokensNeededByFriend;
+    case 9014:
+    case "k_EMsgClientToGCOverworldRequestTokensNeededByFriendResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCOverworldRequestTokensNeededByFriendResponse;
+    case 9015:
+    case "k_EMsgClientToGCCraftworksGetUserData":
+      return EDOTAGCMsg.k_EMsgClientToGCCraftworksGetUserData;
+    case 9016:
+    case "k_EMsgClientToGCCraftworksGetUserDataResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCCraftworksGetUserDataResponse;
+    case 9017:
+    case "k_EMsgGCToClientCraftworksUserDataUpdated":
+      return EDOTAGCMsg.k_EMsgGCToClientCraftworksUserDataUpdated;
+    case 9018:
+    case "k_EMsgClientToGCCraftworksCraftRecipe":
+      return EDOTAGCMsg.k_EMsgClientToGCCraftworksCraftRecipe;
+    case 9019:
+    case "k_EMsgClientToGCCraftworksCraftRecipeResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCCraftworksCraftRecipeResponse;
+    case 9020:
+    case "k_EMsgClientToGCCraftworksDevModifyComponents":
+      return EDOTAGCMsg.k_EMsgClientToGCCraftworksDevModifyComponents;
+    case 9021:
+    case "k_EMsgClientToGCCraftworksDevModifyComponentsResponse":
+      return EDOTAGCMsg.k_EMsgClientToGCCraftworksDevModifyComponentsResponse;
+    case 9022:
+    case "k_EMsgSignOutCraftworks":
+      return EDOTAGCMsg.k_EMsgSignOutCraftworks;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EDOTAGCMsg");
   }
@@ -3888,14 +4004,6 @@ export function eDOTAGCMsgToJSON(object: EDOTAGCMsg): string {
       return "k_EMsgTeamFanfare";
     case EDOTAGCMsg.k_EMsgResponseTeamFanfare:
       return "k_EMsgResponseTeamFanfare";
-    case EDOTAGCMsg.k_EMsgGC_GameServerUploadSaveGame:
-      return "k_EMsgGC_GameServerUploadSaveGame";
-    case EDOTAGCMsg.k_EMsgGC_GameServerSaveGameResult:
-      return "k_EMsgGC_GameServerSaveGameResult";
-    case EDOTAGCMsg.k_EMsgGC_GameServerGetLoadGame:
-      return "k_EMsgGC_GameServerGetLoadGame";
-    case EDOTAGCMsg.k_EMsgGC_GameServerGetLoadGameResult:
-      return "k_EMsgGC_GameServerGetLoadGameResult";
     case EDOTAGCMsg.k_EMsgGCEditTeamDetails:
       return "k_EMsgGCEditTeamDetails";
     case EDOTAGCMsg.k_EMsgGCEditTeamDetailsResponse:
@@ -4080,6 +4188,10 @@ export function eDOTAGCMsgToJSON(object: EDOTAGCMsg): string {
       return "k_EMsgServerToGCRequestBatchPlayerResourcesResponse";
     case EDOTAGCMsg.k_EMsgGCCompendiumSetSelectionResponse:
       return "k_EMsgGCCompendiumSetSelectionResponse";
+    case EDOTAGCMsg.k_EMsgGCRankedPlayerInfoSubmit:
+      return "k_EMsgGCRankedPlayerInfoSubmit";
+    case EDOTAGCMsg.k_EMsgGCRankedPlayerInfoSubmitResponse:
+      return "k_EMsgGCRankedPlayerInfoSubmitResponse";
     case EDOTAGCMsg.k_EMsgGCPlayerInfoSubmit:
       return "k_EMsgGCPlayerInfoSubmit";
     case EDOTAGCMsg.k_EMsgGCPlayerInfoSubmitResponse:
@@ -5376,8 +5488,6 @@ export function eDOTAGCMsgToJSON(object: EDOTAGCMsg): string {
       return "k_EMsgClientToGCUploadMatchClip";
     case EDOTAGCMsg.k_EMsgGCToClientUploadMatchClipResponse:
       return "k_EMsgGCToClientUploadMatchClipResponse";
-    case EDOTAGCMsg.k_EMsgGCToServerSteamLearnAccessTokensChanged:
-      return "k_EMsgGCToServerSteamLearnAccessTokensChanged";
     case EDOTAGCMsg.k_EMsgSignOutMuertaMinigame:
       return "k_EMsgSignOutMuertaMinigame";
     case EDOTAGCMsg.k_EMsgGCToServerLobbyHeroRoleStats:
@@ -5598,6 +5708,70 @@ export function eDOTAGCMsgToJSON(object: EDOTAGCMsg): string {
       return "k_EMsgClientToGCOverworldGetDynamicImage";
     case EDOTAGCMsg.k_EMsgClientToGCOverworldGetDynamicImageResponse:
       return "k_EMsgClientToGCOverworldGetDynamicImageResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCFightingGameChallengeFriend:
+      return "k_EMsgClientToGCFightingGameChallengeFriend";
+    case EDOTAGCMsg.k_EMsgClientToGCFightingGameChallengeFriendResponse:
+      return "k_EMsgClientToGCFightingGameChallengeFriendResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCFightingGameCancelChallengeFriend:
+      return "k_EMsgClientToGCFightingGameCancelChallengeFriend";
+    case EDOTAGCMsg.k_EMsgClientToGCFightingGameAnswerChallenge:
+      return "k_EMsgClientToGCFightingGameAnswerChallenge";
+    case EDOTAGCMsg.k_EMsgClientToGCFightingGameAnswerChallengeResponse:
+      return "k_EMsgClientToGCFightingGameAnswerChallengeResponse";
+    case EDOTAGCMsg.k_EMsgGCToClientFightingGameChallenge:
+      return "k_EMsgGCToClientFightingGameChallenge";
+    case EDOTAGCMsg.k_EMsgGCToClientFightingGameStartMatch:
+      return "k_EMsgGCToClientFightingGameStartMatch";
+    case EDOTAGCMsg.k_EMsgGCToClientFightingGameChallengeCanceled:
+      return "k_EMsgGCToClientFightingGameChallengeCanceled";
+    case EDOTAGCMsg.k_EMsgClientToGCBingoShuffleCard:
+      return "k_EMsgClientToGCBingoShuffleCard";
+    case EDOTAGCMsg.k_EMsgClientToGCBingoShuffleCardResponse:
+      return "k_EMsgClientToGCBingoShuffleCardResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCBingoModifySquare:
+      return "k_EMsgClientToGCBingoModifySquare";
+    case EDOTAGCMsg.k_EMsgClientToGCBingoModifySquareResponse:
+      return "k_EMsgClientToGCBingoModifySquareResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCBingoDevAddTokens:
+      return "k_EMsgClientToGCBingoDevAddTokens";
+    case EDOTAGCMsg.k_EMsgClientToGCBingoDevAddTokensResponse:
+      return "k_EMsgClientToGCBingoDevAddTokensResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCBingoDevClearInventory:
+      return "k_EMsgClientToGCBingoDevClearInventory";
+    case EDOTAGCMsg.k_EMsgClientToGCBingoDevClearInventoryResponse:
+      return "k_EMsgClientToGCBingoDevClearInventoryResponse";
+    case EDOTAGCMsg.k_EMsgGCCompendiumRemoveAllSelections:
+      return "k_EMsgGCCompendiumRemoveAllSelections";
+    case EDOTAGCMsg.k_EMsgGCCompendiumRemoveAllSelectionsResponse:
+      return "k_EMsgGCCompendiumRemoveAllSelectionsResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCOverworldMinigameAction:
+      return "k_EMsgClientToGCOverworldMinigameAction";
+    case EDOTAGCMsg.k_EMsgClientToGCOverworldMinigameActionResponse:
+      return "k_EMsgClientToGCOverworldMinigameActionResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCSurvivorsTelemetry:
+      return "k_EMsgClientToGCSurvivorsTelemetry";
+    case EDOTAGCMsg.k_EMsgClientToGCSurvivorsTelemetryResponse:
+      return "k_EMsgClientToGCSurvivorsTelemetryResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCOverworldRequestTokensNeededByFriend:
+      return "k_EMsgClientToGCOverworldRequestTokensNeededByFriend";
+    case EDOTAGCMsg.k_EMsgClientToGCOverworldRequestTokensNeededByFriendResponse:
+      return "k_EMsgClientToGCOverworldRequestTokensNeededByFriendResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCCraftworksGetUserData:
+      return "k_EMsgClientToGCCraftworksGetUserData";
+    case EDOTAGCMsg.k_EMsgClientToGCCraftworksGetUserDataResponse:
+      return "k_EMsgClientToGCCraftworksGetUserDataResponse";
+    case EDOTAGCMsg.k_EMsgGCToClientCraftworksUserDataUpdated:
+      return "k_EMsgGCToClientCraftworksUserDataUpdated";
+    case EDOTAGCMsg.k_EMsgClientToGCCraftworksCraftRecipe:
+      return "k_EMsgClientToGCCraftworksCraftRecipe";
+    case EDOTAGCMsg.k_EMsgClientToGCCraftworksCraftRecipeResponse:
+      return "k_EMsgClientToGCCraftworksCraftRecipeResponse";
+    case EDOTAGCMsg.k_EMsgClientToGCCraftworksDevModifyComponents:
+      return "k_EMsgClientToGCCraftworksDevModifyComponents";
+    case EDOTAGCMsg.k_EMsgClientToGCCraftworksDevModifyComponentsResponse:
+      return "k_EMsgClientToGCCraftworksDevModifyComponentsResponse";
+    case EDOTAGCMsg.k_EMsgSignOutCraftworks:
+      return "k_EMsgSignOutCraftworks";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EDOTAGCMsg");
   }

@@ -125,6 +125,9 @@ export enum ENetworkDisconnectionReason {
   NETWORK_DISCONNECT_KICKED_SUICIDE = 159,
   NETWORK_DISCONNECT_KICKED_NOSTEAMLOGIN = 160,
   NETWORK_DISCONNECT_KICKED_NOSTEAMTICKET = 161,
+  NETWORK_DISCONNECT_KICKED_INPUTAUTOMATION = 162,
+  NETWORK_DISCONNECT_KICKED_VACNETABNORMALBEHAVIOR = 163,
+  NETWORK_DISCONNECT_KICKED_INSECURECLIENT = 164,
 }
 
 export function eNetworkDisconnectionReasonFromJSON(object: any): ENetworkDisconnectionReason {
@@ -483,6 +486,15 @@ export function eNetworkDisconnectionReasonFromJSON(object: any): ENetworkDiscon
     case 161:
     case "NETWORK_DISCONNECT_KICKED_NOSTEAMTICKET":
       return ENetworkDisconnectionReason.NETWORK_DISCONNECT_KICKED_NOSTEAMTICKET;
+    case 162:
+    case "NETWORK_DISCONNECT_KICKED_INPUTAUTOMATION":
+      return ENetworkDisconnectionReason.NETWORK_DISCONNECT_KICKED_INPUTAUTOMATION;
+    case 163:
+    case "NETWORK_DISCONNECT_KICKED_VACNETABNORMALBEHAVIOR":
+      return ENetworkDisconnectionReason.NETWORK_DISCONNECT_KICKED_VACNETABNORMALBEHAVIOR;
+    case 164:
+    case "NETWORK_DISCONNECT_KICKED_INSECURECLIENT":
+      return ENetworkDisconnectionReason.NETWORK_DISCONNECT_KICKED_INSECURECLIENT;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum ENetworkDisconnectionReason");
   }
@@ -726,6 +738,12 @@ export function eNetworkDisconnectionReasonToJSON(object: ENetworkDisconnectionR
       return "NETWORK_DISCONNECT_KICKED_NOSTEAMLOGIN";
     case ENetworkDisconnectionReason.NETWORK_DISCONNECT_KICKED_NOSTEAMTICKET:
       return "NETWORK_DISCONNECT_KICKED_NOSTEAMTICKET";
+    case ENetworkDisconnectionReason.NETWORK_DISCONNECT_KICKED_INPUTAUTOMATION:
+      return "NETWORK_DISCONNECT_KICKED_INPUTAUTOMATION";
+    case ENetworkDisconnectionReason.NETWORK_DISCONNECT_KICKED_VACNETABNORMALBEHAVIOR:
+      return "NETWORK_DISCONNECT_KICKED_VACNETABNORMALBEHAVIOR";
+    case ENetworkDisconnectionReason.NETWORK_DISCONNECT_KICKED_INSECURECLIENT:
+      return "NETWORK_DISCONNECT_KICKED_INSECURECLIENT";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum ENetworkDisconnectionReason");
   }

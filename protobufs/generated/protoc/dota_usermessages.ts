@@ -22,7 +22,12 @@ import {
   VersusScenePlayActivity,
   VersusScenePlaybackRate,
 } from "./dota_commonmessages";
-import { CMsgDOTACombatLogEntry } from "./dota_shared_enums";
+import {
+  CMsgDOTACombatLogEntry,
+  ETimerAlertType,
+  eTimerAlertTypeFromJSON,
+  eTimerAlertTypeToJSON,
+} from "./dota_shared_enums";
 import { CEntityMsg, CMsgVector, CMsgVector2D } from "./networkbasetypes";
 
 export enum EDotaUserMessages {
@@ -92,7 +97,6 @@ export enum EDotaUserMessages {
   DOTA_UM_BoosterState = 528,
   DOTA_UM_WillPurchaseAlert = 529,
   DOTA_UM_TutorialMinimapPosition = 530,
-  DOTA_UM_PlayerMMR = 531,
   DOTA_UM_AbilitySteal = 532,
   DOTA_UM_CourierKilledAlert = 533,
   DOTA_UM_EnemyItemAlert = 534,
@@ -186,6 +190,10 @@ export enum EDotaUserMessages {
   DOTA_UM_GiftPlayer = 623,
   DOTA_UM_FacetPing = 624,
   DOTA_UM_InnatePing = 625,
+  DOTA_UM_RoshanTimer = 626,
+  DOTA_UM_NeutralCraftAvailable = 627,
+  DOTA_UM_TimerAlert = 628,
+  DOTA_UM_MadstoneAlert = 629,
 }
 
 export function eDotaUserMessagesFromJSON(object: any): EDotaUserMessages {
@@ -388,9 +396,6 @@ export function eDotaUserMessagesFromJSON(object: any): EDotaUserMessages {
     case 530:
     case "DOTA_UM_TutorialMinimapPosition":
       return EDotaUserMessages.DOTA_UM_TutorialMinimapPosition;
-    case 531:
-    case "DOTA_UM_PlayerMMR":
-      return EDotaUserMessages.DOTA_UM_PlayerMMR;
     case 532:
     case "DOTA_UM_AbilitySteal":
       return EDotaUserMessages.DOTA_UM_AbilitySteal;
@@ -670,6 +675,18 @@ export function eDotaUserMessagesFromJSON(object: any): EDotaUserMessages {
     case 625:
     case "DOTA_UM_InnatePing":
       return EDotaUserMessages.DOTA_UM_InnatePing;
+    case 626:
+    case "DOTA_UM_RoshanTimer":
+      return EDotaUserMessages.DOTA_UM_RoshanTimer;
+    case 627:
+    case "DOTA_UM_NeutralCraftAvailable":
+      return EDotaUserMessages.DOTA_UM_NeutralCraftAvailable;
+    case 628:
+    case "DOTA_UM_TimerAlert":
+      return EDotaUserMessages.DOTA_UM_TimerAlert;
+    case 629:
+    case "DOTA_UM_MadstoneAlert":
+      return EDotaUserMessages.DOTA_UM_MadstoneAlert;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EDotaUserMessages");
   }
@@ -809,8 +826,6 @@ export function eDotaUserMessagesToJSON(object: EDotaUserMessages): string {
       return "DOTA_UM_WillPurchaseAlert";
     case EDotaUserMessages.DOTA_UM_TutorialMinimapPosition:
       return "DOTA_UM_TutorialMinimapPosition";
-    case EDotaUserMessages.DOTA_UM_PlayerMMR:
-      return "DOTA_UM_PlayerMMR";
     case EDotaUserMessages.DOTA_UM_AbilitySteal:
       return "DOTA_UM_AbilitySteal";
     case EDotaUserMessages.DOTA_UM_CourierKilledAlert:
@@ -997,6 +1012,14 @@ export function eDotaUserMessagesToJSON(object: EDotaUserMessages): string {
       return "DOTA_UM_FacetPing";
     case EDotaUserMessages.DOTA_UM_InnatePing:
       return "DOTA_UM_InnatePing";
+    case EDotaUserMessages.DOTA_UM_RoshanTimer:
+      return "DOTA_UM_RoshanTimer";
+    case EDotaUserMessages.DOTA_UM_NeutralCraftAvailable:
+      return "DOTA_UM_NeutralCraftAvailable";
+    case EDotaUserMessages.DOTA_UM_TimerAlert:
+      return "DOTA_UM_TimerAlert";
+    case EDotaUserMessages.DOTA_UM_MadstoneAlert:
+      return "DOTA_UM_MadstoneAlert";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EDotaUserMessages");
   }
@@ -1114,6 +1137,9 @@ export enum dotaChatMessage {
   CHAT_MESSAGE_MINIBOSS_KILL = 117,
   CHAT_MESSAGE_PLAYER_IN_GAME_BAN_TEXT = 118,
   CHAT_MESSAGE_BANNER_PLANTED = 119,
+  CHAT_MESSAGE_ALCHEMIST_GRANTED_SCEPTER = 120,
+  CHAT_MESSAGE_PROTECTOR_SPAWNED = 121,
+  CHAT_MESSAGE_CRAFTING_XP = 122,
 }
 
 export function dotaChatMessageFromJSON(object: any): dotaChatMessage {
@@ -1451,6 +1477,15 @@ export function dotaChatMessageFromJSON(object: any): dotaChatMessage {
     case 119:
     case "CHAT_MESSAGE_BANNER_PLANTED":
       return dotaChatMessage.CHAT_MESSAGE_BANNER_PLANTED;
+    case 120:
+    case "CHAT_MESSAGE_ALCHEMIST_GRANTED_SCEPTER":
+      return dotaChatMessage.CHAT_MESSAGE_ALCHEMIST_GRANTED_SCEPTER;
+    case 121:
+    case "CHAT_MESSAGE_PROTECTOR_SPAWNED":
+      return dotaChatMessage.CHAT_MESSAGE_PROTECTOR_SPAWNED;
+    case 122:
+    case "CHAT_MESSAGE_CRAFTING_XP":
+      return dotaChatMessage.CHAT_MESSAGE_CRAFTING_XP;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum dotaChatMessage");
   }
@@ -1680,6 +1715,12 @@ export function dotaChatMessageToJSON(object: dotaChatMessage): string {
       return "CHAT_MESSAGE_PLAYER_IN_GAME_BAN_TEXT";
     case dotaChatMessage.CHAT_MESSAGE_BANNER_PLANTED:
       return "CHAT_MESSAGE_BANNER_PLANTED";
+    case dotaChatMessage.CHAT_MESSAGE_ALCHEMIST_GRANTED_SCEPTER:
+      return "CHAT_MESSAGE_ALCHEMIST_GRANTED_SCEPTER";
+    case dotaChatMessage.CHAT_MESSAGE_PROTECTOR_SPAWNED:
+      return "CHAT_MESSAGE_PROTECTOR_SPAWNED";
+    case dotaChatMessage.CHAT_MESSAGE_CRAFTING_XP:
+      return "CHAT_MESSAGE_CRAFTING_XP";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum dotaChatMessage");
   }
@@ -2835,6 +2876,11 @@ export interface CDOTAUserMsgRadarAlert {
   negative?: boolean | undefined;
 }
 
+export interface CDOTAUserMsgRoshanTimer {
+  playerId?: number | undefined;
+  negative?: boolean | undefined;
+}
+
 export interface CDOTAUserMsgWillPurchaseAlert {
   itemAbilityId?: number | undefined;
   playerId?: number | undefined;
@@ -2948,6 +2994,8 @@ export interface CDOTAUserMsgSpectatorPlayerUnitOrders {
   queue?: boolean | undefined;
   sequenceNumber?: number | undefined;
   flags?: number | undefined;
+  lastOrderLatency?: number | undefined;
+  ping?: number | undefined;
 }
 
 export interface CDOTAUserMsgNevermoreRequiem {
@@ -2982,58 +3030,6 @@ export interface CDOTAUserMsgHalloweenDrops {
   itemDefs: number[];
   playerIds: number[];
   prizeList?: number | undefined;
-}
-
-export interface CDOTAUserMsgPredictionResult {
-  accountId?: number | undefined;
-  matchId?: string | undefined;
-  correct?: boolean | undefined;
-  predictions: CDOTAUserMsgPredictionResult_Prediction[];
-}
-
-export interface CDOTAUserMsgPredictionResult_Prediction {
-  itemDef?: number | undefined;
-  numCorrect?: number | undefined;
-  numFails?: number | undefined;
-  result?: CDOTAUserMsgPredictionResult_Prediction_EResult | undefined;
-  grantedItemDefs: number[];
-}
-
-export enum CDOTAUserMsgPredictionResult_Prediction_EResult {
-  k_eResult_ItemGranted = 1,
-  k_eResult_Destroyed = 2,
-}
-
-export function cDOTAUserMsgPredictionResult_Prediction_EResultFromJSON(
-  object: any,
-): CDOTAUserMsgPredictionResult_Prediction_EResult {
-  switch (object) {
-    case 1:
-    case "k_eResult_ItemGranted":
-      return CDOTAUserMsgPredictionResult_Prediction_EResult.k_eResult_ItemGranted;
-    case 2:
-    case "k_eResult_Destroyed":
-      return CDOTAUserMsgPredictionResult_Prediction_EResult.k_eResult_Destroyed;
-    default:
-      throw new globalThis.Error(
-        "Unrecognized enum value " + object + " for enum CDOTAUserMsgPredictionResult_Prediction_EResult",
-      );
-  }
-}
-
-export function cDOTAUserMsgPredictionResult_Prediction_EResultToJSON(
-  object: CDOTAUserMsgPredictionResult_Prediction_EResult,
-): string {
-  switch (object) {
-    case CDOTAUserMsgPredictionResult_Prediction_EResult.k_eResult_ItemGranted:
-      return "k_eResult_ItemGranted";
-    case CDOTAUserMsgPredictionResult_Prediction_EResult.k_eResult_Destroyed:
-      return "k_eResult_Destroyed";
-    default:
-      throw new globalThis.Error(
-        "Unrecognized enum value " + object + " for enum CDOTAUserMsgPredictionResult_Prediction_EResult",
-      );
-  }
 }
 
 export interface CDOTAResponseQuerySerialized {
@@ -3129,6 +3125,7 @@ export interface CDOTAUserMsgUnitEvent_Speech {
   muteable?: boolean | undefined;
   predelay?: CDOTAUserMsgUnitEvent_Interval | undefined;
   flags?: number | undefined;
+  responseType?: number | undefined;
 }
 
 export interface CDOTAUserMsgUnitEvent_SpeechMute {
@@ -3194,7 +3191,8 @@ export interface CDOTAUserMsgTutorialFinish {
   success?: boolean | undefined;
 }
 
-export interface CDOTAUserMsgTutorialMinimapPosition {}
+export interface CDOTAUserMsgTutorialMinimapPosition {
+}
 
 export interface CDOTAUserMsgSendGenericToolTip {
   title?: string | undefined;
@@ -3235,7 +3233,8 @@ export interface CDOTAUserMsgUpdateSharedContent {
   slotType?: number | undefined;
 }
 
-export interface CDOTAUserMsgTutorialRequestExp {}
+export interface CDOTAUserMsgTutorialRequestExp {
+}
 
 export interface CDOTAUserMsgTutorialFade {
   tgtAlpha?: number | undefined;
@@ -3294,7 +3293,8 @@ export interface CDOTAUserMsgCoachHUDPing {
   hudPing?: CDOTAMsgCoachHUDPing | undefined;
 }
 
-export interface CDOTAUserMsgClientLoadGridNav {}
+export interface CDOTAUserMsgClientLoadGridNav {
+}
 
 export interface CDOTAUserMsgTEProjectile {
   source?: number | undefined;
@@ -3411,10 +3411,6 @@ export interface CDOTAUserMsgBoosterStatePlayer {
 
 export interface CDOTAUserMsgBoosterState {
   boostedPlayers: CDOTAUserMsgBoosterStatePlayer[];
-}
-
-export interface CDOTAUserMsgPlayerMMR {
-  mmr: number[];
 }
 
 export interface CDOTAUserMsgAbilitySteal {
@@ -3610,7 +3606,8 @@ export interface CDOTAUserMsgTalentTreeAlert {
   learned?: boolean | undefined;
 }
 
-export interface CDOTAUserMsgUpdateQuestProgress {}
+export interface CDOTAUserMsgUpdateQuestProgress {
+}
 
 export interface CDOTAUserMsgQuestStatus {
   playerId: number;
@@ -3689,6 +3686,7 @@ export interface CDOTAUserMsgAbilityDraftRequestAbility {
   playerId?: number | undefined;
   requestedAbilityId?: number | undefined;
   ctrlIsDown?: boolean | undefined;
+  requestedHeroId?: number | undefined;
 }
 
 export interface CDOTAUserMsgDamageReport {
@@ -3794,6 +3792,8 @@ export interface CDOTAUserMsgFoundNeutralItem {
   itemAbilityId?: number | undefined;
   itemTier?: number | undefined;
   tierItemCount?: number | undefined;
+  enhancementAbilityId?: number | undefined;
+  enhancementLevel?: number | undefined;
 }
 
 export interface CDOTAUserMsgOutpostCaptured {
@@ -4030,6 +4030,65 @@ export interface CDOTAUserMsgInnatePing {
   playerId?: number | undefined;
   entityId?: number | undefined;
   allChat?: boolean | undefined;
+}
+
+export interface CDOTAUserMsgNeutralCraftAvailable {
+}
+
+export interface CDOTAUserMsgTimerAlert {
+  playerId?: number | undefined;
+  timerAlertType?: ETimerAlertType | undefined;
+}
+
+export interface CDOTAUserMsgMadstoneAlert {
+  playerId?: number | undefined;
+  targetEntindex?: number | undefined;
+  tier?: number | undefined;
+  madstoneAlertType?: CDOTAUserMsgMadstoneAlert_EMadstoneAlertType | undefined;
+  value?: number | undefined;
+}
+
+export enum CDOTAUserMsgMadstoneAlert_EMadstoneAlertType {
+  CraftAvailable = 0,
+  NeedMadstone = 1,
+  WaitingForNextTier = 2,
+}
+
+export function cDOTAUserMsgMadstoneAlert_EMadstoneAlertTypeFromJSON(
+  object: any,
+): CDOTAUserMsgMadstoneAlert_EMadstoneAlertType {
+  switch (object) {
+    case 0:
+    case "CraftAvailable":
+      return CDOTAUserMsgMadstoneAlert_EMadstoneAlertType.CraftAvailable;
+    case 1:
+    case "NeedMadstone":
+      return CDOTAUserMsgMadstoneAlert_EMadstoneAlertType.NeedMadstone;
+    case 2:
+    case "WaitingForNextTier":
+      return CDOTAUserMsgMadstoneAlert_EMadstoneAlertType.WaitingForNextTier;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CDOTAUserMsgMadstoneAlert_EMadstoneAlertType",
+      );
+  }
+}
+
+export function cDOTAUserMsgMadstoneAlert_EMadstoneAlertTypeToJSON(
+  object: CDOTAUserMsgMadstoneAlert_EMadstoneAlertType,
+): string {
+  switch (object) {
+    case CDOTAUserMsgMadstoneAlert_EMadstoneAlertType.CraftAvailable:
+      return "CraftAvailable";
+    case CDOTAUserMsgMadstoneAlert_EMadstoneAlertType.NeedMadstone:
+      return "NeedMadstone";
+    case CDOTAUserMsgMadstoneAlert_EMadstoneAlertType.WaitingForNextTier:
+      return "WaitingForNextTier";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CDOTAUserMsgMadstoneAlert_EMadstoneAlertType",
+      );
+  }
 }
 
 function createBaseCDOTAUserMsgAIDebugLine(): CDOTAUserMsgAIDebugLine {
@@ -4627,8 +4686,9 @@ export const CDOTAUserMsgCombatHeroPositions = {
     const message = createBaseCDOTAUserMsgCombatHeroPositions();
     message.index = object.index ?? 0;
     message.time = object.time ?? 0;
-    message.worldPos =
-      object.worldPos !== undefined && object.worldPos !== null ? CMsgVector2D.fromPartial(object.worldPos) : undefined;
+    message.worldPos = (object.worldPos !== undefined && object.worldPos !== null)
+      ? CMsgVector2D.fromPartial(object.worldPos)
+      : undefined;
     message.health = object.health ?? 0;
     return message;
   },
@@ -4824,8 +4884,9 @@ export const CDOTAUserMsgProjectileParticleCPData = {
   fromPartial(object: DeepPartial<CDOTAUserMsgProjectileParticleCPData>): CDOTAUserMsgProjectileParticleCPData {
     const message = createBaseCDOTAUserMsgProjectileParticleCPData();
     message.controlPoint = object.controlPoint ?? 0;
-    message.vector =
-      object.vector !== undefined && object.vector !== null ? CMsgVector.fromPartial(object.vector) : undefined;
+    message.vector = (object.vector !== undefined && object.vector !== null)
+      ? CMsgVector.fromPartial(object.vector)
+      : undefined;
     return message;
   },
 };
@@ -4914,8 +4975,9 @@ export const CDOTAUserMsgUpdateLinearProjectileCPData = {
     const message = createBaseCDOTAUserMsgUpdateLinearProjectileCPData();
     message.handle = object.handle ?? 0;
     message.controlPoint = object.controlPoint ?? 0;
-    message.vector =
-      object.vector !== undefined && object.vector !== null ? CMsgVector.fromPartial(object.vector) : undefined;
+    message.vector = (object.vector !== undefined && object.vector !== null)
+      ? CMsgVector.fromPartial(object.vector)
+      : undefined;
     return message;
   },
 };
@@ -5307,10 +5369,9 @@ export const CDOTAUserMsgGlobalLightDirection = {
   },
   fromPartial(object: DeepPartial<CDOTAUserMsgGlobalLightDirection>): CDOTAUserMsgGlobalLightDirection {
     const message = createBaseCDOTAUserMsgGlobalLightDirection();
-    message.direction =
-      object.direction !== undefined && object.direction !== null
-        ? CMsgVector.fromPartial(object.direction)
-        : undefined;
+    message.direction = (object.direction !== undefined && object.direction !== null)
+      ? CMsgVector.fromPartial(object.direction)
+      : undefined;
     message.duration = object.duration ?? 0;
     return message;
   },
@@ -5385,10 +5446,9 @@ export const CDOTAUserMsgLocationPing = {
   fromPartial(object: DeepPartial<CDOTAUserMsgLocationPing>): CDOTAUserMsgLocationPing {
     const message = createBaseCDOTAUserMsgLocationPing();
     message.playerId = object.playerId ?? -1;
-    message.locationPing =
-      object.locationPing !== undefined && object.locationPing !== null
-        ? CDOTAMsgLocationPing.fromPartial(object.locationPing)
-        : undefined;
+    message.locationPing = (object.locationPing !== undefined && object.locationPing !== null)
+      ? CDOTAMsgLocationPing.fromPartial(object.locationPing)
+      : undefined;
     return message;
   },
 };
@@ -5494,8 +5554,9 @@ export const CDOTAUserMsgPingConfirmation = {
     message.playerIdOfOriginalPinger = object.playerIdOfOriginalPinger ?? -1;
     message.entityIndex = object.entityIndex ?? 0;
     message.iconType = object.iconType ?? 0;
-    message.location =
-      object.location !== undefined && object.location !== null ? CMsgVector.fromPartial(object.location) : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgVector.fromPartial(object.location)
+      : undefined;
     return message;
   },
 };
@@ -5569,10 +5630,9 @@ export const CDOTAUserMsgItemAlert = {
   fromPartial(object: DeepPartial<CDOTAUserMsgItemAlert>): CDOTAUserMsgItemAlert {
     const message = createBaseCDOTAUserMsgItemAlert();
     message.playerId = object.playerId ?? -1;
-    message.itemAlert =
-      object.itemAlert !== undefined && object.itemAlert !== null
-        ? CDOTAMsgItemAlert.fromPartial(object.itemAlert)
-        : undefined;
+    message.itemAlert = (object.itemAlert !== undefined && object.itemAlert !== null)
+      ? CDOTAMsgItemAlert.fromPartial(object.itemAlert)
+      : undefined;
     return message;
   },
 };
@@ -6278,6 +6338,80 @@ export const CDOTAUserMsgRadarAlert = {
   },
 };
 
+function createBaseCDOTAUserMsgRoshanTimer(): CDOTAUserMsgRoshanTimer {
+  return { playerId: -1, negative: false };
+}
+
+export const CDOTAUserMsgRoshanTimer = {
+  encode(message: CDOTAUserMsgRoshanTimer, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.playerId !== undefined && message.playerId !== -1) {
+      writer.uint32(8).int32(message.playerId);
+    }
+    if (message.negative !== undefined && message.negative !== false) {
+      writer.uint32(16).bool(message.negative);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CDOTAUserMsgRoshanTimer {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCDOTAUserMsgRoshanTimer();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.playerId = reader.int32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.negative = reader.bool();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CDOTAUserMsgRoshanTimer {
+    return {
+      playerId: isSet(object.playerId) ? globalThis.Number(object.playerId) : -1,
+      negative: isSet(object.negative) ? globalThis.Boolean(object.negative) : false,
+    };
+  },
+
+  toJSON(message: CDOTAUserMsgRoshanTimer): unknown {
+    const obj: any = {};
+    if (message.playerId !== undefined && message.playerId !== -1) {
+      obj.playerId = Math.round(message.playerId);
+    }
+    if (message.negative !== undefined && message.negative !== false) {
+      obj.negative = message.negative;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CDOTAUserMsgRoshanTimer>): CDOTAUserMsgRoshanTimer {
+    return CDOTAUserMsgRoshanTimer.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CDOTAUserMsgRoshanTimer>): CDOTAUserMsgRoshanTimer {
+    const message = createBaseCDOTAUserMsgRoshanTimer();
+    message.playerId = object.playerId ?? -1;
+    message.negative = object.negative ?? false;
+    return message;
+  },
+};
+
 function createBaseCDOTAUserMsgWillPurchaseAlert(): CDOTAUserMsgWillPurchaseAlert {
   return { itemAbilityId: -1, playerId: -1, goldRemaining: 0, suggestionPlayerId: -1 };
 }
@@ -6628,10 +6762,9 @@ export const CDOTAEntityMsgInvokerSpellCast = {
   },
   fromPartial(object: DeepPartial<CDOTAEntityMsgInvokerSpellCast>): CDOTAEntityMsgInvokerSpellCast {
     const message = createBaseCDOTAEntityMsgInvokerSpellCast();
-    message.entityMsg =
-      object.entityMsg !== undefined && object.entityMsg !== null
-        ? CEntityMsg.fromPartial(object.entityMsg)
-        : undefined;
+    message.entityMsg = (object.entityMsg !== undefined && object.entityMsg !== null)
+      ? CEntityMsg.fromPartial(object.entityMsg)
+      : undefined;
     message.castActivity = object.castActivity ?? 0;
     return message;
   },
@@ -7249,8 +7382,9 @@ export const CDOTAUserMsgMapLine = {
   fromPartial(object: DeepPartial<CDOTAUserMsgMapLine>): CDOTAUserMsgMapLine {
     const message = createBaseCDOTAUserMsgMapLine();
     message.playerId = object.playerId ?? -1;
-    message.mapline =
-      object.mapline !== undefined && object.mapline !== null ? CDOTAMsgMapLine.fromPartial(object.mapline) : undefined;
+    message.mapline = (object.mapline !== undefined && object.mapline !== null)
+      ? CDOTAMsgMapLine.fromPartial(object.mapline)
+      : undefined;
     return message;
   },
 };
@@ -7365,8 +7499,9 @@ export const CDOTAUserMsgMinimapDebugPoint = {
   },
   fromPartial(object: DeepPartial<CDOTAUserMsgMinimapDebugPoint>): CDOTAUserMsgMinimapDebugPoint {
     const message = createBaseCDOTAUserMsgMinimapDebugPoint();
-    message.location =
-      object.location !== undefined && object.location !== null ? CMsgVector.fromPartial(object.location) : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgVector.fromPartial(object.location)
+      : undefined;
     message.color = object.color ?? 0;
     message.size = object.size ?? 0;
     message.duration = object.duration ?? 0;
@@ -7598,24 +7733,25 @@ export const CDOTAUserMsgCreateLinearProjectile = {
   },
   fromPartial(object: DeepPartial<CDOTAUserMsgCreateLinearProjectile>): CDOTAUserMsgCreateLinearProjectile {
     const message = createBaseCDOTAUserMsgCreateLinearProjectile();
-    message.origin =
-      object.origin !== undefined && object.origin !== null ? CMsgVector.fromPartial(object.origin) : undefined;
-    message.velocity =
-      object.velocity !== undefined && object.velocity !== null ? CMsgVector2D.fromPartial(object.velocity) : undefined;
+    message.origin = (object.origin !== undefined && object.origin !== null)
+      ? CMsgVector.fromPartial(object.origin)
+      : undefined;
+    message.velocity = (object.velocity !== undefined && object.velocity !== null)
+      ? CMsgVector2D.fromPartial(object.velocity)
+      : undefined;
     message.entindex = object.entindex ?? -1;
     message.particleIndex = object.particleIndex ?? "0";
     message.handle = object.handle ?? 0;
-    message.acceleration =
-      object.acceleration !== undefined && object.acceleration !== null
-        ? CMsgVector2D.fromPartial(object.acceleration)
-        : undefined;
+    message.acceleration = (object.acceleration !== undefined && object.acceleration !== null)
+      ? CMsgVector2D.fromPartial(object.acceleration)
+      : undefined;
     message.maxSpeed = object.maxSpeed ?? 0;
     message.fowRadius = object.fowRadius ?? 0;
     message.stickyFowReveal = object.stickyFowReveal ?? false;
     message.distance = object.distance ?? 0;
     message.colorgemcolor = object.colorgemcolor ?? 0;
-    message.particleCpData =
-      object.particleCpData?.map((e) => CDOTAUserMsgProjectileParticleCPData.fromPartial(e)) || [];
+    message.particleCpData = object.particleCpData?.map((e) => CDOTAUserMsgProjectileParticleCPData.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -7851,6 +7987,8 @@ function createBaseCDOTAUserMsgSpectatorPlayerUnitOrders(): CDOTAUserMsgSpectato
     queue: false,
     sequenceNumber: 0,
     flags: 0,
+    lastOrderLatency: 0,
+    ping: 0,
   };
 }
 
@@ -7884,6 +8022,12 @@ export const CDOTAUserMsgSpectatorPlayerUnitOrders = {
     }
     if (message.flags !== undefined && message.flags !== 0) {
       writer.uint32(72).uint32(message.flags);
+    }
+    if (message.lastOrderLatency !== undefined && message.lastOrderLatency !== 0) {
+      writer.uint32(80).uint32(message.lastOrderLatency);
+    }
+    if (message.ping !== undefined && message.ping !== 0) {
+      writer.uint32(88).uint32(message.ping);
     }
     return writer;
   },
@@ -7968,6 +8112,20 @@ export const CDOTAUserMsgSpectatorPlayerUnitOrders = {
 
           message.flags = reader.uint32();
           continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.lastOrderLatency = reader.uint32();
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.ping = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -7988,6 +8146,8 @@ export const CDOTAUserMsgSpectatorPlayerUnitOrders = {
       queue: isSet(object.queue) ? globalThis.Boolean(object.queue) : false,
       sequenceNumber: isSet(object.sequenceNumber) ? globalThis.Number(object.sequenceNumber) : 0,
       flags: isSet(object.flags) ? globalThis.Number(object.flags) : 0,
+      lastOrderLatency: isSet(object.lastOrderLatency) ? globalThis.Number(object.lastOrderLatency) : 0,
+      ping: isSet(object.ping) ? globalThis.Number(object.ping) : 0,
     };
   },
 
@@ -8020,6 +8180,12 @@ export const CDOTAUserMsgSpectatorPlayerUnitOrders = {
     if (message.flags !== undefined && message.flags !== 0) {
       obj.flags = Math.round(message.flags);
     }
+    if (message.lastOrderLatency !== undefined && message.lastOrderLatency !== 0) {
+      obj.lastOrderLatency = Math.round(message.lastOrderLatency);
+    }
+    if (message.ping !== undefined && message.ping !== 0) {
+      obj.ping = Math.round(message.ping);
+    }
     return obj;
   },
 
@@ -8033,11 +8199,14 @@ export const CDOTAUserMsgSpectatorPlayerUnitOrders = {
     message.units = object.units?.map((e) => e) || [];
     message.targetIndex = object.targetIndex ?? 0;
     message.abilityId = object.abilityId ?? -1;
-    message.position =
-      object.position !== undefined && object.position !== null ? CMsgVector.fromPartial(object.position) : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CMsgVector.fromPartial(object.position)
+      : undefined;
     message.queue = object.queue ?? false;
     message.sequenceNumber = object.sequenceNumber ?? 0;
     message.flags = object.flags ?? 0;
+    message.lastOrderLatency = object.lastOrderLatency ?? 0;
+    message.ping = object.ping ?? 0;
     return message;
   },
 };
@@ -8140,8 +8309,9 @@ export const CDOTAUserMsgNevermoreRequiem = {
     const message = createBaseCDOTAUserMsgNevermoreRequiem();
     message.entityHandle = object.entityHandle ?? 16777215;
     message.lines = object.lines ?? 0;
-    message.origin =
-      object.origin !== undefined && object.origin !== null ? CMsgVector.fromPartial(object.origin) : undefined;
+    message.origin = (object.origin !== undefined && object.origin !== null)
+      ? CMsgVector.fromPartial(object.origin)
+      : undefined;
     message.reverse = object.reverse ?? false;
     return message;
   },
@@ -8571,245 +8741,6 @@ export const CDOTAUserMsgHalloweenDrops = {
   },
 };
 
-function createBaseCDOTAUserMsgPredictionResult(): CDOTAUserMsgPredictionResult {
-  return { accountId: 0, matchId: "0", correct: false, predictions: [] };
-}
-
-export const CDOTAUserMsgPredictionResult = {
-  encode(message: CDOTAUserMsgPredictionResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.accountId !== undefined && message.accountId !== 0) {
-      writer.uint32(8).uint32(message.accountId);
-    }
-    if (message.matchId !== undefined && message.matchId !== "0") {
-      writer.uint32(16).uint64(message.matchId);
-    }
-    if (message.correct !== undefined && message.correct !== false) {
-      writer.uint32(24).bool(message.correct);
-    }
-    for (const v of message.predictions) {
-      CDOTAUserMsgPredictionResult_Prediction.encode(v!, writer.uint32(34).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CDOTAUserMsgPredictionResult {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCDOTAUserMsgPredictionResult();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.accountId = reader.uint32();
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.matchId = longToString(reader.uint64() as Long);
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.correct = reader.bool();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
-          message.predictions.push(CDOTAUserMsgPredictionResult_Prediction.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CDOTAUserMsgPredictionResult {
-    return {
-      accountId: isSet(object.accountId) ? globalThis.Number(object.accountId) : 0,
-      matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "0",
-      correct: isSet(object.correct) ? globalThis.Boolean(object.correct) : false,
-      predictions: globalThis.Array.isArray(object?.predictions)
-        ? object.predictions.map((e: any) => CDOTAUserMsgPredictionResult_Prediction.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: CDOTAUserMsgPredictionResult): unknown {
-    const obj: any = {};
-    if (message.accountId !== undefined && message.accountId !== 0) {
-      obj.accountId = Math.round(message.accountId);
-    }
-    if (message.matchId !== undefined && message.matchId !== "0") {
-      obj.matchId = message.matchId;
-    }
-    if (message.correct !== undefined && message.correct !== false) {
-      obj.correct = message.correct;
-    }
-    if (message.predictions?.length) {
-      obj.predictions = message.predictions.map((e) => CDOTAUserMsgPredictionResult_Prediction.toJSON(e));
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CDOTAUserMsgPredictionResult>): CDOTAUserMsgPredictionResult {
-    return CDOTAUserMsgPredictionResult.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CDOTAUserMsgPredictionResult>): CDOTAUserMsgPredictionResult {
-    const message = createBaseCDOTAUserMsgPredictionResult();
-    message.accountId = object.accountId ?? 0;
-    message.matchId = object.matchId ?? "0";
-    message.correct = object.correct ?? false;
-    message.predictions = object.predictions?.map((e) => CDOTAUserMsgPredictionResult_Prediction.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseCDOTAUserMsgPredictionResult_Prediction(): CDOTAUserMsgPredictionResult_Prediction {
-  return { itemDef: 0, numCorrect: 0, numFails: 0, result: 1, grantedItemDefs: [] };
-}
-
-export const CDOTAUserMsgPredictionResult_Prediction = {
-  encode(message: CDOTAUserMsgPredictionResult_Prediction, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.itemDef !== undefined && message.itemDef !== 0) {
-      writer.uint32(8).uint32(message.itemDef);
-    }
-    if (message.numCorrect !== undefined && message.numCorrect !== 0) {
-      writer.uint32(16).uint32(message.numCorrect);
-    }
-    if (message.numFails !== undefined && message.numFails !== 0) {
-      writer.uint32(24).uint32(message.numFails);
-    }
-    if (message.result !== undefined && message.result !== 1) {
-      writer.uint32(32).int32(message.result);
-    }
-    writer.uint32(50).fork();
-    for (const v of message.grantedItemDefs) {
-      writer.uint32(v);
-    }
-    writer.ldelim();
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CDOTAUserMsgPredictionResult_Prediction {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCDOTAUserMsgPredictionResult_Prediction();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.itemDef = reader.uint32();
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.numCorrect = reader.uint32();
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.numFails = reader.uint32();
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.result = reader.int32() as any;
-          continue;
-        case 6:
-          if (tag === 48) {
-            message.grantedItemDefs.push(reader.uint32());
-
-            continue;
-          }
-
-          if (tag === 50) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.grantedItemDefs.push(reader.uint32());
-            }
-
-            continue;
-          }
-
-          break;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CDOTAUserMsgPredictionResult_Prediction {
-    return {
-      itemDef: isSet(object.itemDef) ? globalThis.Number(object.itemDef) : 0,
-      numCorrect: isSet(object.numCorrect) ? globalThis.Number(object.numCorrect) : 0,
-      numFails: isSet(object.numFails) ? globalThis.Number(object.numFails) : 0,
-      result: isSet(object.result) ? cDOTAUserMsgPredictionResult_Prediction_EResultFromJSON(object.result) : 1,
-      grantedItemDefs: globalThis.Array.isArray(object?.grantedItemDefs)
-        ? object.grantedItemDefs.map((e: any) => globalThis.Number(e))
-        : [],
-    };
-  },
-
-  toJSON(message: CDOTAUserMsgPredictionResult_Prediction): unknown {
-    const obj: any = {};
-    if (message.itemDef !== undefined && message.itemDef !== 0) {
-      obj.itemDef = Math.round(message.itemDef);
-    }
-    if (message.numCorrect !== undefined && message.numCorrect !== 0) {
-      obj.numCorrect = Math.round(message.numCorrect);
-    }
-    if (message.numFails !== undefined && message.numFails !== 0) {
-      obj.numFails = Math.round(message.numFails);
-    }
-    if (message.result !== undefined && message.result !== 1) {
-      obj.result = cDOTAUserMsgPredictionResult_Prediction_EResultToJSON(message.result);
-    }
-    if (message.grantedItemDefs?.length) {
-      obj.grantedItemDefs = message.grantedItemDefs.map((e) => Math.round(e));
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CDOTAUserMsgPredictionResult_Prediction>): CDOTAUserMsgPredictionResult_Prediction {
-    return CDOTAUserMsgPredictionResult_Prediction.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CDOTAUserMsgPredictionResult_Prediction>): CDOTAUserMsgPredictionResult_Prediction {
-    const message = createBaseCDOTAUserMsgPredictionResult_Prediction();
-    message.itemDef = object.itemDef ?? 0;
-    message.numCorrect = object.numCorrect ?? 0;
-    message.numFails = object.numFails ?? 0;
-    message.result = object.result ?? 1;
-    message.grantedItemDefs = object.grantedItemDefs?.map((e) => e) || [];
-    return message;
-  },
-};
-
 function createBaseCDOTAResponseQuerySerialized(): CDOTAResponseQuerySerialized {
   return { facts: [] };
 }
@@ -9105,10 +9036,9 @@ export const CDOTASpeechMatchOnClient = {
     const message = createBaseCDOTASpeechMatchOnClient();
     message.speechConcept = object.speechConcept ?? 0;
     message.recipientType = object.recipientType ?? 0;
-    message.responsequery =
-      object.responsequery !== undefined && object.responsequery !== null
-        ? CDOTAResponseQuerySerialized.fromPartial(object.responsequery)
-        : undefined;
+    message.responsequery = (object.responsequery !== undefined && object.responsequery !== null)
+      ? CDOTAResponseQuerySerialized.fromPartial(object.responsequery)
+      : undefined;
     message.randomseed = object.randomseed ?? 0;
     return message;
   },
@@ -9300,34 +9230,27 @@ export const CDOTAUserMsgUnitEvent = {
     const message = createBaseCDOTAUserMsgUnitEvent();
     message.msgType = object.msgType ?? 0;
     message.entityIndex = object.entityIndex ?? 0;
-    message.speech =
-      object.speech !== undefined && object.speech !== null
-        ? CDOTAUserMsgUnitEvent_Speech.fromPartial(object.speech)
-        : undefined;
-    message.speechMute =
-      object.speechMute !== undefined && object.speechMute !== null
-        ? CDOTAUserMsgUnitEvent_SpeechMute.fromPartial(object.speechMute)
-        : undefined;
-    message.addGesture =
-      object.addGesture !== undefined && object.addGesture !== null
-        ? CDOTAUserMsgUnitEvent_AddGesture.fromPartial(object.addGesture)
-        : undefined;
-    message.removeGesture =
-      object.removeGesture !== undefined && object.removeGesture !== null
-        ? CDOTAUserMsgUnitEvent_RemoveGesture.fromPartial(object.removeGesture)
-        : undefined;
-    message.bloodImpact =
-      object.bloodImpact !== undefined && object.bloodImpact !== null
-        ? CDOTAUserMsgUnitEvent_BloodImpact.fromPartial(object.bloodImpact)
-        : undefined;
-    message.fadeGesture =
-      object.fadeGesture !== undefined && object.fadeGesture !== null
-        ? CDOTAUserMsgUnitEvent_FadeGesture.fromPartial(object.fadeGesture)
-        : undefined;
-    message.speechMatchOnClient =
-      object.speechMatchOnClient !== undefined && object.speechMatchOnClient !== null
-        ? CDOTASpeechMatchOnClient.fromPartial(object.speechMatchOnClient)
-        : undefined;
+    message.speech = (object.speech !== undefined && object.speech !== null)
+      ? CDOTAUserMsgUnitEvent_Speech.fromPartial(object.speech)
+      : undefined;
+    message.speechMute = (object.speechMute !== undefined && object.speechMute !== null)
+      ? CDOTAUserMsgUnitEvent_SpeechMute.fromPartial(object.speechMute)
+      : undefined;
+    message.addGesture = (object.addGesture !== undefined && object.addGesture !== null)
+      ? CDOTAUserMsgUnitEvent_AddGesture.fromPartial(object.addGesture)
+      : undefined;
+    message.removeGesture = (object.removeGesture !== undefined && object.removeGesture !== null)
+      ? CDOTAUserMsgUnitEvent_RemoveGesture.fromPartial(object.removeGesture)
+      : undefined;
+    message.bloodImpact = (object.bloodImpact !== undefined && object.bloodImpact !== null)
+      ? CDOTAUserMsgUnitEvent_BloodImpact.fromPartial(object.bloodImpact)
+      : undefined;
+    message.fadeGesture = (object.fadeGesture !== undefined && object.fadeGesture !== null)
+      ? CDOTAUserMsgUnitEvent_FadeGesture.fromPartial(object.fadeGesture)
+      : undefined;
+    message.speechMatchOnClient = (object.speechMatchOnClient !== undefined && object.speechMatchOnClient !== null)
+      ? CDOTASpeechMatchOnClient.fromPartial(object.speechMatchOnClient)
+      : undefined;
     return message;
   },
 };
@@ -9407,7 +9330,15 @@ export const CDOTAUserMsgUnitEvent_Interval = {
 };
 
 function createBaseCDOTAUserMsgUnitEvent_Speech(): CDOTAUserMsgUnitEvent_Speech {
-  return { speechConcept: 0, response: "", recipientType: 0, muteable: false, predelay: undefined, flags: 0 };
+  return {
+    speechConcept: 0,
+    response: "",
+    recipientType: 0,
+    muteable: false,
+    predelay: undefined,
+    flags: 0,
+    responseType: 0,
+  };
 }
 
 export const CDOTAUserMsgUnitEvent_Speech = {
@@ -9429,6 +9360,9 @@ export const CDOTAUserMsgUnitEvent_Speech = {
     }
     if (message.flags !== undefined && message.flags !== 0) {
       writer.uint32(56).uint32(message.flags);
+    }
+    if (message.responseType !== undefined && message.responseType !== 0) {
+      writer.uint32(64).int32(message.responseType);
     }
     return writer;
   },
@@ -9482,6 +9416,13 @@ export const CDOTAUserMsgUnitEvent_Speech = {
 
           message.flags = reader.uint32();
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.responseType = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -9499,6 +9440,7 @@ export const CDOTAUserMsgUnitEvent_Speech = {
       muteable: isSet(object.muteable) ? globalThis.Boolean(object.muteable) : false,
       predelay: isSet(object.predelay) ? CDOTAUserMsgUnitEvent_Interval.fromJSON(object.predelay) : undefined,
       flags: isSet(object.flags) ? globalThis.Number(object.flags) : 0,
+      responseType: isSet(object.responseType) ? globalThis.Number(object.responseType) : 0,
     };
   },
 
@@ -9522,6 +9464,9 @@ export const CDOTAUserMsgUnitEvent_Speech = {
     if (message.flags !== undefined && message.flags !== 0) {
       obj.flags = Math.round(message.flags);
     }
+    if (message.responseType !== undefined && message.responseType !== 0) {
+      obj.responseType = Math.round(message.responseType);
+    }
     return obj;
   },
 
@@ -9534,11 +9479,11 @@ export const CDOTAUserMsgUnitEvent_Speech = {
     message.response = object.response ?? "";
     message.recipientType = object.recipientType ?? 0;
     message.muteable = object.muteable ?? false;
-    message.predelay =
-      object.predelay !== undefined && object.predelay !== null
-        ? CDOTAUserMsgUnitEvent_Interval.fromPartial(object.predelay)
-        : undefined;
+    message.predelay = (object.predelay !== undefined && object.predelay !== null)
+      ? CDOTAUserMsgUnitEvent_Interval.fromPartial(object.predelay)
+      : undefined;
     message.flags = object.flags ?? 0;
+    message.responseType = object.responseType ?? 0;
     return message;
   },
 };
@@ -10683,10 +10628,9 @@ export const CDOTAUserMsgWorldLine = {
   fromPartial(object: DeepPartial<CDOTAUserMsgWorldLine>): CDOTAUserMsgWorldLine {
     const message = createBaseCDOTAUserMsgWorldLine();
     message.playerId = object.playerId ?? -1;
-    message.worldline =
-      object.worldline !== undefined && object.worldline !== null
-        ? CDOTAMsgWorldLine.fromPartial(object.worldline)
-        : undefined;
+    message.worldline = (object.worldline !== undefined && object.worldline !== null)
+      ? CDOTAMsgWorldLine.fromPartial(object.worldline)
+      : undefined;
     return message;
   },
 };
@@ -10707,7 +10651,7 @@ export const CDOTAUserMsgChatWheel = {
       writer.uint32(24).uint32(message.accountId);
     }
     if (message.paramHeroId !== undefined && message.paramHeroId !== 0) {
-      writer.uint32(32).uint32(message.paramHeroId);
+      writer.uint32(32).int32(message.paramHeroId);
     }
     if (message.emoticonId !== undefined && message.emoticonId !== 0) {
       writer.uint32(40).uint32(message.emoticonId);
@@ -10748,7 +10692,7 @@ export const CDOTAUserMsgChatWheel = {
             break;
           }
 
-          message.paramHeroId = reader.uint32();
+          message.paramHeroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -10915,7 +10859,7 @@ export const CDOTAUserMsgShowSurvey = {
       writer.uint32(26).string(message.responseStyle);
     }
     if (message.teammateHeroId !== undefined && message.teammateHeroId !== 0) {
-      writer.uint32(32).uint32(message.teammateHeroId);
+      writer.uint32(32).int32(message.teammateHeroId);
     }
     if (message.teammateName !== undefined && message.teammateName !== "") {
       writer.uint32(42).string(message.teammateName);
@@ -10959,7 +10903,7 @@ export const CDOTAUserMsgShowSurvey = {
             break;
           }
 
-          message.teammateHeroId = reader.uint32();
+          message.teammateHeroId = reader.int32();
           continue;
         case 5:
           if (tag !== 42) {
@@ -11509,10 +11453,9 @@ export const CDOTAUserMsgSendStatPopup = {
   fromPartial(object: DeepPartial<CDOTAUserMsgSendStatPopup>): CDOTAUserMsgSendStatPopup {
     const message = createBaseCDOTAUserMsgSendStatPopup();
     message.playerId = object.playerId ?? -1;
-    message.statpopup =
-      object.statpopup !== undefined && object.statpopup !== null
-        ? CDOTAMsgSendStatPopup.fromPartial(object.statpopup)
-        : undefined;
+    message.statpopup = (object.statpopup !== undefined && object.statpopup !== null)
+      ? CDOTAMsgSendStatPopup.fromPartial(object.statpopup)
+      : undefined;
     return message;
   },
 };
@@ -11573,10 +11516,9 @@ export const CDOTAUserMsgDismissAllStatPopups = {
   },
   fromPartial(object: DeepPartial<CDOTAUserMsgDismissAllStatPopups>): CDOTAUserMsgDismissAllStatPopups {
     const message = createBaseCDOTAUserMsgDismissAllStatPopups();
-    message.dismissallmsg =
-      object.dismissallmsg !== undefined && object.dismissallmsg !== null
-        ? CDOTAMsgDismissAllStatPopups.fromPartial(object.dismissallmsg)
-        : undefined;
+    message.dismissallmsg = (object.dismissallmsg !== undefined && object.dismissallmsg !== null)
+      ? CDOTAMsgDismissAllStatPopups.fromPartial(object.dismissallmsg)
+      : undefined;
     return message;
   },
 };
@@ -12004,10 +11946,9 @@ export const CDOTAUserMsgCoachHUDPing = {
   fromPartial(object: DeepPartial<CDOTAUserMsgCoachHUDPing>): CDOTAUserMsgCoachHUDPing {
     const message = createBaseCDOTAUserMsgCoachHUDPing();
     message.playerId = object.playerId ?? -1;
-    message.hudPing =
-      object.hudPing !== undefined && object.hudPing !== null
-        ? CDOTAMsgCoachHUDPing.fromPartial(object.hudPing)
-        : undefined;
+    message.hudPing = (object.hudPing !== undefined && object.hudPing !== null)
+      ? CDOTAMsgCoachHUDPing.fromPartial(object.hudPing)
+      : undefined;
     return message;
   },
 };
@@ -12367,12 +12308,11 @@ export const CDOTAUserMsgTEProjectile = {
     message.colorgemcolor = object.colorgemcolor ?? 0;
     message.launchTick = object.launchTick ?? 0;
     message.handle = object.handle ?? 0;
-    message.targetLoc =
-      object.targetLoc !== undefined && object.targetLoc !== null
-        ? CMsgVector.fromPartial(object.targetLoc)
-        : undefined;
-    message.particleCpData =
-      object.particleCpData?.map((e) => CDOTAUserMsgProjectileParticleCPData.fromPartial(e)) || [];
+    message.targetLoc = (object.targetLoc !== undefined && object.targetLoc !== null)
+      ? CMsgVector.fromPartial(object.targetLoc)
+      : undefined;
+    message.particleCpData = object.particleCpData?.map((e) => CDOTAUserMsgProjectileParticleCPData.fromPartial(e)) ||
+      [];
     message.additionalParticleSystemHandle = object.additionalParticleSystemHandle ?? "0";
     message.originalMoveSpeed = object.originalMoveSpeed ?? 0;
     message.ability = object.ability ?? 16777215;
@@ -12665,27 +12605,25 @@ export const CDOTAUserMsgTEProjectileLoc = {
   },
   fromPartial(object: DeepPartial<CDOTAUserMsgTEProjectileLoc>): CDOTAUserMsgTEProjectileLoc {
     const message = createBaseCDOTAUserMsgTEProjectileLoc();
-    message.sourceLoc =
-      object.sourceLoc !== undefined && object.sourceLoc !== null
-        ? CMsgVector.fromPartial(object.sourceLoc)
-        : undefined;
+    message.sourceLoc = (object.sourceLoc !== undefined && object.sourceLoc !== null)
+      ? CMsgVector.fromPartial(object.sourceLoc)
+      : undefined;
     message.target = object.target ?? 16777215;
     message.moveSpeed = object.moveSpeed ?? 0;
     message.particleSystemHandle = object.particleSystemHandle ?? "0";
     message.dodgeable = object.dodgeable ?? false;
     message.isAttack = object.isAttack ?? false;
     message.expireTime = object.expireTime ?? 0;
-    message.targetLoc =
-      object.targetLoc !== undefined && object.targetLoc !== null
-        ? CMsgVector.fromPartial(object.targetLoc)
-        : undefined;
+    message.targetLoc = (object.targetLoc !== undefined && object.targetLoc !== null)
+      ? CMsgVector.fromPartial(object.targetLoc)
+      : undefined;
     message.colorgemcolor = object.colorgemcolor ?? 0;
     message.launchTick = object.launchTick ?? 0;
     message.handle = object.handle ?? 0;
     message.source = object.source ?? 16777215;
     message.sourceAttachment = object.sourceAttachment ?? 0;
-    message.particleCpData =
-      object.particleCpData?.map((e) => CDOTAUserMsgProjectileParticleCPData.fromPartial(e)) || [];
+    message.particleCpData = object.particleCpData?.map((e) => CDOTAUserMsgProjectileParticleCPData.fromPartial(e)) ||
+      [];
     message.additionalParticleSystemHandle = object.additionalParticleSystemHandle ?? "0";
     message.originalMoveSpeed = object.originalMoveSpeed ?? 0;
     return message;
@@ -13885,75 +13823,6 @@ export const CDOTAUserMsgBoosterState = {
   },
 };
 
-function createBaseCDOTAUserMsgPlayerMMR(): CDOTAUserMsgPlayerMMR {
-  return { mmr: [] };
-}
-
-export const CDOTAUserMsgPlayerMMR = {
-  encode(message: CDOTAUserMsgPlayerMMR, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    writer.uint32(10).fork();
-    for (const v of message.mmr) {
-      writer.sint32(v);
-    }
-    writer.ldelim();
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CDOTAUserMsgPlayerMMR {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCDOTAUserMsgPlayerMMR();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag === 8) {
-            message.mmr.push(reader.sint32());
-
-            continue;
-          }
-
-          if (tag === 10) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.mmr.push(reader.sint32());
-            }
-
-            continue;
-          }
-
-          break;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CDOTAUserMsgPlayerMMR {
-    return { mmr: globalThis.Array.isArray(object?.mmr) ? object.mmr.map((e: any) => globalThis.Number(e)) : [] };
-  },
-
-  toJSON(message: CDOTAUserMsgPlayerMMR): unknown {
-    const obj: any = {};
-    if (message.mmr?.length) {
-      obj.mmr = message.mmr.map((e) => Math.round(e));
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CDOTAUserMsgPlayerMMR>): CDOTAUserMsgPlayerMMR {
-    return CDOTAUserMsgPlayerMMR.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CDOTAUserMsgPlayerMMR>): CDOTAUserMsgPlayerMMR {
-    const message = createBaseCDOTAUserMsgPlayerMMR();
-    message.mmr = object.mmr?.map((e) => e) || [];
-    return message;
-  },
-};
-
 function createBaseCDOTAUserMsgAbilitySteal(): CDOTAUserMsgAbilitySteal {
   return { playerId: -1, abilityId: -1, abilityLevel: 0 };
 }
@@ -14208,7 +14077,7 @@ export const CDOTAUserMsgStatsHeroPositionInfo = {
     }
     if (message.positionDetails?.length) {
       obj.positionDetails = message.positionDetails.map((e) =>
-        CDOTAUserMsgStatsHeroPositionInfo_PositionPair.toJSON(e),
+        CDOTAUserMsgStatsHeroPositionInfo_PositionPair.toJSON(e)
       );
     }
     return obj;
@@ -14621,10 +14490,9 @@ export const CDOTAUserMsgStatsHeroMinuteDetails = {
     message.heroKills = object.heroKills ?? 0;
     message.heroDamage = object.heroDamage ?? 0;
     message.towerDamage = object.towerDamage ?? 0;
-    message.positionInfo =
-      object.positionInfo !== undefined && object.positionInfo !== null
-        ? CDOTAUserMsgStatsHeroPositionInfo.fromPartial(object.positionInfo)
-        : undefined;
+    message.positionInfo = (object.positionInfo !== undefined && object.positionInfo !== null)
+      ? CDOTAUserMsgStatsHeroPositionInfo.fromPartial(object.positionInfo)
+      : undefined;
     message.totalXp = object.totalXp ?? 0;
     message.netWorth = object.netWorth ?? 0;
     message.harvestedCreepGold = object.harvestedCreepGold ?? 0;
@@ -14829,7 +14697,7 @@ export const CDOTAUserMsgStatsTeamMinuteDetails = {
     }
     if (message.lanePerformance?.length) {
       obj.lanePerformance = message.lanePerformance.map((e) =>
-        CDOTAUserMsgStatsTeamMinuteDetails_LocationPerformance.toJSON(e),
+        CDOTAUserMsgStatsTeamMinuteDetails_LocationPerformance.toJSON(e)
       );
     }
     return obj;
@@ -15350,7 +15218,7 @@ export const CDOTAUserMsgStatsMatchDetails = {
     }
     if (message.fightDetails?.length) {
       obj.fightDetails = message.fightDetails.map((e) =>
-        CDOTAUserMsgStatsMatchDetails_CDOTAUserMsgStatsFightDetails.toJSON(e),
+        CDOTAUserMsgStatsMatchDetails_CDOTAUserMsgStatsFightDetails.toJSON(e)
       );
     }
     return obj;
@@ -15637,14 +15505,12 @@ export const CDOTAUserMsgStatsMatchDetails_CDOTAUserMsgStatsFightDetails = {
     const message = createBaseCDOTAUserMsgStatsMatchDetails_CDOTAUserMsgStatsFightDetails();
     message.startTime = object.startTime ?? 0;
     message.endTime = object.endTime ?? 0;
-    message.radiantFightDetails =
-      object.radiantFightDetails !== undefined && object.radiantFightDetails !== null
-        ? CDOTAUserMsgStatsMatchDetails_CDOTAUserMsgStatsFightTeamDetails.fromPartial(object.radiantFightDetails)
-        : undefined;
-    message.direFightDetails =
-      object.direFightDetails !== undefined && object.direFightDetails !== null
-        ? CDOTAUserMsgStatsMatchDetails_CDOTAUserMsgStatsFightTeamDetails.fromPartial(object.direFightDetails)
-        : undefined;
+    message.radiantFightDetails = (object.radiantFightDetails !== undefined && object.radiantFightDetails !== null)
+      ? CDOTAUserMsgStatsMatchDetails_CDOTAUserMsgStatsFightTeamDetails.fromPartial(object.radiantFightDetails)
+      : undefined;
+    message.direFightDetails = (object.direFightDetails !== undefined && object.direFightDetails !== null)
+      ? CDOTAUserMsgStatsMatchDetails_CDOTAUserMsgStatsFightTeamDetails.fromPartial(object.direFightDetails)
+      : undefined;
     return message;
   },
 };
@@ -16748,8 +16614,9 @@ export const CDOTAUserMsgProjectionAbility = {
     message.casterEntIndex = object.casterEntIndex ?? -1;
     message.casterTeam = object.casterTeam ?? 0;
     message.channelEnd = object.channelEnd ?? false;
-    message.origin =
-      object.origin !== undefined && object.origin !== null ? CMsgVector.fromPartial(object.origin) : undefined;
+    message.origin = (object.origin !== undefined && object.origin !== null)
+      ? CMsgVector.fromPartial(object.origin)
+      : undefined;
     message.trackCasterOnly = object.trackCasterOnly ?? false;
     message.endTime = object.endTime ?? 0;
     message.victimEntIndex = object.victimEntIndex ?? -1;
@@ -17250,7 +17117,7 @@ export const CDOTAUserMsgSuggestHeroPick = {
       writer.uint32(8).int32(message.playerId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     if (message.ban !== undefined && message.ban !== false) {
       writer.uint32(24).bool(message.ban);
@@ -17280,7 +17147,7 @@ export const CDOTAUserMsgSuggestHeroPick = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag !== 24) {
@@ -18159,7 +18026,7 @@ export const CDOTAUserMsgHeroRelicProgress = {
 };
 
 function createBaseCDOTAUserMsgAbilityDraftRequestAbility(): CDOTAUserMsgAbilityDraftRequestAbility {
-  return { playerId: -1, requestedAbilityId: -1, ctrlIsDown: false };
+  return { playerId: -1, requestedAbilityId: -1, ctrlIsDown: false, requestedHeroId: 0 };
 }
 
 export const CDOTAUserMsgAbilityDraftRequestAbility = {
@@ -18172,6 +18039,9 @@ export const CDOTAUserMsgAbilityDraftRequestAbility = {
     }
     if (message.ctrlIsDown !== undefined && message.ctrlIsDown !== false) {
       writer.uint32(24).bool(message.ctrlIsDown);
+    }
+    if (message.requestedHeroId !== undefined && message.requestedHeroId !== 0) {
+      writer.uint32(32).int32(message.requestedHeroId);
     }
     return writer;
   },
@@ -18204,6 +18074,13 @@ export const CDOTAUserMsgAbilityDraftRequestAbility = {
 
           message.ctrlIsDown = reader.bool();
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.requestedHeroId = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -18218,6 +18095,7 @@ export const CDOTAUserMsgAbilityDraftRequestAbility = {
       playerId: isSet(object.playerId) ? globalThis.Number(object.playerId) : -1,
       requestedAbilityId: isSet(object.requestedAbilityId) ? globalThis.Number(object.requestedAbilityId) : -1,
       ctrlIsDown: isSet(object.ctrlIsDown) ? globalThis.Boolean(object.ctrlIsDown) : false,
+      requestedHeroId: isSet(object.requestedHeroId) ? globalThis.Number(object.requestedHeroId) : 0,
     };
   },
 
@@ -18232,6 +18110,9 @@ export const CDOTAUserMsgAbilityDraftRequestAbility = {
     if (message.ctrlIsDown !== undefined && message.ctrlIsDown !== false) {
       obj.ctrlIsDown = message.ctrlIsDown;
     }
+    if (message.requestedHeroId !== undefined && message.requestedHeroId !== 0) {
+      obj.requestedHeroId = Math.round(message.requestedHeroId);
+    }
     return obj;
   },
 
@@ -18243,6 +18124,7 @@ export const CDOTAUserMsgAbilityDraftRequestAbility = {
     message.playerId = object.playerId ?? -1;
     message.requestedAbilityId = object.requestedAbilityId ?? -1;
     message.ctrlIsDown = object.ctrlIsDown ?? false;
+    message.requestedHeroId = object.requestedHeroId ?? 0;
     return message;
   },
 };
@@ -18257,10 +18139,10 @@ export const CDOTAUserMsgDamageReport = {
       writer.uint32(8).int32(message.playerId);
     }
     if (message.targetHeroId !== undefined && message.targetHeroId !== 0) {
-      writer.uint32(16).uint32(message.targetHeroId);
+      writer.uint32(16).int32(message.targetHeroId);
     }
     if (message.sourceHeroId !== undefined && message.sourceHeroId !== 0) {
-      writer.uint32(24).uint32(message.sourceHeroId);
+      writer.uint32(24).int32(message.sourceHeroId);
     }
     if (message.damageAmount !== undefined && message.damageAmount !== 0) {
       writer.uint32(32).int32(message.damageAmount);
@@ -18290,14 +18172,14 @@ export const CDOTAUserMsgDamageReport = {
             break;
           }
 
-          message.targetHeroId = reader.uint32();
+          message.targetHeroId = reader.int32();
           continue;
         case 3:
           if (tag !== 24) {
             break;
           }
 
-          message.sourceHeroId = reader.uint32();
+          message.sourceHeroId = reader.int32();
           continue;
         case 4:
           if (tag !== 32) {
@@ -19725,7 +19607,14 @@ export const CDOTAUserMsgDebugChallenge = {
 };
 
 function createBaseCDOTAUserMsgFoundNeutralItem(): CDOTAUserMsgFoundNeutralItem {
-  return { playerId: -1, itemAbilityId: -1, itemTier: 0, tierItemCount: 0 };
+  return {
+    playerId: -1,
+    itemAbilityId: -1,
+    itemTier: 0,
+    tierItemCount: 0,
+    enhancementAbilityId: -1,
+    enhancementLevel: 0,
+  };
 }
 
 export const CDOTAUserMsgFoundNeutralItem = {
@@ -19741,6 +19630,12 @@ export const CDOTAUserMsgFoundNeutralItem = {
     }
     if (message.tierItemCount !== undefined && message.tierItemCount !== 0) {
       writer.uint32(32).uint32(message.tierItemCount);
+    }
+    if (message.enhancementAbilityId !== undefined && message.enhancementAbilityId !== -1) {
+      writer.uint32(40).int32(message.enhancementAbilityId);
+    }
+    if (message.enhancementLevel !== undefined && message.enhancementLevel !== 0) {
+      writer.uint32(48).int32(message.enhancementLevel);
     }
     return writer;
   },
@@ -19780,6 +19675,20 @@ export const CDOTAUserMsgFoundNeutralItem = {
 
           message.tierItemCount = reader.uint32();
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.enhancementAbilityId = reader.int32();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.enhancementLevel = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -19795,6 +19704,8 @@ export const CDOTAUserMsgFoundNeutralItem = {
       itemAbilityId: isSet(object.itemAbilityId) ? globalThis.Number(object.itemAbilityId) : -1,
       itemTier: isSet(object.itemTier) ? globalThis.Number(object.itemTier) : 0,
       tierItemCount: isSet(object.tierItemCount) ? globalThis.Number(object.tierItemCount) : 0,
+      enhancementAbilityId: isSet(object.enhancementAbilityId) ? globalThis.Number(object.enhancementAbilityId) : -1,
+      enhancementLevel: isSet(object.enhancementLevel) ? globalThis.Number(object.enhancementLevel) : 0,
     };
   },
 
@@ -19812,6 +19723,12 @@ export const CDOTAUserMsgFoundNeutralItem = {
     if (message.tierItemCount !== undefined && message.tierItemCount !== 0) {
       obj.tierItemCount = Math.round(message.tierItemCount);
     }
+    if (message.enhancementAbilityId !== undefined && message.enhancementAbilityId !== -1) {
+      obj.enhancementAbilityId = Math.round(message.enhancementAbilityId);
+    }
+    if (message.enhancementLevel !== undefined && message.enhancementLevel !== 0) {
+      obj.enhancementLevel = Math.round(message.enhancementLevel);
+    }
     return obj;
   },
 
@@ -19824,6 +19741,8 @@ export const CDOTAUserMsgFoundNeutralItem = {
     message.itemAbilityId = object.itemAbilityId ?? -1;
     message.itemTier = object.itemTier ?? 0;
     message.tierItemCount = object.tierItemCount ?? 0;
+    message.enhancementAbilityId = object.enhancementAbilityId ?? -1;
+    message.enhancementLevel = object.enhancementLevel ?? 0;
     return message;
   },
 };
@@ -20295,18 +20214,15 @@ export const CDOTAUserMsgVersusScenePlayerBehavior = {
     const message = createBaseCDOTAUserMsgVersusScenePlayerBehavior();
     message.playerId = object.playerId ?? -1;
     message.behavior = object.behavior ?? 1;
-    message.playActivity =
-      object.playActivity !== undefined && object.playActivity !== null
-        ? VersusScenePlayActivity.fromPartial(object.playActivity)
-        : undefined;
-    message.chatWheel =
-      object.chatWheel !== undefined && object.chatWheel !== null
-        ? VersusSceneChatWheel.fromPartial(object.chatWheel)
-        : undefined;
-    message.playbackRate =
-      object.playbackRate !== undefined && object.playbackRate !== null
-        ? VersusScenePlaybackRate.fromPartial(object.playbackRate)
-        : undefined;
+    message.playActivity = (object.playActivity !== undefined && object.playActivity !== null)
+      ? VersusScenePlayActivity.fromPartial(object.playActivity)
+      : undefined;
+    message.chatWheel = (object.chatWheel !== undefined && object.chatWheel !== null)
+      ? VersusSceneChatWheel.fromPartial(object.chatWheel)
+      : undefined;
+    message.playbackRate = (object.playbackRate !== undefined && object.playbackRate !== null)
+      ? VersusScenePlaybackRate.fromPartial(object.playbackRate)
+      : undefined;
     return message;
   },
 };
@@ -20559,7 +20475,7 @@ export const CDOTAUserMsgWKArcanaProgress = {
       writer.uint32(16).uint32(message.arcanaLevel);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     return writer;
   },
@@ -20590,7 +20506,7 @@ export const CDOTAUserMsgWKArcanaProgress = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -20762,7 +20678,7 @@ export const CDOTAUserMsgGuildChallengeProgress = {
     const obj: any = {};
     if (message.playerProgress?.length) {
       obj.playerProgress = message.playerProgress.map((e) =>
-        CDOTAUserMsgGuildChallengeProgress_PlayerProgress.toJSON(e),
+        CDOTAUserMsgGuildChallengeProgress_PlayerProgress.toJSON(e)
       );
     }
     if (message.guildId !== undefined && message.guildId !== 0) {
@@ -22806,6 +22722,244 @@ export const CDOTAUserMsgInnatePing = {
   },
 };
 
+function createBaseCDOTAUserMsgNeutralCraftAvailable(): CDOTAUserMsgNeutralCraftAvailable {
+  return {};
+}
+
+export const CDOTAUserMsgNeutralCraftAvailable = {
+  encode(_: CDOTAUserMsgNeutralCraftAvailable, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CDOTAUserMsgNeutralCraftAvailable {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCDOTAUserMsgNeutralCraftAvailable();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): CDOTAUserMsgNeutralCraftAvailable {
+    return {};
+  },
+
+  toJSON(_: CDOTAUserMsgNeutralCraftAvailable): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create(base?: DeepPartial<CDOTAUserMsgNeutralCraftAvailable>): CDOTAUserMsgNeutralCraftAvailable {
+    return CDOTAUserMsgNeutralCraftAvailable.fromPartial(base ?? {});
+  },
+  fromPartial(_: DeepPartial<CDOTAUserMsgNeutralCraftAvailable>): CDOTAUserMsgNeutralCraftAvailable {
+    const message = createBaseCDOTAUserMsgNeutralCraftAvailable();
+    return message;
+  },
+};
+
+function createBaseCDOTAUserMsgTimerAlert(): CDOTAUserMsgTimerAlert {
+  return { playerId: -1, timerAlertType: 1 };
+}
+
+export const CDOTAUserMsgTimerAlert = {
+  encode(message: CDOTAUserMsgTimerAlert, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.playerId !== undefined && message.playerId !== -1) {
+      writer.uint32(8).int32(message.playerId);
+    }
+    if (message.timerAlertType !== undefined && message.timerAlertType !== 1) {
+      writer.uint32(16).int32(message.timerAlertType);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CDOTAUserMsgTimerAlert {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCDOTAUserMsgTimerAlert();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.playerId = reader.int32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.timerAlertType = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CDOTAUserMsgTimerAlert {
+    return {
+      playerId: isSet(object.playerId) ? globalThis.Number(object.playerId) : -1,
+      timerAlertType: isSet(object.timerAlertType) ? eTimerAlertTypeFromJSON(object.timerAlertType) : 1,
+    };
+  },
+
+  toJSON(message: CDOTAUserMsgTimerAlert): unknown {
+    const obj: any = {};
+    if (message.playerId !== undefined && message.playerId !== -1) {
+      obj.playerId = Math.round(message.playerId);
+    }
+    if (message.timerAlertType !== undefined && message.timerAlertType !== 1) {
+      obj.timerAlertType = eTimerAlertTypeToJSON(message.timerAlertType);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CDOTAUserMsgTimerAlert>): CDOTAUserMsgTimerAlert {
+    return CDOTAUserMsgTimerAlert.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CDOTAUserMsgTimerAlert>): CDOTAUserMsgTimerAlert {
+    const message = createBaseCDOTAUserMsgTimerAlert();
+    message.playerId = object.playerId ?? -1;
+    message.timerAlertType = object.timerAlertType ?? 1;
+    return message;
+  },
+};
+
+function createBaseCDOTAUserMsgMadstoneAlert(): CDOTAUserMsgMadstoneAlert {
+  return { playerId: -1, targetEntindex: -1, tier: 0, madstoneAlertType: 0, value: 0 };
+}
+
+export const CDOTAUserMsgMadstoneAlert = {
+  encode(message: CDOTAUserMsgMadstoneAlert, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.playerId !== undefined && message.playerId !== -1) {
+      writer.uint32(8).int32(message.playerId);
+    }
+    if (message.targetEntindex !== undefined && message.targetEntindex !== -1) {
+      writer.uint32(16).int32(message.targetEntindex);
+    }
+    if (message.tier !== undefined && message.tier !== 0) {
+      writer.uint32(24).int32(message.tier);
+    }
+    if (message.madstoneAlertType !== undefined && message.madstoneAlertType !== 0) {
+      writer.uint32(32).int32(message.madstoneAlertType);
+    }
+    if (message.value !== undefined && message.value !== 0) {
+      writer.uint32(40).int32(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CDOTAUserMsgMadstoneAlert {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCDOTAUserMsgMadstoneAlert();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.playerId = reader.int32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.targetEntindex = reader.int32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.tier = reader.int32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.madstoneAlertType = reader.int32() as any;
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.value = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CDOTAUserMsgMadstoneAlert {
+    return {
+      playerId: isSet(object.playerId) ? globalThis.Number(object.playerId) : -1,
+      targetEntindex: isSet(object.targetEntindex) ? globalThis.Number(object.targetEntindex) : -1,
+      tier: isSet(object.tier) ? globalThis.Number(object.tier) : 0,
+      madstoneAlertType: isSet(object.madstoneAlertType)
+        ? cDOTAUserMsgMadstoneAlert_EMadstoneAlertTypeFromJSON(object.madstoneAlertType)
+        : 0,
+      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
+    };
+  },
+
+  toJSON(message: CDOTAUserMsgMadstoneAlert): unknown {
+    const obj: any = {};
+    if (message.playerId !== undefined && message.playerId !== -1) {
+      obj.playerId = Math.round(message.playerId);
+    }
+    if (message.targetEntindex !== undefined && message.targetEntindex !== -1) {
+      obj.targetEntindex = Math.round(message.targetEntindex);
+    }
+    if (message.tier !== undefined && message.tier !== 0) {
+      obj.tier = Math.round(message.tier);
+    }
+    if (message.madstoneAlertType !== undefined && message.madstoneAlertType !== 0) {
+      obj.madstoneAlertType = cDOTAUserMsgMadstoneAlert_EMadstoneAlertTypeToJSON(message.madstoneAlertType);
+    }
+    if (message.value !== undefined && message.value !== 0) {
+      obj.value = Math.round(message.value);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CDOTAUserMsgMadstoneAlert>): CDOTAUserMsgMadstoneAlert {
+    return CDOTAUserMsgMadstoneAlert.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CDOTAUserMsgMadstoneAlert>): CDOTAUserMsgMadstoneAlert {
+    const message = createBaseCDOTAUserMsgMadstoneAlert();
+    message.playerId = object.playerId ?? -1;
+    message.targetEntindex = object.targetEntindex ?? -1;
+    message.tier = object.tier ?? 0;
+    message.madstoneAlertType = object.madstoneAlertType ?? 0;
+    message.value = object.value ?? 0;
+    return message;
+  },
+};
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -22816,15 +22970,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

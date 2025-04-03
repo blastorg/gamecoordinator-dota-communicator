@@ -1291,8 +1291,7 @@ export function cMsgClientToGCFantasyCraftingPerformOperationResponse_EResponseF
       return CMsgClientToGCFantasyCraftingPerformOperationResponse_EResponse.k_eMoreInfo;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCFantasyCraftingPerformOperationResponse_EResponse",
       );
   }
@@ -1320,8 +1319,7 @@ export function cMsgClientToGCFantasyCraftingPerformOperationResponse_EResponseT
       return "k_eMoreInfo";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCFantasyCraftingPerformOperationResponse_EResponse",
       );
   }
@@ -1385,8 +1383,7 @@ export function cMsgClientToGCFantasyCraftingDevModifyTabletResponse_EResponseFr
       return CMsgClientToGCFantasyCraftingDevModifyTabletResponse_EResponse.k_eInvalidLeague;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCFantasyCraftingDevModifyTabletResponse_EResponse",
       );
   }
@@ -1410,8 +1407,7 @@ export function cMsgClientToGCFantasyCraftingDevModifyTabletResponse_EResponseTo
       return "k_eInvalidLeague";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCFantasyCraftingDevModifyTabletResponse_EResponse",
       );
   }
@@ -1542,8 +1538,7 @@ export function cMsgClientToGCFantasyCraftingGenerateTabletsResponse_EResponseFr
       return CMsgClientToGCFantasyCraftingGenerateTabletsResponse_EResponse.k_eInvalidPlayer;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCFantasyCraftingGenerateTabletsResponse_EResponse",
       );
   }
@@ -1569,8 +1564,7 @@ export function cMsgClientToGCFantasyCraftingGenerateTabletsResponse_EResponseTo
       return "k_eInvalidPlayer";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCFantasyCraftingGenerateTabletsResponse_EResponse",
       );
   }
@@ -2543,18 +2537,15 @@ export const CMsgDOTADPCProfileInfo = {
   },
   fromPartial(object: DeepPartial<CMsgDOTADPCProfileInfo>): CMsgDOTADPCProfileInfo {
     const message = createBaseCMsgDOTADPCProfileInfo();
-    message.playerInfo =
-      object.playerInfo !== undefined && object.playerInfo !== null
-        ? CMsgDOTAPlayerInfo.fromPartial(object.playerInfo)
-        : undefined;
-    message.predictionInfo =
-      object.predictionInfo !== undefined && object.predictionInfo !== null
-        ? CMsgDOTADPCProfileInfo_PredictionInfo.fromPartial(object.predictionInfo)
-        : undefined;
-    message.fantasyInfo =
-      object.fantasyInfo !== undefined && object.fantasyInfo !== null
-        ? CMsgDOTADPCProfileInfo_FantasyInfo.fromPartial(object.fantasyInfo)
-        : undefined;
+    message.playerInfo = (object.playerInfo !== undefined && object.playerInfo !== null)
+      ? CMsgDOTAPlayerInfo.fromPartial(object.playerInfo)
+      : undefined;
+    message.predictionInfo = (object.predictionInfo !== undefined && object.predictionInfo !== null)
+      ? CMsgDOTADPCProfileInfo_PredictionInfo.fromPartial(object.predictionInfo)
+      : undefined;
+    message.fantasyInfo = (object.fantasyInfo !== undefined && object.fantasyInfo !== null)
+      ? CMsgDOTADPCProfileInfo_FantasyInfo.fromPartial(object.fantasyInfo)
+      : undefined;
     message.disabledNotifications = object.disabledNotifications?.map((e) => e) || [];
     return message;
   },
@@ -3547,8 +3538,8 @@ export const CMsgClientToGCBatchGetPlayerCardRosterRequest = {
     return {
       leagueTimestamps: globalThis.Array.isArray(object?.leagueTimestamps)
         ? object.leagueTimestamps.map((e: any) =>
-            CMsgClientToGCBatchGetPlayerCardRosterRequest_LeagueTimestamp.fromJSON(e),
-          )
+          CMsgClientToGCBatchGetPlayerCardRosterRequest_LeagueTimestamp.fromJSON(e)
+        )
         : [],
     };
   },
@@ -3557,7 +3548,7 @@ export const CMsgClientToGCBatchGetPlayerCardRosterRequest = {
     const obj: any = {};
     if (message.leagueTimestamps?.length) {
       obj.leagueTimestamps = message.leagueTimestamps.map((e) =>
-        CMsgClientToGCBatchGetPlayerCardRosterRequest_LeagueTimestamp.toJSON(e),
+        CMsgClientToGCBatchGetPlayerCardRosterRequest_LeagueTimestamp.toJSON(e)
       );
     }
     return obj;
@@ -3574,7 +3565,7 @@ export const CMsgClientToGCBatchGetPlayerCardRosterRequest = {
     const message = createBaseCMsgClientToGCBatchGetPlayerCardRosterRequest();
     message.leagueTimestamps =
       object.leagueTimestamps?.map((e) =>
-        CMsgClientToGCBatchGetPlayerCardRosterRequest_LeagueTimestamp.fromPartial(e),
+        CMsgClientToGCBatchGetPlayerCardRosterRequest_LeagueTimestamp.fromPartial(e)
       ) || [];
     return message;
   },
@@ -3716,7 +3707,7 @@ export const CMsgClientToGCBatchGetPlayerCardRosterResponse = {
     const obj: any = {};
     if (message.responses?.length) {
       obj.responses = message.responses.map((e) =>
-        CMsgClientToGCBatchGetPlayerCardRosterResponse_RosterResponse.toJSON(e),
+        CMsgClientToGCBatchGetPlayerCardRosterResponse_RosterResponse.toJSON(e)
       );
     }
     return obj;
@@ -4185,8 +4176,8 @@ export const CMsgDOTAFantasyDPCLeagueStatus = {
   },
   fromPartial(object: DeepPartial<CMsgDOTAFantasyDPCLeagueStatus>): CMsgDOTAFantasyDPCLeagueStatus {
     const message = createBaseCMsgDOTAFantasyDPCLeagueStatus();
-    message.leagueInfos =
-      object.leagueInfos?.map((e) => CMsgDOTAFantasyDPCLeagueStatus_LeagueInfo.fromPartial(e)) || [];
+    message.leagueInfos = object.leagueInfos?.map((e) => CMsgDOTAFantasyDPCLeagueStatus_LeagueInfo.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -5267,7 +5258,7 @@ export const CMsgDotaFantasyCraftingTabletData = {
     const obj: any = {};
     if (message.tabletPeriodData?.length) {
       obj.tabletPeriodData = message.tabletPeriodData.map((e) =>
-        CMsgDotaFantasyCraftingTabletData_TabletPeriodDataEntry.toJSON(e),
+        CMsgDotaFantasyCraftingTabletData_TabletPeriodDataEntry.toJSON(e)
       );
     }
     return obj;
@@ -5360,10 +5351,9 @@ export const CMsgDotaFantasyCraftingTabletData_TabletPeriodDataEntry = {
   ): CMsgDotaFantasyCraftingTabletData_TabletPeriodDataEntry {
     const message = createBaseCMsgDotaFantasyCraftingTabletData_TabletPeriodDataEntry();
     message.key = object.key ?? 0;
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? CMsgDotaFantasyCraftingTabletPeriodData.fromPartial(object.value)
-        : undefined;
+    message.value = (object.value !== undefined && object.value !== null)
+      ? CMsgDotaFantasyCraftingTabletPeriodData.fromPartial(object.value)
+      : undefined;
     return message;
   },
 };
@@ -5458,7 +5448,7 @@ export const CMsgDotaFantasyCraftingUserData = {
     }
     if (message.periodRollTokens?.length) {
       obj.periodRollTokens = message.periodRollTokens.map((e) =>
-        CMsgDotaFantasyCraftingUserData_PeriodRollTokensEntry.toJSON(e),
+        CMsgDotaFantasyCraftingUserData_PeriodRollTokensEntry.toJSON(e)
       );
     }
     if (message.periodScores?.length) {
@@ -5714,10 +5704,9 @@ export const CMsgDotaFantasyCraftingUserData_PeriodScoresEntry = {
   ): CMsgDotaFantasyCraftingUserData_PeriodScoresEntry {
     const message = createBaseCMsgDotaFantasyCraftingUserData_PeriodScoresEntry();
     message.key = object.key ?? 0;
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? CMsgDotaFantasyCraftingUserData_PeriodScore.fromPartial(object.value)
-        : undefined;
+    message.value = (object.value !== undefined && object.value !== null)
+      ? CMsgDotaFantasyCraftingUserData_PeriodScore.fromPartial(object.value)
+      : undefined;
     return message;
   },
 };
@@ -5872,10 +5861,9 @@ export const CMsgDotaFantasyCraftingDataCache_CacheEntry = {
     const message = createBaseCMsgDotaFantasyCraftingDataCache_CacheEntry();
     message.accountId = object.accountId ?? 0;
     message.fantasyLeague = object.fantasyLeague ?? 0;
-    message.cacheData =
-      object.cacheData !== undefined && object.cacheData !== null
-        ? CMsgGCToClientFantasyCraftingDataUpdated.fromPartial(object.cacheData)
-        : undefined;
+    message.cacheData = (object.cacheData !== undefined && object.cacheData !== null)
+      ? CMsgGCToClientFantasyCraftingDataUpdated.fromPartial(object.cacheData)
+      : undefined;
     return message;
   },
 };
@@ -6043,14 +6031,12 @@ export const CMsgClientToGCFantasyCraftingGetDataResponse = {
   ): CMsgClientToGCFantasyCraftingGetDataResponse {
     const message = createBaseCMsgClientToGCFantasyCraftingGetDataResponse();
     message.response = object.response ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
-        : undefined;
-    message.tabletData =
-      object.tabletData !== undefined && object.tabletData !== null
-        ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
+      : undefined;
+    message.tabletData = (object.tabletData !== undefined && object.tabletData !== null)
+      ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
+      : undefined;
     return message;
   },
 };
@@ -6349,8 +6335,8 @@ export const CMsgClientToGCFantasyCraftingPerformOperationResponse = {
         : [],
       titleChoices: globalThis.Array.isArray(object?.titleChoices)
         ? object.titleChoices.map((e: any) =>
-            CMsgClientToGCFantasyCraftingPerformOperationResponse_TitleChoice.fromJSON(e),
-          )
+          CMsgClientToGCFantasyCraftingPerformOperationResponse_TitleChoice.fromJSON(e)
+        )
         : [],
     };
   },
@@ -6383,7 +6369,7 @@ export const CMsgClientToGCFantasyCraftingPerformOperationResponse = {
     }
     if (message.titleChoices?.length) {
       obj.titleChoices = message.titleChoices.map((e) =>
-        CMsgClientToGCFantasyCraftingPerformOperationResponse_TitleChoice.toJSON(e),
+        CMsgClientToGCFantasyCraftingPerformOperationResponse_TitleChoice.toJSON(e)
       );
     }
     return obj;
@@ -6401,20 +6387,18 @@ export const CMsgClientToGCFantasyCraftingPerformOperationResponse = {
     message.response = object.response ?? 0;
     message.operationId = object.operationId ?? 0;
     message.tabletId = object.tabletId ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
-        : undefined;
-    message.tabletData =
-      object.tabletData !== undefined && object.tabletData !== null
-        ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
+      : undefined;
+    message.tabletData = (object.tabletData !== undefined && object.tabletData !== null)
+      ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
+      : undefined;
     message.playerChoices = object.playerChoices?.map((e) => e) || [];
     message.prefixChoices = object.prefixChoices?.map((e) => e) || [];
     message.suffixChoices = object.suffixChoices?.map((e) => e) || [];
     message.titleChoices =
       object.titleChoices?.map((e) =>
-        CMsgClientToGCFantasyCraftingPerformOperationResponse_TitleChoice.fromPartial(e),
+        CMsgClientToGCFantasyCraftingPerformOperationResponse_TitleChoice.fromPartial(e)
       ) || [];
     return message;
   },
@@ -6587,14 +6571,12 @@ export const CMsgGCToClientFantasyCraftingDataUpdated = {
   fromPartial(object: DeepPartial<CMsgGCToClientFantasyCraftingDataUpdated>): CMsgGCToClientFantasyCraftingDataUpdated {
     const message = createBaseCMsgGCToClientFantasyCraftingDataUpdated();
     message.fantasyLeague = object.fantasyLeague ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
-        : undefined;
-    message.tabletData =
-      object.tabletData !== undefined && object.tabletData !== null
-        ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
+      : undefined;
+    message.tabletData = (object.tabletData !== undefined && object.tabletData !== null)
+      ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
+      : undefined;
     return message;
   },
 };
@@ -6814,14 +6796,12 @@ export const CMsgClientToGCFantasyCraftingDevModifyTabletResponse = {
   ): CMsgClientToGCFantasyCraftingDevModifyTabletResponse {
     const message = createBaseCMsgClientToGCFantasyCraftingDevModifyTabletResponse();
     message.response = object.response ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
-        : undefined;
-    message.tabletData =
-      object.tabletData !== undefined && object.tabletData !== null
-        ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
+      : undefined;
+    message.tabletData = (object.tabletData !== undefined && object.tabletData !== null)
+      ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
+      : undefined;
     return message;
   },
 };
@@ -6980,10 +6960,9 @@ export const CMsgClientToGCFantasyCraftingSelectPlayerResponse = {
   ): CMsgClientToGCFantasyCraftingSelectPlayerResponse {
     const message = createBaseCMsgClientToGCFantasyCraftingSelectPlayerResponse();
     message.response = object.response ?? 0;
-    message.tabletData =
-      object.tabletData !== undefined && object.tabletData !== null
-        ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
-        : undefined;
+    message.tabletData = (object.tabletData !== undefined && object.tabletData !== null)
+      ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
+      : undefined;
     return message;
   },
 };
@@ -7172,14 +7151,12 @@ export const CMsgClientToGCFantasyCraftingGenerateTabletsResponse = {
   ): CMsgClientToGCFantasyCraftingGenerateTabletsResponse {
     const message = createBaseCMsgClientToGCFantasyCraftingGenerateTabletsResponse();
     message.response = object.response ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
-        : undefined;
-    message.tabletData =
-      object.tabletData !== undefined && object.tabletData !== null
-        ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
+      : undefined;
+    message.tabletData = (object.tabletData !== undefined && object.tabletData !== null)
+      ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
+      : undefined;
     return message;
   },
 };
@@ -7321,10 +7298,9 @@ export const CMsgClientToGcFantasyCraftingUpgradeTabletsResponse = {
   ): CMsgClientToGcFantasyCraftingUpgradeTabletsResponse {
     const message = createBaseCMsgClientToGcFantasyCraftingUpgradeTabletsResponse();
     message.response = object.response ?? 0;
-    message.tabletData =
-      object.tabletData !== undefined && object.tabletData !== null
-        ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
-        : undefined;
+    message.tabletData = (object.tabletData !== undefined && object.tabletData !== null)
+      ? CMsgDotaFantasyCraftingTabletData.fromPartial(object.tabletData)
+      : undefined;
     return message;
   },
 };
@@ -7466,25 +7442,20 @@ export const CMsgClientToGCFantasyCraftingRerollOptionsResponse = {
   ): CMsgClientToGCFantasyCraftingRerollOptionsResponse {
     const message = createBaseCMsgClientToGCFantasyCraftingRerollOptionsResponse();
     message.response = object.response ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgDotaFantasyCraftingUserData.fromPartial(object.userData)
+      : undefined;
     return message;
   },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

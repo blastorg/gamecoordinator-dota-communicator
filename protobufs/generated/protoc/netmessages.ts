@@ -14,19 +14,17 @@ export enum CLCMessages {
   clc_Move = 21,
   clc_VoiceData = 22,
   clc_BaselineAck = 23,
-  clc_ListenEvents = 24,
   clc_RespondCvarValue = 25,
   clc_FileCRCCheck = 26,
   clc_LoadingProgress = 27,
   clc_SplitPlayerConnect = 28,
-  clc_ClientMessage = 29,
   clc_SplitPlayerDisconnect = 30,
   clc_ServerStatus = 31,
-  clc_ServerPing = 32,
   clc_RequestPause = 33,
   clc_CmdKeyValues = 34,
   clc_RconServerDetails = 35,
   clc_HltvReplay = 36,
+  clc_Diagnostic = 37,
 }
 
 export function cLCMessagesFromJSON(object: any): CLCMessages {
@@ -43,9 +41,6 @@ export function cLCMessagesFromJSON(object: any): CLCMessages {
     case 23:
     case "clc_BaselineAck":
       return CLCMessages.clc_BaselineAck;
-    case 24:
-    case "clc_ListenEvents":
-      return CLCMessages.clc_ListenEvents;
     case 25:
     case "clc_RespondCvarValue":
       return CLCMessages.clc_RespondCvarValue;
@@ -58,18 +53,12 @@ export function cLCMessagesFromJSON(object: any): CLCMessages {
     case 28:
     case "clc_SplitPlayerConnect":
       return CLCMessages.clc_SplitPlayerConnect;
-    case 29:
-    case "clc_ClientMessage":
-      return CLCMessages.clc_ClientMessage;
     case 30:
     case "clc_SplitPlayerDisconnect":
       return CLCMessages.clc_SplitPlayerDisconnect;
     case 31:
     case "clc_ServerStatus":
       return CLCMessages.clc_ServerStatus;
-    case 32:
-    case "clc_ServerPing":
-      return CLCMessages.clc_ServerPing;
     case 33:
     case "clc_RequestPause":
       return CLCMessages.clc_RequestPause;
@@ -82,6 +71,9 @@ export function cLCMessagesFromJSON(object: any): CLCMessages {
     case 36:
     case "clc_HltvReplay":
       return CLCMessages.clc_HltvReplay;
+    case 37:
+    case "clc_Diagnostic":
+      return CLCMessages.clc_Diagnostic;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum CLCMessages");
   }
@@ -97,8 +89,6 @@ export function cLCMessagesToJSON(object: CLCMessages): string {
       return "clc_VoiceData";
     case CLCMessages.clc_BaselineAck:
       return "clc_BaselineAck";
-    case CLCMessages.clc_ListenEvents:
-      return "clc_ListenEvents";
     case CLCMessages.clc_RespondCvarValue:
       return "clc_RespondCvarValue";
     case CLCMessages.clc_FileCRCCheck:
@@ -107,14 +97,10 @@ export function cLCMessagesToJSON(object: CLCMessages): string {
       return "clc_LoadingProgress";
     case CLCMessages.clc_SplitPlayerConnect:
       return "clc_SplitPlayerConnect";
-    case CLCMessages.clc_ClientMessage:
-      return "clc_ClientMessage";
     case CLCMessages.clc_SplitPlayerDisconnect:
       return "clc_SplitPlayerDisconnect";
     case CLCMessages.clc_ServerStatus:
       return "clc_ServerStatus";
-    case CLCMessages.clc_ServerPing:
-      return "clc_ServerPing";
     case CLCMessages.clc_RequestPause:
       return "clc_RequestPause";
     case CLCMessages.clc_CmdKeyValues:
@@ -123,6 +109,8 @@ export function cLCMessagesToJSON(object: CLCMessages): string {
       return "clc_RconServerDetails";
     case CLCMessages.clc_HltvReplay:
       return "clc_HltvReplay";
+    case CLCMessages.clc_Diagnostic:
+      return "clc_Diagnostic";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum CLCMessages");
   }
@@ -156,9 +144,9 @@ export enum SVCMessages {
   svc_FullFrameSplit = 70,
   svc_RconServerDetails = 71,
   svc_UserMessage = 72,
-  svc_HltvReplay = 73,
   svc_Broadcast_Command = 74,
   svc_HltvFixupOperatorStatus = 75,
+  svc_UserCmds = 76,
 }
 
 export function sVCMessagesFromJSON(object: any): SVCMessages {
@@ -244,15 +232,15 @@ export function sVCMessagesFromJSON(object: any): SVCMessages {
     case 72:
     case "svc_UserMessage":
       return SVCMessages.svc_UserMessage;
-    case 73:
-    case "svc_HltvReplay":
-      return SVCMessages.svc_HltvReplay;
     case 74:
     case "svc_Broadcast_Command":
       return SVCMessages.svc_Broadcast_Command;
     case 75:
     case "svc_HltvFixupOperatorStatus":
       return SVCMessages.svc_HltvFixupOperatorStatus;
+    case 76:
+    case "svc_UserCmds":
+      return SVCMessages.svc_UserCmds;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum SVCMessages");
   }
@@ -314,12 +302,12 @@ export function sVCMessagesToJSON(object: SVCMessages): string {
       return "svc_RconServerDetails";
     case SVCMessages.svc_UserMessage:
       return "svc_UserMessage";
-    case SVCMessages.svc_HltvReplay:
-      return "svc_HltvReplay";
     case SVCMessages.svc_Broadcast_Command:
       return "svc_Broadcast_Command";
     case SVCMessages.svc_HltvFixupOperatorStatus:
       return "svc_HltvFixupOperatorStatus";
+    case SVCMessages.svc_UserCmds:
+      return "svc_UserCmds";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum SVCMessages");
   }
@@ -562,6 +550,7 @@ export enum BidirectionalMessages {
   bi_RebroadcastGameEvent = 16,
   bi_RebroadcastSource = 17,
   bi_GameEvent = 18,
+  bi_PredictionEvent = 19,
 }
 
 export function bidirectionalMessagesFromJSON(object: any): BidirectionalMessages {
@@ -575,6 +564,9 @@ export function bidirectionalMessagesFromJSON(object: any): BidirectionalMessage
     case 18:
     case "bi_GameEvent":
       return BidirectionalMessages.bi_GameEvent;
+    case 19:
+    case "bi_PredictionEvent":
+      return BidirectionalMessages.bi_PredictionEvent;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum BidirectionalMessages");
   }
@@ -588,6 +580,8 @@ export function bidirectionalMessagesToJSON(object: BidirectionalMessages): stri
       return "bi_RebroadcastSource";
     case BidirectionalMessages.bi_GameEvent:
       return "bi_GameEvent";
+    case BidirectionalMessages.bi_PredictionEvent:
+      return "bi_PredictionEvent";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum BidirectionalMessages");
   }
@@ -679,8 +673,7 @@ export interface CCLCMsgClientInfo {
 
 export interface CCLCMsgMove {
   data?: Buffer | undefined;
-  commandNumber?: number | undefined;
-  numCommands?: number | undefined;
+  lastCommandNumber?: number | undefined;
 }
 
 export interface CMsgVoiceAudio {
@@ -733,11 +726,6 @@ export interface CCLCMsgSplitPlayerConnect {
   playername?: string | undefined;
 }
 
-export interface CCLCMsgClientMessage {
-  msgType?: number | undefined;
-  data?: Buffer | undefined;
-}
-
 export interface CCLCMsgSplitPlayerDisconnect {
   slot?: number | undefined;
 }
@@ -757,6 +745,101 @@ export interface CCLCMsgCmdKeyValues {
 
 export interface CCLCMsgRconServerDetails {
   token?: Buffer | undefined;
+}
+
+export interface CMsgSource2SystemSpecs {
+  cpuId?: string | undefined;
+  cpuBrand?: string | undefined;
+  cpuModel?: number | undefined;
+  cpuNumPhysical?: number | undefined;
+  ramPhysicalTotalMb?: number | undefined;
+  gpuRendersystemDllName?: string | undefined;
+  gpuVendorId?: number | undefined;
+  gpuDriverName?: string | undefined;
+  gpuDriverVersionHigh?: number | undefined;
+  gpuDriverVersionLow?: number | undefined;
+  gpuDxSupportLevel?: number | undefined;
+  gpuTextureMemorySizeMb?: number | undefined;
+}
+
+export interface CMsgSource2VProfLiteReportItem {
+  name?: string | undefined;
+  activeSamples?: number | undefined;
+  activeSamples1secmax?: number | undefined;
+  usecMax?: number | undefined;
+  usecAvgActive?: number | undefined;
+  usecP50Active?: number | undefined;
+  usecP99Active?: number | undefined;
+  usecAvgAll?: number | undefined;
+  usecP50All?: number | undefined;
+  usecP99All?: number | undefined;
+  usec1secmaxAvgActive?: number | undefined;
+  usec1secmaxP50Active?: number | undefined;
+  usec1secmaxP95Active?: number | undefined;
+  usec1secmaxP99Active?: number | undefined;
+  usec1secmaxAvgAll?: number | undefined;
+  usec1secmaxP50All?: number | undefined;
+  usec1secmaxP95All?: number | undefined;
+  usec1secmaxP99All?: number | undefined;
+}
+
+export interface CMsgSource2VProfLiteReport {
+  total?: CMsgSource2VProfLiteReportItem | undefined;
+  items: CMsgSource2VProfLiteReportItem[];
+  discardedFrames?: number | undefined;
+}
+
+export interface CMsgSource2NetworkFlowQuality {
+  duration?: number | undefined;
+  bytesTotal?: string | undefined;
+  bytesTotalReliable?: string | undefined;
+  bytesTotalVoice?: string | undefined;
+  bytesSecP95?: number | undefined;
+  bytesSecP99?: number | undefined;
+  enginemsgsTotal?: number | undefined;
+  enginemsgsSecP95?: number | undefined;
+  enginemsgsSecP99?: number | undefined;
+  ticksTotal?: number | undefined;
+  ticksGood?: number | undefined;
+  ticksGoodAlmostLate?: number | undefined;
+  ticksFixedDropped?: number | undefined;
+  ticksFixedLate?: number | undefined;
+  ticksBadDropped?: number | undefined;
+  ticksBadLate?: number | undefined;
+  ticksBadOther?: number | undefined;
+  tickMissrateSamplesTotal?: number | undefined;
+  tickMissrateSamplesPerfect?: number | undefined;
+  tickMissrateSamplesPerfectnet?: number | undefined;
+  tickMissratenetP75X10?: number | undefined;
+  tickMissratenetP95X10?: number | undefined;
+  tickMissratenetP99X10?: number | undefined;
+  recvmarginP1?: number | undefined;
+  recvmarginP5?: number | undefined;
+  recvmarginP25?: number | undefined;
+  recvmarginP50?: number | undefined;
+  recvmarginP75?: number | undefined;
+  recvmarginP95?: number | undefined;
+}
+
+export interface CCLCMsgDiagnostic {
+  systemSpecs?: CMsgSource2SystemSpecs | undefined;
+  vprofReport?: CMsgSource2VProfLiteReport | undefined;
+}
+
+export interface CSource2MetricsMatchPerfSummaryNotification {
+  appid?: number | undefined;
+  gameMode?: string | undefined;
+  serverBuildId?: number | undefined;
+  serverProfile?: CMsgSource2VProfLiteReport | undefined;
+  clients: CSource2MetricsMatchPerfSummaryNotification_Client[];
+  map?: string | undefined;
+}
+
+export interface CSource2MetricsMatchPerfSummaryNotification_Client {
+  systemSpecs?: CMsgSource2SystemSpecs | undefined;
+  profile?: CMsgSource2VProfLiteReport | undefined;
+  buildId?: number | undefined;
+  steamid?: string | undefined;
 }
 
 export interface CSVCMsgServerInfo {
@@ -927,18 +1010,13 @@ export interface CSVCMsgPacketEntities {
   lastCmdNumberRecvDelta?: number | undefined;
   serverTick?: number | undefined;
   serializedEntities?: Buffer | undefined;
-  commandQueueInfo?: CSVCMsgPacketEntities_commandQueueInfoT | undefined;
   alternateBaselines: CSVCMsgPacketEntities_alternateBaselineT[];
-  hasPvsVisBits?: number | undefined;
-  lastCmdRecvMargin?: number | undefined;
+  hasPvsVisBitsDeprecated?: number | undefined;
+  cmdRecvStatus: number[];
   nonTransmittedEntities?: CSVCMsgPacketEntities_nonTransmittedEntitiesT | undefined;
+  cqStarvedCommandTicks?: number | undefined;
+  cqDiscardedCommandTicks?: number | undefined;
   devPadding?: Buffer | undefined;
-}
-
-export interface CSVCMsgPacketEntities_commandQueueInfoT {
-  commandsQueued?: number | undefined;
-  starvedCommandTicks?: number | undefined;
-  discardedCommandTicks?: number | undefined;
 }
 
 export interface CSVCMsgPacketEntities_alternateBaselineT {
@@ -1089,6 +1167,42 @@ export interface CBidirMsgRebroadcastSource {
   eventsource?: number | undefined;
 }
 
+export interface CBidirMsgPredictionEvent {
+  eventId: number;
+  eventData: Buffer;
+  syncType?: number | undefined;
+  syncValUint32?: number | undefined;
+}
+
+export enum CBidirMsgPredictionEvent_ESyncType {
+  ST_Tick = 0,
+  ST_UserCmdNum = 1,
+}
+
+export function cBidirMsgPredictionEvent_ESyncTypeFromJSON(object: any): CBidirMsgPredictionEvent_ESyncType {
+  switch (object) {
+    case 0:
+    case "ST_Tick":
+      return CBidirMsgPredictionEvent_ESyncType.ST_Tick;
+    case 1:
+    case "ST_UserCmdNum":
+      return CBidirMsgPredictionEvent_ESyncType.ST_UserCmdNum;
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum CBidirMsgPredictionEvent_ESyncType");
+  }
+}
+
+export function cBidirMsgPredictionEvent_ESyncTypeToJSON(object: CBidirMsgPredictionEvent_ESyncType): string {
+  switch (object) {
+    case CBidirMsgPredictionEvent_ESyncType.ST_Tick:
+      return "ST_Tick";
+    case CBidirMsgPredictionEvent_ESyncType.ST_UserCmdNum:
+      return "ST_UserCmdNum";
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum CBidirMsgPredictionEvent_ESyncType");
+  }
+}
+
 export interface CMsgServerNetworkStats {
   dedicated?: boolean | undefined;
   cpuUsage?: number | undefined;
@@ -1170,6 +1284,18 @@ export interface CCLCMsgHltvFixupOperatorTick {
 export interface CSVCMsgHltvFixupOperatorStatus {
   mode?: number | undefined;
   overrideOperatorName?: string | undefined;
+}
+
+export interface CMsgServerUserCmd {
+  data?: Buffer | undefined;
+  cmdNumber?: number | undefined;
+  playerSlot?: number | undefined;
+  serverTickExecuted?: number | undefined;
+  clientTick?: number | undefined;
+}
+
+export interface CSVCMsgUserCommands {
+  commands: CMsgServerUserCmd[];
 }
 
 function createBaseCCLCMsgClientInfo(): CCLCMsgClientInfo {
@@ -1292,7 +1418,7 @@ export const CCLCMsgClientInfo = {
 };
 
 function createBaseCCLCMsgMove(): CCLCMsgMove {
-  return { data: Buffer.alloc(0), commandNumber: 0, numCommands: 0 };
+  return { data: Buffer.alloc(0), lastCommandNumber: 0 };
 }
 
 export const CCLCMsgMove = {
@@ -1300,11 +1426,8 @@ export const CCLCMsgMove = {
     if (message.data !== undefined && message.data.length !== 0) {
       writer.uint32(26).bytes(message.data);
     }
-    if (message.commandNumber !== undefined && message.commandNumber !== 0) {
-      writer.uint32(32).uint32(message.commandNumber);
-    }
-    if (message.numCommands !== undefined && message.numCommands !== 0) {
-      writer.uint32(40).uint32(message.numCommands);
+    if (message.lastCommandNumber !== undefined && message.lastCommandNumber !== 0) {
+      writer.uint32(32).uint32(message.lastCommandNumber);
     }
     return writer;
   },
@@ -1328,14 +1451,7 @@ export const CCLCMsgMove = {
             break;
           }
 
-          message.commandNumber = reader.uint32();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
-
-          message.numCommands = reader.uint32();
+          message.lastCommandNumber = reader.uint32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1349,8 +1465,7 @@ export const CCLCMsgMove = {
   fromJSON(object: any): CCLCMsgMove {
     return {
       data: isSet(object.data) ? Buffer.from(bytesFromBase64(object.data)) : Buffer.alloc(0),
-      commandNumber: isSet(object.commandNumber) ? globalThis.Number(object.commandNumber) : 0,
-      numCommands: isSet(object.numCommands) ? globalThis.Number(object.numCommands) : 0,
+      lastCommandNumber: isSet(object.lastCommandNumber) ? globalThis.Number(object.lastCommandNumber) : 0,
     };
   },
 
@@ -1359,11 +1474,8 @@ export const CCLCMsgMove = {
     if (message.data !== undefined && message.data.length !== 0) {
       obj.data = base64FromBytes(message.data);
     }
-    if (message.commandNumber !== undefined && message.commandNumber !== 0) {
-      obj.commandNumber = Math.round(message.commandNumber);
-    }
-    if (message.numCommands !== undefined && message.numCommands !== 0) {
-      obj.numCommands = Math.round(message.numCommands);
+    if (message.lastCommandNumber !== undefined && message.lastCommandNumber !== 0) {
+      obj.lastCommandNumber = Math.round(message.lastCommandNumber);
     }
     return obj;
   },
@@ -1374,8 +1486,7 @@ export const CCLCMsgMove = {
   fromPartial(object: DeepPartial<CCLCMsgMove>): CCLCMsgMove {
     const message = createBaseCCLCMsgMove();
     message.data = object.data ?? Buffer.alloc(0);
-    message.commandNumber = object.commandNumber ?? 0;
-    message.numCommands = object.numCommands ?? 0;
+    message.lastCommandNumber = object.lastCommandNumber ?? 0;
     return message;
   },
 };
@@ -1667,8 +1778,9 @@ export const CCLCMsgVoiceData = {
   },
   fromPartial(object: DeepPartial<CCLCMsgVoiceData>): CCLCMsgVoiceData {
     const message = createBaseCCLCMsgVoiceData();
-    message.audio =
-      object.audio !== undefined && object.audio !== null ? CMsgVoiceAudio.fromPartial(object.audio) : undefined;
+    message.audio = (object.audio !== undefined && object.audio !== null)
+      ? CMsgVoiceAudio.fromPartial(object.audio)
+      : undefined;
     message.xuid = object.xuid ?? "0";
     message.tick = object.tick ?? 0;
     return message;
@@ -2159,80 +2271,6 @@ export const CCLCMsgSplitPlayerConnect = {
   },
 };
 
-function createBaseCCLCMsgClientMessage(): CCLCMsgClientMessage {
-  return { msgType: 0, data: Buffer.alloc(0) };
-}
-
-export const CCLCMsgClientMessage = {
-  encode(message: CCLCMsgClientMessage, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.msgType !== undefined && message.msgType !== 0) {
-      writer.uint32(8).int32(message.msgType);
-    }
-    if (message.data !== undefined && message.data.length !== 0) {
-      writer.uint32(18).bytes(message.data);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CCLCMsgClientMessage {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCCLCMsgClientMessage();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.msgType = reader.int32();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.data = reader.bytes() as Buffer;
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CCLCMsgClientMessage {
-    return {
-      msgType: isSet(object.msgType) ? globalThis.Number(object.msgType) : 0,
-      data: isSet(object.data) ? Buffer.from(bytesFromBase64(object.data)) : Buffer.alloc(0),
-    };
-  },
-
-  toJSON(message: CCLCMsgClientMessage): unknown {
-    const obj: any = {};
-    if (message.msgType !== undefined && message.msgType !== 0) {
-      obj.msgType = Math.round(message.msgType);
-    }
-    if (message.data !== undefined && message.data.length !== 0) {
-      obj.data = base64FromBytes(message.data);
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CCLCMsgClientMessage>): CCLCMsgClientMessage {
-    return CCLCMsgClientMessage.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CCLCMsgClientMessage>): CCLCMsgClientMessage {
-    const message = createBaseCCLCMsgClientMessage();
-    message.msgType = object.msgType ?? 0;
-    message.data = object.data ?? Buffer.alloc(0);
-    return message;
-  },
-};
-
 function createBaseCCLCMsgSplitPlayerDisconnect(): CCLCMsgSplitPlayerDisconnect {
   return { slot: 0 };
 }
@@ -2531,6 +2569,1524 @@ export const CCLCMsgRconServerDetails = {
   fromPartial(object: DeepPartial<CCLCMsgRconServerDetails>): CCLCMsgRconServerDetails {
     const message = createBaseCCLCMsgRconServerDetails();
     message.token = object.token ?? Buffer.alloc(0);
+    return message;
+  },
+};
+
+function createBaseCMsgSource2SystemSpecs(): CMsgSource2SystemSpecs {
+  return {
+    cpuId: "",
+    cpuBrand: "",
+    cpuModel: 0,
+    cpuNumPhysical: 0,
+    ramPhysicalTotalMb: 0,
+    gpuRendersystemDllName: "",
+    gpuVendorId: 0,
+    gpuDriverName: "",
+    gpuDriverVersionHigh: 0,
+    gpuDriverVersionLow: 0,
+    gpuDxSupportLevel: 0,
+    gpuTextureMemorySizeMb: 0,
+  };
+}
+
+export const CMsgSource2SystemSpecs = {
+  encode(message: CMsgSource2SystemSpecs, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.cpuId !== undefined && message.cpuId !== "") {
+      writer.uint32(10).string(message.cpuId);
+    }
+    if (message.cpuBrand !== undefined && message.cpuBrand !== "") {
+      writer.uint32(18).string(message.cpuBrand);
+    }
+    if (message.cpuModel !== undefined && message.cpuModel !== 0) {
+      writer.uint32(24).uint32(message.cpuModel);
+    }
+    if (message.cpuNumPhysical !== undefined && message.cpuNumPhysical !== 0) {
+      writer.uint32(32).uint32(message.cpuNumPhysical);
+    }
+    if (message.ramPhysicalTotalMb !== undefined && message.ramPhysicalTotalMb !== 0) {
+      writer.uint32(168).uint32(message.ramPhysicalTotalMb);
+    }
+    if (message.gpuRendersystemDllName !== undefined && message.gpuRendersystemDllName !== "") {
+      writer.uint32(330).string(message.gpuRendersystemDllName);
+    }
+    if (message.gpuVendorId !== undefined && message.gpuVendorId !== 0) {
+      writer.uint32(336).uint32(message.gpuVendorId);
+    }
+    if (message.gpuDriverName !== undefined && message.gpuDriverName !== "") {
+      writer.uint32(346).string(message.gpuDriverName);
+    }
+    if (message.gpuDriverVersionHigh !== undefined && message.gpuDriverVersionHigh !== 0) {
+      writer.uint32(352).uint32(message.gpuDriverVersionHigh);
+    }
+    if (message.gpuDriverVersionLow !== undefined && message.gpuDriverVersionLow !== 0) {
+      writer.uint32(360).uint32(message.gpuDriverVersionLow);
+    }
+    if (message.gpuDxSupportLevel !== undefined && message.gpuDxSupportLevel !== 0) {
+      writer.uint32(368).uint32(message.gpuDxSupportLevel);
+    }
+    if (message.gpuTextureMemorySizeMb !== undefined && message.gpuTextureMemorySizeMb !== 0) {
+      writer.uint32(376).uint32(message.gpuTextureMemorySizeMb);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSource2SystemSpecs {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSource2SystemSpecs();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.cpuId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.cpuBrand = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.cpuModel = reader.uint32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.cpuNumPhysical = reader.uint32();
+          continue;
+        case 21:
+          if (tag !== 168) {
+            break;
+          }
+
+          message.ramPhysicalTotalMb = reader.uint32();
+          continue;
+        case 41:
+          if (tag !== 330) {
+            break;
+          }
+
+          message.gpuRendersystemDllName = reader.string();
+          continue;
+        case 42:
+          if (tag !== 336) {
+            break;
+          }
+
+          message.gpuVendorId = reader.uint32();
+          continue;
+        case 43:
+          if (tag !== 346) {
+            break;
+          }
+
+          message.gpuDriverName = reader.string();
+          continue;
+        case 44:
+          if (tag !== 352) {
+            break;
+          }
+
+          message.gpuDriverVersionHigh = reader.uint32();
+          continue;
+        case 45:
+          if (tag !== 360) {
+            break;
+          }
+
+          message.gpuDriverVersionLow = reader.uint32();
+          continue;
+        case 46:
+          if (tag !== 368) {
+            break;
+          }
+
+          message.gpuDxSupportLevel = reader.uint32();
+          continue;
+        case 47:
+          if (tag !== 376) {
+            break;
+          }
+
+          message.gpuTextureMemorySizeMb = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSource2SystemSpecs {
+    return {
+      cpuId: isSet(object.cpuId) ? globalThis.String(object.cpuId) : "",
+      cpuBrand: isSet(object.cpuBrand) ? globalThis.String(object.cpuBrand) : "",
+      cpuModel: isSet(object.cpuModel) ? globalThis.Number(object.cpuModel) : 0,
+      cpuNumPhysical: isSet(object.cpuNumPhysical) ? globalThis.Number(object.cpuNumPhysical) : 0,
+      ramPhysicalTotalMb: isSet(object.ramPhysicalTotalMb) ? globalThis.Number(object.ramPhysicalTotalMb) : 0,
+      gpuRendersystemDllName: isSet(object.gpuRendersystemDllName)
+        ? globalThis.String(object.gpuRendersystemDllName)
+        : "",
+      gpuVendorId: isSet(object.gpuVendorId) ? globalThis.Number(object.gpuVendorId) : 0,
+      gpuDriverName: isSet(object.gpuDriverName) ? globalThis.String(object.gpuDriverName) : "",
+      gpuDriverVersionHigh: isSet(object.gpuDriverVersionHigh) ? globalThis.Number(object.gpuDriverVersionHigh) : 0,
+      gpuDriverVersionLow: isSet(object.gpuDriverVersionLow) ? globalThis.Number(object.gpuDriverVersionLow) : 0,
+      gpuDxSupportLevel: isSet(object.gpuDxSupportLevel) ? globalThis.Number(object.gpuDxSupportLevel) : 0,
+      gpuTextureMemorySizeMb: isSet(object.gpuTextureMemorySizeMb)
+        ? globalThis.Number(object.gpuTextureMemorySizeMb)
+        : 0,
+    };
+  },
+
+  toJSON(message: CMsgSource2SystemSpecs): unknown {
+    const obj: any = {};
+    if (message.cpuId !== undefined && message.cpuId !== "") {
+      obj.cpuId = message.cpuId;
+    }
+    if (message.cpuBrand !== undefined && message.cpuBrand !== "") {
+      obj.cpuBrand = message.cpuBrand;
+    }
+    if (message.cpuModel !== undefined && message.cpuModel !== 0) {
+      obj.cpuModel = Math.round(message.cpuModel);
+    }
+    if (message.cpuNumPhysical !== undefined && message.cpuNumPhysical !== 0) {
+      obj.cpuNumPhysical = Math.round(message.cpuNumPhysical);
+    }
+    if (message.ramPhysicalTotalMb !== undefined && message.ramPhysicalTotalMb !== 0) {
+      obj.ramPhysicalTotalMb = Math.round(message.ramPhysicalTotalMb);
+    }
+    if (message.gpuRendersystemDllName !== undefined && message.gpuRendersystemDllName !== "") {
+      obj.gpuRendersystemDllName = message.gpuRendersystemDllName;
+    }
+    if (message.gpuVendorId !== undefined && message.gpuVendorId !== 0) {
+      obj.gpuVendorId = Math.round(message.gpuVendorId);
+    }
+    if (message.gpuDriverName !== undefined && message.gpuDriverName !== "") {
+      obj.gpuDriverName = message.gpuDriverName;
+    }
+    if (message.gpuDriverVersionHigh !== undefined && message.gpuDriverVersionHigh !== 0) {
+      obj.gpuDriverVersionHigh = Math.round(message.gpuDriverVersionHigh);
+    }
+    if (message.gpuDriverVersionLow !== undefined && message.gpuDriverVersionLow !== 0) {
+      obj.gpuDriverVersionLow = Math.round(message.gpuDriverVersionLow);
+    }
+    if (message.gpuDxSupportLevel !== undefined && message.gpuDxSupportLevel !== 0) {
+      obj.gpuDxSupportLevel = Math.round(message.gpuDxSupportLevel);
+    }
+    if (message.gpuTextureMemorySizeMb !== undefined && message.gpuTextureMemorySizeMb !== 0) {
+      obj.gpuTextureMemorySizeMb = Math.round(message.gpuTextureMemorySizeMb);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSource2SystemSpecs>): CMsgSource2SystemSpecs {
+    return CMsgSource2SystemSpecs.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSource2SystemSpecs>): CMsgSource2SystemSpecs {
+    const message = createBaseCMsgSource2SystemSpecs();
+    message.cpuId = object.cpuId ?? "";
+    message.cpuBrand = object.cpuBrand ?? "";
+    message.cpuModel = object.cpuModel ?? 0;
+    message.cpuNumPhysical = object.cpuNumPhysical ?? 0;
+    message.ramPhysicalTotalMb = object.ramPhysicalTotalMb ?? 0;
+    message.gpuRendersystemDllName = object.gpuRendersystemDllName ?? "";
+    message.gpuVendorId = object.gpuVendorId ?? 0;
+    message.gpuDriverName = object.gpuDriverName ?? "";
+    message.gpuDriverVersionHigh = object.gpuDriverVersionHigh ?? 0;
+    message.gpuDriverVersionLow = object.gpuDriverVersionLow ?? 0;
+    message.gpuDxSupportLevel = object.gpuDxSupportLevel ?? 0;
+    message.gpuTextureMemorySizeMb = object.gpuTextureMemorySizeMb ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgSource2VProfLiteReportItem(): CMsgSource2VProfLiteReportItem {
+  return {
+    name: "",
+    activeSamples: 0,
+    activeSamples1secmax: 0,
+    usecMax: 0,
+    usecAvgActive: 0,
+    usecP50Active: 0,
+    usecP99Active: 0,
+    usecAvgAll: 0,
+    usecP50All: 0,
+    usecP99All: 0,
+    usec1secmaxAvgActive: 0,
+    usec1secmaxP50Active: 0,
+    usec1secmaxP95Active: 0,
+    usec1secmaxP99Active: 0,
+    usec1secmaxAvgAll: 0,
+    usec1secmaxP50All: 0,
+    usec1secmaxP95All: 0,
+    usec1secmaxP99All: 0,
+  };
+}
+
+export const CMsgSource2VProfLiteReportItem = {
+  encode(message: CMsgSource2VProfLiteReportItem, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.name !== undefined && message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.activeSamples !== undefined && message.activeSamples !== 0) {
+      writer.uint32(16).uint32(message.activeSamples);
+    }
+    if (message.activeSamples1secmax !== undefined && message.activeSamples1secmax !== 0) {
+      writer.uint32(32).uint32(message.activeSamples1secmax);
+    }
+    if (message.usecMax !== undefined && message.usecMax !== 0) {
+      writer.uint32(24).uint32(message.usecMax);
+    }
+    if (message.usecAvgActive !== undefined && message.usecAvgActive !== 0) {
+      writer.uint32(88).uint32(message.usecAvgActive);
+    }
+    if (message.usecP50Active !== undefined && message.usecP50Active !== 0) {
+      writer.uint32(96).uint32(message.usecP50Active);
+    }
+    if (message.usecP99Active !== undefined && message.usecP99Active !== 0) {
+      writer.uint32(104).uint32(message.usecP99Active);
+    }
+    if (message.usecAvgAll !== undefined && message.usecAvgAll !== 0) {
+      writer.uint32(168).uint32(message.usecAvgAll);
+    }
+    if (message.usecP50All !== undefined && message.usecP50All !== 0) {
+      writer.uint32(176).uint32(message.usecP50All);
+    }
+    if (message.usecP99All !== undefined && message.usecP99All !== 0) {
+      writer.uint32(184).uint32(message.usecP99All);
+    }
+    if (message.usec1secmaxAvgActive !== undefined && message.usec1secmaxAvgActive !== 0) {
+      writer.uint32(248).uint32(message.usec1secmaxAvgActive);
+    }
+    if (message.usec1secmaxP50Active !== undefined && message.usec1secmaxP50Active !== 0) {
+      writer.uint32(256).uint32(message.usec1secmaxP50Active);
+    }
+    if (message.usec1secmaxP95Active !== undefined && message.usec1secmaxP95Active !== 0) {
+      writer.uint32(264).uint32(message.usec1secmaxP95Active);
+    }
+    if (message.usec1secmaxP99Active !== undefined && message.usec1secmaxP99Active !== 0) {
+      writer.uint32(272).uint32(message.usec1secmaxP99Active);
+    }
+    if (message.usec1secmaxAvgAll !== undefined && message.usec1secmaxAvgAll !== 0) {
+      writer.uint32(328).uint32(message.usec1secmaxAvgAll);
+    }
+    if (message.usec1secmaxP50All !== undefined && message.usec1secmaxP50All !== 0) {
+      writer.uint32(336).uint32(message.usec1secmaxP50All);
+    }
+    if (message.usec1secmaxP95All !== undefined && message.usec1secmaxP95All !== 0) {
+      writer.uint32(344).uint32(message.usec1secmaxP95All);
+    }
+    if (message.usec1secmaxP99All !== undefined && message.usec1secmaxP99All !== 0) {
+      writer.uint32(352).uint32(message.usec1secmaxP99All);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSource2VProfLiteReportItem {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSource2VProfLiteReportItem();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.activeSamples = reader.uint32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.activeSamples1secmax = reader.uint32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.usecMax = reader.uint32();
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.usecAvgActive = reader.uint32();
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.usecP50Active = reader.uint32();
+          continue;
+        case 13:
+          if (tag !== 104) {
+            break;
+          }
+
+          message.usecP99Active = reader.uint32();
+          continue;
+        case 21:
+          if (tag !== 168) {
+            break;
+          }
+
+          message.usecAvgAll = reader.uint32();
+          continue;
+        case 22:
+          if (tag !== 176) {
+            break;
+          }
+
+          message.usecP50All = reader.uint32();
+          continue;
+        case 23:
+          if (tag !== 184) {
+            break;
+          }
+
+          message.usecP99All = reader.uint32();
+          continue;
+        case 31:
+          if (tag !== 248) {
+            break;
+          }
+
+          message.usec1secmaxAvgActive = reader.uint32();
+          continue;
+        case 32:
+          if (tag !== 256) {
+            break;
+          }
+
+          message.usec1secmaxP50Active = reader.uint32();
+          continue;
+        case 33:
+          if (tag !== 264) {
+            break;
+          }
+
+          message.usec1secmaxP95Active = reader.uint32();
+          continue;
+        case 34:
+          if (tag !== 272) {
+            break;
+          }
+
+          message.usec1secmaxP99Active = reader.uint32();
+          continue;
+        case 41:
+          if (tag !== 328) {
+            break;
+          }
+
+          message.usec1secmaxAvgAll = reader.uint32();
+          continue;
+        case 42:
+          if (tag !== 336) {
+            break;
+          }
+
+          message.usec1secmaxP50All = reader.uint32();
+          continue;
+        case 43:
+          if (tag !== 344) {
+            break;
+          }
+
+          message.usec1secmaxP95All = reader.uint32();
+          continue;
+        case 44:
+          if (tag !== 352) {
+            break;
+          }
+
+          message.usec1secmaxP99All = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSource2VProfLiteReportItem {
+    return {
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      activeSamples: isSet(object.activeSamples) ? globalThis.Number(object.activeSamples) : 0,
+      activeSamples1secmax: isSet(object.activeSamples1secmax) ? globalThis.Number(object.activeSamples1secmax) : 0,
+      usecMax: isSet(object.usecMax) ? globalThis.Number(object.usecMax) : 0,
+      usecAvgActive: isSet(object.usecAvgActive) ? globalThis.Number(object.usecAvgActive) : 0,
+      usecP50Active: isSet(object.usecP50Active) ? globalThis.Number(object.usecP50Active) : 0,
+      usecP99Active: isSet(object.usecP99Active) ? globalThis.Number(object.usecP99Active) : 0,
+      usecAvgAll: isSet(object.usecAvgAll) ? globalThis.Number(object.usecAvgAll) : 0,
+      usecP50All: isSet(object.usecP50All) ? globalThis.Number(object.usecP50All) : 0,
+      usecP99All: isSet(object.usecP99All) ? globalThis.Number(object.usecP99All) : 0,
+      usec1secmaxAvgActive: isSet(object.usec1secmaxAvgActive) ? globalThis.Number(object.usec1secmaxAvgActive) : 0,
+      usec1secmaxP50Active: isSet(object.usec1secmaxP50Active) ? globalThis.Number(object.usec1secmaxP50Active) : 0,
+      usec1secmaxP95Active: isSet(object.usec1secmaxP95Active) ? globalThis.Number(object.usec1secmaxP95Active) : 0,
+      usec1secmaxP99Active: isSet(object.usec1secmaxP99Active) ? globalThis.Number(object.usec1secmaxP99Active) : 0,
+      usec1secmaxAvgAll: isSet(object.usec1secmaxAvgAll) ? globalThis.Number(object.usec1secmaxAvgAll) : 0,
+      usec1secmaxP50All: isSet(object.usec1secmaxP50All) ? globalThis.Number(object.usec1secmaxP50All) : 0,
+      usec1secmaxP95All: isSet(object.usec1secmaxP95All) ? globalThis.Number(object.usec1secmaxP95All) : 0,
+      usec1secmaxP99All: isSet(object.usec1secmaxP99All) ? globalThis.Number(object.usec1secmaxP99All) : 0,
+    };
+  },
+
+  toJSON(message: CMsgSource2VProfLiteReportItem): unknown {
+    const obj: any = {};
+    if (message.name !== undefined && message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.activeSamples !== undefined && message.activeSamples !== 0) {
+      obj.activeSamples = Math.round(message.activeSamples);
+    }
+    if (message.activeSamples1secmax !== undefined && message.activeSamples1secmax !== 0) {
+      obj.activeSamples1secmax = Math.round(message.activeSamples1secmax);
+    }
+    if (message.usecMax !== undefined && message.usecMax !== 0) {
+      obj.usecMax = Math.round(message.usecMax);
+    }
+    if (message.usecAvgActive !== undefined && message.usecAvgActive !== 0) {
+      obj.usecAvgActive = Math.round(message.usecAvgActive);
+    }
+    if (message.usecP50Active !== undefined && message.usecP50Active !== 0) {
+      obj.usecP50Active = Math.round(message.usecP50Active);
+    }
+    if (message.usecP99Active !== undefined && message.usecP99Active !== 0) {
+      obj.usecP99Active = Math.round(message.usecP99Active);
+    }
+    if (message.usecAvgAll !== undefined && message.usecAvgAll !== 0) {
+      obj.usecAvgAll = Math.round(message.usecAvgAll);
+    }
+    if (message.usecP50All !== undefined && message.usecP50All !== 0) {
+      obj.usecP50All = Math.round(message.usecP50All);
+    }
+    if (message.usecP99All !== undefined && message.usecP99All !== 0) {
+      obj.usecP99All = Math.round(message.usecP99All);
+    }
+    if (message.usec1secmaxAvgActive !== undefined && message.usec1secmaxAvgActive !== 0) {
+      obj.usec1secmaxAvgActive = Math.round(message.usec1secmaxAvgActive);
+    }
+    if (message.usec1secmaxP50Active !== undefined && message.usec1secmaxP50Active !== 0) {
+      obj.usec1secmaxP50Active = Math.round(message.usec1secmaxP50Active);
+    }
+    if (message.usec1secmaxP95Active !== undefined && message.usec1secmaxP95Active !== 0) {
+      obj.usec1secmaxP95Active = Math.round(message.usec1secmaxP95Active);
+    }
+    if (message.usec1secmaxP99Active !== undefined && message.usec1secmaxP99Active !== 0) {
+      obj.usec1secmaxP99Active = Math.round(message.usec1secmaxP99Active);
+    }
+    if (message.usec1secmaxAvgAll !== undefined && message.usec1secmaxAvgAll !== 0) {
+      obj.usec1secmaxAvgAll = Math.round(message.usec1secmaxAvgAll);
+    }
+    if (message.usec1secmaxP50All !== undefined && message.usec1secmaxP50All !== 0) {
+      obj.usec1secmaxP50All = Math.round(message.usec1secmaxP50All);
+    }
+    if (message.usec1secmaxP95All !== undefined && message.usec1secmaxP95All !== 0) {
+      obj.usec1secmaxP95All = Math.round(message.usec1secmaxP95All);
+    }
+    if (message.usec1secmaxP99All !== undefined && message.usec1secmaxP99All !== 0) {
+      obj.usec1secmaxP99All = Math.round(message.usec1secmaxP99All);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSource2VProfLiteReportItem>): CMsgSource2VProfLiteReportItem {
+    return CMsgSource2VProfLiteReportItem.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSource2VProfLiteReportItem>): CMsgSource2VProfLiteReportItem {
+    const message = createBaseCMsgSource2VProfLiteReportItem();
+    message.name = object.name ?? "";
+    message.activeSamples = object.activeSamples ?? 0;
+    message.activeSamples1secmax = object.activeSamples1secmax ?? 0;
+    message.usecMax = object.usecMax ?? 0;
+    message.usecAvgActive = object.usecAvgActive ?? 0;
+    message.usecP50Active = object.usecP50Active ?? 0;
+    message.usecP99Active = object.usecP99Active ?? 0;
+    message.usecAvgAll = object.usecAvgAll ?? 0;
+    message.usecP50All = object.usecP50All ?? 0;
+    message.usecP99All = object.usecP99All ?? 0;
+    message.usec1secmaxAvgActive = object.usec1secmaxAvgActive ?? 0;
+    message.usec1secmaxP50Active = object.usec1secmaxP50Active ?? 0;
+    message.usec1secmaxP95Active = object.usec1secmaxP95Active ?? 0;
+    message.usec1secmaxP99Active = object.usec1secmaxP99Active ?? 0;
+    message.usec1secmaxAvgAll = object.usec1secmaxAvgAll ?? 0;
+    message.usec1secmaxP50All = object.usec1secmaxP50All ?? 0;
+    message.usec1secmaxP95All = object.usec1secmaxP95All ?? 0;
+    message.usec1secmaxP99All = object.usec1secmaxP99All ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgSource2VProfLiteReport(): CMsgSource2VProfLiteReport {
+  return { total: undefined, items: [], discardedFrames: 0 };
+}
+
+export const CMsgSource2VProfLiteReport = {
+  encode(message: CMsgSource2VProfLiteReport, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.total !== undefined) {
+      CMsgSource2VProfLiteReportItem.encode(message.total, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.items) {
+      CMsgSource2VProfLiteReportItem.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.discardedFrames !== undefined && message.discardedFrames !== 0) {
+      writer.uint32(24).uint32(message.discardedFrames);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSource2VProfLiteReport {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSource2VProfLiteReport();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.total = CMsgSource2VProfLiteReportItem.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.items.push(CMsgSource2VProfLiteReportItem.decode(reader, reader.uint32()));
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.discardedFrames = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSource2VProfLiteReport {
+    return {
+      total: isSet(object.total) ? CMsgSource2VProfLiteReportItem.fromJSON(object.total) : undefined,
+      items: globalThis.Array.isArray(object?.items)
+        ? object.items.map((e: any) => CMsgSource2VProfLiteReportItem.fromJSON(e))
+        : [],
+      discardedFrames: isSet(object.discardedFrames) ? globalThis.Number(object.discardedFrames) : 0,
+    };
+  },
+
+  toJSON(message: CMsgSource2VProfLiteReport): unknown {
+    const obj: any = {};
+    if (message.total !== undefined) {
+      obj.total = CMsgSource2VProfLiteReportItem.toJSON(message.total);
+    }
+    if (message.items?.length) {
+      obj.items = message.items.map((e) => CMsgSource2VProfLiteReportItem.toJSON(e));
+    }
+    if (message.discardedFrames !== undefined && message.discardedFrames !== 0) {
+      obj.discardedFrames = Math.round(message.discardedFrames);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSource2VProfLiteReport>): CMsgSource2VProfLiteReport {
+    return CMsgSource2VProfLiteReport.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSource2VProfLiteReport>): CMsgSource2VProfLiteReport {
+    const message = createBaseCMsgSource2VProfLiteReport();
+    message.total = (object.total !== undefined && object.total !== null)
+      ? CMsgSource2VProfLiteReportItem.fromPartial(object.total)
+      : undefined;
+    message.items = object.items?.map((e) => CMsgSource2VProfLiteReportItem.fromPartial(e)) || [];
+    message.discardedFrames = object.discardedFrames ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgSource2NetworkFlowQuality(): CMsgSource2NetworkFlowQuality {
+  return {
+    duration: 0,
+    bytesTotal: "0",
+    bytesTotalReliable: "0",
+    bytesTotalVoice: "0",
+    bytesSecP95: 0,
+    bytesSecP99: 0,
+    enginemsgsTotal: 0,
+    enginemsgsSecP95: 0,
+    enginemsgsSecP99: 0,
+    ticksTotal: 0,
+    ticksGood: 0,
+    ticksGoodAlmostLate: 0,
+    ticksFixedDropped: 0,
+    ticksFixedLate: 0,
+    ticksBadDropped: 0,
+    ticksBadLate: 0,
+    ticksBadOther: 0,
+    tickMissrateSamplesTotal: 0,
+    tickMissrateSamplesPerfect: 0,
+    tickMissrateSamplesPerfectnet: 0,
+    tickMissratenetP75X10: 0,
+    tickMissratenetP95X10: 0,
+    tickMissratenetP99X10: 0,
+    recvmarginP1: 0,
+    recvmarginP5: 0,
+    recvmarginP25: 0,
+    recvmarginP50: 0,
+    recvmarginP75: 0,
+    recvmarginP95: 0,
+  };
+}
+
+export const CMsgSource2NetworkFlowQuality = {
+  encode(message: CMsgSource2NetworkFlowQuality, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.duration !== undefined && message.duration !== 0) {
+      writer.uint32(8).uint32(message.duration);
+    }
+    if (message.bytesTotal !== undefined && message.bytesTotal !== "0") {
+      writer.uint32(40).uint64(message.bytesTotal);
+    }
+    if (message.bytesTotalReliable !== undefined && message.bytesTotalReliable !== "0") {
+      writer.uint32(48).uint64(message.bytesTotalReliable);
+    }
+    if (message.bytesTotalVoice !== undefined && message.bytesTotalVoice !== "0") {
+      writer.uint32(56).uint64(message.bytesTotalVoice);
+    }
+    if (message.bytesSecP95 !== undefined && message.bytesSecP95 !== 0) {
+      writer.uint32(80).uint32(message.bytesSecP95);
+    }
+    if (message.bytesSecP99 !== undefined && message.bytesSecP99 !== 0) {
+      writer.uint32(88).uint32(message.bytesSecP99);
+    }
+    if (message.enginemsgsTotal !== undefined && message.enginemsgsTotal !== 0) {
+      writer.uint32(160).uint32(message.enginemsgsTotal);
+    }
+    if (message.enginemsgsSecP95 !== undefined && message.enginemsgsSecP95 !== 0) {
+      writer.uint32(168).uint32(message.enginemsgsSecP95);
+    }
+    if (message.enginemsgsSecP99 !== undefined && message.enginemsgsSecP99 !== 0) {
+      writer.uint32(176).uint32(message.enginemsgsSecP99);
+    }
+    if (message.ticksTotal !== undefined && message.ticksTotal !== 0) {
+      writer.uint32(320).uint32(message.ticksTotal);
+    }
+    if (message.ticksGood !== undefined && message.ticksGood !== 0) {
+      writer.uint32(328).uint32(message.ticksGood);
+    }
+    if (message.ticksGoodAlmostLate !== undefined && message.ticksGoodAlmostLate !== 0) {
+      writer.uint32(336).uint32(message.ticksGoodAlmostLate);
+    }
+    if (message.ticksFixedDropped !== undefined && message.ticksFixedDropped !== 0) {
+      writer.uint32(344).uint32(message.ticksFixedDropped);
+    }
+    if (message.ticksFixedLate !== undefined && message.ticksFixedLate !== 0) {
+      writer.uint32(352).uint32(message.ticksFixedLate);
+    }
+    if (message.ticksBadDropped !== undefined && message.ticksBadDropped !== 0) {
+      writer.uint32(360).uint32(message.ticksBadDropped);
+    }
+    if (message.ticksBadLate !== undefined && message.ticksBadLate !== 0) {
+      writer.uint32(368).uint32(message.ticksBadLate);
+    }
+    if (message.ticksBadOther !== undefined && message.ticksBadOther !== 0) {
+      writer.uint32(376).uint32(message.ticksBadOther);
+    }
+    if (message.tickMissrateSamplesTotal !== undefined && message.tickMissrateSamplesTotal !== 0) {
+      writer.uint32(400).uint32(message.tickMissrateSamplesTotal);
+    }
+    if (message.tickMissrateSamplesPerfect !== undefined && message.tickMissrateSamplesPerfect !== 0) {
+      writer.uint32(408).uint32(message.tickMissrateSamplesPerfect);
+    }
+    if (message.tickMissrateSamplesPerfectnet !== undefined && message.tickMissrateSamplesPerfectnet !== 0) {
+      writer.uint32(416).uint32(message.tickMissrateSamplesPerfectnet);
+    }
+    if (message.tickMissratenetP75X10 !== undefined && message.tickMissratenetP75X10 !== 0) {
+      writer.uint32(424).uint32(message.tickMissratenetP75X10);
+    }
+    if (message.tickMissratenetP95X10 !== undefined && message.tickMissratenetP95X10 !== 0) {
+      writer.uint32(432).uint32(message.tickMissratenetP95X10);
+    }
+    if (message.tickMissratenetP99X10 !== undefined && message.tickMissratenetP99X10 !== 0) {
+      writer.uint32(440).uint32(message.tickMissratenetP99X10);
+    }
+    if (message.recvmarginP1 !== undefined && message.recvmarginP1 !== 0) {
+      writer.uint32(488).sint32(message.recvmarginP1);
+    }
+    if (message.recvmarginP5 !== undefined && message.recvmarginP5 !== 0) {
+      writer.uint32(496).sint32(message.recvmarginP5);
+    }
+    if (message.recvmarginP25 !== undefined && message.recvmarginP25 !== 0) {
+      writer.uint32(504).sint32(message.recvmarginP25);
+    }
+    if (message.recvmarginP50 !== undefined && message.recvmarginP50 !== 0) {
+      writer.uint32(512).sint32(message.recvmarginP50);
+    }
+    if (message.recvmarginP75 !== undefined && message.recvmarginP75 !== 0) {
+      writer.uint32(520).sint32(message.recvmarginP75);
+    }
+    if (message.recvmarginP95 !== undefined && message.recvmarginP95 !== 0) {
+      writer.uint32(528).sint32(message.recvmarginP95);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSource2NetworkFlowQuality {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSource2NetworkFlowQuality();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.duration = reader.uint32();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.bytesTotal = longToString(reader.uint64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.bytesTotalReliable = longToString(reader.uint64() as Long);
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.bytesTotalVoice = longToString(reader.uint64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.bytesSecP95 = reader.uint32();
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.bytesSecP99 = reader.uint32();
+          continue;
+        case 20:
+          if (tag !== 160) {
+            break;
+          }
+
+          message.enginemsgsTotal = reader.uint32();
+          continue;
+        case 21:
+          if (tag !== 168) {
+            break;
+          }
+
+          message.enginemsgsSecP95 = reader.uint32();
+          continue;
+        case 22:
+          if (tag !== 176) {
+            break;
+          }
+
+          message.enginemsgsSecP99 = reader.uint32();
+          continue;
+        case 40:
+          if (tag !== 320) {
+            break;
+          }
+
+          message.ticksTotal = reader.uint32();
+          continue;
+        case 41:
+          if (tag !== 328) {
+            break;
+          }
+
+          message.ticksGood = reader.uint32();
+          continue;
+        case 42:
+          if (tag !== 336) {
+            break;
+          }
+
+          message.ticksGoodAlmostLate = reader.uint32();
+          continue;
+        case 43:
+          if (tag !== 344) {
+            break;
+          }
+
+          message.ticksFixedDropped = reader.uint32();
+          continue;
+        case 44:
+          if (tag !== 352) {
+            break;
+          }
+
+          message.ticksFixedLate = reader.uint32();
+          continue;
+        case 45:
+          if (tag !== 360) {
+            break;
+          }
+
+          message.ticksBadDropped = reader.uint32();
+          continue;
+        case 46:
+          if (tag !== 368) {
+            break;
+          }
+
+          message.ticksBadLate = reader.uint32();
+          continue;
+        case 47:
+          if (tag !== 376) {
+            break;
+          }
+
+          message.ticksBadOther = reader.uint32();
+          continue;
+        case 50:
+          if (tag !== 400) {
+            break;
+          }
+
+          message.tickMissrateSamplesTotal = reader.uint32();
+          continue;
+        case 51:
+          if (tag !== 408) {
+            break;
+          }
+
+          message.tickMissrateSamplesPerfect = reader.uint32();
+          continue;
+        case 52:
+          if (tag !== 416) {
+            break;
+          }
+
+          message.tickMissrateSamplesPerfectnet = reader.uint32();
+          continue;
+        case 53:
+          if (tag !== 424) {
+            break;
+          }
+
+          message.tickMissratenetP75X10 = reader.uint32();
+          continue;
+        case 54:
+          if (tag !== 432) {
+            break;
+          }
+
+          message.tickMissratenetP95X10 = reader.uint32();
+          continue;
+        case 55:
+          if (tag !== 440) {
+            break;
+          }
+
+          message.tickMissratenetP99X10 = reader.uint32();
+          continue;
+        case 61:
+          if (tag !== 488) {
+            break;
+          }
+
+          message.recvmarginP1 = reader.sint32();
+          continue;
+        case 62:
+          if (tag !== 496) {
+            break;
+          }
+
+          message.recvmarginP5 = reader.sint32();
+          continue;
+        case 63:
+          if (tag !== 504) {
+            break;
+          }
+
+          message.recvmarginP25 = reader.sint32();
+          continue;
+        case 64:
+          if (tag !== 512) {
+            break;
+          }
+
+          message.recvmarginP50 = reader.sint32();
+          continue;
+        case 65:
+          if (tag !== 520) {
+            break;
+          }
+
+          message.recvmarginP75 = reader.sint32();
+          continue;
+        case 66:
+          if (tag !== 528) {
+            break;
+          }
+
+          message.recvmarginP95 = reader.sint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSource2NetworkFlowQuality {
+    return {
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
+      bytesTotal: isSet(object.bytesTotal) ? globalThis.String(object.bytesTotal) : "0",
+      bytesTotalReliable: isSet(object.bytesTotalReliable) ? globalThis.String(object.bytesTotalReliable) : "0",
+      bytesTotalVoice: isSet(object.bytesTotalVoice) ? globalThis.String(object.bytesTotalVoice) : "0",
+      bytesSecP95: isSet(object.bytesSecP95) ? globalThis.Number(object.bytesSecP95) : 0,
+      bytesSecP99: isSet(object.bytesSecP99) ? globalThis.Number(object.bytesSecP99) : 0,
+      enginemsgsTotal: isSet(object.enginemsgsTotal) ? globalThis.Number(object.enginemsgsTotal) : 0,
+      enginemsgsSecP95: isSet(object.enginemsgsSecP95) ? globalThis.Number(object.enginemsgsSecP95) : 0,
+      enginemsgsSecP99: isSet(object.enginemsgsSecP99) ? globalThis.Number(object.enginemsgsSecP99) : 0,
+      ticksTotal: isSet(object.ticksTotal) ? globalThis.Number(object.ticksTotal) : 0,
+      ticksGood: isSet(object.ticksGood) ? globalThis.Number(object.ticksGood) : 0,
+      ticksGoodAlmostLate: isSet(object.ticksGoodAlmostLate) ? globalThis.Number(object.ticksGoodAlmostLate) : 0,
+      ticksFixedDropped: isSet(object.ticksFixedDropped) ? globalThis.Number(object.ticksFixedDropped) : 0,
+      ticksFixedLate: isSet(object.ticksFixedLate) ? globalThis.Number(object.ticksFixedLate) : 0,
+      ticksBadDropped: isSet(object.ticksBadDropped) ? globalThis.Number(object.ticksBadDropped) : 0,
+      ticksBadLate: isSet(object.ticksBadLate) ? globalThis.Number(object.ticksBadLate) : 0,
+      ticksBadOther: isSet(object.ticksBadOther) ? globalThis.Number(object.ticksBadOther) : 0,
+      tickMissrateSamplesTotal: isSet(object.tickMissrateSamplesTotal)
+        ? globalThis.Number(object.tickMissrateSamplesTotal)
+        : 0,
+      tickMissrateSamplesPerfect: isSet(object.tickMissrateSamplesPerfect)
+        ? globalThis.Number(object.tickMissrateSamplesPerfect)
+        : 0,
+      tickMissrateSamplesPerfectnet: isSet(object.tickMissrateSamplesPerfectnet)
+        ? globalThis.Number(object.tickMissrateSamplesPerfectnet)
+        : 0,
+      tickMissratenetP75X10: isSet(object.tickMissratenetP75X10) ? globalThis.Number(object.tickMissratenetP75X10) : 0,
+      tickMissratenetP95X10: isSet(object.tickMissratenetP95X10) ? globalThis.Number(object.tickMissratenetP95X10) : 0,
+      tickMissratenetP99X10: isSet(object.tickMissratenetP99X10) ? globalThis.Number(object.tickMissratenetP99X10) : 0,
+      recvmarginP1: isSet(object.recvmarginP1) ? globalThis.Number(object.recvmarginP1) : 0,
+      recvmarginP5: isSet(object.recvmarginP5) ? globalThis.Number(object.recvmarginP5) : 0,
+      recvmarginP25: isSet(object.recvmarginP25) ? globalThis.Number(object.recvmarginP25) : 0,
+      recvmarginP50: isSet(object.recvmarginP50) ? globalThis.Number(object.recvmarginP50) : 0,
+      recvmarginP75: isSet(object.recvmarginP75) ? globalThis.Number(object.recvmarginP75) : 0,
+      recvmarginP95: isSet(object.recvmarginP95) ? globalThis.Number(object.recvmarginP95) : 0,
+    };
+  },
+
+  toJSON(message: CMsgSource2NetworkFlowQuality): unknown {
+    const obj: any = {};
+    if (message.duration !== undefined && message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
+    }
+    if (message.bytesTotal !== undefined && message.bytesTotal !== "0") {
+      obj.bytesTotal = message.bytesTotal;
+    }
+    if (message.bytesTotalReliable !== undefined && message.bytesTotalReliable !== "0") {
+      obj.bytesTotalReliable = message.bytesTotalReliable;
+    }
+    if (message.bytesTotalVoice !== undefined && message.bytesTotalVoice !== "0") {
+      obj.bytesTotalVoice = message.bytesTotalVoice;
+    }
+    if (message.bytesSecP95 !== undefined && message.bytesSecP95 !== 0) {
+      obj.bytesSecP95 = Math.round(message.bytesSecP95);
+    }
+    if (message.bytesSecP99 !== undefined && message.bytesSecP99 !== 0) {
+      obj.bytesSecP99 = Math.round(message.bytesSecP99);
+    }
+    if (message.enginemsgsTotal !== undefined && message.enginemsgsTotal !== 0) {
+      obj.enginemsgsTotal = Math.round(message.enginemsgsTotal);
+    }
+    if (message.enginemsgsSecP95 !== undefined && message.enginemsgsSecP95 !== 0) {
+      obj.enginemsgsSecP95 = Math.round(message.enginemsgsSecP95);
+    }
+    if (message.enginemsgsSecP99 !== undefined && message.enginemsgsSecP99 !== 0) {
+      obj.enginemsgsSecP99 = Math.round(message.enginemsgsSecP99);
+    }
+    if (message.ticksTotal !== undefined && message.ticksTotal !== 0) {
+      obj.ticksTotal = Math.round(message.ticksTotal);
+    }
+    if (message.ticksGood !== undefined && message.ticksGood !== 0) {
+      obj.ticksGood = Math.round(message.ticksGood);
+    }
+    if (message.ticksGoodAlmostLate !== undefined && message.ticksGoodAlmostLate !== 0) {
+      obj.ticksGoodAlmostLate = Math.round(message.ticksGoodAlmostLate);
+    }
+    if (message.ticksFixedDropped !== undefined && message.ticksFixedDropped !== 0) {
+      obj.ticksFixedDropped = Math.round(message.ticksFixedDropped);
+    }
+    if (message.ticksFixedLate !== undefined && message.ticksFixedLate !== 0) {
+      obj.ticksFixedLate = Math.round(message.ticksFixedLate);
+    }
+    if (message.ticksBadDropped !== undefined && message.ticksBadDropped !== 0) {
+      obj.ticksBadDropped = Math.round(message.ticksBadDropped);
+    }
+    if (message.ticksBadLate !== undefined && message.ticksBadLate !== 0) {
+      obj.ticksBadLate = Math.round(message.ticksBadLate);
+    }
+    if (message.ticksBadOther !== undefined && message.ticksBadOther !== 0) {
+      obj.ticksBadOther = Math.round(message.ticksBadOther);
+    }
+    if (message.tickMissrateSamplesTotal !== undefined && message.tickMissrateSamplesTotal !== 0) {
+      obj.tickMissrateSamplesTotal = Math.round(message.tickMissrateSamplesTotal);
+    }
+    if (message.tickMissrateSamplesPerfect !== undefined && message.tickMissrateSamplesPerfect !== 0) {
+      obj.tickMissrateSamplesPerfect = Math.round(message.tickMissrateSamplesPerfect);
+    }
+    if (message.tickMissrateSamplesPerfectnet !== undefined && message.tickMissrateSamplesPerfectnet !== 0) {
+      obj.tickMissrateSamplesPerfectnet = Math.round(message.tickMissrateSamplesPerfectnet);
+    }
+    if (message.tickMissratenetP75X10 !== undefined && message.tickMissratenetP75X10 !== 0) {
+      obj.tickMissratenetP75X10 = Math.round(message.tickMissratenetP75X10);
+    }
+    if (message.tickMissratenetP95X10 !== undefined && message.tickMissratenetP95X10 !== 0) {
+      obj.tickMissratenetP95X10 = Math.round(message.tickMissratenetP95X10);
+    }
+    if (message.tickMissratenetP99X10 !== undefined && message.tickMissratenetP99X10 !== 0) {
+      obj.tickMissratenetP99X10 = Math.round(message.tickMissratenetP99X10);
+    }
+    if (message.recvmarginP1 !== undefined && message.recvmarginP1 !== 0) {
+      obj.recvmarginP1 = Math.round(message.recvmarginP1);
+    }
+    if (message.recvmarginP5 !== undefined && message.recvmarginP5 !== 0) {
+      obj.recvmarginP5 = Math.round(message.recvmarginP5);
+    }
+    if (message.recvmarginP25 !== undefined && message.recvmarginP25 !== 0) {
+      obj.recvmarginP25 = Math.round(message.recvmarginP25);
+    }
+    if (message.recvmarginP50 !== undefined && message.recvmarginP50 !== 0) {
+      obj.recvmarginP50 = Math.round(message.recvmarginP50);
+    }
+    if (message.recvmarginP75 !== undefined && message.recvmarginP75 !== 0) {
+      obj.recvmarginP75 = Math.round(message.recvmarginP75);
+    }
+    if (message.recvmarginP95 !== undefined && message.recvmarginP95 !== 0) {
+      obj.recvmarginP95 = Math.round(message.recvmarginP95);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSource2NetworkFlowQuality>): CMsgSource2NetworkFlowQuality {
+    return CMsgSource2NetworkFlowQuality.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSource2NetworkFlowQuality>): CMsgSource2NetworkFlowQuality {
+    const message = createBaseCMsgSource2NetworkFlowQuality();
+    message.duration = object.duration ?? 0;
+    message.bytesTotal = object.bytesTotal ?? "0";
+    message.bytesTotalReliable = object.bytesTotalReliable ?? "0";
+    message.bytesTotalVoice = object.bytesTotalVoice ?? "0";
+    message.bytesSecP95 = object.bytesSecP95 ?? 0;
+    message.bytesSecP99 = object.bytesSecP99 ?? 0;
+    message.enginemsgsTotal = object.enginemsgsTotal ?? 0;
+    message.enginemsgsSecP95 = object.enginemsgsSecP95 ?? 0;
+    message.enginemsgsSecP99 = object.enginemsgsSecP99 ?? 0;
+    message.ticksTotal = object.ticksTotal ?? 0;
+    message.ticksGood = object.ticksGood ?? 0;
+    message.ticksGoodAlmostLate = object.ticksGoodAlmostLate ?? 0;
+    message.ticksFixedDropped = object.ticksFixedDropped ?? 0;
+    message.ticksFixedLate = object.ticksFixedLate ?? 0;
+    message.ticksBadDropped = object.ticksBadDropped ?? 0;
+    message.ticksBadLate = object.ticksBadLate ?? 0;
+    message.ticksBadOther = object.ticksBadOther ?? 0;
+    message.tickMissrateSamplesTotal = object.tickMissrateSamplesTotal ?? 0;
+    message.tickMissrateSamplesPerfect = object.tickMissrateSamplesPerfect ?? 0;
+    message.tickMissrateSamplesPerfectnet = object.tickMissrateSamplesPerfectnet ?? 0;
+    message.tickMissratenetP75X10 = object.tickMissratenetP75X10 ?? 0;
+    message.tickMissratenetP95X10 = object.tickMissratenetP95X10 ?? 0;
+    message.tickMissratenetP99X10 = object.tickMissratenetP99X10 ?? 0;
+    message.recvmarginP1 = object.recvmarginP1 ?? 0;
+    message.recvmarginP5 = object.recvmarginP5 ?? 0;
+    message.recvmarginP25 = object.recvmarginP25 ?? 0;
+    message.recvmarginP50 = object.recvmarginP50 ?? 0;
+    message.recvmarginP75 = object.recvmarginP75 ?? 0;
+    message.recvmarginP95 = object.recvmarginP95 ?? 0;
+    return message;
+  },
+};
+
+function createBaseCCLCMsgDiagnostic(): CCLCMsgDiagnostic {
+  return { systemSpecs: undefined, vprofReport: undefined };
+}
+
+export const CCLCMsgDiagnostic = {
+  encode(message: CCLCMsgDiagnostic, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.systemSpecs !== undefined) {
+      CMsgSource2SystemSpecs.encode(message.systemSpecs, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.vprofReport !== undefined) {
+      CMsgSource2VProfLiteReport.encode(message.vprofReport, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CCLCMsgDiagnostic {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCCLCMsgDiagnostic();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.systemSpecs = CMsgSource2SystemSpecs.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.vprofReport = CMsgSource2VProfLiteReport.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CCLCMsgDiagnostic {
+    return {
+      systemSpecs: isSet(object.systemSpecs) ? CMsgSource2SystemSpecs.fromJSON(object.systemSpecs) : undefined,
+      vprofReport: isSet(object.vprofReport) ? CMsgSource2VProfLiteReport.fromJSON(object.vprofReport) : undefined,
+    };
+  },
+
+  toJSON(message: CCLCMsgDiagnostic): unknown {
+    const obj: any = {};
+    if (message.systemSpecs !== undefined) {
+      obj.systemSpecs = CMsgSource2SystemSpecs.toJSON(message.systemSpecs);
+    }
+    if (message.vprofReport !== undefined) {
+      obj.vprofReport = CMsgSource2VProfLiteReport.toJSON(message.vprofReport);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CCLCMsgDiagnostic>): CCLCMsgDiagnostic {
+    return CCLCMsgDiagnostic.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CCLCMsgDiagnostic>): CCLCMsgDiagnostic {
+    const message = createBaseCCLCMsgDiagnostic();
+    message.systemSpecs = (object.systemSpecs !== undefined && object.systemSpecs !== null)
+      ? CMsgSource2SystemSpecs.fromPartial(object.systemSpecs)
+      : undefined;
+    message.vprofReport = (object.vprofReport !== undefined && object.vprofReport !== null)
+      ? CMsgSource2VProfLiteReport.fromPartial(object.vprofReport)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseCSource2MetricsMatchPerfSummaryNotification(): CSource2MetricsMatchPerfSummaryNotification {
+  return { appid: 0, gameMode: "", serverBuildId: 0, serverProfile: undefined, clients: [], map: "" };
+}
+
+export const CSource2MetricsMatchPerfSummaryNotification = {
+  encode(message: CSource2MetricsMatchPerfSummaryNotification, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.appid !== undefined && message.appid !== 0) {
+      writer.uint32(8).uint32(message.appid);
+    }
+    if (message.gameMode !== undefined && message.gameMode !== "") {
+      writer.uint32(18).string(message.gameMode);
+    }
+    if (message.serverBuildId !== undefined && message.serverBuildId !== 0) {
+      writer.uint32(24).uint32(message.serverBuildId);
+    }
+    if (message.serverProfile !== undefined) {
+      CMsgSource2VProfLiteReport.encode(message.serverProfile, writer.uint32(82).fork()).ldelim();
+    }
+    for (const v of message.clients) {
+      CSource2MetricsMatchPerfSummaryNotification_Client.encode(v!, writer.uint32(90).fork()).ldelim();
+    }
+    if (message.map !== undefined && message.map !== "") {
+      writer.uint32(162).string(message.map);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CSource2MetricsMatchPerfSummaryNotification {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCSource2MetricsMatchPerfSummaryNotification();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.appid = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.gameMode = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.serverBuildId = reader.uint32();
+          continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.serverProfile = CMsgSource2VProfLiteReport.decode(reader, reader.uint32());
+          continue;
+        case 11:
+          if (tag !== 90) {
+            break;
+          }
+
+          message.clients.push(CSource2MetricsMatchPerfSummaryNotification_Client.decode(reader, reader.uint32()));
+          continue;
+        case 20:
+          if (tag !== 162) {
+            break;
+          }
+
+          message.map = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CSource2MetricsMatchPerfSummaryNotification {
+    return {
+      appid: isSet(object.appid) ? globalThis.Number(object.appid) : 0,
+      gameMode: isSet(object.gameMode) ? globalThis.String(object.gameMode) : "",
+      serverBuildId: isSet(object.serverBuildId) ? globalThis.Number(object.serverBuildId) : 0,
+      serverProfile: isSet(object.serverProfile)
+        ? CMsgSource2VProfLiteReport.fromJSON(object.serverProfile)
+        : undefined,
+      clients: globalThis.Array.isArray(object?.clients)
+        ? object.clients.map((e: any) => CSource2MetricsMatchPerfSummaryNotification_Client.fromJSON(e))
+        : [],
+      map: isSet(object.map) ? globalThis.String(object.map) : "",
+    };
+  },
+
+  toJSON(message: CSource2MetricsMatchPerfSummaryNotification): unknown {
+    const obj: any = {};
+    if (message.appid !== undefined && message.appid !== 0) {
+      obj.appid = Math.round(message.appid);
+    }
+    if (message.gameMode !== undefined && message.gameMode !== "") {
+      obj.gameMode = message.gameMode;
+    }
+    if (message.serverBuildId !== undefined && message.serverBuildId !== 0) {
+      obj.serverBuildId = Math.round(message.serverBuildId);
+    }
+    if (message.serverProfile !== undefined) {
+      obj.serverProfile = CMsgSource2VProfLiteReport.toJSON(message.serverProfile);
+    }
+    if (message.clients?.length) {
+      obj.clients = message.clients.map((e) => CSource2MetricsMatchPerfSummaryNotification_Client.toJSON(e));
+    }
+    if (message.map !== undefined && message.map !== "") {
+      obj.map = message.map;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CSource2MetricsMatchPerfSummaryNotification>): CSource2MetricsMatchPerfSummaryNotification {
+    return CSource2MetricsMatchPerfSummaryNotification.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CSource2MetricsMatchPerfSummaryNotification>,
+  ): CSource2MetricsMatchPerfSummaryNotification {
+    const message = createBaseCSource2MetricsMatchPerfSummaryNotification();
+    message.appid = object.appid ?? 0;
+    message.gameMode = object.gameMode ?? "";
+    message.serverBuildId = object.serverBuildId ?? 0;
+    message.serverProfile = (object.serverProfile !== undefined && object.serverProfile !== null)
+      ? CMsgSource2VProfLiteReport.fromPartial(object.serverProfile)
+      : undefined;
+    message.clients = object.clients?.map((e) => CSource2MetricsMatchPerfSummaryNotification_Client.fromPartial(e)) ||
+      [];
+    message.map = object.map ?? "";
+    return message;
+  },
+};
+
+function createBaseCSource2MetricsMatchPerfSummaryNotification_Client(): CSource2MetricsMatchPerfSummaryNotification_Client {
+  return { systemSpecs: undefined, profile: undefined, buildId: 0, steamid: "0" };
+}
+
+export const CSource2MetricsMatchPerfSummaryNotification_Client = {
+  encode(
+    message: CSource2MetricsMatchPerfSummaryNotification_Client,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.systemSpecs !== undefined) {
+      CMsgSource2SystemSpecs.encode(message.systemSpecs, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.profile !== undefined) {
+      CMsgSource2VProfLiteReport.encode(message.profile, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.buildId !== undefined && message.buildId !== 0) {
+      writer.uint32(24).uint32(message.buildId);
+    }
+    if (message.steamid !== undefined && message.steamid !== "0") {
+      writer.uint32(81).fixed64(message.steamid);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CSource2MetricsMatchPerfSummaryNotification_Client {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCSource2MetricsMatchPerfSummaryNotification_Client();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.systemSpecs = CMsgSource2SystemSpecs.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.profile = CMsgSource2VProfLiteReport.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.buildId = reader.uint32();
+          continue;
+        case 10:
+          if (tag !== 81) {
+            break;
+          }
+
+          message.steamid = longToString(reader.fixed64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CSource2MetricsMatchPerfSummaryNotification_Client {
+    return {
+      systemSpecs: isSet(object.systemSpecs) ? CMsgSource2SystemSpecs.fromJSON(object.systemSpecs) : undefined,
+      profile: isSet(object.profile) ? CMsgSource2VProfLiteReport.fromJSON(object.profile) : undefined,
+      buildId: isSet(object.buildId) ? globalThis.Number(object.buildId) : 0,
+      steamid: isSet(object.steamid) ? globalThis.String(object.steamid) : "0",
+    };
+  },
+
+  toJSON(message: CSource2MetricsMatchPerfSummaryNotification_Client): unknown {
+    const obj: any = {};
+    if (message.systemSpecs !== undefined) {
+      obj.systemSpecs = CMsgSource2SystemSpecs.toJSON(message.systemSpecs);
+    }
+    if (message.profile !== undefined) {
+      obj.profile = CMsgSource2VProfLiteReport.toJSON(message.profile);
+    }
+    if (message.buildId !== undefined && message.buildId !== 0) {
+      obj.buildId = Math.round(message.buildId);
+    }
+    if (message.steamid !== undefined && message.steamid !== "0") {
+      obj.steamid = message.steamid;
+    }
+    return obj;
+  },
+
+  create(
+    base?: DeepPartial<CSource2MetricsMatchPerfSummaryNotification_Client>,
+  ): CSource2MetricsMatchPerfSummaryNotification_Client {
+    return CSource2MetricsMatchPerfSummaryNotification_Client.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CSource2MetricsMatchPerfSummaryNotification_Client>,
+  ): CSource2MetricsMatchPerfSummaryNotification_Client {
+    const message = createBaseCSource2MetricsMatchPerfSummaryNotification_Client();
+    message.systemSpecs = (object.systemSpecs !== undefined && object.systemSpecs !== null)
+      ? CMsgSource2SystemSpecs.fromPartial(object.systemSpecs)
+      : undefined;
+    message.profile = (object.profile !== undefined && object.profile !== null)
+      ? CMsgSource2VProfLiteReport.fromPartial(object.profile)
+      : undefined;
+    message.buildId = object.buildId ?? 0;
+    message.steamid = object.steamid ?? "0";
     return message;
   },
 };
@@ -2834,10 +4390,9 @@ export const CSVCMsgServerInfo = {
     message.skyName = object.skyName ?? "";
     message.hostName = object.hostName ?? "";
     message.addonName = object.addonName ?? "";
-    message.gameSessionConfig =
-      object.gameSessionConfig !== undefined && object.gameSessionConfig !== null
-        ? CSVCMsgGameSessionConfiguration.fromPartial(object.gameSessionConfig)
-        : undefined;
+    message.gameSessionConfig = (object.gameSessionConfig !== undefined && object.gameSessionConfig !== null)
+      ? CSVCMsgGameSessionConfiguration.fromPartial(object.gameSessionConfig)
+      : undefined;
     message.gameSessionManifest = object.gameSessionManifest ?? Buffer.alloc(0);
     return message;
   },
@@ -3838,8 +5393,9 @@ export const CSVCMsgFixAngle = {
   fromPartial(object: DeepPartial<CSVCMsgFixAngle>): CSVCMsgFixAngle {
     const message = createBaseCSVCMsgFixAngle();
     message.relative = object.relative ?? false;
-    message.angle =
-      object.angle !== undefined && object.angle !== null ? CMsgQAngle.fromPartial(object.angle) : undefined;
+    message.angle = (object.angle !== undefined && object.angle !== null)
+      ? CMsgQAngle.fromPartial(object.angle)
+      : undefined;
     return message;
   },
 };
@@ -3896,8 +5452,9 @@ export const CSVCMsgCrosshairAngle = {
   },
   fromPartial(object: DeepPartial<CSVCMsgCrosshairAngle>): CSVCMsgCrosshairAngle {
     const message = createBaseCSVCMsgCrosshairAngle();
-    message.angle =
-      object.angle !== undefined && object.angle !== null ? CMsgQAngle.fromPartial(object.angle) : undefined;
+    message.angle = (object.angle !== undefined && object.angle !== null)
+      ? CMsgQAngle.fromPartial(object.angle)
+      : undefined;
     return message;
   },
 };
@@ -4012,7 +5569,7 @@ export const CSVCMsgBSPDecal = {
   },
   fromPartial(object: DeepPartial<CSVCMsgBSPDecal>): CSVCMsgBSPDecal {
     const message = createBaseCSVCMsgBSPDecal();
-    message.pos = object.pos !== undefined && object.pos !== null ? CMsgVector.fromPartial(object.pos) : undefined;
+    message.pos = (object.pos !== undefined && object.pos !== null) ? CMsgVector.fromPartial(object.pos) : undefined;
     message.decalTextureIndex = object.decalTextureIndex ?? 0;
     message.entityIndex = object.entityIndex ?? -1;
     message.modelIndex = object.modelIndex ?? 0;
@@ -4884,11 +6441,12 @@ function createBaseCSVCMsgPacketEntities(): CSVCMsgPacketEntities {
     lastCmdNumberRecvDelta: 0,
     serverTick: 0,
     serializedEntities: Buffer.alloc(0),
-    commandQueueInfo: undefined,
     alternateBaselines: [],
-    hasPvsVisBits: 0,
-    lastCmdRecvMargin: 0,
+    hasPvsVisBitsDeprecated: 0,
+    cmdRecvStatus: [],
     nonTransmittedEntities: undefined,
+    cqStarvedCommandTicks: 0,
+    cqDiscardedCommandTicks: 0,
     devPadding: Buffer.alloc(0),
   };
 }
@@ -4937,23 +6495,26 @@ export const CSVCMsgPacketEntities = {
     if (message.serializedEntities !== undefined && message.serializedEntities.length !== 0) {
       writer.uint32(106).bytes(message.serializedEntities);
     }
-    if (message.commandQueueInfo !== undefined) {
-      CSVCMsgPacketEntities_commandQueueInfoT.encode(message.commandQueueInfo, writer.uint32(114).fork()).ldelim();
-    }
     for (const v of message.alternateBaselines) {
       CSVCMsgPacketEntities_alternateBaselineT.encode(v!, writer.uint32(122).fork()).ldelim();
     }
-    if (message.hasPvsVisBits !== undefined && message.hasPvsVisBits !== 0) {
-      writer.uint32(128).uint32(message.hasPvsVisBits);
+    if (message.hasPvsVisBitsDeprecated !== undefined && message.hasPvsVisBitsDeprecated !== 0) {
+      writer.uint32(128).uint32(message.hasPvsVisBitsDeprecated);
     }
-    if (message.lastCmdRecvMargin !== undefined && message.lastCmdRecvMargin !== 0) {
-      writer.uint32(144).uint32(message.lastCmdRecvMargin);
+    writer.uint32(178).fork();
+    for (const v of message.cmdRecvStatus) {
+      writer.sint32(v);
     }
+    writer.ldelim();
     if (message.nonTransmittedEntities !== undefined) {
-      CSVCMsgPacketEntities_nonTransmittedEntitiesT.encode(
-        message.nonTransmittedEntities,
-        writer.uint32(154).fork(),
-      ).ldelim();
+      CSVCMsgPacketEntities_nonTransmittedEntitiesT.encode(message.nonTransmittedEntities, writer.uint32(154).fork())
+        .ldelim();
+    }
+    if (message.cqStarvedCommandTicks !== undefined && message.cqStarvedCommandTicks !== 0) {
+      writer.uint32(160).uint32(message.cqStarvedCommandTicks);
+    }
+    if (message.cqDiscardedCommandTicks !== undefined && message.cqDiscardedCommandTicks !== 0) {
+      writer.uint32(168).uint32(message.cqDiscardedCommandTicks);
     }
     if (message.devPadding !== undefined && message.devPadding.length !== 0) {
       writer.uint32(7994).bytes(message.devPadding);
@@ -5066,13 +6627,6 @@ export const CSVCMsgPacketEntities = {
 
           message.serializedEntities = reader.bytes() as Buffer;
           continue;
-        case 14:
-          if (tag !== 114) {
-            break;
-          }
-
-          message.commandQueueInfo = CSVCMsgPacketEntities_commandQueueInfoT.decode(reader, reader.uint32());
-          continue;
         case 15:
           if (tag !== 122) {
             break;
@@ -5085,15 +6639,25 @@ export const CSVCMsgPacketEntities = {
             break;
           }
 
-          message.hasPvsVisBits = reader.uint32();
+          message.hasPvsVisBitsDeprecated = reader.uint32();
           continue;
-        case 18:
-          if (tag !== 144) {
-            break;
+        case 22:
+          if (tag === 176) {
+            message.cmdRecvStatus.push(reader.sint32());
+
+            continue;
           }
 
-          message.lastCmdRecvMargin = reader.uint32();
-          continue;
+          if (tag === 178) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.cmdRecvStatus.push(reader.sint32());
+            }
+
+            continue;
+          }
+
+          break;
         case 19:
           if (tag !== 154) {
             break;
@@ -5103,6 +6667,20 @@ export const CSVCMsgPacketEntities = {
             reader,
             reader.uint32(),
           );
+          continue;
+        case 20:
+          if (tag !== 160) {
+            break;
+          }
+
+          message.cqStarvedCommandTicks = reader.uint32();
+          continue;
+        case 21:
+          if (tag !== 168) {
+            break;
+          }
+
+          message.cqDiscardedCommandTicks = reader.uint32();
           continue;
         case 999:
           if (tag !== 7994) {
@@ -5144,17 +6722,22 @@ export const CSVCMsgPacketEntities = {
       serializedEntities: isSet(object.serializedEntities)
         ? Buffer.from(bytesFromBase64(object.serializedEntities))
         : Buffer.alloc(0),
-      commandQueueInfo: isSet(object.commandQueueInfo)
-        ? CSVCMsgPacketEntities_commandQueueInfoT.fromJSON(object.commandQueueInfo)
-        : undefined,
       alternateBaselines: globalThis.Array.isArray(object?.alternateBaselines)
         ? object.alternateBaselines.map((e: any) => CSVCMsgPacketEntities_alternateBaselineT.fromJSON(e))
         : [],
-      hasPvsVisBits: isSet(object.hasPvsVisBits) ? globalThis.Number(object.hasPvsVisBits) : 0,
-      lastCmdRecvMargin: isSet(object.lastCmdRecvMargin) ? globalThis.Number(object.lastCmdRecvMargin) : 0,
+      hasPvsVisBitsDeprecated: isSet(object.hasPvsVisBitsDeprecated)
+        ? globalThis.Number(object.hasPvsVisBitsDeprecated)
+        : 0,
+      cmdRecvStatus: globalThis.Array.isArray(object?.cmdRecvStatus)
+        ? object.cmdRecvStatus.map((e: any) => globalThis.Number(e))
+        : [],
       nonTransmittedEntities: isSet(object.nonTransmittedEntities)
         ? CSVCMsgPacketEntities_nonTransmittedEntitiesT.fromJSON(object.nonTransmittedEntities)
         : undefined,
+      cqStarvedCommandTicks: isSet(object.cqStarvedCommandTicks) ? globalThis.Number(object.cqStarvedCommandTicks) : 0,
+      cqDiscardedCommandTicks: isSet(object.cqDiscardedCommandTicks)
+        ? globalThis.Number(object.cqDiscardedCommandTicks)
+        : 0,
       devPadding: isSet(object.devPadding) ? Buffer.from(bytesFromBase64(object.devPadding)) : Buffer.alloc(0),
     };
   },
@@ -5203,22 +6786,25 @@ export const CSVCMsgPacketEntities = {
     if (message.serializedEntities !== undefined && message.serializedEntities.length !== 0) {
       obj.serializedEntities = base64FromBytes(message.serializedEntities);
     }
-    if (message.commandQueueInfo !== undefined) {
-      obj.commandQueueInfo = CSVCMsgPacketEntities_commandQueueInfoT.toJSON(message.commandQueueInfo);
-    }
     if (message.alternateBaselines?.length) {
       obj.alternateBaselines = message.alternateBaselines.map((e) =>
-        CSVCMsgPacketEntities_alternateBaselineT.toJSON(e),
+        CSVCMsgPacketEntities_alternateBaselineT.toJSON(e)
       );
     }
-    if (message.hasPvsVisBits !== undefined && message.hasPvsVisBits !== 0) {
-      obj.hasPvsVisBits = Math.round(message.hasPvsVisBits);
+    if (message.hasPvsVisBitsDeprecated !== undefined && message.hasPvsVisBitsDeprecated !== 0) {
+      obj.hasPvsVisBitsDeprecated = Math.round(message.hasPvsVisBitsDeprecated);
     }
-    if (message.lastCmdRecvMargin !== undefined && message.lastCmdRecvMargin !== 0) {
-      obj.lastCmdRecvMargin = Math.round(message.lastCmdRecvMargin);
+    if (message.cmdRecvStatus?.length) {
+      obj.cmdRecvStatus = message.cmdRecvStatus.map((e) => Math.round(e));
     }
     if (message.nonTransmittedEntities !== undefined) {
       obj.nonTransmittedEntities = CSVCMsgPacketEntities_nonTransmittedEntitiesT.toJSON(message.nonTransmittedEntities);
+    }
+    if (message.cqStarvedCommandTicks !== undefined && message.cqStarvedCommandTicks !== 0) {
+      obj.cqStarvedCommandTicks = Math.round(message.cqStarvedCommandTicks);
+    }
+    if (message.cqDiscardedCommandTicks !== undefined && message.cqDiscardedCommandTicks !== 0) {
+      obj.cqDiscardedCommandTicks = Math.round(message.cqDiscardedCommandTicks);
     }
     if (message.devPadding !== undefined && message.devPadding.length !== 0) {
       obj.devPadding = base64FromBytes(message.devPadding);
@@ -5245,108 +6831,17 @@ export const CSVCMsgPacketEntities = {
     message.lastCmdNumberRecvDelta = object.lastCmdNumberRecvDelta ?? 0;
     message.serverTick = object.serverTick ?? 0;
     message.serializedEntities = object.serializedEntities ?? Buffer.alloc(0);
-    message.commandQueueInfo =
-      object.commandQueueInfo !== undefined && object.commandQueueInfo !== null
-        ? CSVCMsgPacketEntities_commandQueueInfoT.fromPartial(object.commandQueueInfo)
-        : undefined;
     message.alternateBaselines =
       object.alternateBaselines?.map((e) => CSVCMsgPacketEntities_alternateBaselineT.fromPartial(e)) || [];
-    message.hasPvsVisBits = object.hasPvsVisBits ?? 0;
-    message.lastCmdRecvMargin = object.lastCmdRecvMargin ?? 0;
+    message.hasPvsVisBitsDeprecated = object.hasPvsVisBitsDeprecated ?? 0;
+    message.cmdRecvStatus = object.cmdRecvStatus?.map((e) => e) || [];
     message.nonTransmittedEntities =
-      object.nonTransmittedEntities !== undefined && object.nonTransmittedEntities !== null
+      (object.nonTransmittedEntities !== undefined && object.nonTransmittedEntities !== null)
         ? CSVCMsgPacketEntities_nonTransmittedEntitiesT.fromPartial(object.nonTransmittedEntities)
         : undefined;
+    message.cqStarvedCommandTicks = object.cqStarvedCommandTicks ?? 0;
+    message.cqDiscardedCommandTicks = object.cqDiscardedCommandTicks ?? 0;
     message.devPadding = object.devPadding ?? Buffer.alloc(0);
-    return message;
-  },
-};
-
-function createBaseCSVCMsgPacketEntities_commandQueueInfoT(): CSVCMsgPacketEntities_commandQueueInfoT {
-  return { commandsQueued: 0, starvedCommandTicks: 0, discardedCommandTicks: 0 };
-}
-
-export const CSVCMsgPacketEntities_commandQueueInfoT = {
-  encode(message: CSVCMsgPacketEntities_commandQueueInfoT, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.commandsQueued !== undefined && message.commandsQueued !== 0) {
-      writer.uint32(8).uint32(message.commandsQueued);
-    }
-    if (message.starvedCommandTicks !== undefined && message.starvedCommandTicks !== 0) {
-      writer.uint32(24).uint32(message.starvedCommandTicks);
-    }
-    if (message.discardedCommandTicks !== undefined && message.discardedCommandTicks !== 0) {
-      writer.uint32(40).uint32(message.discardedCommandTicks);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CSVCMsgPacketEntities_commandQueueInfoT {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCSVCMsgPacketEntities_commandQueueInfoT();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.commandsQueued = reader.uint32();
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.starvedCommandTicks = reader.uint32();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
-
-          message.discardedCommandTicks = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CSVCMsgPacketEntities_commandQueueInfoT {
-    return {
-      commandsQueued: isSet(object.commandsQueued) ? globalThis.Number(object.commandsQueued) : 0,
-      starvedCommandTicks: isSet(object.starvedCommandTicks) ? globalThis.Number(object.starvedCommandTicks) : 0,
-      discardedCommandTicks: isSet(object.discardedCommandTicks) ? globalThis.Number(object.discardedCommandTicks) : 0,
-    };
-  },
-
-  toJSON(message: CSVCMsgPacketEntities_commandQueueInfoT): unknown {
-    const obj: any = {};
-    if (message.commandsQueued !== undefined && message.commandsQueued !== 0) {
-      obj.commandsQueued = Math.round(message.commandsQueued);
-    }
-    if (message.starvedCommandTicks !== undefined && message.starvedCommandTicks !== 0) {
-      obj.starvedCommandTicks = Math.round(message.starvedCommandTicks);
-    }
-    if (message.discardedCommandTicks !== undefined && message.discardedCommandTicks !== 0) {
-      obj.discardedCommandTicks = Math.round(message.discardedCommandTicks);
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CSVCMsgPacketEntities_commandQueueInfoT>): CSVCMsgPacketEntities_commandQueueInfoT {
-    return CSVCMsgPacketEntities_commandQueueInfoT.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CSVCMsgPacketEntities_commandQueueInfoT>): CSVCMsgPacketEntities_commandQueueInfoT {
-    const message = createBaseCSVCMsgPacketEntities_commandQueueInfoT();
-    message.commandsQueued = object.commandsQueued ?? 0;
-    message.starvedCommandTicks = object.starvedCommandTicks ?? 0;
-    message.discardedCommandTicks = object.discardedCommandTicks ?? 0;
     return message;
   },
 };
@@ -6026,8 +7521,9 @@ export const CSVCMsgVoiceData = {
   },
   fromPartial(object: DeepPartial<CSVCMsgVoiceData>): CSVCMsgVoiceData {
     const message = createBaseCSVCMsgVoiceData();
-    message.audio =
-      object.audio !== undefined && object.audio !== null ? CMsgVoiceAudio.fromPartial(object.audio) : undefined;
+    message.audio = (object.audio !== undefined && object.audio !== null)
+      ? CMsgVoiceAudio.fromPartial(object.audio)
+      : undefined;
     message.client = object.client ?? -1;
     message.proximity = object.proximity ?? false;
     message.xuid = object.xuid ?? "0";
@@ -6730,7 +8226,9 @@ export const CMsgServerPeer = {
     const message = createBaseCMsgServerPeer();
     message.playerSlot = object.playerSlot ?? -1;
     message.steamid = object.steamid ?? "0";
-    message.ipc = object.ipc !== undefined && object.ipc !== null ? CMsgIPCAddress.fromPartial(object.ipc) : undefined;
+    message.ipc = (object.ipc !== undefined && object.ipc !== null)
+      ? CMsgIPCAddress.fromPartial(object.ipc)
+      : undefined;
     message.theyHearYou = object.theyHearYou ?? false;
     message.youHearThem = object.youHearThem ?? false;
     message.isListenserverHost = object.isListenserverHost ?? false;
@@ -7088,7 +8586,7 @@ export const ProtoFlattenedSerializerFieldT = {
     }
     if (message.polymorphicTypes?.length) {
       obj.polymorphicTypes = message.polymorphicTypes.map((e) =>
-        ProtoFlattenedSerializerFieldT_polymorphicFieldT.toJSON(e),
+        ProtoFlattenedSerializerFieldT_polymorphicFieldT.toJSON(e)
       );
     }
     if (message.varSerializerSym !== undefined && message.varSerializerSym !== 0) {
@@ -7614,6 +9112,110 @@ export const CBidirMsgRebroadcastSource = {
   fromPartial(object: DeepPartial<CBidirMsgRebroadcastSource>): CBidirMsgRebroadcastSource {
     const message = createBaseCBidirMsgRebroadcastSource();
     message.eventsource = object.eventsource ?? 0;
+    return message;
+  },
+};
+
+function createBaseCBidirMsgPredictionEvent(): CBidirMsgPredictionEvent {
+  return { eventId: 0, eventData: Buffer.alloc(0), syncType: 0, syncValUint32: 0 };
+}
+
+export const CBidirMsgPredictionEvent = {
+  encode(message: CBidirMsgPredictionEvent, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.eventId !== 0) {
+      writer.uint32(8).uint32(message.eventId);
+    }
+    if (message.eventData.length !== 0) {
+      writer.uint32(18).bytes(message.eventData);
+    }
+    if (message.syncType !== undefined && message.syncType !== 0) {
+      writer.uint32(24).uint32(message.syncType);
+    }
+    if (message.syncValUint32 !== undefined && message.syncValUint32 !== 0) {
+      writer.uint32(32).uint32(message.syncValUint32);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CBidirMsgPredictionEvent {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCBidirMsgPredictionEvent();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.eventId = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.eventData = reader.bytes() as Buffer;
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.syncType = reader.uint32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.syncValUint32 = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CBidirMsgPredictionEvent {
+    return {
+      eventId: isSet(object.eventId) ? globalThis.Number(object.eventId) : 0,
+      eventData: isSet(object.eventData) ? Buffer.from(bytesFromBase64(object.eventData)) : Buffer.alloc(0),
+      syncType: isSet(object.syncType) ? globalThis.Number(object.syncType) : 0,
+      syncValUint32: isSet(object.syncValUint32) ? globalThis.Number(object.syncValUint32) : 0,
+    };
+  },
+
+  toJSON(message: CBidirMsgPredictionEvent): unknown {
+    const obj: any = {};
+    if (message.eventId !== 0) {
+      obj.eventId = Math.round(message.eventId);
+    }
+    if (message.eventData.length !== 0) {
+      obj.eventData = base64FromBytes(message.eventData);
+    }
+    if (message.syncType !== undefined && message.syncType !== 0) {
+      obj.syncType = Math.round(message.syncType);
+    }
+    if (message.syncValUint32 !== undefined && message.syncValUint32 !== 0) {
+      obj.syncValUint32 = Math.round(message.syncValUint32);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CBidirMsgPredictionEvent>): CBidirMsgPredictionEvent {
+    return CBidirMsgPredictionEvent.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CBidirMsgPredictionEvent>): CBidirMsgPredictionEvent {
+    const message = createBaseCBidirMsgPredictionEvent();
+    message.eventId = object.eventId ?? 0;
+    message.eventData = object.eventData ?? Buffer.alloc(0);
+    message.syncType = object.syncType ?? 0;
+    message.syncValUint32 = object.syncValUint32 ?? 0;
     return message;
   },
 };
@@ -8826,19 +10428,18 @@ export const CCLCMsgHltvFixupOperatorTick = {
     const message = createBaseCCLCMsgHltvFixupOperatorTick();
     message.tick = object.tick ?? 0;
     message.propsData = object.propsData ?? Buffer.alloc(0);
-    message.origin =
-      object.origin !== undefined && object.origin !== null ? CMsgVector.fromPartial(object.origin) : undefined;
-    message.eyeAngles =
-      object.eyeAngles !== undefined && object.eyeAngles !== null
-        ? CMsgQAngle.fromPartial(object.eyeAngles)
-        : undefined;
+    message.origin = (object.origin !== undefined && object.origin !== null)
+      ? CMsgVector.fromPartial(object.origin)
+      : undefined;
+    message.eyeAngles = (object.eyeAngles !== undefined && object.eyeAngles !== null)
+      ? CMsgQAngle.fromPartial(object.eyeAngles)
+      : undefined;
     message.observerMode = object.observerMode ?? 0;
     message.cameramanScoreboard = object.cameramanScoreboard ?? false;
     message.observerTarget = object.observerTarget ?? 0;
-    message.viewOffset =
-      object.viewOffset !== undefined && object.viewOffset !== null
-        ? CMsgVector.fromPartial(object.viewOffset)
-        : undefined;
+    message.viewOffset = (object.viewOffset !== undefined && object.viewOffset !== null)
+      ? CMsgVector.fromPartial(object.viewOffset)
+      : undefined;
     return message;
   },
 };
@@ -8917,6 +10518,186 @@ export const CSVCMsgHltvFixupOperatorStatus = {
   },
 };
 
+function createBaseCMsgServerUserCmd(): CMsgServerUserCmd {
+  return { data: Buffer.alloc(0), cmdNumber: 0, playerSlot: -1, serverTickExecuted: 0, clientTick: 0 };
+}
+
+export const CMsgServerUserCmd = {
+  encode(message: CMsgServerUserCmd, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.data !== undefined && message.data.length !== 0) {
+      writer.uint32(10).bytes(message.data);
+    }
+    if (message.cmdNumber !== undefined && message.cmdNumber !== 0) {
+      writer.uint32(16).int32(message.cmdNumber);
+    }
+    if (message.playerSlot !== undefined && message.playerSlot !== -1) {
+      writer.uint32(24).int32(message.playerSlot);
+    }
+    if (message.serverTickExecuted !== undefined && message.serverTickExecuted !== 0) {
+      writer.uint32(32).int32(message.serverTickExecuted);
+    }
+    if (message.clientTick !== undefined && message.clientTick !== 0) {
+      writer.uint32(40).int32(message.clientTick);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgServerUserCmd {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgServerUserCmd();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.data = reader.bytes() as Buffer;
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.cmdNumber = reader.int32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.playerSlot = reader.int32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.serverTickExecuted = reader.int32();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.clientTick = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgServerUserCmd {
+    return {
+      data: isSet(object.data) ? Buffer.from(bytesFromBase64(object.data)) : Buffer.alloc(0),
+      cmdNumber: isSet(object.cmdNumber) ? globalThis.Number(object.cmdNumber) : 0,
+      playerSlot: isSet(object.playerSlot) ? globalThis.Number(object.playerSlot) : -1,
+      serverTickExecuted: isSet(object.serverTickExecuted) ? globalThis.Number(object.serverTickExecuted) : 0,
+      clientTick: isSet(object.clientTick) ? globalThis.Number(object.clientTick) : 0,
+    };
+  },
+
+  toJSON(message: CMsgServerUserCmd): unknown {
+    const obj: any = {};
+    if (message.data !== undefined && message.data.length !== 0) {
+      obj.data = base64FromBytes(message.data);
+    }
+    if (message.cmdNumber !== undefined && message.cmdNumber !== 0) {
+      obj.cmdNumber = Math.round(message.cmdNumber);
+    }
+    if (message.playerSlot !== undefined && message.playerSlot !== -1) {
+      obj.playerSlot = Math.round(message.playerSlot);
+    }
+    if (message.serverTickExecuted !== undefined && message.serverTickExecuted !== 0) {
+      obj.serverTickExecuted = Math.round(message.serverTickExecuted);
+    }
+    if (message.clientTick !== undefined && message.clientTick !== 0) {
+      obj.clientTick = Math.round(message.clientTick);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgServerUserCmd>): CMsgServerUserCmd {
+    return CMsgServerUserCmd.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgServerUserCmd>): CMsgServerUserCmd {
+    const message = createBaseCMsgServerUserCmd();
+    message.data = object.data ?? Buffer.alloc(0);
+    message.cmdNumber = object.cmdNumber ?? 0;
+    message.playerSlot = object.playerSlot ?? -1;
+    message.serverTickExecuted = object.serverTickExecuted ?? 0;
+    message.clientTick = object.clientTick ?? 0;
+    return message;
+  },
+};
+
+function createBaseCSVCMsgUserCommands(): CSVCMsgUserCommands {
+  return { commands: [] };
+}
+
+export const CSVCMsgUserCommands = {
+  encode(message: CSVCMsgUserCommands, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.commands) {
+      CMsgServerUserCmd.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CSVCMsgUserCommands {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCSVCMsgUserCommands();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.commands.push(CMsgServerUserCmd.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CSVCMsgUserCommands {
+    return {
+      commands: globalThis.Array.isArray(object?.commands)
+        ? object.commands.map((e: any) => CMsgServerUserCmd.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: CSVCMsgUserCommands): unknown {
+    const obj: any = {};
+    if (message.commands?.length) {
+      obj.commands = message.commands.map((e) => CMsgServerUserCmd.toJSON(e));
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CSVCMsgUserCommands>): CSVCMsgUserCommands {
+    return CSVCMsgUserCommands.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CSVCMsgUserCommands>): CSVCMsgUserCommands {
+    const message = createBaseCSVCMsgUserCommands();
+    message.commands = object.commands?.map((e) => CMsgServerUserCmd.fromPartial(e)) || [];
+    return message;
+  },
+};
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -8927,15 +10708,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

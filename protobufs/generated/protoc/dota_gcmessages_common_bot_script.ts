@@ -882,8 +882,8 @@ export const CMsgBotWorldState = {
     message.droppedItemsDeltas = object.droppedItemsDeltas?.map((e) => e) || [];
     message.runeInfos = object.runeInfos?.map((e) => CMsgBotWorldState_RuneInfo.fromPartial(e)) || [];
     message.runeInfosDeltas = object.runeInfosDeltas?.map((e) => e) || [];
-    message.incomingTeleports =
-      object.incomingTeleports?.map((e) => CMsgBotWorldState_TeleportInfo.fromPartial(e)) || [];
+    message.incomingTeleports = object.incomingTeleports?.map((e) => CMsgBotWorldState_TeleportInfo.fromPartial(e)) ||
+      [];
     message.linearProjectiles =
       object.linearProjectiles?.map((e) => CMsgBotWorldState_LinearProjectile.fromPartial(e)) || [];
     message.avoidanceZones = object.avoidanceZones?.map((e) => CMsgBotWorldState_AvoidanceZone.fromPartial(e)) || [];
@@ -1010,7 +1010,7 @@ export const CMsgBotWorldState_Player = {
       writer.uint32(8).int32(message.playerId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     if (message.isAlive !== undefined && message.isAlive !== false) {
       writer.uint32(24).bool(message.isAlive);
@@ -1061,7 +1061,7 @@ export const CMsgBotWorldState_Player = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag !== 24) {
@@ -1204,10 +1204,9 @@ export const CMsgBotWorldState_Player = {
     message.teamId = object.teamId ?? 0;
     message.primaryUnitHandle = object.primaryUnitHandle ?? 4294967295;
     message.mmr = object.mmr ?? 0;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     return message;
   },
 };
@@ -1614,10 +1613,9 @@ export const CMsgBotWorldState_DroppedItem = {
   fromPartial(object: DeepPartial<CMsgBotWorldState_DroppedItem>): CMsgBotWorldState_DroppedItem {
     const message = createBaseCMsgBotWorldState_DroppedItem();
     message.itemId = object.itemId ?? -1;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     return message;
   },
 };
@@ -1719,10 +1717,9 @@ export const CMsgBotWorldState_RuneInfo = {
   fromPartial(object: DeepPartial<CMsgBotWorldState_RuneInfo>): CMsgBotWorldState_RuneInfo {
     const message = createBaseCMsgBotWorldState_RuneInfo();
     message.type = object.type ?? 0;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     message.status = object.status ?? 0;
     message.timeSinceSeen = object.timeSinceSeen ?? 0;
     return message;
@@ -1812,10 +1809,9 @@ export const CMsgBotWorldState_TeleportInfo = {
   fromPartial(object: DeepPartial<CMsgBotWorldState_TeleportInfo>): CMsgBotWorldState_TeleportInfo {
     const message = createBaseCMsgBotWorldState_TeleportInfo();
     message.playerId = object.playerId ?? 0;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     message.timeRemaining = object.timeRemaining ?? 0;
     return message;
   },
@@ -2174,14 +2170,12 @@ export const CMsgBotWorldState_LinearProjectile = {
     message.casterPlayerId = object.casterPlayerId ?? 0;
     message.abilityHandle = object.abilityHandle ?? 4294967295;
     message.abilityId = object.abilityId ?? -1;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
-    message.velocity =
-      object.velocity !== undefined && object.velocity !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.velocity)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
+    message.velocity = (object.velocity !== undefined && object.velocity !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.velocity)
+      : undefined;
     message.radius = object.radius ?? 0;
     return message;
   },
@@ -2384,10 +2378,9 @@ export const CMsgBotWorldState_TrackingProjectile = {
     message.casterPlayerId = object.casterPlayerId ?? 0;
     message.abilityHandle = object.abilityHandle ?? 4294967295;
     message.abilityId = object.abilityId ?? -1;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     message.velocity = object.velocity ?? 0;
     message.isDodgeable = object.isDodgeable ?? false;
     message.isAttack = object.isAttack ?? false;
@@ -2541,10 +2534,9 @@ export const CMsgBotWorldState_AvoidanceZone = {
   },
   fromPartial(object: DeepPartial<CMsgBotWorldState_AvoidanceZone>): CMsgBotWorldState_AvoidanceZone {
     const message = createBaseCMsgBotWorldState_AvoidanceZone();
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     message.casterHandle = object.casterHandle ?? 4294967295;
     message.casterUnitType = object.casterUnitType ?? 0;
     message.casterPlayerId = object.casterPlayerId ?? 0;
@@ -2757,10 +2749,9 @@ export const CMsgBotWorldState_EventAbility = {
     message.abilityId = object.abilityId ?? -1;
     message.playerId = object.playerId ?? 0;
     message.unitHandle = object.unitHandle ?? 4294967295;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     message.isChannelStart = object.isChannelStart ?? false;
     return message;
   },
@@ -3198,10 +3189,9 @@ export const CMsgBotWorldState_EventTree = {
     message.treeId = object.treeId ?? 0;
     message.destroyed = object.destroyed ?? false;
     message.respawned = object.respawned ?? false;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     message.delayed = object.delayed ?? false;
     return message;
   },
@@ -4541,7 +4531,7 @@ export const CMsgBotWorldState_Unit = {
     }
     if (message.incomingTrackingProjectiles?.length) {
       obj.incomingTrackingProjectiles = message.incomingTrackingProjectiles.map((e) =>
-        CMsgBotWorldState_TrackingProjectile.toJSON(e),
+        CMsgBotWorldState_TrackingProjectile.toJSON(e)
       );
     }
     if (message.actionType !== undefined && message.actionType !== 0) {
@@ -4638,10 +4628,9 @@ export const CMsgBotWorldState_Unit = {
     message.name = object.name ?? "";
     message.teamId = object.teamId ?? 0;
     message.level = object.level ?? 0;
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgBotWorldState_Vector.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgBotWorldState_Vector.fromPartial(object.location)
+      : undefined;
     message.isAlive = object.isAlive ?? false;
     message.playerId = object.playerId ?? 0;
     message.boundingRadius = object.boundingRadius ?? 0;
@@ -4734,15 +4723,11 @@ export const CMsgBotWorldState_Unit = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
