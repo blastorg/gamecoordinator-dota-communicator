@@ -649,18 +649,16 @@ export const CScenarioEntNPC = {
   },
   fromPartial(object: DeepPartial<CScenarioEntNPC>): CScenarioEntNPC {
     const message = createBaseCScenarioEntNPC();
-    message.position =
-      object.position !== undefined && object.position !== null
-        ? CScenarioPosition.fromPartial(object.position)
-        : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CScenarioPosition.fromPartial(object.position)
+      : undefined;
     message.unitName = object.unitName ?? "";
     message.teamNumber = object.teamNumber ?? 0;
     message.healthFrac = object.healthFrac ?? 1;
     message.owningCamp = object.owningCamp ?? "";
-    message.owningCampPosition =
-      object.owningCampPosition !== undefined && object.owningCampPosition !== null
-        ? CScenarioPosition.fromPartial(object.owningCampPosition)
-        : undefined;
+    message.owningCampPosition = (object.owningCampPosition !== undefined && object.owningCampPosition !== null)
+      ? CScenarioPosition.fromPartial(object.owningCampPosition)
+      : undefined;
     message.invadeGoal = object.invadeGoal ?? "";
     return message;
   },
@@ -792,10 +790,9 @@ export const CScenarioEntDroppedItem = {
   },
   fromPartial(object: DeepPartial<CScenarioEntDroppedItem>): CScenarioEntDroppedItem {
     const message = createBaseCScenarioEntDroppedItem();
-    message.position =
-      object.position !== undefined && object.position !== null
-        ? CScenarioPosition.fromPartial(object.position)
-        : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CScenarioPosition.fromPartial(object.position)
+      : undefined;
     return message;
   },
 };
@@ -991,8 +988,9 @@ export const CMsgDotaScenario = {
   fromPartial(object: DeepPartial<CMsgDotaScenario>): CMsgDotaScenario {
     const message = createBaseCMsgDotaScenario();
     message.lobbyId = object.lobbyId ?? "0";
-    message.game =
-      object.game !== undefined && object.game !== null ? CMsgDotaScenario_Game.fromPartial(object.game) : undefined;
+    message.game = (object.game !== undefined && object.game !== null)
+      ? CMsgDotaScenario_Game.fromPartial(object.game)
+      : undefined;
     message.teams = object.teams?.map((e) => CMsgDotaScenario_Team.fromPartial(e)) || [];
     message.heroes = object.heroes?.map((e) => CMsgDotaScenario_Hero.fromPartial(e)) || [];
     message.stock = object.stock?.map((e) => CMsgDotaScenario_Stock.fromPartial(e)) || [];
@@ -1237,10 +1235,9 @@ export const CMsgDotaScenario_Game = {
     message.gameMode = object.gameMode ?? 0;
     message.clockTime = object.clockTime ?? 0;
     message.internalTime = object.internalTime ?? 0;
-    message.roshan =
-      object.roshan !== undefined && object.roshan !== null
-        ? CScenarioGameRoshanSpawner.fromPartial(object.roshan)
-        : undefined;
+    message.roshan = (object.roshan !== undefined && object.roshan !== null)
+      ? CScenarioGameRoshanSpawner.fromPartial(object.roshan)
+      : undefined;
     return message;
   },
 };
@@ -2908,10 +2905,9 @@ export const CMsgDotaScenario_Hero = {
     message.firstBloodGiven = object.firstBloodGiven ?? false;
     message.bountyRunes = object.bountyRunes ?? 0;
     message.outpostsCaptured = object.outpostsCaptured ?? 0;
-    message.position =
-      object.position !== undefined && object.position !== null
-        ? CScenarioPosition.fromPartial(object.position)
-        : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CScenarioPosition.fromPartial(object.position)
+      : undefined;
     message.enemyKills = object.enemyKills?.map((e) => CMsgDotaScenario_HeroHeroInt.fromPartial(e)) || [];
     message.damageStats = object.damageStats?.map((e) => CMsgDotaScenario_DamageStatsByType.fromPartial(e)) || [];
     message.abilities = object.abilities?.map((e) => CMsgDotaScenario_HeroAbility.fromPartial(e)) || [];
@@ -3269,19 +3265,18 @@ export const CMsgDotaScenario_Entity = {
   },
   fromPartial(object: DeepPartial<CMsgDotaScenario_Entity>): CMsgDotaScenario_Entity {
     const message = createBaseCMsgDotaScenario_Entity();
-    message.courier =
-      object.courier !== undefined && object.courier !== null
-        ? CScenarioEntCourier.fromPartial(object.courier)
-        : undefined;
-    message.npc = object.npc !== undefined && object.npc !== null ? CScenarioEntNPC.fromPartial(object.npc) : undefined;
-    message.spiritBear =
-      object.spiritBear !== undefined && object.spiritBear !== null
-        ? CScenarioEntSpiritBear.fromPartial(object.spiritBear)
-        : undefined;
-    message.droppedItem =
-      object.droppedItem !== undefined && object.droppedItem !== null
-        ? CScenarioEntDroppedItem.fromPartial(object.droppedItem)
-        : undefined;
+    message.courier = (object.courier !== undefined && object.courier !== null)
+      ? CScenarioEntCourier.fromPartial(object.courier)
+      : undefined;
+    message.npc = (object.npc !== undefined && object.npc !== null)
+      ? CScenarioEntNPC.fromPartial(object.npc)
+      : undefined;
+    message.spiritBear = (object.spiritBear !== undefined && object.spiritBear !== null)
+      ? CScenarioEntSpiritBear.fromPartial(object.spiritBear)
+      : undefined;
+    message.droppedItem = (object.droppedItem !== undefined && object.droppedItem !== null)
+      ? CScenarioEntDroppedItem.fromPartial(object.droppedItem)
+      : undefined;
     return message;
   },
 };
@@ -3463,10 +3458,9 @@ export const CMsgDotaScenario_Item = {
   fromPartial(object: DeepPartial<CMsgDotaScenario_Item>): CMsgDotaScenario_Item {
     const message = createBaseCMsgDotaScenario_Item();
     message.name = object.name ?? "";
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? CMsgDotaScenario_EntityRef.fromPartial(object.location)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? CMsgDotaScenario_EntityRef.fromPartial(object.location)
+      : undefined;
     message.ownerId = object.ownerId ?? -1;
     message.itemSlot = object.itemSlot ?? 0;
     message.neutralDropTeam = object.neutralDropTeam ?? 0;
@@ -3794,18 +3788,15 @@ export const CMsgDotaScenario_Modifier = {
   fromPartial(object: DeepPartial<CMsgDotaScenario_Modifier>): CMsgDotaScenario_Modifier {
     const message = createBaseCMsgDotaScenario_Modifier();
     message.name = object.name ?? "";
-    message.parent =
-      object.parent !== undefined && object.parent !== null
-        ? CMsgDotaScenario_EntityRef.fromPartial(object.parent)
-        : undefined;
-    message.caster =
-      object.caster !== undefined && object.caster !== null
-        ? CMsgDotaScenario_EntityRef.fromPartial(object.caster)
-        : undefined;
-    message.ability =
-      object.ability !== undefined && object.ability !== null
-        ? CMsgDotaScenario_EntityRef.fromPartial(object.ability)
-        : undefined;
+    message.parent = (object.parent !== undefined && object.parent !== null)
+      ? CMsgDotaScenario_EntityRef.fromPartial(object.parent)
+      : undefined;
+    message.caster = (object.caster !== undefined && object.caster !== null)
+      ? CMsgDotaScenario_EntityRef.fromPartial(object.caster)
+      : undefined;
+    message.ability = (object.ability !== undefined && object.ability !== null)
+      ? CMsgDotaScenario_EntityRef.fromPartial(object.ability)
+      : undefined;
     message.duration = object.duration ?? -1;
     message.lifetimeRemaining = object.lifetimeRemaining ?? 0;
     message.stackCount = object.stackCount ?? 0;
@@ -3824,15 +3815,11 @@ export const CMsgDotaScenario_Modifier = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

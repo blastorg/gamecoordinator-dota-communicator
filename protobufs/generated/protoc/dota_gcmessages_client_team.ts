@@ -218,7 +218,8 @@ export interface CMsgDOTATeamInfoCache {
   teamList?: CMsgDOTATeamInfoList | undefined;
 }
 
-export interface CMsgDOTAMyTeamInfoRequest {}
+export interface CMsgDOTAMyTeamInfoRequest {
+}
 
 export interface CMsgDOTACreateTeam {
   name?: string | undefined;
@@ -1183,10 +1184,9 @@ export const CMsgDOTATeamInfo = {
     message.region = object.region ?? 0;
     message.abbreviation = object.abbreviation ?? "";
     message.memberStats = object.memberStats?.map((e) => CMsgDOTATeamInfo_MemberStats.fromPartial(e)) || [];
-    message.teamStats =
-      object.teamStats !== undefined && object.teamStats !== null
-        ? CMsgDOTATeamInfo_TeamStats.fromPartial(object.teamStats)
-        : undefined;
+    message.teamStats = (object.teamStats !== undefined && object.teamStats !== null)
+      ? CMsgDOTATeamInfo_TeamStats.fromPartial(object.teamStats)
+      : undefined;
     message.dpcResults = object.dpcResults?.map((e) => CMsgDOTATeamInfo_DPCResult.fromPartial(e)) || [];
     message.colorPrimary = object.colorPrimary ?? "";
     message.colorSecondary = object.colorSecondary ?? "";
@@ -1202,7 +1202,7 @@ function createBaseCMsgDOTATeamInfo_HeroStats(): CMsgDOTATeamInfo_HeroStats {
 export const CMsgDOTATeamInfo_HeroStats = {
   encode(message: CMsgDOTATeamInfo_HeroStats, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.picks !== undefined && message.picks !== 0) {
       writer.uint32(16).uint32(message.picks);
@@ -1243,7 +1243,7 @@ export const CMsgDOTATeamInfo_HeroStats = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -2220,10 +2220,9 @@ export const CMsgDOTATeamInfoCache = {
   fromPartial(object: DeepPartial<CMsgDOTATeamInfoCache>): CMsgDOTATeamInfoCache {
     const message = createBaseCMsgDOTATeamInfoCache();
     message.cacheTimestamp = object.cacheTimestamp ?? 0;
-    message.teamList =
-      object.teamList !== undefined && object.teamList !== null
-        ? CMsgDOTATeamInfoList.fromPartial(object.teamList)
-        : undefined;
+    message.teamList = (object.teamList !== undefined && object.teamList !== null)
+      ? CMsgDOTATeamInfoList.fromPartial(object.teamList)
+      : undefined;
     return message;
   },
 };
@@ -3742,15 +3741,11 @@ export const CMsgDOTABetaParticipation = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

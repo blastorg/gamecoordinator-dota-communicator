@@ -52,7 +52,8 @@ export interface CCloudDeleteRequest {
   appid?: number | undefined;
 }
 
-export interface CCloudDeleteResponse {}
+export interface CCloudDeleteResponse {
+}
 
 function createBaseCCloudGetUploadServerInfoRequest(): CCloudGetUploadServerInfoRequest {
   return { appid: 0 };
@@ -443,8 +444,9 @@ export const CCloudGetFileDetailsResponse = {
   },
   fromPartial(object: DeepPartial<CCloudGetFileDetailsResponse>): CCloudGetFileDetailsResponse {
     const message = createBaseCCloudGetFileDetailsResponse();
-    message.details =
-      object.details !== undefined && object.details !== null ? CCloudUserFile.fromPartial(object.details) : undefined;
+    message.details = (object.details !== undefined && object.details !== null)
+      ? CCloudUserFile.fromPartial(object.details)
+      : undefined;
     return message;
   },
 };
@@ -794,15 +796,11 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

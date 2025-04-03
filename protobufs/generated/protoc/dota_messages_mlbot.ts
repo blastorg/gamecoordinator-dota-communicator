@@ -753,10 +753,9 @@ export const CMsgMLBotTeamInference = {
     const message = createBaseCMsgMLBotTeamInference();
     message.teamId = object.teamId ?? 0;
     message.botPlayerIds = object.botPlayerIds?.map((e) => e) || [];
-    message.worldState =
-      object.worldState !== undefined && object.worldState !== null
-        ? CMsgBotWorldState.fromPartial(object.worldState)
-        : undefined;
+    message.worldState = (object.worldState !== undefined && object.worldState !== null)
+      ? CMsgBotWorldState.fromPartial(object.worldState)
+      : undefined;
     return message;
   },
 };
@@ -885,15 +884,11 @@ export const CMsgMLBotTeamInferenceList = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

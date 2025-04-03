@@ -729,7 +729,8 @@ export function cMsgClientToGCCandyShopRerollRewardsResponse_EResponseToJSON(
   }
 }
 
-export interface CCandyShopDev {}
+export interface CCandyShopDev {
+}
 
 export enum CCandyShopDev_EResponse {
   k_eInternalError = 0,
@@ -1065,14 +1066,12 @@ export const CMsgCandyShopExchangeRecipe = {
   fromPartial(object: DeepPartial<CMsgCandyShopExchangeRecipe>): CMsgCandyShopExchangeRecipe {
     const message = createBaseCMsgCandyShopExchangeRecipe();
     message.recipeId = object.recipeId ?? 0;
-    message.input =
-      object.input !== undefined && object.input !== null
-        ? CMsgCandyShopCandyQuantity.fromPartial(object.input)
-        : undefined;
-    message.output =
-      object.output !== undefined && object.output !== null
-        ? CMsgCandyShopCandyQuantity.fromPartial(object.output)
-        : undefined;
+    message.input = (object.input !== undefined && object.input !== null)
+      ? CMsgCandyShopCandyQuantity.fromPartial(object.input)
+      : undefined;
+    message.output = (object.output !== undefined && object.output !== null)
+      ? CMsgCandyShopCandyQuantity.fromPartial(object.output)
+      : undefined;
     return message;
   },
 };
@@ -1434,23 +1433,19 @@ export const CMsgCandyShopReward = {
     const message = createBaseCMsgCandyShopReward();
     message.rewardId = object.rewardId ?? 0;
     message.rewardOptionId = object.rewardOptionId ?? 0;
-    message.price =
-      object.price !== undefined && object.price !== null
-        ? CMsgCandyShopCandyQuantity.fromPartial(object.price)
-        : undefined;
+    message.price = (object.price !== undefined && object.price !== null)
+      ? CMsgCandyShopCandyQuantity.fromPartial(object.price)
+      : undefined;
     message.rewardType = object.rewardType ?? 0;
-    message.itemData =
-      object.itemData !== undefined && object.itemData !== null
-        ? CMsgCandyShopRewardDataItem.fromPartial(object.itemData)
-        : undefined;
-    message.eventActionData =
-      object.eventActionData !== undefined && object.eventActionData !== null
-        ? CMsgCandyShopRewardDataEventAction.fromPartial(object.eventActionData)
-        : undefined;
-    message.eventPointsData =
-      object.eventPointsData !== undefined && object.eventPointsData !== null
-        ? CMsgCandyShopRewardDataEventPoints.fromPartial(object.eventPointsData)
-        : undefined;
+    message.itemData = (object.itemData !== undefined && object.itemData !== null)
+      ? CMsgCandyShopRewardDataItem.fromPartial(object.itemData)
+      : undefined;
+    message.eventActionData = (object.eventActionData !== undefined && object.eventActionData !== null)
+      ? CMsgCandyShopRewardDataEventAction.fromPartial(object.eventActionData)
+      : undefined;
+    message.eventPointsData = (object.eventPointsData !== undefined && object.eventPointsData !== null)
+      ? CMsgCandyShopRewardDataEventPoints.fromPartial(object.eventPointsData)
+      : undefined;
     return message;
   },
 };
@@ -1638,10 +1633,9 @@ export const CMsgCandyShopUserData = {
   fromPartial(object: DeepPartial<CMsgCandyShopUserData>): CMsgCandyShopUserData {
     const message = createBaseCMsgCandyShopUserData();
     message.inventoryMax = object.inventoryMax ?? 0;
-    message.inventory =
-      object.inventory !== undefined && object.inventory !== null
-        ? CMsgCandyShopCandyQuantity.fromPartial(object.inventory)
-        : undefined;
+    message.inventory = (object.inventory !== undefined && object.inventory !== null)
+      ? CMsgCandyShopCandyQuantity.fromPartial(object.inventory)
+      : undefined;
     message.exchangeRecipeMax = object.exchangeRecipeMax ?? 0;
     message.exchangeResetTimestamp = object.exchangeResetTimestamp ?? 0;
     message.exchangeRecipes = object.exchangeRecipes?.map((e) => CMsgCandyShopExchangeRecipe.fromPartial(e)) || [];
@@ -1783,10 +1777,9 @@ export const CMsgClientToGCCandyShopGetUserDataResponse = {
   ): CMsgClientToGCCandyShopGetUserDataResponse {
     const message = createBaseCMsgClientToGCCandyShopGetUserDataResponse();
     message.response = object.response ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgCandyShopUserData.fromPartial(object.userData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgCandyShopUserData.fromPartial(object.userData)
+      : undefined;
     return message;
   },
 };
@@ -1860,10 +1853,9 @@ export const CMsgGCToClientCandyShopUserDataUpdated = {
   fromPartial(object: DeepPartial<CMsgGCToClientCandyShopUserDataUpdated>): CMsgGCToClientCandyShopUserDataUpdated {
     const message = createBaseCMsgGCToClientCandyShopUserDataUpdated();
     message.candyShopId = object.candyShopId ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgCandyShopUserData.fromPartial(object.userData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgCandyShopUserData.fromPartial(object.userData)
+      : undefined;
     return message;
   },
 };
@@ -2362,14 +2354,12 @@ export const CMsgClientToGCCandyShopDoVariableExchange = {
   ): CMsgClientToGCCandyShopDoVariableExchange {
     const message = createBaseCMsgClientToGCCandyShopDoVariableExchange();
     message.candyShopId = object.candyShopId ?? 0;
-    message.input =
-      object.input !== undefined && object.input !== null
-        ? CMsgCandyShopCandyQuantity.fromPartial(object.input)
-        : undefined;
-    message.output =
-      object.output !== undefined && object.output !== null
-        ? CMsgCandyShopCandyQuantity.fromPartial(object.output)
-        : undefined;
+    message.input = (object.input !== undefined && object.input !== null)
+      ? CMsgCandyShopCandyQuantity.fromPartial(object.input)
+      : undefined;
+    message.output = (object.output !== undefined && object.output !== null)
+      ? CMsgCandyShopCandyQuantity.fromPartial(object.output)
+      : undefined;
     return message;
   },
 };
@@ -2678,10 +2668,9 @@ export const CMsgClientToGCCandyShopDevGrantCandy = {
   fromPartial(object: DeepPartial<CMsgClientToGCCandyShopDevGrantCandy>): CMsgClientToGCCandyShopDevGrantCandy {
     const message = createBaseCMsgClientToGCCandyShopDevGrantCandy();
     message.candyShopId = object.candyShopId ?? 0;
-    message.candyQuantity =
-      object.candyQuantity !== undefined && object.candyQuantity !== null
-        ? CMsgCandyShopCandyQuantity.fromPartial(object.candyQuantity)
-        : undefined;
+    message.candyQuantity = (object.candyQuantity !== undefined && object.candyQuantity !== null)
+      ? CMsgCandyShopCandyQuantity.fromPartial(object.candyQuantity)
+      : undefined;
     return message;
   },
 };
@@ -3389,15 +3378,11 @@ export const CMsgClientToGCCandyShopDevResetShopResponse = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

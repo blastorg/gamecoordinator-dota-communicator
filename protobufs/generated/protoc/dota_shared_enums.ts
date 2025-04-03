@@ -438,6 +438,8 @@ export enum EEvent {
   EVENT_ID_10TH_ANNIVERSARY = 46,
   EVENT_ID_CROWNFALL = 47,
   EVENT_ID_FROSTIVUS_2023 = 48,
+  EVENT_ID_INTERNATIONAL_2024 = 49,
+  EVENT_ID_FROSTIVUS_2024 = 50,
 }
 
 export function eEventFromJSON(object: any): EEvent {
@@ -586,6 +588,12 @@ export function eEventFromJSON(object: any): EEvent {
     case 48:
     case "EVENT_ID_FROSTIVUS_2023":
       return EEvent.EVENT_ID_FROSTIVUS_2023;
+    case 49:
+    case "EVENT_ID_INTERNATIONAL_2024":
+      return EEvent.EVENT_ID_INTERNATIONAL_2024;
+    case 50:
+    case "EVENT_ID_FROSTIVUS_2024":
+      return EEvent.EVENT_ID_FROSTIVUS_2024;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EEvent");
   }
@@ -689,6 +697,10 @@ export function eEventToJSON(object: EEvent): string {
       return "EVENT_ID_CROWNFALL";
     case EEvent.EVENT_ID_FROSTIVUS_2023:
       return "EVENT_ID_FROSTIVUS_2023";
+    case EEvent.EVENT_ID_INTERNATIONAL_2024:
+      return "EVENT_ID_INTERNATIONAL_2024";
+    case EEvent.EVENT_ID_FROSTIVUS_2024:
+      return "EVENT_ID_FROSTIVUS_2024";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EEvent");
   }
@@ -2859,6 +2871,10 @@ export enum EBadgeType {
   k_EBadgeType_TI12_PlayoffsDay3 = 15,
   k_EBadgeType_TI12_FinalsWeekend = 16,
   k_EBadgeType_TI12_Special = 17,
+  k_EBadgeType_TI13_FinalsDay1 = 18,
+  k_EBadgeType_TI13_FinalsDay2 = 19,
+  k_EBadgeType_TI13_FinalsDay3 = 20,
+  k_EBadgeType_TI13_Special = 21,
 }
 
 export function eBadgeTypeFromJSON(object: any): EBadgeType {
@@ -2917,6 +2933,18 @@ export function eBadgeTypeFromJSON(object: any): EBadgeType {
     case 17:
     case "k_EBadgeType_TI12_Special":
       return EBadgeType.k_EBadgeType_TI12_Special;
+    case 18:
+    case "k_EBadgeType_TI13_FinalsDay1":
+      return EBadgeType.k_EBadgeType_TI13_FinalsDay1;
+    case 19:
+    case "k_EBadgeType_TI13_FinalsDay2":
+      return EBadgeType.k_EBadgeType_TI13_FinalsDay2;
+    case 20:
+    case "k_EBadgeType_TI13_FinalsDay3":
+      return EBadgeType.k_EBadgeType_TI13_FinalsDay3;
+    case 21:
+    case "k_EBadgeType_TI13_Special":
+      return EBadgeType.k_EBadgeType_TI13_Special;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EBadgeType");
   }
@@ -2960,6 +2988,14 @@ export function eBadgeTypeToJSON(object: EBadgeType): string {
       return "k_EBadgeType_TI12_FinalsWeekend";
     case EBadgeType.k_EBadgeType_TI12_Special:
       return "k_EBadgeType_TI12_Special";
+    case EBadgeType.k_EBadgeType_TI13_FinalsDay1:
+      return "k_EBadgeType_TI13_FinalsDay1";
+    case EBadgeType.k_EBadgeType_TI13_FinalsDay2:
+      return "k_EBadgeType_TI13_FinalsDay2";
+    case EBadgeType.k_EBadgeType_TI13_FinalsDay3:
+      return "k_EBadgeType_TI13_FinalsDay3";
+    case EBadgeType.k_EBadgeType_TI13_Special:
+      return "k_EBadgeType_TI13_Special";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EBadgeType");
   }
@@ -3633,6 +3669,7 @@ export enum dotaCombatlogTypes {
   DOTA_COMBATLOG_UNIT_TELEPORTED = 41,
   DOTA_COMBATLOG_KILL_EATER_EVENT = 42,
   DOTA_COMBATLOG_NEUTRAL_ITEM_EARNED = 43,
+  DOTA_COMBATLOG_STAT_TRACKER_PLAYER = 44,
 }
 
 export function dotaCombatlogTypesFromJSON(object: any): dotaCombatlogTypes {
@@ -3772,6 +3809,9 @@ export function dotaCombatlogTypesFromJSON(object: any): dotaCombatlogTypes {
     case 43:
     case "DOTA_COMBATLOG_NEUTRAL_ITEM_EARNED":
       return dotaCombatlogTypes.DOTA_COMBATLOG_NEUTRAL_ITEM_EARNED;
+    case 44:
+    case "DOTA_COMBATLOG_STAT_TRACKER_PLAYER":
+      return dotaCombatlogTypes.DOTA_COMBATLOG_STAT_TRACKER_PLAYER;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum dotaCombatlogTypes");
   }
@@ -3869,6 +3909,8 @@ export function dotaCombatlogTypesToJSON(object: dotaCombatlogTypes): string {
       return "DOTA_COMBATLOG_KILL_EATER_EVENT";
     case dotaCombatlogTypes.DOTA_COMBATLOG_NEUTRAL_ITEM_EARNED:
       return "DOTA_COMBATLOG_NEUTRAL_ITEM_EARNED";
+    case dotaCombatlogTypes.DOTA_COMBATLOG_STAT_TRACKER_PLAYER:
+      return "DOTA_COMBATLOG_STAT_TRACKER_PLAYER";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum dotaCombatlogTypes");
   }
@@ -4174,6 +4216,88 @@ export function eCandyShopUpgradeToJSON(object: ECandyShopUpgrade): string {
   }
 }
 
+export enum EItemSuggestPreference {
+  k_EItemSuggestPreference_None = 0,
+  k_EItemSuggestPreference_Liked = 1,
+  k_EItemSuggestPreference_Disliked = 2,
+}
+
+export function eItemSuggestPreferenceFromJSON(object: any): EItemSuggestPreference {
+  switch (object) {
+    case 0:
+    case "k_EItemSuggestPreference_None":
+      return EItemSuggestPreference.k_EItemSuggestPreference_None;
+    case 1:
+    case "k_EItemSuggestPreference_Liked":
+      return EItemSuggestPreference.k_EItemSuggestPreference_Liked;
+    case 2:
+    case "k_EItemSuggestPreference_Disliked":
+      return EItemSuggestPreference.k_EItemSuggestPreference_Disliked;
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum EItemSuggestPreference");
+  }
+}
+
+export function eItemSuggestPreferenceToJSON(object: EItemSuggestPreference): string {
+  switch (object) {
+    case EItemSuggestPreference.k_EItemSuggestPreference_None:
+      return "k_EItemSuggestPreference_None";
+    case EItemSuggestPreference.k_EItemSuggestPreference_Liked:
+      return "k_EItemSuggestPreference_Liked";
+    case EItemSuggestPreference.k_EItemSuggestPreference_Disliked:
+      return "k_EItemSuggestPreference_Disliked";
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum EItemSuggestPreference");
+  }
+}
+
+export enum ETimerAlertType {
+  k_TimerAlertType_PowerRune = 1,
+  k_TimerAlertType_BountyRune = 2,
+  k_TimerAlertType_WisdomShrine = 3,
+  k_TimerAlertType_JungleCamps = 4,
+  k_TimerAlertType_LotusPool = 5,
+}
+
+export function eTimerAlertTypeFromJSON(object: any): ETimerAlertType {
+  switch (object) {
+    case 1:
+    case "k_TimerAlertType_PowerRune":
+      return ETimerAlertType.k_TimerAlertType_PowerRune;
+    case 2:
+    case "k_TimerAlertType_BountyRune":
+      return ETimerAlertType.k_TimerAlertType_BountyRune;
+    case 3:
+    case "k_TimerAlertType_WisdomShrine":
+      return ETimerAlertType.k_TimerAlertType_WisdomShrine;
+    case 4:
+    case "k_TimerAlertType_JungleCamps":
+      return ETimerAlertType.k_TimerAlertType_JungleCamps;
+    case 5:
+    case "k_TimerAlertType_LotusPool":
+      return ETimerAlertType.k_TimerAlertType_LotusPool;
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum ETimerAlertType");
+  }
+}
+
+export function eTimerAlertTypeToJSON(object: ETimerAlertType): string {
+  switch (object) {
+    case ETimerAlertType.k_TimerAlertType_PowerRune:
+      return "k_TimerAlertType_PowerRune";
+    case ETimerAlertType.k_TimerAlertType_BountyRune:
+      return "k_TimerAlertType_BountyRune";
+    case ETimerAlertType.k_TimerAlertType_WisdomShrine:
+      return "k_TimerAlertType_WisdomShrine";
+    case ETimerAlertType.k_TimerAlertType_JungleCamps:
+      return "k_TimerAlertType_JungleCamps";
+    case ETimerAlertType.k_TimerAlertType_LotusPool:
+      return "k_TimerAlertType_LotusPool";
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum ETimerAlertType");
+  }
+}
+
 export interface CDOTAClientHardwareSpecs {
   logicalProcessors?: number | undefined;
   cpuCyclesPerSecond?: string | undefined;
@@ -4291,6 +4415,7 @@ export interface CMsgDOTACombatLogEntry {
   regeneratedHealth?: number | undefined;
   willReincarnate?: boolean | undefined;
   usesCharges?: boolean | undefined;
+  trackedStatId?: number | undefined;
 }
 
 export interface CMsgPendingEventAward {
@@ -4962,6 +5087,7 @@ function createBaseCMsgDOTACombatLogEntry(): CMsgDOTACombatLogEntry {
     regeneratedHealth: 0,
     willReincarnate: false,
     usesCharges: false,
+    trackedStatId: 0,
   };
 }
 
@@ -5205,6 +5331,9 @@ export const CMsgDOTACombatLogEntry = {
     }
     if (message.usesCharges !== undefined && message.usesCharges !== false) {
       writer.uint32(632).bool(message.usesCharges);
+    }
+    if (message.trackedStatId !== undefined && message.trackedStatId !== 0) {
+      writer.uint32(640).uint32(message.trackedStatId);
     }
     return writer;
   },
@@ -5779,6 +5908,13 @@ export const CMsgDOTACombatLogEntry = {
 
           message.usesCharges = reader.bool();
           continue;
+        case 80:
+          if (tag !== 640) {
+            break;
+          }
+
+          message.trackedStatId = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5883,6 +6019,7 @@ export const CMsgDOTACombatLogEntry = {
       regeneratedHealth: isSet(object.regeneratedHealth) ? globalThis.Number(object.regeneratedHealth) : 0,
       willReincarnate: isSet(object.willReincarnate) ? globalThis.Boolean(object.willReincarnate) : false,
       usesCharges: isSet(object.usesCharges) ? globalThis.Boolean(object.usesCharges) : false,
+      trackedStatId: isSet(object.trackedStatId) ? globalThis.Number(object.trackedStatId) : 0,
     };
   },
 
@@ -6125,6 +6262,9 @@ export const CMsgDOTACombatLogEntry = {
     if (message.usesCharges !== undefined && message.usesCharges !== false) {
       obj.usesCharges = message.usesCharges;
     }
+    if (message.trackedStatId !== undefined && message.trackedStatId !== 0) {
+      obj.trackedStatId = Math.round(message.trackedStatId);
+    }
     return obj;
   },
 
@@ -6212,6 +6352,7 @@ export const CMsgDOTACombatLogEntry = {
     message.regeneratedHealth = object.regeneratedHealth ?? 0;
     message.willReincarnate = object.willReincarnate ?? false;
     message.usesCharges = object.usesCharges ?? false;
+    message.trackedStatId = object.trackedStatId ?? 0;
     return message;
   },
 };
@@ -6352,15 +6493,11 @@ export const CMsgPendingEventAward = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

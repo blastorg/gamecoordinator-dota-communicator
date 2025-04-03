@@ -29,7 +29,7 @@ import {
   eNewBloomGiftingResponseFromJSON,
   eNewBloomGiftingResponseToJSON,
 } from "./dota_gcmessages_common";
-import { CLobbyTimedRewardDetails, CSODOTALobbyMember } from "./dota_gcmessages_common_lobby";
+import { CMsgCraftworksComponents } from "./dota_gcmessages_common_craftworks";
 import { CMsgLeaverState, CMvpData } from "./dota_gcmessages_common_match_management";
 import { CMsgOverworldMatchRewards } from "./dota_gcmessages_common_overworld";
 import {
@@ -60,7 +60,6 @@ import {
   eNetworkDisconnectionReasonFromJSON,
   eNetworkDisconnectionReasonToJSON,
 } from "./network_connection";
-import { CMsgSteamLearnAccessTokens } from "./steammessages_steamlearn.steamworkssdk";
 
 export enum EPoorNetworkConditionsType {
   k_EPoorNetworkConditions_None = 0,
@@ -433,7 +432,6 @@ export interface CMsgGameMatchSignOut {
   serverAddr?: string | undefined;
   firstBloodTime?: number | undefined;
   eventScore?: number | undefined;
-  picksBans: CMatchHeroSelectEvent[];
   fantasyStats: CMsgDOTAFantasyPlayerStats[];
   playerStrangeCountAdjustments: CMsgEconPlayerStrangeCountAdjustment[];
   automaticSurrender?: boolean | undefined;
@@ -534,6 +532,7 @@ export interface CMsgGameMatchSignOut_CTeam_CPlayer {
   playerTrackedStats: CMsgTrackedStat[];
   predictedRank?: number | undefined;
   selectedFacet?: number | undefined;
+  enhancementLevel?: number | undefined;
 }
 
 export enum CMsgGameMatchSignOut_CTeam_CPlayer_HeroDamageType {
@@ -717,8 +716,6 @@ export interface CMsgSignOutCommunicationSummary_PlayerCommunication_PingDetail 
 export interface CMsgGameMatchSignoutResponse {
   matchId?: string | undefined;
   replaySalt?: number | undefined;
-  timedRewardDetails: CLobbyTimedRewardDetails[];
-  xpRewardDetails: CSODOTALobbyMember[];
   leagueid?: number | undefined;
   metadataPrivateKey?: number | undefined;
   matchDetails?: CMsgDOTAMatch | undefined;
@@ -744,10 +741,6 @@ export interface CMsgGameMatchSignoutResponse_PlayerMetadata {
   winStreak?: number | undefined;
   bestWinStreak?: number | undefined;
   gamesPlayed?: number | undefined;
-}
-
-export interface CMsgTimedRewardContainer {
-  timedRewardDetails: CLobbyTimedRewardDetails[];
 }
 
 export interface CMsgGameMatchSignOutPermissionRequest {
@@ -928,6 +921,9 @@ export interface CMsgServerToGCRequestBatchPlayerResourcesResponse_Result {
   wins?: number | undefined;
   losses?: number | undefined;
   smurfCategory?: number | undefined;
+  commScore?: number | undefined;
+  behaviorScore?: number | undefined;
+  rankUncertainty?: number | undefined;
 }
 
 export interface CMsgDOTAPlayerFailedToConnect {
@@ -987,66 +983,6 @@ export interface CMsgTeamFanfare {
 export interface CMsgResponseTeamFanfare {
   fanfareGoodguys?: number | undefined;
   fanfareBadguys?: number | undefined;
-}
-
-export interface CMsgGameServerUploadSaveGame {
-  gameTime?: number | undefined;
-  saveGameData?: Buffer | undefined;
-  lobbyId?: string | undefined;
-  playerSteamIds: string[];
-}
-
-export interface CMsgGameServerSaveGameResult {
-  result?: CMsgGameServerSaveGameResult_Result | undefined;
-}
-
-export enum CMsgGameServerSaveGameResult_Result {
-  SaveSuccessful = 0,
-  SessionNotFound = 1,
-  DatabaseError = 2,
-  TooBig = 3,
-}
-
-export function cMsgGameServerSaveGameResult_ResultFromJSON(object: any): CMsgGameServerSaveGameResult_Result {
-  switch (object) {
-    case 0:
-    case "SaveSuccessful":
-      return CMsgGameServerSaveGameResult_Result.SaveSuccessful;
-    case 1:
-    case "SessionNotFound":
-      return CMsgGameServerSaveGameResult_Result.SessionNotFound;
-    case 2:
-    case "DatabaseError":
-      return CMsgGameServerSaveGameResult_Result.DatabaseError;
-    case 3:
-    case "TooBig":
-      return CMsgGameServerSaveGameResult_Result.TooBig;
-    default:
-      throw new globalThis.Error("Unrecognized enum value " + object + " for enum CMsgGameServerSaveGameResult_Result");
-  }
-}
-
-export function cMsgGameServerSaveGameResult_ResultToJSON(object: CMsgGameServerSaveGameResult_Result): string {
-  switch (object) {
-    case CMsgGameServerSaveGameResult_Result.SaveSuccessful:
-      return "SaveSuccessful";
-    case CMsgGameServerSaveGameResult_Result.SessionNotFound:
-      return "SessionNotFound";
-    case CMsgGameServerSaveGameResult_Result.DatabaseError:
-      return "DatabaseError";
-    case CMsgGameServerSaveGameResult_Result.TooBig:
-      return "TooBig";
-    default:
-      throw new globalThis.Error("Unrecognized enum value " + object + " for enum CMsgGameServerSaveGameResult_Result");
-  }
-}
-
-export interface CMsgGameServerGetLoadGame {
-  saveId?: number | undefined;
-}
-
-export interface CMsgGameServerGetLoadGameResult {
-  saveGameData?: Buffer | undefined;
 }
 
 export interface CMsgDOTAAwardEventPoints {
@@ -1128,7 +1064,8 @@ export interface CMsgServerToGCVictoryPredictions_Record {
   predictionItems: CMsgServerToGCVictoryPredictions_PredictionItem[];
 }
 
-export interface CMsgServerToGCRequestStatus {}
+export interface CMsgServerToGCRequestStatus {
+}
 
 export interface CMsgServerToGCRequestStatusResponse {
   response?: number | undefined;
@@ -1175,58 +1112,6 @@ export interface CMsgServerToGCKillSummaries_KillSummary {
   killerHeroId?: number | undefined;
   victimHeroId?: number | undefined;
   killCount?: number | undefined;
-}
-
-export interface CMsgGCToServerPredictionResult {
-  accountId?: number | undefined;
-  matchId?: string | undefined;
-  correct?: boolean | undefined;
-  predictions: CMsgGCToServerPredictionResult_Prediction[];
-}
-
-export interface CMsgGCToServerPredictionResult_Prediction {
-  itemDef?: number | undefined;
-  numCorrect?: number | undefined;
-  numFails?: number | undefined;
-  result?: CMsgGCToServerPredictionResult_Prediction_EResult | undefined;
-  grantedItemDefs: number[];
-}
-
-export enum CMsgGCToServerPredictionResult_Prediction_EResult {
-  k_eResult_ItemGranted = 1,
-  k_eResult_Destroyed = 2,
-}
-
-export function cMsgGCToServerPredictionResult_Prediction_EResultFromJSON(
-  object: any,
-): CMsgGCToServerPredictionResult_Prediction_EResult {
-  switch (object) {
-    case 1:
-    case "k_eResult_ItemGranted":
-      return CMsgGCToServerPredictionResult_Prediction_EResult.k_eResult_ItemGranted;
-    case 2:
-    case "k_eResult_Destroyed":
-      return CMsgGCToServerPredictionResult_Prediction_EResult.k_eResult_Destroyed;
-    default:
-      throw new globalThis.Error(
-        "Unrecognized enum value " + object + " for enum CMsgGCToServerPredictionResult_Prediction_EResult",
-      );
-  }
-}
-
-export function cMsgGCToServerPredictionResult_Prediction_EResultToJSON(
-  object: CMsgGCToServerPredictionResult_Prediction_EResult,
-): string {
-  switch (object) {
-    case CMsgGCToServerPredictionResult_Prediction_EResult.k_eResult_ItemGranted:
-      return "k_eResult_ItemGranted";
-    case CMsgGCToServerPredictionResult_Prediction_EResult.k_eResult_Destroyed:
-      return "k_eResult_Destroyed";
-    default:
-      throw new globalThis.Error(
-        "Unrecognized enum value " + object + " for enum CMsgGCToServerPredictionResult_Prediction_EResult",
-      );
-  }
 }
 
 export interface CMsgServerToGCLockCharmTrading {
@@ -1703,7 +1588,8 @@ export interface CMsgGCToServerCheerScalesOverride {
   scales: number[];
 }
 
-export interface CMsgGCToServerGetCheerState {}
+export interface CMsgGCToServerGetCheerState {
+}
 
 export interface CMsgCheerTypeState {
   cheerCounts: number[];
@@ -1736,10 +1622,6 @@ export interface CMsgServerToGCGetStickerHeroesResponse_Player {
   stickers?: CMsgStickerHeroes | undefined;
 }
 
-export interface CMsgGCToServerSteamLearnAccessTokensChanged {
-  accessTokens?: CMsgSteamLearnAccessTokens | undefined;
-}
-
 export interface CMsgSteamLearnMatchInfo {
   averageMmr?: number | undefined;
   radiantWon?: boolean | undefined;
@@ -1757,18 +1639,35 @@ export interface CMsgSteamLearnMatchInfoPlayer {
   playerMmr?: number | undefined;
 }
 
-export interface CMsgSteamLearnMatchHeroesV2 {
+export interface CMsgSteamLearnMatchInfoTeam {
+  radiantPlayers: CMsgSteamLearnMatchInfoTeam_Player[];
+  direPlayers: CMsgSteamLearnMatchInfoTeam_Player[];
+  radiantTeamWon?: boolean | undefined;
+}
+
+export interface CMsgSteamLearnMatchInfoTeam_Player {
+  prematchMmr?: number | undefined;
+  prematchRankUncertainty?: number | undefined;
+  prematchBehaviorScore?: number | undefined;
+  prematchCommScore?: number | undefined;
+  numPlayersInParty?: number | undefined;
+}
+
+export interface CMsgSteamLearnMatchHeroesV3 {
   radiantHeroIds: number[];
   direHeroIds: number[];
   radiantLanes: number[];
   direLanes: number[];
   radiantHeroFacets: number[];
   direHeroFacets: number[];
+  radiantPositions: number[];
+  direPositions: number[];
 }
 
-export interface CMsgSteamLearnMatchHeroV2 {
+export interface CMsgSteamLearnMatchHeroV3 {
   heroId?: number | undefined;
   lane?: number | undefined;
+  position?: number | undefined;
   alliedHeroIds: number[];
   enemyHeroIds: number[];
   heroFacet?: number | undefined;
@@ -1851,11 +1750,32 @@ export interface CMsgSteamLearnNeutralItemPurchase {
   isUsingDotaPlus?: boolean | undefined;
 }
 
+export interface CMsgSteamLearnNeutralItemPurchaseV2 {
+  tier?: number | undefined;
+  trinketId?: number | undefined;
+  enhancementId?: number | undefined;
+  previousTrinketId?: number | undefined;
+}
+
 export interface CMsgSteamLearnAbilitySkill {
   abilityId?: number | undefined;
   skilledAbilities: number[];
   gameTime?: number | undefined;
   isUsingDotaPlus?: boolean | undefined;
+}
+
+export interface CMsgSteamLearnEarlyGameItemPurchasesV2 {
+  itemIds: number[];
+  otherItemIds: number[];
+}
+
+export interface CMsgSteamLearnLateGameItemPurchasesV2 {
+  itemIds: number[];
+  otherItemIds: number[];
+}
+
+export interface CMsgSteamLearnMainGameItemPurchases {
+  itemIds: number[];
 }
 
 export interface CMsgSteamLearnWardPlacement {
@@ -1867,6 +1787,21 @@ export interface CMsgSteamLearnWardPlacement {
 export interface CMsgSteamLearnWardPlacement_Location {
   x?: number | undefined;
   y?: number | undefined;
+}
+
+export interface CMsgSteamLearnPlayerMatchState {
+  netWorth?: number | undefined;
+  level?: number | undefined;
+  deaths?: number | undefined;
+  respawnTime?: number | undefined;
+  hasBuyback?: boolean | undefined;
+  hasAegis?: boolean | undefined;
+  hasRapier?: boolean | undefined;
+  teamNetWorth?: number | undefined;
+  enemyTeamNetWorth?: number | undefined;
+  teamKills?: number | undefined;
+  enemyTeamKills?: number | undefined;
+  gameTime?: number | undefined;
 }
 
 export interface CMsgSignOutMuertaMinigame {
@@ -1903,6 +1838,16 @@ export interface CMsgSignOutOverworld_Player {
   accountId?: number | undefined;
   overworldId?: number | undefined;
   desiredTokenRewards: number[];
+}
+
+export interface CMsgSignOutCraftworks {
+  players: CMsgSignOutCraftworks_Player[];
+  eventId?: EEvent | undefined;
+}
+
+export interface CMsgSignOutCraftworks_Player {
+  accountId?: number | undefined;
+  components?: CMsgCraftworksComponents | undefined;
 }
 
 function createBaseCMsgPoorNetworkConditions(): CMsgPoorNetworkConditions {
@@ -2539,12 +2484,12 @@ export const CMsgConnectedPlayers = {
   fromPartial(object: DeepPartial<CMsgConnectedPlayers>): CMsgConnectedPlayers {
     const message = createBaseCMsgConnectedPlayers();
     message.connectedPlayers = object.connectedPlayers?.map((e) => CMsgConnectedPlayers_Player.fromPartial(e)) || [];
-    message.disconnectedPlayers =
-      object.disconnectedPlayers?.map((e) => CMsgConnectedPlayers_Player.fromPartial(e)) || [];
+    message.disconnectedPlayers = object.disconnectedPlayers?.map((e) => CMsgConnectedPlayers_Player.fromPartial(e)) ||
+      [];
     message.gameState = object.gameState ?? 0;
     message.firstBloodHappened = object.firstBloodHappened ?? false;
     message.poorNetworkConditions =
-      object.poorNetworkConditions !== undefined && object.poorNetworkConditions !== null
+      (object.poorNetworkConditions !== undefined && object.poorNetworkConditions !== null)
         ? CMsgPoorNetworkConditions.fromPartial(object.poorNetworkConditions)
         : undefined;
     message.sendReason = object.sendReason ?? 0;
@@ -2567,7 +2512,7 @@ export const CMsgConnectedPlayers_Player = {
       writer.uint32(9).fixed64(message.steamId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     if (message.leaverState !== undefined) {
       CMsgLeaverState.encode(message.leaverState, writer.uint32(26).fork()).ldelim();
@@ -2597,7 +2542,7 @@ export const CMsgConnectedPlayers_Player = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag !== 26) {
@@ -2657,10 +2602,9 @@ export const CMsgConnectedPlayers_Player = {
     const message = createBaseCMsgConnectedPlayers_Player();
     message.steamId = object.steamId ?? "0";
     message.heroId = object.heroId ?? 0;
-    message.leaverState =
-      object.leaverState !== undefined && object.leaverState !== null
-        ? CMsgLeaverState.fromPartial(object.leaverState)
-        : undefined;
+    message.leaverState = (object.leaverState !== undefined && object.leaverState !== null)
+      ? CMsgLeaverState.fromPartial(object.leaverState)
+      : undefined;
     message.disconnectReason = object.disconnectReason ?? 0;
     return message;
   },
@@ -2805,8 +2749,7 @@ export const CMsgGameServerInfo = {
       writer.uint32(176).uint32(message.assignedServerTvPort);
     }
     if (
-      message.legacyServerSteamdatagramAddress !== undefined &&
-      message.legacyServerSteamdatagramAddress.length !== 0
+      message.legacyServerSteamdatagramAddress !== undefined && message.legacyServerSteamdatagramAddress.length !== 0
     ) {
       writer.uint32(218).bytes(message.legacyServerSteamdatagramAddress);
     }
@@ -3141,8 +3084,7 @@ export const CMsgGameServerInfo = {
       obj.assignedServerTvPort = Math.round(message.assignedServerTvPort);
     }
     if (
-      message.legacyServerSteamdatagramAddress !== undefined &&
-      message.legacyServerSteamdatagramAddress.length !== 0
+      message.legacyServerSteamdatagramAddress !== undefined && message.legacyServerSteamdatagramAddress.length !== 0
     ) {
       obj.legacyServerSteamdatagramAddress = base64FromBytes(message.legacyServerSteamdatagramAddress);
     }
@@ -3385,14 +3327,13 @@ export const CMsgLeaverDetected = {
     const message = createBaseCMsgLeaverDetected();
     message.steamId = object.steamId ?? "0";
     message.leaverStatus = object.leaverStatus ?? 0;
-    message.leaverState =
-      object.leaverState !== undefined && object.leaverState !== null
-        ? CMsgLeaverState.fromPartial(object.leaverState)
-        : undefined;
+    message.leaverState = (object.leaverState !== undefined && object.leaverState !== null)
+      ? CMsgLeaverState.fromPartial(object.leaverState)
+      : undefined;
     message.serverCluster = object.serverCluster ?? 0;
     message.disconnectReason = object.disconnectReason ?? 0;
     message.poorNetworkConditions =
-      object.poorNetworkConditions !== undefined && object.poorNetworkConditions !== null
+      (object.poorNetworkConditions !== undefined && object.poorNetworkConditions !== null)
         ? CMsgPoorNetworkConditions.fromPartial(object.poorNetworkConditions)
         : undefined;
     return message;
@@ -3630,10 +3571,9 @@ export const CMsgServerToGCRealtimeStats = {
   },
   fromPartial(object: DeepPartial<CMsgServerToGCRealtimeStats>): CMsgServerToGCRealtimeStats {
     const message = createBaseCMsgServerToGCRealtimeStats();
-    message.delayed =
-      object.delayed !== undefined && object.delayed !== null
-        ? CMsgDOTARealtimeGameStatsTerse.fromPartial(object.delayed)
-        : undefined;
+    message.delayed = (object.delayed !== undefined && object.delayed !== null)
+      ? CMsgDOTARealtimeGameStatsTerse.fromPartial(object.delayed)
+      : undefined;
     return message;
   },
 };
@@ -3826,7 +3766,7 @@ export const CMsgSignOutGameplayStats_CPlayer = {
       writer.uint32(16).uint32(message.playerSlot);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     for (const v of message.timedPlayerStats) {
       CMatchPlayerTimedStats.encode(v!, writer.uint32(34).fork()).ldelim();
@@ -3860,7 +3800,7 @@ export const CMsgSignOutGameplayStats_CPlayer = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag !== 34) {
@@ -4040,7 +3980,6 @@ function createBaseCMsgGameMatchSignOut(): CMsgGameMatchSignOut {
     serverAddr: "",
     firstBloodTime: 0,
     eventScore: 0,
-    picksBans: [],
     fantasyStats: [],
     playerStrangeCountAdjustments: [],
     automaticSurrender: false,
@@ -4102,9 +4041,6 @@ export const CMsgGameMatchSignOut = {
     }
     if (message.eventScore !== undefined && message.eventScore !== 0) {
       writer.uint32(112).uint32(message.eventScore);
-    }
-    for (const v of message.picksBans) {
-      CMatchHeroSelectEvent.encode(v!, writer.uint32(122).fork()).ldelim();
     }
     for (const v of message.fantasyStats) {
       CMsgDOTAFantasyPlayerStats.encode(v!, writer.uint32(330).fork()).ldelim();
@@ -4274,13 +4210,6 @@ export const CMsgGameMatchSignOut = {
           }
 
           message.eventScore = reader.uint32();
-          continue;
-        case 15:
-          if (tag !== 122) {
-            break;
-          }
-
-          message.picksBans.push(CMatchHeroSelectEvent.decode(reader, reader.uint32()));
           continue;
         case 41:
           if (tag !== 330) {
@@ -4464,9 +4393,6 @@ export const CMsgGameMatchSignOut = {
       serverAddr: isSet(object.serverAddr) ? globalThis.String(object.serverAddr) : "",
       firstBloodTime: isSet(object.firstBloodTime) ? globalThis.Number(object.firstBloodTime) : 0,
       eventScore: isSet(object.eventScore) ? globalThis.Number(object.eventScore) : 0,
-      picksBans: globalThis.Array.isArray(object?.picksBans)
-        ? object.picksBans.map((e: any) => CMatchHeroSelectEvent.fromJSON(e))
-        : [],
       fantasyStats: globalThis.Array.isArray(object?.fantasyStats)
         ? object.fantasyStats.map((e: any) => CMsgDOTAFantasyPlayerStats.fromJSON(e))
         : [],
@@ -4551,15 +4477,12 @@ export const CMsgGameMatchSignOut = {
     if (message.eventScore !== undefined && message.eventScore !== 0) {
       obj.eventScore = Math.round(message.eventScore);
     }
-    if (message.picksBans?.length) {
-      obj.picksBans = message.picksBans.map((e) => CMatchHeroSelectEvent.toJSON(e));
-    }
     if (message.fantasyStats?.length) {
       obj.fantasyStats = message.fantasyStats.map((e) => CMsgDOTAFantasyPlayerStats.toJSON(e));
     }
     if (message.playerStrangeCountAdjustments?.length) {
       obj.playerStrangeCountAdjustments = message.playerStrangeCountAdjustments.map((e) =>
-        CMsgEconPlayerStrangeCountAdjustment.toJSON(e),
+        CMsgEconPlayerStrangeCountAdjustment.toJSON(e)
       );
     }
     if (message.automaticSurrender !== undefined && message.automaticSurrender !== false) {
@@ -4594,7 +4517,7 @@ export const CMsgGameMatchSignOut = {
     }
     if (message.eventGameLeaderboardEntries?.length) {
       obj.eventGameLeaderboardEntries = message.eventGameLeaderboardEntries.map((e) =>
-        CMsgGameMatchSignOut_EventGameLeaderboardEntry.toJSON(e),
+        CMsgGameMatchSignOut_EventGameLeaderboardEntry.toJSON(e)
       );
     }
     if (message.wardPlacements?.length) {
@@ -4637,14 +4560,13 @@ export const CMsgGameMatchSignOut = {
     message.serverAddr = object.serverAddr ?? "";
     message.firstBloodTime = object.firstBloodTime ?? 0;
     message.eventScore = object.eventScore ?? 0;
-    message.picksBans = object.picksBans?.map((e) => CMatchHeroSelectEvent.fromPartial(e)) || [];
     message.fantasyStats = object.fantasyStats?.map((e) => CMsgDOTAFantasyPlayerStats.fromPartial(e)) || [];
     message.playerStrangeCountAdjustments =
       object.playerStrangeCountAdjustments?.map((e) => CMsgEconPlayerStrangeCountAdjustment.fromPartial(e)) || [];
     message.automaticSurrender = object.automaticSurrender ?? false;
     message.serverVersion = object.serverVersion ?? 0;
     message.poorNetworkConditions =
-      object.poorNetworkConditions !== undefined && object.poorNetworkConditions !== null
+      (object.poorNetworkConditions !== undefined && object.poorNetworkConditions !== null)
         ? CMsgPoorNetworkConditions.fromPartial(object.poorNetworkConditions)
         : undefined;
     message.additionalMsgs =
@@ -4652,10 +4574,9 @@ export const CMsgGameMatchSignOut = {
     message.socialFeedEvents =
       object.socialFeedEvents?.map((e) => CMsgGameMatchSignOut_CSocialFeedMatchEvent.fromPartial(e)) || [];
     message.averageNetworthDelta = object.averageNetworthDelta ?? 0;
-    message.customGameData =
-      object.customGameData !== undefined && object.customGameData !== null
-        ? CMsgGameMatchSignOut_CCustomGameData.fromPartial(object.customGameData)
-        : undefined;
+    message.customGameData = (object.customGameData !== undefined && object.customGameData !== null)
+      ? CMsgGameMatchSignOut_CCustomGameData.fromPartial(object.customGameData)
+      : undefined;
     message.matchFlags = object.matchFlags ?? 0;
     message.teamScores = object.teamScores?.map((e) => e) || [];
     message.preGameDuration = object.preGameDuration ?? 0;
@@ -4663,10 +4584,9 @@ export const CMsgGameMatchSignOut = {
       object.eventGameLeaderboardEntries?.map((e) => CMsgGameMatchSignOut_EventGameLeaderboardEntry.fromPartial(e)) ||
       [];
     message.wardPlacements = object.wardPlacements?.map((e) => CMsgGameMatchSignOut_WardPlacement.fromPartial(e)) || [];
-    message.gameplayStats =
-      object.gameplayStats !== undefined && object.gameplayStats !== null
-        ? CMsgSignOutGameplayStats.fromPartial(object.gameplayStats)
-        : undefined;
+    message.gameplayStats = (object.gameplayStats !== undefined && object.gameplayStats !== null)
+      ? CMsgSignOutGameplayStats.fromPartial(object.gameplayStats)
+      : undefined;
     message.extraMessages = object.extraMessages?.map((e) => CExtraMsgBlock.fromPartial(e)) || [];
     message.trainingDataRecorded = object.trainingDataRecorded ?? false;
     message.winningTeam = object.winningTeam ?? 0;
@@ -4828,6 +4748,7 @@ function createBaseCMsgGameMatchSignOut_CTeam_CPlayer(): CMsgGameMatchSignOut_CT
     playerTrackedStats: [],
     predictedRank: 0,
     selectedFacet: 0,
+    enhancementLevel: 0,
   };
 }
 
@@ -4837,7 +4758,7 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
       writer.uint32(9).fixed64(message.steamId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     writer.uint32(34).fork();
     for (const v of message.items) {
@@ -4937,10 +4858,8 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
       CMatchPlayerPermanentBuff.encode(v!, writer.uint32(322).fork()).ldelim();
     }
     if (message.customGameData !== undefined) {
-      CMsgGameMatchSignOut_CTeam_CPlayer_CCustomGameData.encode(
-        message.customGameData,
-        writer.uint32(282).fork(),
-      ).ldelim();
+      CMsgGameMatchSignOut_CTeam_CPlayer_CCustomGameData.encode(message.customGameData, writer.uint32(282).fork())
+        .ldelim();
     }
     if (message.matchPlayerFlags !== undefined && message.matchPlayerFlags !== 0) {
       writer.uint32(288).uint32(message.matchPlayerFlags);
@@ -5060,6 +4979,9 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
     if (message.selectedFacet !== undefined && message.selectedFacet !== 0) {
       writer.uint32(656).uint32(message.selectedFacet);
     }
+    if (message.enhancementLevel !== undefined && message.enhancementLevel !== 0) {
+      writer.uint32(664).uint32(message.enhancementLevel);
+    }
     return writer;
   },
 
@@ -5082,7 +5004,7 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag === 32) {
@@ -5618,6 +5540,13 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
 
           message.selectedFacet = reader.uint32();
           continue;
+        case 83:
+          if (tag !== 664) {
+            break;
+          }
+
+          message.enhancementLevel = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5729,6 +5658,7 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
         : [],
       predictedRank: isSet(object.predictedRank) ? globalThis.Number(object.predictedRank) : 0,
       selectedFacet: isSet(object.selectedFacet) ? globalThis.Number(object.selectedFacet) : 0,
+      enhancementLevel: isSet(object.enhancementLevel) ? globalThis.Number(object.enhancementLevel) : 0,
     };
   },
 
@@ -5829,7 +5759,7 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
     }
     if (message.additionalUnitsInventory?.length) {
       obj.additionalUnitsInventory = message.additionalUnitsInventory.map((e) =>
-        CMatchAdditionalUnitInventory.toJSON(e),
+        CMatchAdditionalUnitInventory.toJSON(e)
       );
     }
     if (message.permanentBuffs?.length) {
@@ -5861,12 +5791,12 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
     }
     if (message.heroDamageReceived?.length) {
       obj.heroDamageReceived = message.heroDamageReceived.map((e) =>
-        CMsgGameMatchSignOut_CTeam_CPlayer_HeroDamageReceived.toJSON(e),
+        CMsgGameMatchSignOut_CTeam_CPlayer_HeroDamageReceived.toJSON(e)
       );
     }
     if (message.heroDamageDealt?.length) {
       obj.heroDamageDealt = message.heroDamageDealt.map((e) =>
-        CMsgGameMatchSignOut_CTeam_CPlayer_HeroDamageReceived.toJSON(e),
+        CMsgGameMatchSignOut_CTeam_CPlayer_HeroDamageReceived.toJSON(e)
       );
     }
     if (message.secondsDead !== undefined && message.secondsDead !== 0) {
@@ -5956,6 +5886,9 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
     if (message.selectedFacet !== undefined && message.selectedFacet !== 0) {
       obj.selectedFacet = Math.round(message.selectedFacet);
     }
+    if (message.enhancementLevel !== undefined && message.enhancementLevel !== 0) {
+      obj.enhancementLevel = Math.round(message.enhancementLevel);
+    }
     return obj;
   },
 
@@ -5998,10 +5931,9 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
     message.additionalUnitsInventory =
       object.additionalUnitsInventory?.map((e) => CMatchAdditionalUnitInventory.fromPartial(e)) || [];
     message.permanentBuffs = object.permanentBuffs?.map((e) => CMatchPlayerPermanentBuff.fromPartial(e)) || [];
-    message.customGameData =
-      object.customGameData !== undefined && object.customGameData !== null
-        ? CMsgGameMatchSignOut_CTeam_CPlayer_CCustomGameData.fromPartial(object.customGameData)
-        : undefined;
+    message.customGameData = (object.customGameData !== undefined && object.customGameData !== null)
+      ? CMsgGameMatchSignOut_CTeam_CPlayer_CCustomGameData.fromPartial(object.customGameData)
+      : undefined;
     message.matchPlayerFlags = object.matchPlayerFlags ?? 0;
     message.talentAbilityIds = object.talentAbilityIds?.map((e) => e) || [];
     message.heroPickOrder = object.heroPickOrder ?? 0;
@@ -6042,6 +5974,7 @@ export const CMsgGameMatchSignOut_CTeam_CPlayer = {
     message.playerTrackedStats = object.playerTrackedStats?.map((e) => CMsgTrackedStat.fromPartial(e)) || [];
     message.predictedRank = object.predictedRank ?? 0;
     message.selectedFacet = object.selectedFacet ?? 0;
+    message.enhancementLevel = object.enhancementLevel ?? 0;
     return message;
   },
 };
@@ -7205,7 +7138,7 @@ export const CMsgSignOutPlayerStats = {
       writer.uint32(24).uint32(message.rank);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     if (message.rampages !== undefined && message.rampages !== 0) {
       writer.uint32(40).uint32(message.rampages);
@@ -7321,7 +7254,7 @@ export const CMsgSignOutPlayerStats = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -7739,8 +7672,8 @@ export const CMsgSignOutCommunicationSummary = {
   },
   fromPartial(object: DeepPartial<CMsgSignOutCommunicationSummary>): CMsgSignOutCommunicationSummary {
     const message = createBaseCMsgSignOutCommunicationSummary();
-    message.players =
-      object.players?.map((e) => CMsgSignOutCommunicationSummary_PlayerCommunication.fromPartial(e)) || [];
+    message.players = object.players?.map((e) => CMsgSignOutCommunicationSummary_PlayerCommunication.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -8047,7 +7980,7 @@ export const CMsgSignOutCommunicationSummary_PlayerCommunication = {
     }
     if (message.pingDetails?.length) {
       obj.pingDetails = message.pingDetails.map((e) =>
-        CMsgSignOutCommunicationSummary_PlayerCommunication_PingDetail.toJSON(e),
+        CMsgSignOutCommunicationSummary_PlayerCommunication_PingDetail.toJSON(e)
       );
     }
     if (message.commsBlocksSolo !== undefined && message.commsBlocksSolo !== 0) {
@@ -8183,8 +8116,6 @@ function createBaseCMsgGameMatchSignoutResponse(): CMsgGameMatchSignoutResponse 
   return {
     matchId: "0",
     replaySalt: 0,
-    timedRewardDetails: [],
-    xpRewardDetails: [],
     leagueid: 0,
     metadataPrivateKey: 0,
     matchDetails: undefined,
@@ -8204,12 +8135,6 @@ export const CMsgGameMatchSignoutResponse = {
     }
     if (message.replaySalt !== undefined && message.replaySalt !== 0) {
       writer.uint32(21).fixed32(message.replaySalt);
-    }
-    for (const v of message.timedRewardDetails) {
-      CLobbyTimedRewardDetails.encode(v!, writer.uint32(26).fork()).ldelim();
-    }
-    for (const v of message.xpRewardDetails) {
-      CSODOTALobbyMember.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     if (message.leagueid !== undefined && message.leagueid !== 0) {
       writer.uint32(40).uint32(message.leagueid);
@@ -8261,20 +8186,6 @@ export const CMsgGameMatchSignoutResponse = {
           }
 
           message.replaySalt = reader.fixed32();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.timedRewardDetails.push(CLobbyTimedRewardDetails.decode(reader, reader.uint32()));
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
-          message.xpRewardDetails.push(CSODOTALobbyMember.decode(reader, reader.uint32()));
           continue;
         case 5:
           if (tag !== 40) {
@@ -8352,12 +8263,6 @@ export const CMsgGameMatchSignoutResponse = {
     return {
       matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "0",
       replaySalt: isSet(object.replaySalt) ? globalThis.Number(object.replaySalt) : 0,
-      timedRewardDetails: globalThis.Array.isArray(object?.timedRewardDetails)
-        ? object.timedRewardDetails.map((e: any) => CLobbyTimedRewardDetails.fromJSON(e))
-        : [],
-      xpRewardDetails: globalThis.Array.isArray(object?.xpRewardDetails)
-        ? object.xpRewardDetails.map((e: any) => CSODOTALobbyMember.fromJSON(e))
-        : [],
       leagueid: isSet(object.leagueid) ? globalThis.Number(object.leagueid) : 0,
       metadataPrivateKey: isSet(object.metadataPrivateKey) ? globalThis.Number(object.metadataPrivateKey) : 0,
       matchDetails: isSet(object.matchDetails) ? CMsgDOTAMatch.fromJSON(object.matchDetails) : undefined,
@@ -8381,12 +8286,6 @@ export const CMsgGameMatchSignoutResponse = {
     }
     if (message.replaySalt !== undefined && message.replaySalt !== 0) {
       obj.replaySalt = Math.round(message.replaySalt);
-    }
-    if (message.timedRewardDetails?.length) {
-      obj.timedRewardDetails = message.timedRewardDetails.map((e) => CLobbyTimedRewardDetails.toJSON(e));
-    }
-    if (message.xpRewardDetails?.length) {
-      obj.xpRewardDetails = message.xpRewardDetails.map((e) => CSODOTALobbyMember.toJSON(e));
     }
     if (message.leagueid !== undefined && message.leagueid !== 0) {
       obj.leagueid = Math.round(message.leagueid);
@@ -8425,25 +8324,22 @@ export const CMsgGameMatchSignoutResponse = {
     const message = createBaseCMsgGameMatchSignoutResponse();
     message.matchId = object.matchId ?? "0";
     message.replaySalt = object.replaySalt ?? 0;
-    message.timedRewardDetails = object.timedRewardDetails?.map((e) => CLobbyTimedRewardDetails.fromPartial(e)) || [];
-    message.xpRewardDetails = object.xpRewardDetails?.map((e) => CSODOTALobbyMember.fromPartial(e)) || [];
     message.leagueid = object.leagueid ?? 0;
     message.metadataPrivateKey = object.metadataPrivateKey ?? 0;
-    message.matchDetails =
-      object.matchDetails !== undefined && object.matchDetails !== null
-        ? CMsgDOTAMatch.fromPartial(object.matchDetails)
-        : undefined;
+    message.matchDetails = (object.matchDetails !== undefined && object.matchDetails !== null)
+      ? CMsgDOTAMatch.fromPartial(object.matchDetails)
+      : undefined;
     message.playersMetadata =
       object.playersMetadata?.map((e) => CMsgGameMatchSignoutResponse_PlayerMetadata.fromPartial(e)) || [];
-    message.mvpData =
-      object.mvpData !== undefined && object.mvpData !== null ? CMvpData.fromPartial(object.mvpData) : undefined;
+    message.mvpData = (object.mvpData !== undefined && object.mvpData !== null)
+      ? CMvpData.fromPartial(object.mvpData)
+      : undefined;
     message.owPrivateKey = object.owPrivateKey ?? "0";
     message.owSalt = object.owSalt ?? 0;
     message.owReplayId = object.owReplayId ?? "0";
-    message.overworldRewards =
-      object.overworldRewards !== undefined && object.overworldRewards !== null
-        ? CMsgOverworldMatchRewards.fromPartial(object.overworldRewards)
-        : undefined;
+    message.overworldRewards = (object.overworldRewards !== undefined && object.overworldRewards !== null)
+      ? CMsgOverworldMatchRewards.fromPartial(object.overworldRewards)
+      : undefined;
     return message;
   },
 };
@@ -8469,7 +8365,7 @@ function createBaseCMsgGameMatchSignoutResponse_PlayerMetadata(): CMsgGameMatchS
 export const CMsgGameMatchSignoutResponse_PlayerMetadata = {
   encode(message: CMsgGameMatchSignoutResponse_PlayerMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.avgKillsX16 !== undefined && message.avgKillsX16 !== 0) {
       writer.uint32(16).uint32(message.avgKillsX16);
@@ -8522,7 +8418,7 @@ export const CMsgGameMatchSignoutResponse_PlayerMetadata = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -8699,67 +8595,6 @@ export const CMsgGameMatchSignoutResponse_PlayerMetadata = {
     message.winStreak = object.winStreak ?? 0;
     message.bestWinStreak = object.bestWinStreak ?? 0;
     message.gamesPlayed = object.gamesPlayed ?? 0;
-    return message;
-  },
-};
-
-function createBaseCMsgTimedRewardContainer(): CMsgTimedRewardContainer {
-  return { timedRewardDetails: [] };
-}
-
-export const CMsgTimedRewardContainer = {
-  encode(message: CMsgTimedRewardContainer, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.timedRewardDetails) {
-      CLobbyTimedRewardDetails.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgTimedRewardContainer {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgTimedRewardContainer();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.timedRewardDetails.push(CLobbyTimedRewardDetails.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgTimedRewardContainer {
-    return {
-      timedRewardDetails: globalThis.Array.isArray(object?.timedRewardDetails)
-        ? object.timedRewardDetails.map((e: any) => CLobbyTimedRewardDetails.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: CMsgTimedRewardContainer): unknown {
-    const obj: any = {};
-    if (message.timedRewardDetails?.length) {
-      obj.timedRewardDetails = message.timedRewardDetails.map((e) => CLobbyTimedRewardDetails.toJSON(e));
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgTimedRewardContainer>): CMsgTimedRewardContainer {
-    return CMsgTimedRewardContainer.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CMsgTimedRewardContainer>): CMsgTimedRewardContainer {
-    const message = createBaseCMsgTimedRewardContainer();
-    message.timedRewardDetails = object.timedRewardDetails?.map((e) => CLobbyTimedRewardDetails.fromPartial(e)) || [];
     return message;
   },
 };
@@ -9763,12 +9598,12 @@ export const CMsgGameMatchSignOutBanData = {
   encode(message: CMsgGameMatchSignOutBanData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).fork();
     for (const v of message.heroBans) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(18).fork();
     for (const v of message.heroBanVotes) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     return writer;
@@ -9783,7 +9618,7 @@ export const CMsgGameMatchSignOutBanData = {
       switch (tag >>> 3) {
         case 1:
           if (tag === 8) {
-            message.heroBans.push(reader.uint32());
+            message.heroBans.push(reader.int32());
 
             continue;
           }
@@ -9791,7 +9626,7 @@ export const CMsgGameMatchSignOutBanData = {
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.heroBans.push(reader.uint32());
+              message.heroBans.push(reader.int32());
             }
 
             continue;
@@ -9800,7 +9635,7 @@ export const CMsgGameMatchSignOutBanData = {
           break;
         case 2:
           if (tag === 16) {
-            message.heroBanVotes.push(reader.uint32());
+            message.heroBanVotes.push(reader.int32());
 
             continue;
           }
@@ -9808,7 +9643,7 @@ export const CMsgGameMatchSignOutBanData = {
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.heroBanVotes.push(reader.uint32());
+              message.heroBanVotes.push(reader.int32());
             }
 
             continue;
@@ -10035,14 +9870,12 @@ export const CMsgDOTALiveScoreboardUpdate = {
     message.tournamentGameId = object.tournamentGameId ?? 0;
     message.duration = object.duration ?? 0;
     message.hltvDelay = object.hltvDelay ?? 0;
-    message.teamGood =
-      object.teamGood !== undefined && object.teamGood !== null
-        ? CMsgDOTALiveScoreboardUpdate_Team.fromPartial(object.teamGood)
-        : undefined;
-    message.teamBad =
-      object.teamBad !== undefined && object.teamBad !== null
-        ? CMsgDOTALiveScoreboardUpdate_Team.fromPartial(object.teamBad)
-        : undefined;
+    message.teamGood = (object.teamGood !== undefined && object.teamGood !== null)
+      ? CMsgDOTALiveScoreboardUpdate_Team.fromPartial(object.teamGood)
+      : undefined;
+    message.teamBad = (object.teamBad !== undefined && object.teamBad !== null)
+      ? CMsgDOTALiveScoreboardUpdate_Team.fromPartial(object.teamBad)
+      : undefined;
     message.roshanRespawnTimer = object.roshanRespawnTimer ?? 0;
     message.leagueId = object.leagueId ?? 0;
     message.matchId = object.matchId ?? "0";
@@ -10070,12 +9903,12 @@ export const CMsgDOTALiveScoreboardUpdate_Team = {
     }
     writer.uint32(42).fork();
     for (const v of message.heroPicks) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(50).fork();
     for (const v of message.heroBans) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     return writer;
@@ -10118,7 +9951,7 @@ export const CMsgDOTALiveScoreboardUpdate_Team = {
           continue;
         case 5:
           if (tag === 40) {
-            message.heroPicks.push(reader.uint32());
+            message.heroPicks.push(reader.int32());
 
             continue;
           }
@@ -10126,7 +9959,7 @@ export const CMsgDOTALiveScoreboardUpdate_Team = {
           if (tag === 42) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.heroPicks.push(reader.uint32());
+              message.heroPicks.push(reader.int32());
             }
 
             continue;
@@ -10135,7 +9968,7 @@ export const CMsgDOTALiveScoreboardUpdate_Team = {
           break;
         case 6:
           if (tag === 48) {
-            message.heroBans.push(reader.uint32());
+            message.heroBans.push(reader.int32());
 
             continue;
           }
@@ -10143,7 +9976,7 @@ export const CMsgDOTALiveScoreboardUpdate_Team = {
           if (tag === 50) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.heroBans.push(reader.uint32());
+              message.heroBans.push(reader.int32());
             }
 
             continue;
@@ -10256,7 +10089,7 @@ export const CMsgDOTALiveScoreboardUpdate_Team_Player = {
       writer.uint32(26).string(message.heroName);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     if (message.kills !== undefined && message.kills !== 0) {
       writer.uint32(40).uint32(message.kills);
@@ -10363,7 +10196,7 @@ export const CMsgDOTALiveScoreboardUpdate_Team_Player = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -10978,6 +10811,9 @@ function createBaseCMsgServerToGCRequestBatchPlayerResourcesResponse_Result(): C
     wins: 0,
     losses: 0,
     smurfCategory: 0,
+    commScore: 0,
+    behaviorScore: 0,
+    rankUncertainty: 0,
   };
 }
 
@@ -11018,6 +10854,15 @@ export const CMsgServerToGCRequestBatchPlayerResourcesResponse_Result = {
     }
     if (message.smurfCategory !== undefined && message.smurfCategory !== 0) {
       writer.uint32(104).int32(message.smurfCategory);
+    }
+    if (message.commScore !== undefined && message.commScore !== 0) {
+      writer.uint32(112).int32(message.commScore);
+    }
+    if (message.behaviorScore !== undefined && message.behaviorScore !== 0) {
+      writer.uint32(120).int32(message.behaviorScore);
+    }
+    if (message.rankUncertainty !== undefined && message.rankUncertainty !== 0) {
+      writer.uint32(128).int32(message.rankUncertainty);
     }
     return writer;
   },
@@ -11106,6 +10951,27 @@ export const CMsgServerToGCRequestBatchPlayerResourcesResponse_Result = {
 
           message.smurfCategory = reader.int32();
           continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.commScore = reader.int32();
+          continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.behaviorScore = reader.int32();
+          continue;
+        case 16:
+          if (tag !== 128) {
+            break;
+          }
+
+          message.rankUncertainty = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -11128,6 +10994,9 @@ export const CMsgServerToGCRequestBatchPlayerResourcesResponse_Result = {
       wins: isSet(object.wins) ? globalThis.Number(object.wins) : 0,
       losses: isSet(object.losses) ? globalThis.Number(object.losses) : 0,
       smurfCategory: isSet(object.smurfCategory) ? globalThis.Number(object.smurfCategory) : 0,
+      commScore: isSet(object.commScore) ? globalThis.Number(object.commScore) : 0,
+      behaviorScore: isSet(object.behaviorScore) ? globalThis.Number(object.behaviorScore) : 0,
+      rankUncertainty: isSet(object.rankUncertainty) ? globalThis.Number(object.rankUncertainty) : 0,
     };
   },
 
@@ -11166,6 +11035,15 @@ export const CMsgServerToGCRequestBatchPlayerResourcesResponse_Result = {
     if (message.smurfCategory !== undefined && message.smurfCategory !== 0) {
       obj.smurfCategory = Math.round(message.smurfCategory);
     }
+    if (message.commScore !== undefined && message.commScore !== 0) {
+      obj.commScore = Math.round(message.commScore);
+    }
+    if (message.behaviorScore !== undefined && message.behaviorScore !== 0) {
+      obj.behaviorScore = Math.round(message.behaviorScore);
+    }
+    if (message.rankUncertainty !== undefined && message.rankUncertainty !== 0) {
+      obj.rankUncertainty = Math.round(message.rankUncertainty);
+    }
     return obj;
   },
 
@@ -11189,6 +11067,9 @@ export const CMsgServerToGCRequestBatchPlayerResourcesResponse_Result = {
     message.wins = object.wins ?? 0;
     message.losses = object.losses ?? 0;
     message.smurfCategory = object.smurfCategory ?? 0;
+    message.commScore = object.commScore ?? 0;
+    message.behaviorScore = object.behaviorScore ?? 0;
+    message.rankUncertainty = object.rankUncertainty ?? 0;
     return message;
   },
 };
@@ -12114,297 +11995,6 @@ export const CMsgResponseTeamFanfare = {
   },
 };
 
-function createBaseCMsgGameServerUploadSaveGame(): CMsgGameServerUploadSaveGame {
-  return { gameTime: 0, saveGameData: Buffer.alloc(0), lobbyId: "0", playerSteamIds: [] };
-}
-
-export const CMsgGameServerUploadSaveGame = {
-  encode(message: CMsgGameServerUploadSaveGame, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.gameTime !== undefined && message.gameTime !== 0) {
-      writer.uint32(8).uint32(message.gameTime);
-    }
-    if (message.saveGameData !== undefined && message.saveGameData.length !== 0) {
-      writer.uint32(18).bytes(message.saveGameData);
-    }
-    if (message.lobbyId !== undefined && message.lobbyId !== "0") {
-      writer.uint32(24).uint64(message.lobbyId);
-    }
-    writer.uint32(34).fork();
-    for (const v of message.playerSteamIds) {
-      writer.uint64(v);
-    }
-    writer.ldelim();
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGameServerUploadSaveGame {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgGameServerUploadSaveGame();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.gameTime = reader.uint32();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.saveGameData = reader.bytes() as Buffer;
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.lobbyId = longToString(reader.uint64() as Long);
-          continue;
-        case 4:
-          if (tag === 32) {
-            message.playerSteamIds.push(longToString(reader.uint64() as Long));
-
-            continue;
-          }
-
-          if (tag === 34) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.playerSteamIds.push(longToString(reader.uint64() as Long));
-            }
-
-            continue;
-          }
-
-          break;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgGameServerUploadSaveGame {
-    return {
-      gameTime: isSet(object.gameTime) ? globalThis.Number(object.gameTime) : 0,
-      saveGameData: isSet(object.saveGameData) ? Buffer.from(bytesFromBase64(object.saveGameData)) : Buffer.alloc(0),
-      lobbyId: isSet(object.lobbyId) ? globalThis.String(object.lobbyId) : "0",
-      playerSteamIds: globalThis.Array.isArray(object?.playerSteamIds)
-        ? object.playerSteamIds.map((e: any) => globalThis.String(e))
-        : [],
-    };
-  },
-
-  toJSON(message: CMsgGameServerUploadSaveGame): unknown {
-    const obj: any = {};
-    if (message.gameTime !== undefined && message.gameTime !== 0) {
-      obj.gameTime = Math.round(message.gameTime);
-    }
-    if (message.saveGameData !== undefined && message.saveGameData.length !== 0) {
-      obj.saveGameData = base64FromBytes(message.saveGameData);
-    }
-    if (message.lobbyId !== undefined && message.lobbyId !== "0") {
-      obj.lobbyId = message.lobbyId;
-    }
-    if (message.playerSteamIds?.length) {
-      obj.playerSteamIds = message.playerSteamIds;
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgGameServerUploadSaveGame>): CMsgGameServerUploadSaveGame {
-    return CMsgGameServerUploadSaveGame.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CMsgGameServerUploadSaveGame>): CMsgGameServerUploadSaveGame {
-    const message = createBaseCMsgGameServerUploadSaveGame();
-    message.gameTime = object.gameTime ?? 0;
-    message.saveGameData = object.saveGameData ?? Buffer.alloc(0);
-    message.lobbyId = object.lobbyId ?? "0";
-    message.playerSteamIds = object.playerSteamIds?.map((e) => e) || [];
-    return message;
-  },
-};
-
-function createBaseCMsgGameServerSaveGameResult(): CMsgGameServerSaveGameResult {
-  return { result: 0 };
-}
-
-export const CMsgGameServerSaveGameResult = {
-  encode(message: CMsgGameServerSaveGameResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.result !== undefined && message.result !== 0) {
-      writer.uint32(8).int32(message.result);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGameServerSaveGameResult {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgGameServerSaveGameResult();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.result = reader.int32() as any;
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgGameServerSaveGameResult {
-    return { result: isSet(object.result) ? cMsgGameServerSaveGameResult_ResultFromJSON(object.result) : 0 };
-  },
-
-  toJSON(message: CMsgGameServerSaveGameResult): unknown {
-    const obj: any = {};
-    if (message.result !== undefined && message.result !== 0) {
-      obj.result = cMsgGameServerSaveGameResult_ResultToJSON(message.result);
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgGameServerSaveGameResult>): CMsgGameServerSaveGameResult {
-    return CMsgGameServerSaveGameResult.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CMsgGameServerSaveGameResult>): CMsgGameServerSaveGameResult {
-    const message = createBaseCMsgGameServerSaveGameResult();
-    message.result = object.result ?? 0;
-    return message;
-  },
-};
-
-function createBaseCMsgGameServerGetLoadGame(): CMsgGameServerGetLoadGame {
-  return { saveId: 0 };
-}
-
-export const CMsgGameServerGetLoadGame = {
-  encode(message: CMsgGameServerGetLoadGame, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.saveId !== undefined && message.saveId !== 0) {
-      writer.uint32(8).uint32(message.saveId);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGameServerGetLoadGame {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgGameServerGetLoadGame();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.saveId = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgGameServerGetLoadGame {
-    return { saveId: isSet(object.saveId) ? globalThis.Number(object.saveId) : 0 };
-  },
-
-  toJSON(message: CMsgGameServerGetLoadGame): unknown {
-    const obj: any = {};
-    if (message.saveId !== undefined && message.saveId !== 0) {
-      obj.saveId = Math.round(message.saveId);
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgGameServerGetLoadGame>): CMsgGameServerGetLoadGame {
-    return CMsgGameServerGetLoadGame.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CMsgGameServerGetLoadGame>): CMsgGameServerGetLoadGame {
-    const message = createBaseCMsgGameServerGetLoadGame();
-    message.saveId = object.saveId ?? 0;
-    return message;
-  },
-};
-
-function createBaseCMsgGameServerGetLoadGameResult(): CMsgGameServerGetLoadGameResult {
-  return { saveGameData: Buffer.alloc(0) };
-}
-
-export const CMsgGameServerGetLoadGameResult = {
-  encode(message: CMsgGameServerGetLoadGameResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.saveGameData !== undefined && message.saveGameData.length !== 0) {
-      writer.uint32(10).bytes(message.saveGameData);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGameServerGetLoadGameResult {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgGameServerGetLoadGameResult();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.saveGameData = reader.bytes() as Buffer;
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgGameServerGetLoadGameResult {
-    return {
-      saveGameData: isSet(object.saveGameData) ? Buffer.from(bytesFromBase64(object.saveGameData)) : Buffer.alloc(0),
-    };
-  },
-
-  toJSON(message: CMsgGameServerGetLoadGameResult): unknown {
-    const obj: any = {};
-    if (message.saveGameData !== undefined && message.saveGameData.length !== 0) {
-      obj.saveGameData = base64FromBytes(message.saveGameData);
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgGameServerGetLoadGameResult>): CMsgGameServerGetLoadGameResult {
-    return CMsgGameServerGetLoadGameResult.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CMsgGameServerGetLoadGameResult>): CMsgGameServerGetLoadGameResult {
-    const message = createBaseCMsgGameServerGetLoadGameResult();
-    message.saveGameData = object.saveGameData ?? Buffer.alloc(0);
-    return message;
-  },
-};
-
 function createBaseCMsgDOTAAwardEventPoints(): CMsgDOTAAwardEventPoints {
   return { awardPoints: [], matchId: "0", eventId: 0, timestamp: 0, auditAction: 0 };
 }
@@ -13233,10 +12823,9 @@ export const CSerializedCombatLog = {
   fromPartial(object: DeepPartial<CSerializedCombatLog>): CSerializedCombatLog {
     const message = createBaseCSerializedCombatLog();
     message.version = object.version ?? 0;
-    message.dictionary =
-      object.dictionary !== undefined && object.dictionary !== null
-        ? CSerializedCombatLog_Dictionary.fromPartial(object.dictionary)
-        : undefined;
+    message.dictionary = (object.dictionary !== undefined && object.dictionary !== null)
+      ? CSerializedCombatLog_Dictionary.fromPartial(object.dictionary)
+      : undefined;
     message.entries = object.entries?.map((e) => CMsgDOTACombatLogEntry.fromPartial(e)) || [];
     return message;
   },
@@ -13608,7 +13197,7 @@ export const CMsgServerToGCVictoryPredictions_Record = {
     }
     if (message.predictionItems?.length) {
       obj.predictionItems = message.predictionItems.map((e) =>
-        CMsgServerToGCVictoryPredictions_PredictionItem.toJSON(e),
+        CMsgServerToGCVictoryPredictions_PredictionItem.toJSON(e)
       );
     }
     return obj;
@@ -14087,7 +13676,7 @@ export const CMsgSignOutAssassinMiniGameInfo = {
       writer.uint32(32).bool(message.assassinWon);
     }
     if (message.targetHeroId !== undefined && message.targetHeroId !== 0) {
-      writer.uint32(40).uint32(message.targetHeroId);
+      writer.uint32(40).int32(message.targetHeroId);
     }
     if (message.contractCompleted !== undefined && message.contractCompleted !== false) {
       writer.uint32(48).bool(message.contractCompleted);
@@ -14171,7 +13760,7 @@ export const CMsgSignOutAssassinMiniGameInfo = {
             break;
           }
 
-          message.targetHeroId = reader.uint32();
+          message.targetHeroId = reader.int32();
           continue;
         case 6:
           if (tag !== 48) {
@@ -14433,248 +14022,6 @@ export const CMsgServerToGCKillSummaries_KillSummary = {
   },
 };
 
-function createBaseCMsgGCToServerPredictionResult(): CMsgGCToServerPredictionResult {
-  return { accountId: 0, matchId: "0", correct: false, predictions: [] };
-}
-
-export const CMsgGCToServerPredictionResult = {
-  encode(message: CMsgGCToServerPredictionResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.accountId !== undefined && message.accountId !== 0) {
-      writer.uint32(8).uint32(message.accountId);
-    }
-    if (message.matchId !== undefined && message.matchId !== "0") {
-      writer.uint32(16).uint64(message.matchId);
-    }
-    if (message.correct !== undefined && message.correct !== false) {
-      writer.uint32(24).bool(message.correct);
-    }
-    for (const v of message.predictions) {
-      CMsgGCToServerPredictionResult_Prediction.encode(v!, writer.uint32(34).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGCToServerPredictionResult {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgGCToServerPredictionResult();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.accountId = reader.uint32();
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.matchId = longToString(reader.uint64() as Long);
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.correct = reader.bool();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
-          message.predictions.push(CMsgGCToServerPredictionResult_Prediction.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgGCToServerPredictionResult {
-    return {
-      accountId: isSet(object.accountId) ? globalThis.Number(object.accountId) : 0,
-      matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "0",
-      correct: isSet(object.correct) ? globalThis.Boolean(object.correct) : false,
-      predictions: globalThis.Array.isArray(object?.predictions)
-        ? object.predictions.map((e: any) => CMsgGCToServerPredictionResult_Prediction.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: CMsgGCToServerPredictionResult): unknown {
-    const obj: any = {};
-    if (message.accountId !== undefined && message.accountId !== 0) {
-      obj.accountId = Math.round(message.accountId);
-    }
-    if (message.matchId !== undefined && message.matchId !== "0") {
-      obj.matchId = message.matchId;
-    }
-    if (message.correct !== undefined && message.correct !== false) {
-      obj.correct = message.correct;
-    }
-    if (message.predictions?.length) {
-      obj.predictions = message.predictions.map((e) => CMsgGCToServerPredictionResult_Prediction.toJSON(e));
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgGCToServerPredictionResult>): CMsgGCToServerPredictionResult {
-    return CMsgGCToServerPredictionResult.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CMsgGCToServerPredictionResult>): CMsgGCToServerPredictionResult {
-    const message = createBaseCMsgGCToServerPredictionResult();
-    message.accountId = object.accountId ?? 0;
-    message.matchId = object.matchId ?? "0";
-    message.correct = object.correct ?? false;
-    message.predictions =
-      object.predictions?.map((e) => CMsgGCToServerPredictionResult_Prediction.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseCMsgGCToServerPredictionResult_Prediction(): CMsgGCToServerPredictionResult_Prediction {
-  return { itemDef: 0, numCorrect: 0, numFails: 0, result: 1, grantedItemDefs: [] };
-}
-
-export const CMsgGCToServerPredictionResult_Prediction = {
-  encode(message: CMsgGCToServerPredictionResult_Prediction, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.itemDef !== undefined && message.itemDef !== 0) {
-      writer.uint32(8).uint32(message.itemDef);
-    }
-    if (message.numCorrect !== undefined && message.numCorrect !== 0) {
-      writer.uint32(16).uint32(message.numCorrect);
-    }
-    if (message.numFails !== undefined && message.numFails !== 0) {
-      writer.uint32(24).uint32(message.numFails);
-    }
-    if (message.result !== undefined && message.result !== 1) {
-      writer.uint32(32).int32(message.result);
-    }
-    writer.uint32(50).fork();
-    for (const v of message.grantedItemDefs) {
-      writer.uint32(v);
-    }
-    writer.ldelim();
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGCToServerPredictionResult_Prediction {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgGCToServerPredictionResult_Prediction();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.itemDef = reader.uint32();
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.numCorrect = reader.uint32();
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.numFails = reader.uint32();
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.result = reader.int32() as any;
-          continue;
-        case 6:
-          if (tag === 48) {
-            message.grantedItemDefs.push(reader.uint32());
-
-            continue;
-          }
-
-          if (tag === 50) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.grantedItemDefs.push(reader.uint32());
-            }
-
-            continue;
-          }
-
-          break;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgGCToServerPredictionResult_Prediction {
-    return {
-      itemDef: isSet(object.itemDef) ? globalThis.Number(object.itemDef) : 0,
-      numCorrect: isSet(object.numCorrect) ? globalThis.Number(object.numCorrect) : 0,
-      numFails: isSet(object.numFails) ? globalThis.Number(object.numFails) : 0,
-      result: isSet(object.result) ? cMsgGCToServerPredictionResult_Prediction_EResultFromJSON(object.result) : 1,
-      grantedItemDefs: globalThis.Array.isArray(object?.grantedItemDefs)
-        ? object.grantedItemDefs.map((e: any) => globalThis.Number(e))
-        : [],
-    };
-  },
-
-  toJSON(message: CMsgGCToServerPredictionResult_Prediction): unknown {
-    const obj: any = {};
-    if (message.itemDef !== undefined && message.itemDef !== 0) {
-      obj.itemDef = Math.round(message.itemDef);
-    }
-    if (message.numCorrect !== undefined && message.numCorrect !== 0) {
-      obj.numCorrect = Math.round(message.numCorrect);
-    }
-    if (message.numFails !== undefined && message.numFails !== 0) {
-      obj.numFails = Math.round(message.numFails);
-    }
-    if (message.result !== undefined && message.result !== 1) {
-      obj.result = cMsgGCToServerPredictionResult_Prediction_EResultToJSON(message.result);
-    }
-    if (message.grantedItemDefs?.length) {
-      obj.grantedItemDefs = message.grantedItemDefs.map((e) => Math.round(e));
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgGCToServerPredictionResult_Prediction>): CMsgGCToServerPredictionResult_Prediction {
-    return CMsgGCToServerPredictionResult_Prediction.fromPartial(base ?? {});
-  },
-  fromPartial(
-    object: DeepPartial<CMsgGCToServerPredictionResult_Prediction>,
-  ): CMsgGCToServerPredictionResult_Prediction {
-    const message = createBaseCMsgGCToServerPredictionResult_Prediction();
-    message.itemDef = object.itemDef ?? 0;
-    message.numCorrect = object.numCorrect ?? 0;
-    message.numFails = object.numFails ?? 0;
-    message.result = object.result ?? 1;
-    message.grantedItemDefs = object.grantedItemDefs?.map((e) => e) || [];
-    return message;
-  },
-};
-
 function createBaseCMsgServerToGCLockCharmTrading(): CMsgServerToGCLockCharmTrading {
   return { accountId: 0, itemId: "0" };
 }
@@ -14768,7 +14115,7 @@ export const CMsgSignOutUpdatePlayerChallenge = {
       writer.uint32(32).uint64(message.matchId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(40).uint32(message.heroId);
+      writer.uint32(40).int32(message.heroId);
     }
     return writer;
   },
@@ -14813,7 +14160,7 @@ export const CMsgSignOutUpdatePlayerChallenge = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -15062,10 +14409,9 @@ export const CMsgServerToGCRerollPlayerChallenge = {
   fromPartial(object: DeepPartial<CMsgServerToGCRerollPlayerChallenge>): CMsgServerToGCRerollPlayerChallenge {
     const message = createBaseCMsgServerToGCRerollPlayerChallenge();
     message.accountId = object.accountId ?? 0;
-    message.rerollMsg =
-      object.rerollMsg !== undefined && object.rerollMsg !== null
-        ? CMsgClientToGCRerollPlayerChallenge.fromPartial(object.rerollMsg)
-        : undefined;
+    message.rerollMsg = (object.rerollMsg !== undefined && object.rerollMsg !== null)
+      ? CMsgClientToGCRerollPlayerChallenge.fromPartial(object.rerollMsg)
+      : undefined;
     return message;
   },
 };
@@ -15778,7 +15124,7 @@ export const CMsgSignOutCommunityGoalProgress = {
     }
     if (message.eventIncrements?.length) {
       obj.eventIncrements = message.eventIncrements.map((e) =>
-        CMsgSignOutCommunityGoalProgress_EventGoalIncrement.toJSON(e),
+        CMsgSignOutCommunityGoalProgress_EventGoalIncrement.toJSON(e)
       );
     }
     return obj;
@@ -16125,7 +15471,7 @@ export const CMsgServerToGCCompendiumInGamePredictionResults = {
     }
     if (message.results?.length) {
       obj.results = message.results.map((e) =>
-        CMsgServerToGCCompendiumInGamePredictionResults_PredictionResult.toJSON(e),
+        CMsgServerToGCCompendiumInGamePredictionResults_PredictionResult.toJSON(e)
       );
     }
     if (message.leagueId !== undefined && message.leagueId !== 0) {
@@ -16321,8 +15667,8 @@ export const CMsgServerToGCCompendiumChosenInGamePredictions = {
       matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "0",
       predictionsChosen: globalThis.Array.isArray(object?.predictionsChosen)
         ? object.predictionsChosen.map((e: any) =>
-            CMsgServerToGCCompendiumChosenInGamePredictions_Prediction.fromJSON(e),
-          )
+          CMsgServerToGCCompendiumChosenInGamePredictions_Prediction.fromJSON(e)
+        )
         : [],
       leagueId: isSet(object.leagueId) ? globalThis.Number(object.leagueId) : 0,
     };
@@ -16335,7 +15681,7 @@ export const CMsgServerToGCCompendiumChosenInGamePredictions = {
     }
     if (message.predictionsChosen?.length) {
       obj.predictionsChosen = message.predictionsChosen.map((e) =>
-        CMsgServerToGCCompendiumChosenInGamePredictions_Prediction.toJSON(e),
+        CMsgServerToGCCompendiumChosenInGamePredictions_Prediction.toJSON(e)
       );
     }
     if (message.leagueId !== undefined && message.leagueId !== 0) {
@@ -16484,10 +15830,9 @@ export const CMsgGCToGCCompendiumInGamePredictionResults = {
     object: DeepPartial<CMsgGCToGCCompendiumInGamePredictionResults>,
   ): CMsgGCToGCCompendiumInGamePredictionResults {
     const message = createBaseCMsgGCToGCCompendiumInGamePredictionResults();
-    message.results =
-      object.results !== undefined && object.results !== null
-        ? CMsgServerToGCCompendiumInGamePredictionResults.fromPartial(object.results)
-        : undefined;
+    message.results = (object.results !== undefined && object.results !== null)
+      ? CMsgServerToGCCompendiumInGamePredictionResults.fromPartial(object.results)
+      : undefined;
     return message;
   },
 };
@@ -16582,8 +15927,8 @@ export const CMsgServerToGCMatchPlayerItemPurchaseHistory = {
     const message = createBaseCMsgServerToGCMatchPlayerItemPurchaseHistory();
     message.matchId = object.matchId ?? "0";
     message.mmr = object.mmr ?? 0;
-    message.players =
-      object.players?.map((e) => CMsgServerToGCMatchPlayerItemPurchaseHistory_Player.fromPartial(e)) || [];
+    message.players = object.players?.map((e) => CMsgServerToGCMatchPlayerItemPurchaseHistory_Player.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -16782,16 +16127,16 @@ export const CMsgServerToGCMatchPlayerItemPurchaseHistory_Player = {
       writer.uint32(16).uint32(message.accountId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     writer.uint32(34).fork();
     for (const v of message.alliedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(42).fork();
     for (const v of message.enemyHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     for (const v of message.itemPurchases) {
@@ -16832,11 +16177,11 @@ export const CMsgServerToGCMatchPlayerItemPurchaseHistory_Player = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag === 32) {
-            message.alliedHeroIds.push(reader.uint32());
+            message.alliedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -16844,7 +16189,7 @@ export const CMsgServerToGCMatchPlayerItemPurchaseHistory_Player = {
           if (tag === 34) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.alliedHeroIds.push(reader.uint32());
+              message.alliedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -16853,7 +16198,7 @@ export const CMsgServerToGCMatchPlayerItemPurchaseHistory_Player = {
           break;
         case 5:
           if (tag === 40) {
-            message.enemyHeroIds.push(reader.uint32());
+            message.enemyHeroIds.push(reader.int32());
 
             continue;
           }
@@ -16861,7 +16206,7 @@ export const CMsgServerToGCMatchPlayerItemPurchaseHistory_Player = {
           if (tag === 42) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.enemyHeroIds.push(reader.uint32());
+              message.enemyHeroIds.push(reader.int32());
             }
 
             continue;
@@ -16938,7 +16283,7 @@ export const CMsgServerToGCMatchPlayerItemPurchaseHistory_Player = {
     }
     if (message.itemPurchases?.length) {
       obj.itemPurchases = message.itemPurchases.map((e) =>
-        CMsgServerToGCMatchPlayerItemPurchaseHistory_ItemPurchase.toJSON(e),
+        CMsgServerToGCMatchPlayerItemPurchaseHistory_ItemPurchase.toJSON(e)
       );
     }
     if (message.lane !== undefined && message.lane !== 0) {
@@ -17238,12 +16583,12 @@ export const CMsgServerToGCMatchPlayerNeutralItemEquipHistory_Player = {
     }
     writer.uint32(18).fork();
     for (const v of message.alliedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(26).fork();
     for (const v of message.enemyHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     for (const v of message.itemEquips) {
@@ -17271,7 +16616,7 @@ export const CMsgServerToGCMatchPlayerNeutralItemEquipHistory_Player = {
           continue;
         case 2:
           if (tag === 16) {
-            message.alliedHeroIds.push(reader.uint32());
+            message.alliedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -17279,7 +16624,7 @@ export const CMsgServerToGCMatchPlayerNeutralItemEquipHistory_Player = {
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.alliedHeroIds.push(reader.uint32());
+              message.alliedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -17288,7 +16633,7 @@ export const CMsgServerToGCMatchPlayerNeutralItemEquipHistory_Player = {
           break;
         case 3:
           if (tag === 24) {
-            message.enemyHeroIds.push(reader.uint32());
+            message.enemyHeroIds.push(reader.int32());
 
             continue;
           }
@@ -17296,7 +16641,7 @@ export const CMsgServerToGCMatchPlayerNeutralItemEquipHistory_Player = {
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.enemyHeroIds.push(reader.uint32());
+              message.enemyHeroIds.push(reader.int32());
             }
 
             continue;
@@ -17357,7 +16702,7 @@ export const CMsgServerToGCMatchPlayerNeutralItemEquipHistory_Player = {
     }
     if (message.itemEquips?.length) {
       obj.itemEquips = message.itemEquips.map((e) =>
-        CMsgServerToGCMatchPlayerNeutralItemEquipHistory_ItemEquip.toJSON(e),
+        CMsgServerToGCMatchPlayerNeutralItemEquipHistory_ItemEquip.toJSON(e)
       );
     }
     if (message.isWinner !== undefined && message.isWinner !== false) {
@@ -17486,8 +16831,8 @@ export const CMsgServerToGCMatchStateHistory = {
     message.matchId = object.matchId ?? "0";
     message.radiantWon = object.radiantWon ?? false;
     message.mmr = object.mmr ?? 0;
-    message.matchStates =
-      object.matchStates?.map((e) => CMsgServerToGCMatchStateHistory_MatchState.fromPartial(e)) || [];
+    message.matchStates = object.matchStates?.map((e) => CMsgServerToGCMatchStateHistory_MatchState.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -17509,7 +16854,7 @@ function createBaseCMsgServerToGCMatchStateHistory_PlayerState(): CMsgServerToGC
 export const CMsgServerToGCMatchStateHistory_PlayerState = {
   encode(message: CMsgServerToGCMatchStateHistory_PlayerState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.netWorth !== undefined && message.netWorth !== 0) {
       writer.uint32(16).uint32(message.netWorth);
@@ -17550,7 +16895,7 @@ export const CMsgServerToGCMatchStateHistory_PlayerState = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -18010,14 +17355,12 @@ export const CMsgServerToGCMatchStateHistory_MatchState = {
   ): CMsgServerToGCMatchStateHistory_MatchState {
     const message = createBaseCMsgServerToGCMatchStateHistory_MatchState();
     message.gameTime = object.gameTime ?? 0;
-    message.radiantState =
-      object.radiantState !== undefined && object.radiantState !== null
-        ? CMsgServerToGCMatchStateHistory_TeamState.fromPartial(object.radiantState)
-        : undefined;
-    message.direState =
-      object.direState !== undefined && object.direState !== null
-        ? CMsgServerToGCMatchStateHistory_TeamState.fromPartial(object.direState)
-        : undefined;
+    message.radiantState = (object.radiantState !== undefined && object.radiantState !== null)
+      ? CMsgServerToGCMatchStateHistory_TeamState.fromPartial(object.radiantState)
+      : undefined;
+    message.direState = (object.direState !== undefined && object.direState !== null)
+      ? CMsgServerToGCMatchStateHistory_TeamState.fromPartial(object.direState)
+      : undefined;
     return message;
   },
 };
@@ -18106,10 +17449,9 @@ export const CMsgMatchStateSteamMLEntry = {
   },
   fromPartial(object: DeepPartial<CMsgMatchStateSteamMLEntry>): CMsgMatchStateSteamMLEntry {
     const message = createBaseCMsgMatchStateSteamMLEntry();
-    message.matchState =
-      object.matchState !== undefined && object.matchState !== null
-        ? CMsgServerToGCMatchStateHistory_MatchState.fromPartial(object.matchState)
-        : undefined;
+    message.matchState = (object.matchState !== undefined && object.matchState !== null)
+      ? CMsgServerToGCMatchStateHistory_MatchState.fromPartial(object.matchState)
+      : undefined;
     message.mmr = object.mmr ?? 0;
     message.radiantWon = object.radiantWon ?? false;
     return message;
@@ -18124,7 +17466,7 @@ export const CMsgLaneSelectionSteamMLEntry = {
   encode(message: CMsgLaneSelectionSteamMLEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).fork();
     for (const v of message.heroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(18).fork();
@@ -18144,7 +17486,7 @@ export const CMsgLaneSelectionSteamMLEntry = {
       switch (tag >>> 3) {
         case 1:
           if (tag === 8) {
-            message.heroIds.push(reader.uint32());
+            message.heroIds.push(reader.int32());
 
             continue;
           }
@@ -18152,7 +17494,7 @@ export const CMsgLaneSelectionSteamMLEntry = {
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.heroIds.push(reader.uint32());
+              message.heroIds.push(reader.int32());
             }
 
             continue;
@@ -18224,11 +17566,11 @@ export const CMsgAbilitySelectionSteamMLEntry = {
       writer.uint32(8).uint32(message.mmr);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     writer.uint32(26).fork();
     for (const v of message.enemyHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     if (message.lane !== undefined && message.lane !== 0) {
@@ -18264,11 +17606,11 @@ export const CMsgAbilitySelectionSteamMLEntry = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag === 24) {
-            message.enemyHeroIds.push(reader.uint32());
+            message.enemyHeroIds.push(reader.int32());
 
             continue;
           }
@@ -18276,7 +17618,7 @@ export const CMsgAbilitySelectionSteamMLEntry = {
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.enemyHeroIds.push(reader.uint32());
+              message.enemyHeroIds.push(reader.int32());
             }
 
             continue;
@@ -18392,16 +17734,16 @@ export const CMsgItemPurchasePregameSteamMLEntry = {
       writer.uint32(29).float(message.balance);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     writer.uint32(42).fork();
     for (const v of message.alliedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(50).fork();
     for (const v of message.enemyHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(58).fork();
@@ -18445,11 +17787,11 @@ export const CMsgItemPurchasePregameSteamMLEntry = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag === 40) {
-            message.alliedHeroIds.push(reader.uint32());
+            message.alliedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -18457,7 +17799,7 @@ export const CMsgItemPurchasePregameSteamMLEntry = {
           if (tag === 42) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.alliedHeroIds.push(reader.uint32());
+              message.alliedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -18466,7 +17808,7 @@ export const CMsgItemPurchasePregameSteamMLEntry = {
           break;
         case 6:
           if (tag === 48) {
-            message.enemyHeroIds.push(reader.uint32());
+            message.enemyHeroIds.push(reader.int32());
 
             continue;
           }
@@ -18474,7 +17816,7 @@ export const CMsgItemPurchasePregameSteamMLEntry = {
           if (tag === 50) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.enemyHeroIds.push(reader.uint32());
+              message.enemyHeroIds.push(reader.int32());
             }
 
             continue;
@@ -18578,16 +17920,16 @@ export const CMsgItemPurchaseSteamMLEntry = {
       writer.uint32(16).uint32(message.lane);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     writer.uint32(34).fork();
     for (const v of message.alliedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(42).fork();
     for (const v of message.enemyHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(50).fork();
@@ -18629,11 +17971,11 @@ export const CMsgItemPurchaseSteamMLEntry = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag === 32) {
-            message.alliedHeroIds.push(reader.uint32());
+            message.alliedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -18641,7 +17983,7 @@ export const CMsgItemPurchaseSteamMLEntry = {
           if (tag === 34) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.alliedHeroIds.push(reader.uint32());
+              message.alliedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -18650,7 +17992,7 @@ export const CMsgItemPurchaseSteamMLEntry = {
           break;
         case 5:
           if (tag === 40) {
-            message.enemyHeroIds.push(reader.uint32());
+            message.enemyHeroIds.push(reader.int32());
 
             continue;
           }
@@ -18658,7 +18000,7 @@ export const CMsgItemPurchaseSteamMLEntry = {
           if (tag === 42) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.enemyHeroIds.push(reader.uint32());
+              message.enemyHeroIds.push(reader.int32());
             }
 
             continue;
@@ -18781,16 +18123,16 @@ export const CMsgItemPurchaseSequenceSteamMLEntry = {
       writer.uint32(16).uint32(message.lane);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     writer.uint32(34).fork();
     for (const v of message.alliedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(42).fork();
     for (const v of message.enemyHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(50).fork();
@@ -18830,11 +18172,11 @@ export const CMsgItemPurchaseSequenceSteamMLEntry = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag === 32) {
-            message.alliedHeroIds.push(reader.uint32());
+            message.alliedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -18842,7 +18184,7 @@ export const CMsgItemPurchaseSequenceSteamMLEntry = {
           if (tag === 34) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.alliedHeroIds.push(reader.uint32());
+              message.alliedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -18851,7 +18193,7 @@ export const CMsgItemPurchaseSequenceSteamMLEntry = {
           break;
         case 5:
           if (tag === 40) {
-            message.enemyHeroIds.push(reader.uint32());
+            message.enemyHeroIds.push(reader.int32());
 
             continue;
           }
@@ -18859,7 +18201,7 @@ export const CMsgItemPurchaseSequenceSteamMLEntry = {
           if (tag === 42) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.enemyHeroIds.push(reader.uint32());
+              message.enemyHeroIds.push(reader.int32());
             }
 
             continue;
@@ -18973,7 +18315,7 @@ export const CMsgServerToGCCavernCrawlIsHeroActive = {
       writer.uint32(24).uint32(message.preferredMapVariant);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     if (message.turboMode !== undefined && message.turboMode !== false) {
       writer.uint32(40).bool(message.turboMode);
@@ -19014,7 +18356,7 @@ export const CMsgServerToGCCavernCrawlIsHeroActive = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -19153,7 +18495,7 @@ export const CMsgServerToGCPlayerChallengeHistory = {
     }
     if (message.challengeRecords?.length) {
       obj.challengeRecords = message.challengeRecords.map((e) =>
-        CMsgServerToGCPlayerChallengeHistory_PlayerChallenge.toJSON(e),
+        CMsgServerToGCPlayerChallengeHistory_PlayerChallenge.toJSON(e)
       );
     }
     return obj;
@@ -19217,7 +18559,7 @@ export const CMsgServerToGCPlayerChallengeHistory_PlayerChallenge = {
       writer.uint32(64).uint64(message.auditData);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(72).uint32(message.heroId);
+      writer.uint32(72).int32(message.heroId);
     }
     if (message.rankCompleted !== undefined && message.rankCompleted !== 0) {
       writer.uint32(80).uint32(message.rankCompleted);
@@ -19293,7 +18635,7 @@ export const CMsgServerToGCPlayerChallengeHistory_PlayerChallenge = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 10:
           if (tag !== 80) {
@@ -19488,7 +18830,7 @@ export const CMsgServerToGCCavernCrawlIsHeroActiveResponse = {
     }
     if (message.mapResults?.length) {
       obj.mapResults = message.mapResults.map((e) =>
-        CMsgServerToGCCavernCrawlIsHeroActiveResponse_MapResults.toJSON(e),
+        CMsgServerToGCCavernCrawlIsHeroActiveResponse_MapResults.toJSON(e)
       );
     }
     if (message.potentialPlusShardWinnings !== undefined && message.potentialPlusShardWinnings !== 0) {
@@ -19860,7 +19202,7 @@ function createBaseCMsgGCToServerLobbyHeroBanRates_HeroBanEntry(): CMsgGCToServe
 export const CMsgGCToServerLobbyHeroBanRates_HeroBanEntry = {
   encode(message: CMsgGCToServerLobbyHeroBanRates_HeroBanEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.banCount !== undefined && message.banCount !== 0) {
       writer.uint32(16).uint32(message.banCount);
@@ -19883,7 +19225,7 @@ export const CMsgGCToServerLobbyHeroBanRates_HeroBanEntry = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -19993,7 +19335,7 @@ export const CMsgSignOutGuildContractProgress = {
     const obj: any = {};
     if (message.playerContracts?.length) {
       obj.playerContracts = message.playerContracts.map((e) =>
-        CMsgSignOutGuildContractProgress_PlayerContract.toJSON(e),
+        CMsgSignOutGuildContractProgress_PlayerContract.toJSON(e)
       );
     }
     return obj;
@@ -20178,8 +19520,8 @@ export const CMsgSignOutGuildContractProgress_PlayerContract = {
       accountId: isSet(object.accountId) ? globalThis.Number(object.accountId) : 0,
       completedContracts: globalThis.Array.isArray(object?.completedContracts)
         ? object.completedContracts.map((e: any) =>
-            CMsgSignOutGuildContractProgress_CompletedGuildEventContracts.fromJSON(e),
-          )
+          CMsgSignOutGuildContractProgress_CompletedGuildEventContracts.fromJSON(e)
+        )
         : [],
     };
   },
@@ -20191,7 +19533,7 @@ export const CMsgSignOutGuildContractProgress_PlayerContract = {
     }
     if (message.completedContracts?.length) {
       obj.completedContracts = message.completedContracts.map((e) =>
-        CMsgSignOutGuildContractProgress_CompletedGuildEventContracts.toJSON(e),
+        CMsgSignOutGuildContractProgress_CompletedGuildEventContracts.toJSON(e)
       );
     }
     return obj;
@@ -20209,7 +19551,7 @@ export const CMsgSignOutGuildContractProgress_PlayerContract = {
     message.accountId = object.accountId ?? 0;
     message.completedContracts =
       object.completedContracts?.map((e) =>
-        CMsgSignOutGuildContractProgress_CompletedGuildEventContracts.fromPartial(e),
+        CMsgSignOutGuildContractProgress_CompletedGuildEventContracts.fromPartial(e)
       ) || [];
     return message;
   },
@@ -20256,8 +19598,8 @@ export const CMsgSignOutGuildChallengeProgress = {
     return {
       guildChallengesProgresses: globalThis.Array.isArray(object?.guildChallengesProgresses)
         ? object.guildChallengesProgresses.map((e: any) =>
-            CMsgSignOutGuildChallengeProgress_ChallengeProgress.fromJSON(e),
-          )
+          CMsgSignOutGuildChallengeProgress_ChallengeProgress.fromJSON(e)
+        )
         : [],
     };
   },
@@ -20266,7 +19608,7 @@ export const CMsgSignOutGuildChallengeProgress = {
     const obj: any = {};
     if (message.guildChallengesProgresses?.length) {
       obj.guildChallengesProgresses = message.guildChallengesProgresses.map((e) =>
-        CMsgSignOutGuildChallengeProgress_ChallengeProgress.toJSON(e),
+        CMsgSignOutGuildChallengeProgress_ChallengeProgress.toJSON(e)
       );
     }
     return obj;
@@ -20279,7 +19621,7 @@ export const CMsgSignOutGuildChallengeProgress = {
     const message = createBaseCMsgSignOutGuildChallengeProgress();
     message.guildChallengesProgresses =
       object.guildChallengesProgresses?.map((e) =>
-        CMsgSignOutGuildChallengeProgress_ChallengeProgress.fromPartial(e),
+        CMsgSignOutGuildChallengeProgress_ChallengeProgress.fromPartial(e)
       ) || [];
     return message;
   },
@@ -20620,7 +19962,7 @@ export const CMsgSignOutMVPStats_Player = {
       writer.uint32(264).uint32(message.rank);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(32).uint32(message.heroId);
+      writer.uint32(32).int32(message.heroId);
     }
     if (message.role !== undefined && message.role !== 0) {
       writer.uint32(40).uint32(message.role);
@@ -20729,7 +20071,7 @@ export const CMsgSignOutMVPStats_Player = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -21275,7 +20617,7 @@ export const CMsgServerToGCGetGuildContractsResponse = {
     const obj: any = {};
     if (message.playerContracts?.length) {
       obj.playerContracts = message.playerContracts.map((e) =>
-        CMsgServerToGCGetGuildContractsResponse_Player.toJSON(e),
+        CMsgServerToGCGetGuildContractsResponse_Player.toJSON(e)
       );
     }
     return obj;
@@ -21604,8 +20946,8 @@ export const CMsgMatchDiretideCandy = {
   },
   fromPartial(object: DeepPartial<CMsgMatchDiretideCandy>): CMsgMatchDiretideCandy {
     const message = createBaseCMsgMatchDiretideCandy();
-    message.playerCandyData =
-      object.playerCandyData?.map((e) => CMsgMatchDiretideCandy_PlayerCandy.fromPartial(e)) || [];
+    message.playerCandyData = object.playerCandyData?.map((e) => CMsgMatchDiretideCandy_PlayerCandy.fromPartial(e)) ||
+      [];
     message.eventId = object.eventId ?? 0;
     return message;
   },
@@ -21788,8 +21130,8 @@ export const CMsgMatchDiretideCandy_PlayerCandy = {
     message.accountId = object.accountId ?? 0;
     message.candyAmount = object.candyAmount ?? 0;
     message.consumesPeriodicResource = object.consumesPeriodicResource ?? false;
-    message.candyBreakdown =
-      object.candyBreakdown?.map((e) => CMsgMatchDiretideCandy_CandyDetails.fromPartial(e)) || [];
+    message.candyBreakdown = object.candyBreakdown?.map((e) => CMsgMatchDiretideCandy_CandyDetails.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -22320,10 +21662,9 @@ export const CMsgGCToServerCheerConfig = {
   },
   fromPartial(object: DeepPartial<CMsgGCToServerCheerConfig>): CMsgGCToServerCheerConfig {
     const message = createBaseCMsgGCToServerCheerConfig();
-    message.cheerConfig =
-      object.cheerConfig !== undefined && object.cheerConfig !== null
-        ? CMsgCheerConfig.fromPartial(object.cheerConfig)
-        : undefined;
+    message.cheerConfig = (object.cheerConfig !== undefined && object.cheerConfig !== null)
+      ? CMsgCheerConfig.fromPartial(object.cheerConfig)
+      : undefined;
     return message;
   },
 };
@@ -22437,10 +21778,9 @@ export const CMsgServerToGCGetCheerConfigResponse = {
   },
   fromPartial(object: DeepPartial<CMsgServerToGCGetCheerConfigResponse>): CMsgServerToGCGetCheerConfigResponse {
     const message = createBaseCMsgServerToGCGetCheerConfigResponse();
-    message.cheerConfig =
-      object.cheerConfig !== undefined && object.cheerConfig !== null
-        ? CMsgCheerConfig.fromPartial(object.cheerConfig)
-        : undefined;
+    message.cheerConfig = (object.cheerConfig !== undefined && object.cheerConfig !== null)
+      ? CMsgCheerConfig.fromPartial(object.cheerConfig)
+      : undefined;
     return message;
   },
 };
@@ -22836,14 +22176,12 @@ export const CMsgServerToGCReportCheerState = {
   },
   fromPartial(object: DeepPartial<CMsgServerToGCReportCheerState>): CMsgServerToGCReportCheerState {
     const message = createBaseCMsgServerToGCReportCheerState();
-    message.cheerConfig =
-      object.cheerConfig !== undefined && object.cheerConfig !== null
-        ? CMsgCheerConfig.fromPartial(object.cheerConfig)
-        : undefined;
-    message.cheerState =
-      object.cheerState !== undefined && object.cheerState !== null
-        ? CMsgCheerState.fromPartial(object.cheerState)
-        : undefined;
+    message.cheerConfig = (object.cheerConfig !== undefined && object.cheerConfig !== null)
+      ? CMsgCheerConfig.fromPartial(object.cheerConfig)
+      : undefined;
+    message.cheerState = (object.cheerState !== undefined && object.cheerState !== null)
+      ? CMsgCheerState.fromPartial(object.cheerState)
+      : undefined;
     return message;
   },
 };
@@ -23055,74 +22393,9 @@ export const CMsgServerToGCGetStickerHeroesResponse_Player = {
   ): CMsgServerToGCGetStickerHeroesResponse_Player {
     const message = createBaseCMsgServerToGCGetStickerHeroesResponse_Player();
     message.accountId = object.accountId ?? 0;
-    message.stickers =
-      object.stickers !== undefined && object.stickers !== null
-        ? CMsgStickerHeroes.fromPartial(object.stickers)
-        : undefined;
-    return message;
-  },
-};
-
-function createBaseCMsgGCToServerSteamLearnAccessTokensChanged(): CMsgGCToServerSteamLearnAccessTokensChanged {
-  return { accessTokens: undefined };
-}
-
-export const CMsgGCToServerSteamLearnAccessTokensChanged = {
-  encode(message: CMsgGCToServerSteamLearnAccessTokensChanged, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.accessTokens !== undefined) {
-      CMsgSteamLearnAccessTokens.encode(message.accessTokens, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgGCToServerSteamLearnAccessTokensChanged {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgGCToServerSteamLearnAccessTokensChanged();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.accessTokens = CMsgSteamLearnAccessTokens.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CMsgGCToServerSteamLearnAccessTokensChanged {
-    return {
-      accessTokens: isSet(object.accessTokens) ? CMsgSteamLearnAccessTokens.fromJSON(object.accessTokens) : undefined,
-    };
-  },
-
-  toJSON(message: CMsgGCToServerSteamLearnAccessTokensChanged): unknown {
-    const obj: any = {};
-    if (message.accessTokens !== undefined) {
-      obj.accessTokens = CMsgSteamLearnAccessTokens.toJSON(message.accessTokens);
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CMsgGCToServerSteamLearnAccessTokensChanged>): CMsgGCToServerSteamLearnAccessTokensChanged {
-    return CMsgGCToServerSteamLearnAccessTokensChanged.fromPartial(base ?? {});
-  },
-  fromPartial(
-    object: DeepPartial<CMsgGCToServerSteamLearnAccessTokensChanged>,
-  ): CMsgGCToServerSteamLearnAccessTokensChanged {
-    const message = createBaseCMsgGCToServerSteamLearnAccessTokensChanged();
-    message.accessTokens =
-      object.accessTokens !== undefined && object.accessTokens !== null
-        ? CMsgSteamLearnAccessTokens.fromPartial(object.accessTokens)
-        : undefined;
+    message.stickers = (object.stickers !== undefined && object.stickers !== null)
+      ? CMsgStickerHeroes.fromPartial(object.stickers)
+      : undefined;
     return message;
   },
 };
@@ -23380,7 +22653,227 @@ export const CMsgSteamLearnMatchInfoPlayer = {
   },
 };
 
-function createBaseCMsgSteamLearnMatchHeroesV2(): CMsgSteamLearnMatchHeroesV2 {
+function createBaseCMsgSteamLearnMatchInfoTeam(): CMsgSteamLearnMatchInfoTeam {
+  return { radiantPlayers: [], direPlayers: [], radiantTeamWon: false };
+}
+
+export const CMsgSteamLearnMatchInfoTeam = {
+  encode(message: CMsgSteamLearnMatchInfoTeam, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.radiantPlayers) {
+      CMsgSteamLearnMatchInfoTeam_Player.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.direPlayers) {
+      CMsgSteamLearnMatchInfoTeam_Player.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.radiantTeamWon !== undefined && message.radiantTeamWon !== false) {
+      writer.uint32(24).bool(message.radiantTeamWon);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnMatchInfoTeam {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSteamLearnMatchInfoTeam();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.radiantPlayers.push(CMsgSteamLearnMatchInfoTeam_Player.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.direPlayers.push(CMsgSteamLearnMatchInfoTeam_Player.decode(reader, reader.uint32()));
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.radiantTeamWon = reader.bool();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSteamLearnMatchInfoTeam {
+    return {
+      radiantPlayers: globalThis.Array.isArray(object?.radiantPlayers)
+        ? object.radiantPlayers.map((e: any) => CMsgSteamLearnMatchInfoTeam_Player.fromJSON(e))
+        : [],
+      direPlayers: globalThis.Array.isArray(object?.direPlayers)
+        ? object.direPlayers.map((e: any) => CMsgSteamLearnMatchInfoTeam_Player.fromJSON(e))
+        : [],
+      radiantTeamWon: isSet(object.radiantTeamWon) ? globalThis.Boolean(object.radiantTeamWon) : false,
+    };
+  },
+
+  toJSON(message: CMsgSteamLearnMatchInfoTeam): unknown {
+    const obj: any = {};
+    if (message.radiantPlayers?.length) {
+      obj.radiantPlayers = message.radiantPlayers.map((e) => CMsgSteamLearnMatchInfoTeam_Player.toJSON(e));
+    }
+    if (message.direPlayers?.length) {
+      obj.direPlayers = message.direPlayers.map((e) => CMsgSteamLearnMatchInfoTeam_Player.toJSON(e));
+    }
+    if (message.radiantTeamWon !== undefined && message.radiantTeamWon !== false) {
+      obj.radiantTeamWon = message.radiantTeamWon;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSteamLearnMatchInfoTeam>): CMsgSteamLearnMatchInfoTeam {
+    return CMsgSteamLearnMatchInfoTeam.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSteamLearnMatchInfoTeam>): CMsgSteamLearnMatchInfoTeam {
+    const message = createBaseCMsgSteamLearnMatchInfoTeam();
+    message.radiantPlayers = object.radiantPlayers?.map((e) => CMsgSteamLearnMatchInfoTeam_Player.fromPartial(e)) || [];
+    message.direPlayers = object.direPlayers?.map((e) => CMsgSteamLearnMatchInfoTeam_Player.fromPartial(e)) || [];
+    message.radiantTeamWon = object.radiantTeamWon ?? false;
+    return message;
+  },
+};
+
+function createBaseCMsgSteamLearnMatchInfoTeam_Player(): CMsgSteamLearnMatchInfoTeam_Player {
+  return {
+    prematchMmr: 0,
+    prematchRankUncertainty: 0,
+    prematchBehaviorScore: 0,
+    prematchCommScore: 0,
+    numPlayersInParty: 0,
+  };
+}
+
+export const CMsgSteamLearnMatchInfoTeam_Player = {
+  encode(message: CMsgSteamLearnMatchInfoTeam_Player, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.prematchMmr !== undefined && message.prematchMmr !== 0) {
+      writer.uint32(8).uint32(message.prematchMmr);
+    }
+    if (message.prematchRankUncertainty !== undefined && message.prematchRankUncertainty !== 0) {
+      writer.uint32(16).uint32(message.prematchRankUncertainty);
+    }
+    if (message.prematchBehaviorScore !== undefined && message.prematchBehaviorScore !== 0) {
+      writer.uint32(24).uint32(message.prematchBehaviorScore);
+    }
+    if (message.prematchCommScore !== undefined && message.prematchCommScore !== 0) {
+      writer.uint32(32).uint32(message.prematchCommScore);
+    }
+    if (message.numPlayersInParty !== undefined && message.numPlayersInParty !== 0) {
+      writer.uint32(40).uint32(message.numPlayersInParty);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnMatchInfoTeam_Player {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSteamLearnMatchInfoTeam_Player();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.prematchMmr = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.prematchRankUncertainty = reader.uint32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.prematchBehaviorScore = reader.uint32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.prematchCommScore = reader.uint32();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.numPlayersInParty = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSteamLearnMatchInfoTeam_Player {
+    return {
+      prematchMmr: isSet(object.prematchMmr) ? globalThis.Number(object.prematchMmr) : 0,
+      prematchRankUncertainty: isSet(object.prematchRankUncertainty)
+        ? globalThis.Number(object.prematchRankUncertainty)
+        : 0,
+      prematchBehaviorScore: isSet(object.prematchBehaviorScore) ? globalThis.Number(object.prematchBehaviorScore) : 0,
+      prematchCommScore: isSet(object.prematchCommScore) ? globalThis.Number(object.prematchCommScore) : 0,
+      numPlayersInParty: isSet(object.numPlayersInParty) ? globalThis.Number(object.numPlayersInParty) : 0,
+    };
+  },
+
+  toJSON(message: CMsgSteamLearnMatchInfoTeam_Player): unknown {
+    const obj: any = {};
+    if (message.prematchMmr !== undefined && message.prematchMmr !== 0) {
+      obj.prematchMmr = Math.round(message.prematchMmr);
+    }
+    if (message.prematchRankUncertainty !== undefined && message.prematchRankUncertainty !== 0) {
+      obj.prematchRankUncertainty = Math.round(message.prematchRankUncertainty);
+    }
+    if (message.prematchBehaviorScore !== undefined && message.prematchBehaviorScore !== 0) {
+      obj.prematchBehaviorScore = Math.round(message.prematchBehaviorScore);
+    }
+    if (message.prematchCommScore !== undefined && message.prematchCommScore !== 0) {
+      obj.prematchCommScore = Math.round(message.prematchCommScore);
+    }
+    if (message.numPlayersInParty !== undefined && message.numPlayersInParty !== 0) {
+      obj.numPlayersInParty = Math.round(message.numPlayersInParty);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSteamLearnMatchInfoTeam_Player>): CMsgSteamLearnMatchInfoTeam_Player {
+    return CMsgSteamLearnMatchInfoTeam_Player.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSteamLearnMatchInfoTeam_Player>): CMsgSteamLearnMatchInfoTeam_Player {
+    const message = createBaseCMsgSteamLearnMatchInfoTeam_Player();
+    message.prematchMmr = object.prematchMmr ?? 0;
+    message.prematchRankUncertainty = object.prematchRankUncertainty ?? 0;
+    message.prematchBehaviorScore = object.prematchBehaviorScore ?? 0;
+    message.prematchCommScore = object.prematchCommScore ?? 0;
+    message.numPlayersInParty = object.numPlayersInParty ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgSteamLearnMatchHeroesV3(): CMsgSteamLearnMatchHeroesV3 {
   return {
     radiantHeroIds: [],
     direHeroIds: [],
@@ -23388,19 +22881,21 @@ function createBaseCMsgSteamLearnMatchHeroesV2(): CMsgSteamLearnMatchHeroesV2 {
     direLanes: [],
     radiantHeroFacets: [],
     direHeroFacets: [],
+    radiantPositions: [],
+    direPositions: [],
   };
 }
 
-export const CMsgSteamLearnMatchHeroesV2 = {
-  encode(message: CMsgSteamLearnMatchHeroesV2, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CMsgSteamLearnMatchHeroesV3 = {
+  encode(message: CMsgSteamLearnMatchHeroesV3, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).fork();
     for (const v of message.radiantHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(18).fork();
     for (const v of message.direHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(26).fork();
@@ -23423,19 +22918,29 @@ export const CMsgSteamLearnMatchHeroesV2 = {
       writer.uint32(v);
     }
     writer.ldelim();
+    writer.uint32(58).fork();
+    for (const v of message.radiantPositions) {
+      writer.uint32(v);
+    }
+    writer.ldelim();
+    writer.uint32(66).fork();
+    for (const v of message.direPositions) {
+      writer.uint32(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnMatchHeroesV2 {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnMatchHeroesV3 {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgSteamLearnMatchHeroesV2();
+    const message = createBaseCMsgSteamLearnMatchHeroesV3();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
           if (tag === 8) {
-            message.radiantHeroIds.push(reader.uint32());
+            message.radiantHeroIds.push(reader.int32());
 
             continue;
           }
@@ -23443,7 +22948,7 @@ export const CMsgSteamLearnMatchHeroesV2 = {
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.radiantHeroIds.push(reader.uint32());
+              message.radiantHeroIds.push(reader.int32());
             }
 
             continue;
@@ -23452,7 +22957,7 @@ export const CMsgSteamLearnMatchHeroesV2 = {
           break;
         case 2:
           if (tag === 16) {
-            message.direHeroIds.push(reader.uint32());
+            message.direHeroIds.push(reader.int32());
 
             continue;
           }
@@ -23460,7 +22965,7 @@ export const CMsgSteamLearnMatchHeroesV2 = {
           if (tag === 18) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.direHeroIds.push(reader.uint32());
+              message.direHeroIds.push(reader.int32());
             }
 
             continue;
@@ -23535,6 +23040,40 @@ export const CMsgSteamLearnMatchHeroesV2 = {
           }
 
           break;
+        case 7:
+          if (tag === 56) {
+            message.radiantPositions.push(reader.uint32());
+
+            continue;
+          }
+
+          if (tag === 58) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.radiantPositions.push(reader.uint32());
+            }
+
+            continue;
+          }
+
+          break;
+        case 8:
+          if (tag === 64) {
+            message.direPositions.push(reader.uint32());
+
+            continue;
+          }
+
+          if (tag === 66) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.direPositions.push(reader.uint32());
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -23544,7 +23083,7 @@ export const CMsgSteamLearnMatchHeroesV2 = {
     return message;
   },
 
-  fromJSON(object: any): CMsgSteamLearnMatchHeroesV2 {
+  fromJSON(object: any): CMsgSteamLearnMatchHeroesV3 {
     return {
       radiantHeroIds: globalThis.Array.isArray(object?.radiantHeroIds)
         ? object.radiantHeroIds.map((e: any) => globalThis.Number(e))
@@ -23564,10 +23103,16 @@ export const CMsgSteamLearnMatchHeroesV2 = {
       direHeroFacets: globalThis.Array.isArray(object?.direHeroFacets)
         ? object.direHeroFacets.map((e: any) => globalThis.Number(e))
         : [],
+      radiantPositions: globalThis.Array.isArray(object?.radiantPositions)
+        ? object.radiantPositions.map((e: any) => globalThis.Number(e))
+        : [],
+      direPositions: globalThis.Array.isArray(object?.direPositions)
+        ? object.direPositions.map((e: any) => globalThis.Number(e))
+        : [],
     };
   },
 
-  toJSON(message: CMsgSteamLearnMatchHeroesV2): unknown {
+  toJSON(message: CMsgSteamLearnMatchHeroesV3): unknown {
     const obj: any = {};
     if (message.radiantHeroIds?.length) {
       obj.radiantHeroIds = message.radiantHeroIds.map((e) => Math.round(e));
@@ -23587,28 +23132,37 @@ export const CMsgSteamLearnMatchHeroesV2 = {
     if (message.direHeroFacets?.length) {
       obj.direHeroFacets = message.direHeroFacets.map((e) => Math.round(e));
     }
+    if (message.radiantPositions?.length) {
+      obj.radiantPositions = message.radiantPositions.map((e) => Math.round(e));
+    }
+    if (message.direPositions?.length) {
+      obj.direPositions = message.direPositions.map((e) => Math.round(e));
+    }
     return obj;
   },
 
-  create(base?: DeepPartial<CMsgSteamLearnMatchHeroesV2>): CMsgSteamLearnMatchHeroesV2 {
-    return CMsgSteamLearnMatchHeroesV2.fromPartial(base ?? {});
+  create(base?: DeepPartial<CMsgSteamLearnMatchHeroesV3>): CMsgSteamLearnMatchHeroesV3 {
+    return CMsgSteamLearnMatchHeroesV3.fromPartial(base ?? {});
   },
-  fromPartial(object: DeepPartial<CMsgSteamLearnMatchHeroesV2>): CMsgSteamLearnMatchHeroesV2 {
-    const message = createBaseCMsgSteamLearnMatchHeroesV2();
+  fromPartial(object: DeepPartial<CMsgSteamLearnMatchHeroesV3>): CMsgSteamLearnMatchHeroesV3 {
+    const message = createBaseCMsgSteamLearnMatchHeroesV3();
     message.radiantHeroIds = object.radiantHeroIds?.map((e) => e) || [];
     message.direHeroIds = object.direHeroIds?.map((e) => e) || [];
     message.radiantLanes = object.radiantLanes?.map((e) => e) || [];
     message.direLanes = object.direLanes?.map((e) => e) || [];
     message.radiantHeroFacets = object.radiantHeroFacets?.map((e) => e) || [];
     message.direHeroFacets = object.direHeroFacets?.map((e) => e) || [];
+    message.radiantPositions = object.radiantPositions?.map((e) => e) || [];
+    message.direPositions = object.direPositions?.map((e) => e) || [];
     return message;
   },
 };
 
-function createBaseCMsgSteamLearnMatchHeroV2(): CMsgSteamLearnMatchHeroV2 {
+function createBaseCMsgSteamLearnMatchHeroV3(): CMsgSteamLearnMatchHeroV3 {
   return {
     heroId: 0,
     lane: 0,
+    position: 0,
     alliedHeroIds: [],
     enemyHeroIds: [],
     heroFacet: 0,
@@ -23617,22 +23171,25 @@ function createBaseCMsgSteamLearnMatchHeroV2(): CMsgSteamLearnMatchHeroV2 {
   };
 }
 
-export const CMsgSteamLearnMatchHeroV2 = {
-  encode(message: CMsgSteamLearnMatchHeroV2, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CMsgSteamLearnMatchHeroV3 = {
+  encode(message: CMsgSteamLearnMatchHeroV3, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.lane !== undefined && message.lane !== 0) {
       writer.uint32(16).uint32(message.lane);
     }
+    if (message.position !== undefined && message.position !== 0) {
+      writer.uint32(64).uint32(message.position);
+    }
     writer.uint32(26).fork();
     for (const v of message.alliedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     writer.uint32(34).fork();
     for (const v of message.enemyHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     if (message.heroFacet !== undefined && message.heroFacet !== 0) {
@@ -23651,10 +23208,10 @@ export const CMsgSteamLearnMatchHeroV2 = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnMatchHeroV2 {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnMatchHeroV3 {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgSteamLearnMatchHeroV2();
+    const message = createBaseCMsgSteamLearnMatchHeroV3();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -23663,7 +23220,7 @@ export const CMsgSteamLearnMatchHeroV2 = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -23672,9 +23229,16 @@ export const CMsgSteamLearnMatchHeroV2 = {
 
           message.lane = reader.uint32();
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.position = reader.uint32();
+          continue;
         case 3:
           if (tag === 24) {
-            message.alliedHeroIds.push(reader.uint32());
+            message.alliedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -23682,7 +23246,7 @@ export const CMsgSteamLearnMatchHeroV2 = {
           if (tag === 26) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.alliedHeroIds.push(reader.uint32());
+              message.alliedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -23691,7 +23255,7 @@ export const CMsgSteamLearnMatchHeroV2 = {
           break;
         case 4:
           if (tag === 32) {
-            message.enemyHeroIds.push(reader.uint32());
+            message.enemyHeroIds.push(reader.int32());
 
             continue;
           }
@@ -23699,7 +23263,7 @@ export const CMsgSteamLearnMatchHeroV2 = {
           if (tag === 34) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.enemyHeroIds.push(reader.uint32());
+              message.enemyHeroIds.push(reader.int32());
             }
 
             continue;
@@ -23756,10 +23320,11 @@ export const CMsgSteamLearnMatchHeroV2 = {
     return message;
   },
 
-  fromJSON(object: any): CMsgSteamLearnMatchHeroV2 {
+  fromJSON(object: any): CMsgSteamLearnMatchHeroV3 {
     return {
       heroId: isSet(object.heroId) ? globalThis.Number(object.heroId) : 0,
       lane: isSet(object.lane) ? globalThis.Number(object.lane) : 0,
+      position: isSet(object.position) ? globalThis.Number(object.position) : 0,
       alliedHeroIds: globalThis.Array.isArray(object?.alliedHeroIds)
         ? object.alliedHeroIds.map((e: any) => globalThis.Number(e))
         : [],
@@ -23776,13 +23341,16 @@ export const CMsgSteamLearnMatchHeroV2 = {
     };
   },
 
-  toJSON(message: CMsgSteamLearnMatchHeroV2): unknown {
+  toJSON(message: CMsgSteamLearnMatchHeroV3): unknown {
     const obj: any = {};
     if (message.heroId !== undefined && message.heroId !== 0) {
       obj.heroId = Math.round(message.heroId);
     }
     if (message.lane !== undefined && message.lane !== 0) {
       obj.lane = Math.round(message.lane);
+    }
+    if (message.position !== undefined && message.position !== 0) {
+      obj.position = Math.round(message.position);
     }
     if (message.alliedHeroIds?.length) {
       obj.alliedHeroIds = message.alliedHeroIds.map((e) => Math.round(e));
@@ -23802,13 +23370,14 @@ export const CMsgSteamLearnMatchHeroV2 = {
     return obj;
   },
 
-  create(base?: DeepPartial<CMsgSteamLearnMatchHeroV2>): CMsgSteamLearnMatchHeroV2 {
-    return CMsgSteamLearnMatchHeroV2.fromPartial(base ?? {});
+  create(base?: DeepPartial<CMsgSteamLearnMatchHeroV3>): CMsgSteamLearnMatchHeroV3 {
+    return CMsgSteamLearnMatchHeroV3.fromPartial(base ?? {});
   },
-  fromPartial(object: DeepPartial<CMsgSteamLearnMatchHeroV2>): CMsgSteamLearnMatchHeroV2 {
-    const message = createBaseCMsgSteamLearnMatchHeroV2();
+  fromPartial(object: DeepPartial<CMsgSteamLearnMatchHeroV3>): CMsgSteamLearnMatchHeroV3 {
+    const message = createBaseCMsgSteamLearnMatchHeroV3();
     message.heroId = object.heroId ?? 0;
     message.lane = object.lane ?? 0;
+    message.position = object.position ?? 0;
     message.alliedHeroIds = object.alliedHeroIds?.map((e) => e) || [];
     message.enemyHeroIds = object.enemyHeroIds?.map((e) => e) || [];
     message.heroFacet = object.heroFacet ?? 0;
@@ -23874,8 +23443,8 @@ export const CMsgSteamLearnPlayerTimedStats = {
   },
   fromPartial(object: DeepPartial<CMsgSteamLearnPlayerTimedStats>): CMsgSteamLearnPlayerTimedStats {
     const message = createBaseCMsgSteamLearnPlayerTimedStats();
-    message.statBuckets =
-      object.statBuckets?.map((e) => CMsgSteamLearnPlayerTimedStats_StatBucket.fromPartial(e)) || [];
+    message.statBuckets = object.statBuckets?.map((e) => CMsgSteamLearnPlayerTimedStats_StatBucket.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -24204,14 +23773,12 @@ export const CMsgSteamLearnMatchStateV5 = {
   fromPartial(object: DeepPartial<CMsgSteamLearnMatchStateV5>): CMsgSteamLearnMatchStateV5 {
     const message = createBaseCMsgSteamLearnMatchStateV5();
     message.gameTime = object.gameTime ?? 0;
-    message.radiantState =
-      object.radiantState !== undefined && object.radiantState !== null
-        ? CMsgSteamLearnMatchStateV5_TeamState.fromPartial(object.radiantState)
-        : undefined;
-    message.direState =
-      object.direState !== undefined && object.direState !== null
-        ? CMsgSteamLearnMatchStateV5_TeamState.fromPartial(object.direState)
-        : undefined;
+    message.radiantState = (object.radiantState !== undefined && object.radiantState !== null)
+      ? CMsgSteamLearnMatchStateV5_TeamState.fromPartial(object.radiantState)
+      : undefined;
+    message.direState = (object.direState !== undefined && object.direState !== null)
+      ? CMsgSteamLearnMatchStateV5_TeamState.fromPartial(object.direState)
+      : undefined;
     return message;
   },
 };
@@ -24234,7 +23801,7 @@ function createBaseCMsgSteamLearnMatchStateV5_PlayerState(): CMsgSteamLearnMatch
 export const CMsgSteamLearnMatchStateV5_PlayerState = {
   encode(message: CMsgSteamLearnMatchStateV5_PlayerState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.netWorth !== undefined && message.netWorth !== 0) {
       writer.uint32(16).uint32(message.netWorth);
@@ -24278,7 +23845,7 @@ export const CMsgSteamLearnMatchStateV5_PlayerState = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -25062,6 +24629,110 @@ export const CMsgSteamLearnNeutralItemPurchase = {
   },
 };
 
+function createBaseCMsgSteamLearnNeutralItemPurchaseV2(): CMsgSteamLearnNeutralItemPurchaseV2 {
+  return { tier: 0, trinketId: -1, enhancementId: -1, previousTrinketId: -1 };
+}
+
+export const CMsgSteamLearnNeutralItemPurchaseV2 = {
+  encode(message: CMsgSteamLearnNeutralItemPurchaseV2, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.tier !== undefined && message.tier !== 0) {
+      writer.uint32(8).uint32(message.tier);
+    }
+    if (message.trinketId !== undefined && message.trinketId !== -1) {
+      writer.uint32(16).int32(message.trinketId);
+    }
+    if (message.enhancementId !== undefined && message.enhancementId !== -1) {
+      writer.uint32(24).int32(message.enhancementId);
+    }
+    if (message.previousTrinketId !== undefined && message.previousTrinketId !== -1) {
+      writer.uint32(32).int32(message.previousTrinketId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnNeutralItemPurchaseV2 {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSteamLearnNeutralItemPurchaseV2();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.tier = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.trinketId = reader.int32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.enhancementId = reader.int32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.previousTrinketId = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSteamLearnNeutralItemPurchaseV2 {
+    return {
+      tier: isSet(object.tier) ? globalThis.Number(object.tier) : 0,
+      trinketId: isSet(object.trinketId) ? globalThis.Number(object.trinketId) : -1,
+      enhancementId: isSet(object.enhancementId) ? globalThis.Number(object.enhancementId) : -1,
+      previousTrinketId: isSet(object.previousTrinketId) ? globalThis.Number(object.previousTrinketId) : -1,
+    };
+  },
+
+  toJSON(message: CMsgSteamLearnNeutralItemPurchaseV2): unknown {
+    const obj: any = {};
+    if (message.tier !== undefined && message.tier !== 0) {
+      obj.tier = Math.round(message.tier);
+    }
+    if (message.trinketId !== undefined && message.trinketId !== -1) {
+      obj.trinketId = Math.round(message.trinketId);
+    }
+    if (message.enhancementId !== undefined && message.enhancementId !== -1) {
+      obj.enhancementId = Math.round(message.enhancementId);
+    }
+    if (message.previousTrinketId !== undefined && message.previousTrinketId !== -1) {
+      obj.previousTrinketId = Math.round(message.previousTrinketId);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSteamLearnNeutralItemPurchaseV2>): CMsgSteamLearnNeutralItemPurchaseV2 {
+    return CMsgSteamLearnNeutralItemPurchaseV2.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSteamLearnNeutralItemPurchaseV2>): CMsgSteamLearnNeutralItemPurchaseV2 {
+    const message = createBaseCMsgSteamLearnNeutralItemPurchaseV2();
+    message.tier = object.tier ?? 0;
+    message.trinketId = object.trinketId ?? -1;
+    message.enhancementId = object.enhancementId ?? -1;
+    message.previousTrinketId = object.previousTrinketId ?? -1;
+    return message;
+  },
+};
+
 function createBaseCMsgSteamLearnAbilitySkill(): CMsgSteamLearnAbilitySkill {
   return { abilityId: -1, skilledAbilities: [], gameTime: 0, isUsingDotaPlus: false };
 }
@@ -25180,6 +24851,277 @@ export const CMsgSteamLearnAbilitySkill = {
   },
 };
 
+function createBaseCMsgSteamLearnEarlyGameItemPurchasesV2(): CMsgSteamLearnEarlyGameItemPurchasesV2 {
+  return { itemIds: [], otherItemIds: [] };
+}
+
+export const CMsgSteamLearnEarlyGameItemPurchasesV2 = {
+  encode(message: CMsgSteamLearnEarlyGameItemPurchasesV2, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    writer.uint32(10).fork();
+    for (const v of message.itemIds) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    writer.uint32(18).fork();
+    for (const v of message.otherItemIds) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnEarlyGameItemPurchasesV2 {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSteamLearnEarlyGameItemPurchasesV2();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag === 8) {
+            message.itemIds.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 10) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.itemIds.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
+        case 2:
+          if (tag === 16) {
+            message.otherItemIds.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 18) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.otherItemIds.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSteamLearnEarlyGameItemPurchasesV2 {
+    return {
+      itemIds: globalThis.Array.isArray(object?.itemIds) ? object.itemIds.map((e: any) => globalThis.Number(e)) : [],
+      otherItemIds: globalThis.Array.isArray(object?.otherItemIds)
+        ? object.otherItemIds.map((e: any) => globalThis.Number(e))
+        : [],
+    };
+  },
+
+  toJSON(message: CMsgSteamLearnEarlyGameItemPurchasesV2): unknown {
+    const obj: any = {};
+    if (message.itemIds?.length) {
+      obj.itemIds = message.itemIds.map((e) => Math.round(e));
+    }
+    if (message.otherItemIds?.length) {
+      obj.otherItemIds = message.otherItemIds.map((e) => Math.round(e));
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSteamLearnEarlyGameItemPurchasesV2>): CMsgSteamLearnEarlyGameItemPurchasesV2 {
+    return CMsgSteamLearnEarlyGameItemPurchasesV2.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSteamLearnEarlyGameItemPurchasesV2>): CMsgSteamLearnEarlyGameItemPurchasesV2 {
+    const message = createBaseCMsgSteamLearnEarlyGameItemPurchasesV2();
+    message.itemIds = object.itemIds?.map((e) => e) || [];
+    message.otherItemIds = object.otherItemIds?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseCMsgSteamLearnLateGameItemPurchasesV2(): CMsgSteamLearnLateGameItemPurchasesV2 {
+  return { itemIds: [], otherItemIds: [] };
+}
+
+export const CMsgSteamLearnLateGameItemPurchasesV2 = {
+  encode(message: CMsgSteamLearnLateGameItemPurchasesV2, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    writer.uint32(10).fork();
+    for (const v of message.itemIds) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    writer.uint32(18).fork();
+    for (const v of message.otherItemIds) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnLateGameItemPurchasesV2 {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSteamLearnLateGameItemPurchasesV2();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag === 8) {
+            message.itemIds.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 10) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.itemIds.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
+        case 2:
+          if (tag === 16) {
+            message.otherItemIds.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 18) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.otherItemIds.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSteamLearnLateGameItemPurchasesV2 {
+    return {
+      itemIds: globalThis.Array.isArray(object?.itemIds) ? object.itemIds.map((e: any) => globalThis.Number(e)) : [],
+      otherItemIds: globalThis.Array.isArray(object?.otherItemIds)
+        ? object.otherItemIds.map((e: any) => globalThis.Number(e))
+        : [],
+    };
+  },
+
+  toJSON(message: CMsgSteamLearnLateGameItemPurchasesV2): unknown {
+    const obj: any = {};
+    if (message.itemIds?.length) {
+      obj.itemIds = message.itemIds.map((e) => Math.round(e));
+    }
+    if (message.otherItemIds?.length) {
+      obj.otherItemIds = message.otherItemIds.map((e) => Math.round(e));
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSteamLearnLateGameItemPurchasesV2>): CMsgSteamLearnLateGameItemPurchasesV2 {
+    return CMsgSteamLearnLateGameItemPurchasesV2.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSteamLearnLateGameItemPurchasesV2>): CMsgSteamLearnLateGameItemPurchasesV2 {
+    const message = createBaseCMsgSteamLearnLateGameItemPurchasesV2();
+    message.itemIds = object.itemIds?.map((e) => e) || [];
+    message.otherItemIds = object.otherItemIds?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseCMsgSteamLearnMainGameItemPurchases(): CMsgSteamLearnMainGameItemPurchases {
+  return { itemIds: [] };
+}
+
+export const CMsgSteamLearnMainGameItemPurchases = {
+  encode(message: CMsgSteamLearnMainGameItemPurchases, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    writer.uint32(10).fork();
+    for (const v of message.itemIds) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnMainGameItemPurchases {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSteamLearnMainGameItemPurchases();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag === 8) {
+            message.itemIds.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 10) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.itemIds.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSteamLearnMainGameItemPurchases {
+    return {
+      itemIds: globalThis.Array.isArray(object?.itemIds) ? object.itemIds.map((e: any) => globalThis.Number(e)) : [],
+    };
+  },
+
+  toJSON(message: CMsgSteamLearnMainGameItemPurchases): unknown {
+    const obj: any = {};
+    if (message.itemIds?.length) {
+      obj.itemIds = message.itemIds.map((e) => Math.round(e));
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSteamLearnMainGameItemPurchases>): CMsgSteamLearnMainGameItemPurchases {
+    return CMsgSteamLearnMainGameItemPurchases.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSteamLearnMainGameItemPurchases>): CMsgSteamLearnMainGameItemPurchases {
+    const message = createBaseCMsgSteamLearnMainGameItemPurchases();
+    message.itemIds = object.itemIds?.map((e) => e) || [];
+    return message;
+  },
+};
+
 function createBaseCMsgSteamLearnWardPlacement(): CMsgSteamLearnWardPlacement {
   return { wardLoc: undefined, existingWardLocs: [], team: 0 };
 }
@@ -25264,10 +25206,9 @@ export const CMsgSteamLearnWardPlacement = {
   },
   fromPartial(object: DeepPartial<CMsgSteamLearnWardPlacement>): CMsgSteamLearnWardPlacement {
     const message = createBaseCMsgSteamLearnWardPlacement();
-    message.wardLoc =
-      object.wardLoc !== undefined && object.wardLoc !== null
-        ? CMsgSteamLearnWardPlacement_Location.fromPartial(object.wardLoc)
-        : undefined;
+    message.wardLoc = (object.wardLoc !== undefined && object.wardLoc !== null)
+      ? CMsgSteamLearnWardPlacement_Location.fromPartial(object.wardLoc)
+      : undefined;
     message.existingWardLocs =
       object.existingWardLocs?.map((e) => CMsgSteamLearnWardPlacement_Location.fromPartial(e)) || [];
     message.team = object.team ?? 0;
@@ -25345,6 +25286,243 @@ export const CMsgSteamLearnWardPlacement_Location = {
     const message = createBaseCMsgSteamLearnWardPlacement_Location();
     message.x = object.x ?? 0;
     message.y = object.y ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgSteamLearnPlayerMatchState(): CMsgSteamLearnPlayerMatchState {
+  return {
+    netWorth: 0,
+    level: 0,
+    deaths: 0,
+    respawnTime: 0,
+    hasBuyback: false,
+    hasAegis: false,
+    hasRapier: false,
+    teamNetWorth: 0,
+    enemyTeamNetWorth: 0,
+    teamKills: 0,
+    enemyTeamKills: 0,
+    gameTime: 0,
+  };
+}
+
+export const CMsgSteamLearnPlayerMatchState = {
+  encode(message: CMsgSteamLearnPlayerMatchState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.netWorth !== undefined && message.netWorth !== 0) {
+      writer.uint32(8).uint32(message.netWorth);
+    }
+    if (message.level !== undefined && message.level !== 0) {
+      writer.uint32(16).uint32(message.level);
+    }
+    if (message.deaths !== undefined && message.deaths !== 0) {
+      writer.uint32(24).uint32(message.deaths);
+    }
+    if (message.respawnTime !== undefined && message.respawnTime !== 0) {
+      writer.uint32(32).uint32(message.respawnTime);
+    }
+    if (message.hasBuyback !== undefined && message.hasBuyback !== false) {
+      writer.uint32(40).bool(message.hasBuyback);
+    }
+    if (message.hasAegis !== undefined && message.hasAegis !== false) {
+      writer.uint32(48).bool(message.hasAegis);
+    }
+    if (message.hasRapier !== undefined && message.hasRapier !== false) {
+      writer.uint32(56).bool(message.hasRapier);
+    }
+    if (message.teamNetWorth !== undefined && message.teamNetWorth !== 0) {
+      writer.uint32(64).uint32(message.teamNetWorth);
+    }
+    if (message.enemyTeamNetWorth !== undefined && message.enemyTeamNetWorth !== 0) {
+      writer.uint32(72).uint32(message.enemyTeamNetWorth);
+    }
+    if (message.teamKills !== undefined && message.teamKills !== 0) {
+      writer.uint32(80).uint32(message.teamKills);
+    }
+    if (message.enemyTeamKills !== undefined && message.enemyTeamKills !== 0) {
+      writer.uint32(88).uint32(message.enemyTeamKills);
+    }
+    if (message.gameTime !== undefined && message.gameTime !== 0) {
+      writer.uint32(101).float(message.gameTime);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSteamLearnPlayerMatchState {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSteamLearnPlayerMatchState();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.netWorth = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.level = reader.uint32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.deaths = reader.uint32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.respawnTime = reader.uint32();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.hasBuyback = reader.bool();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.hasAegis = reader.bool();
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.hasRapier = reader.bool();
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.teamNetWorth = reader.uint32();
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.enemyTeamNetWorth = reader.uint32();
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.teamKills = reader.uint32();
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.enemyTeamKills = reader.uint32();
+          continue;
+        case 12:
+          if (tag !== 101) {
+            break;
+          }
+
+          message.gameTime = reader.float();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSteamLearnPlayerMatchState {
+    return {
+      netWorth: isSet(object.netWorth) ? globalThis.Number(object.netWorth) : 0,
+      level: isSet(object.level) ? globalThis.Number(object.level) : 0,
+      deaths: isSet(object.deaths) ? globalThis.Number(object.deaths) : 0,
+      respawnTime: isSet(object.respawnTime) ? globalThis.Number(object.respawnTime) : 0,
+      hasBuyback: isSet(object.hasBuyback) ? globalThis.Boolean(object.hasBuyback) : false,
+      hasAegis: isSet(object.hasAegis) ? globalThis.Boolean(object.hasAegis) : false,
+      hasRapier: isSet(object.hasRapier) ? globalThis.Boolean(object.hasRapier) : false,
+      teamNetWorth: isSet(object.teamNetWorth) ? globalThis.Number(object.teamNetWorth) : 0,
+      enemyTeamNetWorth: isSet(object.enemyTeamNetWorth) ? globalThis.Number(object.enemyTeamNetWorth) : 0,
+      teamKills: isSet(object.teamKills) ? globalThis.Number(object.teamKills) : 0,
+      enemyTeamKills: isSet(object.enemyTeamKills) ? globalThis.Number(object.enemyTeamKills) : 0,
+      gameTime: isSet(object.gameTime) ? globalThis.Number(object.gameTime) : 0,
+    };
+  },
+
+  toJSON(message: CMsgSteamLearnPlayerMatchState): unknown {
+    const obj: any = {};
+    if (message.netWorth !== undefined && message.netWorth !== 0) {
+      obj.netWorth = Math.round(message.netWorth);
+    }
+    if (message.level !== undefined && message.level !== 0) {
+      obj.level = Math.round(message.level);
+    }
+    if (message.deaths !== undefined && message.deaths !== 0) {
+      obj.deaths = Math.round(message.deaths);
+    }
+    if (message.respawnTime !== undefined && message.respawnTime !== 0) {
+      obj.respawnTime = Math.round(message.respawnTime);
+    }
+    if (message.hasBuyback !== undefined && message.hasBuyback !== false) {
+      obj.hasBuyback = message.hasBuyback;
+    }
+    if (message.hasAegis !== undefined && message.hasAegis !== false) {
+      obj.hasAegis = message.hasAegis;
+    }
+    if (message.hasRapier !== undefined && message.hasRapier !== false) {
+      obj.hasRapier = message.hasRapier;
+    }
+    if (message.teamNetWorth !== undefined && message.teamNetWorth !== 0) {
+      obj.teamNetWorth = Math.round(message.teamNetWorth);
+    }
+    if (message.enemyTeamNetWorth !== undefined && message.enemyTeamNetWorth !== 0) {
+      obj.enemyTeamNetWorth = Math.round(message.enemyTeamNetWorth);
+    }
+    if (message.teamKills !== undefined && message.teamKills !== 0) {
+      obj.teamKills = Math.round(message.teamKills);
+    }
+    if (message.enemyTeamKills !== undefined && message.enemyTeamKills !== 0) {
+      obj.enemyTeamKills = Math.round(message.enemyTeamKills);
+    }
+    if (message.gameTime !== undefined && message.gameTime !== 0) {
+      obj.gameTime = message.gameTime;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSteamLearnPlayerMatchState>): CMsgSteamLearnPlayerMatchState {
+    return CMsgSteamLearnPlayerMatchState.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSteamLearnPlayerMatchState>): CMsgSteamLearnPlayerMatchState {
+    const message = createBaseCMsgSteamLearnPlayerMatchState();
+    message.netWorth = object.netWorth ?? 0;
+    message.level = object.level ?? 0;
+    message.deaths = object.deaths ?? 0;
+    message.respawnTime = object.respawnTime ?? 0;
+    message.hasBuyback = object.hasBuyback ?? false;
+    message.hasAegis = object.hasAegis ?? false;
+    message.hasRapier = object.hasRapier ?? false;
+    message.teamNetWorth = object.teamNetWorth ?? 0;
+    message.enemyTeamNetWorth = object.enemyTeamNetWorth ?? 0;
+    message.teamKills = object.teamKills ?? 0;
+    message.enemyTeamKills = object.enemyTeamKills ?? 0;
+    message.gameTime = object.gameTime ?? 0;
     return message;
   },
 };
@@ -25479,10 +25657,9 @@ export const CMsgSignOutMapStats = {
   fromPartial(object: DeepPartial<CMsgSignOutMapStats>): CMsgSignOutMapStats {
     const message = createBaseCMsgSignOutMapStats();
     message.players = object.players?.map((e) => CMsgSignOutMapStats_Player.fromPartial(e)) || [];
-    message.globalStats =
-      object.globalStats !== undefined && object.globalStats !== null
-        ? CMsgMapStatsSnapshot.fromPartial(object.globalStats)
-        : undefined;
+    message.globalStats = (object.globalStats !== undefined && object.globalStats !== null)
+      ? CMsgMapStatsSnapshot.fromPartial(object.globalStats)
+      : undefined;
     return message;
   },
 };
@@ -25556,10 +25733,9 @@ export const CMsgSignOutMapStats_Player = {
   fromPartial(object: DeepPartial<CMsgSignOutMapStats_Player>): CMsgSignOutMapStats_Player {
     const message = createBaseCMsgSignOutMapStats_Player();
     message.accountId = object.accountId ?? 0;
-    message.personalStats =
-      object.personalStats !== undefined && object.personalStats !== null
-        ? CMsgMapStatsSnapshot.fromPartial(object.personalStats)
-        : undefined;
+    message.personalStats = (object.personalStats !== undefined && object.personalStats !== null)
+      ? CMsgMapStatsSnapshot.fromPartial(object.personalStats)
+      : undefined;
     return message;
   },
 };
@@ -25934,6 +26110,158 @@ export const CMsgSignOutOverworld_Player = {
   },
 };
 
+function createBaseCMsgSignOutCraftworks(): CMsgSignOutCraftworks {
+  return { players: [], eventId: 0 };
+}
+
+export const CMsgSignOutCraftworks = {
+  encode(message: CMsgSignOutCraftworks, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.players) {
+      CMsgSignOutCraftworks_Player.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.eventId !== undefined && message.eventId !== 0) {
+      writer.uint32(16).int32(message.eventId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSignOutCraftworks {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSignOutCraftworks();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.players.push(CMsgSignOutCraftworks_Player.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.eventId = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSignOutCraftworks {
+    return {
+      players: globalThis.Array.isArray(object?.players)
+        ? object.players.map((e: any) => CMsgSignOutCraftworks_Player.fromJSON(e))
+        : [],
+      eventId: isSet(object.eventId) ? eEventFromJSON(object.eventId) : 0,
+    };
+  },
+
+  toJSON(message: CMsgSignOutCraftworks): unknown {
+    const obj: any = {};
+    if (message.players?.length) {
+      obj.players = message.players.map((e) => CMsgSignOutCraftworks_Player.toJSON(e));
+    }
+    if (message.eventId !== undefined && message.eventId !== 0) {
+      obj.eventId = eEventToJSON(message.eventId);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSignOutCraftworks>): CMsgSignOutCraftworks {
+    return CMsgSignOutCraftworks.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSignOutCraftworks>): CMsgSignOutCraftworks {
+    const message = createBaseCMsgSignOutCraftworks();
+    message.players = object.players?.map((e) => CMsgSignOutCraftworks_Player.fromPartial(e)) || [];
+    message.eventId = object.eventId ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgSignOutCraftworks_Player(): CMsgSignOutCraftworks_Player {
+  return { accountId: 0, components: undefined };
+}
+
+export const CMsgSignOutCraftworks_Player = {
+  encode(message: CMsgSignOutCraftworks_Player, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.accountId !== undefined && message.accountId !== 0) {
+      writer.uint32(8).uint32(message.accountId);
+    }
+    if (message.components !== undefined) {
+      CMsgCraftworksComponents.encode(message.components, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgSignOutCraftworks_Player {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgSignOutCraftworks_Player();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.accountId = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.components = CMsgCraftworksComponents.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgSignOutCraftworks_Player {
+    return {
+      accountId: isSet(object.accountId) ? globalThis.Number(object.accountId) : 0,
+      components: isSet(object.components) ? CMsgCraftworksComponents.fromJSON(object.components) : undefined,
+    };
+  },
+
+  toJSON(message: CMsgSignOutCraftworks_Player): unknown {
+    const obj: any = {};
+    if (message.accountId !== undefined && message.accountId !== 0) {
+      obj.accountId = Math.round(message.accountId);
+    }
+    if (message.components !== undefined) {
+      obj.components = CMsgCraftworksComponents.toJSON(message.components);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgSignOutCraftworks_Player>): CMsgSignOutCraftworks_Player {
+    return CMsgSignOutCraftworks_Player.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgSignOutCraftworks_Player>): CMsgSignOutCraftworks_Player {
+    const message = createBaseCMsgSignOutCraftworks_Player();
+    message.accountId = object.accountId ?? 0;
+    message.components = (object.components !== undefined && object.components !== null)
+      ? CMsgCraftworksComponents.fromPartial(object.components)
+      : undefined;
+    return message;
+  },
+};
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -25944,15 +26272,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

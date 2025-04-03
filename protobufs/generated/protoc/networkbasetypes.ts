@@ -7,11 +7,6 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import {
-  ENetworkDisconnectionReason,
-  eNetworkDisconnectionReasonFromJSON,
-  eNetworkDisconnectionReasonToJSON,
-} from "./network_connection";
 
 export enum SignonStateT {
   SIGNONSTATE_NONE = 0,
@@ -298,28 +293,24 @@ export interface CMsgCVars_CVar {
   value?: string | undefined;
 }
 
-export interface CNETMsgNOP {}
+export interface CNETMsgNOP {
+}
 
 export interface CNETMsgSplitScreenUser {
   slot?: number | undefined;
 }
 
-export interface CNETMsgDisconnectLegacy {
-  reason?: ENetworkDisconnectionReason | undefined;
-}
-
 export interface CNETMsgTick {
   tick?: number | undefined;
-  hostFrametime?: number | undefined;
-  hostFrametimeStdDeviation?: number | undefined;
   hostComputationtime?: number | undefined;
   hostComputationtimeStdDeviation?: number | undefined;
-  hostFramestarttimeStdDeviation?: number | undefined;
-  hostLoss?: number | undefined;
+  legacyHostLoss?: number | undefined;
   hostUnfilteredFrametime?: number | undefined;
   hltvReplayFlags?: number | undefined;
   expectedLongTick?: number | undefined;
   expectedLongTickReason?: string | undefined;
+  hostFrameDroppedPctX10?: number | undefined;
+  hostFrameIrregularArrivalPctX10?: number | undefined;
 }
 
 export interface CNETMsgStringCmd {
@@ -897,13 +888,13 @@ export const CMsgTransform = {
   },
   fromPartial(object: DeepPartial<CMsgTransform>): CMsgTransform {
     const message = createBaseCMsgTransform();
-    message.position =
-      object.position !== undefined && object.position !== null ? CMsgVector.fromPartial(object.position) : undefined;
+    message.position = (object.position !== undefined && object.position !== null)
+      ? CMsgVector.fromPartial(object.position)
+      : undefined;
     message.scale = object.scale ?? 0;
-    message.orientation =
-      object.orientation !== undefined && object.orientation !== null
-        ? CMsgQuaternion.fromPartial(object.orientation)
-        : undefined;
+    message.orientation = (object.orientation !== undefined && object.orientation !== null)
+      ? CMsgQuaternion.fromPartial(object.orientation)
+      : undefined;
     return message;
   },
 };
@@ -1436,76 +1427,18 @@ export const CNETMsgSplitScreenUser = {
   },
 };
 
-function createBaseCNETMsgDisconnectLegacy(): CNETMsgDisconnectLegacy {
-  return { reason: 0 };
-}
-
-export const CNETMsgDisconnectLegacy = {
-  encode(message: CNETMsgDisconnectLegacy, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.reason !== undefined && message.reason !== 0) {
-      writer.uint32(16).int32(message.reason);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CNETMsgDisconnectLegacy {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCNETMsgDisconnectLegacy();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.reason = reader.int32() as any;
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CNETMsgDisconnectLegacy {
-    return { reason: isSet(object.reason) ? eNetworkDisconnectionReasonFromJSON(object.reason) : 0 };
-  },
-
-  toJSON(message: CNETMsgDisconnectLegacy): unknown {
-    const obj: any = {};
-    if (message.reason !== undefined && message.reason !== 0) {
-      obj.reason = eNetworkDisconnectionReasonToJSON(message.reason);
-    }
-    return obj;
-  },
-
-  create(base?: DeepPartial<CNETMsgDisconnectLegacy>): CNETMsgDisconnectLegacy {
-    return CNETMsgDisconnectLegacy.fromPartial(base ?? {});
-  },
-  fromPartial(object: DeepPartial<CNETMsgDisconnectLegacy>): CNETMsgDisconnectLegacy {
-    const message = createBaseCNETMsgDisconnectLegacy();
-    message.reason = object.reason ?? 0;
-    return message;
-  },
-};
-
 function createBaseCNETMsgTick(): CNETMsgTick {
   return {
     tick: 0,
-    hostFrametime: 0,
-    hostFrametimeStdDeviation: 0,
     hostComputationtime: 0,
     hostComputationtimeStdDeviation: 0,
-    hostFramestarttimeStdDeviation: 0,
-    hostLoss: 0,
+    legacyHostLoss: 0,
     hostUnfilteredFrametime: 0,
     hltvReplayFlags: 0,
     expectedLongTick: 0,
     expectedLongTickReason: "",
+    hostFrameDroppedPctX10: 0,
+    hostFrameIrregularArrivalPctX10: 0,
   };
 }
 
@@ -1514,23 +1447,14 @@ export const CNETMsgTick = {
     if (message.tick !== undefined && message.tick !== 0) {
       writer.uint32(8).uint32(message.tick);
     }
-    if (message.hostFrametime !== undefined && message.hostFrametime !== 0) {
-      writer.uint32(16).uint32(message.hostFrametime);
-    }
-    if (message.hostFrametimeStdDeviation !== undefined && message.hostFrametimeStdDeviation !== 0) {
-      writer.uint32(24).uint32(message.hostFrametimeStdDeviation);
-    }
     if (message.hostComputationtime !== undefined && message.hostComputationtime !== 0) {
       writer.uint32(32).uint32(message.hostComputationtime);
     }
     if (message.hostComputationtimeStdDeviation !== undefined && message.hostComputationtimeStdDeviation !== 0) {
       writer.uint32(40).uint32(message.hostComputationtimeStdDeviation);
     }
-    if (message.hostFramestarttimeStdDeviation !== undefined && message.hostFramestarttimeStdDeviation !== 0) {
-      writer.uint32(48).uint32(message.hostFramestarttimeStdDeviation);
-    }
-    if (message.hostLoss !== undefined && message.hostLoss !== 0) {
-      writer.uint32(56).uint32(message.hostLoss);
+    if (message.legacyHostLoss !== undefined && message.legacyHostLoss !== 0) {
+      writer.uint32(56).uint32(message.legacyHostLoss);
     }
     if (message.hostUnfilteredFrametime !== undefined && message.hostUnfilteredFrametime !== 0) {
       writer.uint32(64).uint32(message.hostUnfilteredFrametime);
@@ -1543,6 +1467,12 @@ export const CNETMsgTick = {
     }
     if (message.expectedLongTickReason !== undefined && message.expectedLongTickReason !== "") {
       writer.uint32(90).string(message.expectedLongTickReason);
+    }
+    if (message.hostFrameDroppedPctX10 !== undefined && message.hostFrameDroppedPctX10 !== 0) {
+      writer.uint32(96).uint32(message.hostFrameDroppedPctX10);
+    }
+    if (message.hostFrameIrregularArrivalPctX10 !== undefined && message.hostFrameIrregularArrivalPctX10 !== 0) {
+      writer.uint32(104).uint32(message.hostFrameIrregularArrivalPctX10);
     }
     return writer;
   },
@@ -1561,20 +1491,6 @@ export const CNETMsgTick = {
 
           message.tick = reader.uint32();
           continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.hostFrametime = reader.uint32();
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.hostFrametimeStdDeviation = reader.uint32();
-          continue;
         case 4:
           if (tag !== 32) {
             break;
@@ -1589,19 +1505,12 @@ export const CNETMsgTick = {
 
           message.hostComputationtimeStdDeviation = reader.uint32();
           continue;
-        case 6:
-          if (tag !== 48) {
-            break;
-          }
-
-          message.hostFramestarttimeStdDeviation = reader.uint32();
-          continue;
         case 7:
           if (tag !== 56) {
             break;
           }
 
-          message.hostLoss = reader.uint32();
+          message.legacyHostLoss = reader.uint32();
           continue;
         case 8:
           if (tag !== 64) {
@@ -1631,6 +1540,20 @@ export const CNETMsgTick = {
 
           message.expectedLongTickReason = reader.string();
           continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.hostFrameDroppedPctX10 = reader.uint32();
+          continue;
+        case 13:
+          if (tag !== 104) {
+            break;
+          }
+
+          message.hostFrameIrregularArrivalPctX10 = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1643,18 +1566,11 @@ export const CNETMsgTick = {
   fromJSON(object: any): CNETMsgTick {
     return {
       tick: isSet(object.tick) ? globalThis.Number(object.tick) : 0,
-      hostFrametime: isSet(object.hostFrametime) ? globalThis.Number(object.hostFrametime) : 0,
-      hostFrametimeStdDeviation: isSet(object.hostFrametimeStdDeviation)
-        ? globalThis.Number(object.hostFrametimeStdDeviation)
-        : 0,
       hostComputationtime: isSet(object.hostComputationtime) ? globalThis.Number(object.hostComputationtime) : 0,
       hostComputationtimeStdDeviation: isSet(object.hostComputationtimeStdDeviation)
         ? globalThis.Number(object.hostComputationtimeStdDeviation)
         : 0,
-      hostFramestarttimeStdDeviation: isSet(object.hostFramestarttimeStdDeviation)
-        ? globalThis.Number(object.hostFramestarttimeStdDeviation)
-        : 0,
-      hostLoss: isSet(object.hostLoss) ? globalThis.Number(object.hostLoss) : 0,
+      legacyHostLoss: isSet(object.legacyHostLoss) ? globalThis.Number(object.legacyHostLoss) : 0,
       hostUnfilteredFrametime: isSet(object.hostUnfilteredFrametime)
         ? globalThis.Number(object.hostUnfilteredFrametime)
         : 0,
@@ -1663,6 +1579,12 @@ export const CNETMsgTick = {
       expectedLongTickReason: isSet(object.expectedLongTickReason)
         ? globalThis.String(object.expectedLongTickReason)
         : "",
+      hostFrameDroppedPctX10: isSet(object.hostFrameDroppedPctX10)
+        ? globalThis.Number(object.hostFrameDroppedPctX10)
+        : 0,
+      hostFrameIrregularArrivalPctX10: isSet(object.hostFrameIrregularArrivalPctX10)
+        ? globalThis.Number(object.hostFrameIrregularArrivalPctX10)
+        : 0,
     };
   },
 
@@ -1671,23 +1593,14 @@ export const CNETMsgTick = {
     if (message.tick !== undefined && message.tick !== 0) {
       obj.tick = Math.round(message.tick);
     }
-    if (message.hostFrametime !== undefined && message.hostFrametime !== 0) {
-      obj.hostFrametime = Math.round(message.hostFrametime);
-    }
-    if (message.hostFrametimeStdDeviation !== undefined && message.hostFrametimeStdDeviation !== 0) {
-      obj.hostFrametimeStdDeviation = Math.round(message.hostFrametimeStdDeviation);
-    }
     if (message.hostComputationtime !== undefined && message.hostComputationtime !== 0) {
       obj.hostComputationtime = Math.round(message.hostComputationtime);
     }
     if (message.hostComputationtimeStdDeviation !== undefined && message.hostComputationtimeStdDeviation !== 0) {
       obj.hostComputationtimeStdDeviation = Math.round(message.hostComputationtimeStdDeviation);
     }
-    if (message.hostFramestarttimeStdDeviation !== undefined && message.hostFramestarttimeStdDeviation !== 0) {
-      obj.hostFramestarttimeStdDeviation = Math.round(message.hostFramestarttimeStdDeviation);
-    }
-    if (message.hostLoss !== undefined && message.hostLoss !== 0) {
-      obj.hostLoss = Math.round(message.hostLoss);
+    if (message.legacyHostLoss !== undefined && message.legacyHostLoss !== 0) {
+      obj.legacyHostLoss = Math.round(message.legacyHostLoss);
     }
     if (message.hostUnfilteredFrametime !== undefined && message.hostUnfilteredFrametime !== 0) {
       obj.hostUnfilteredFrametime = Math.round(message.hostUnfilteredFrametime);
@@ -1701,6 +1614,12 @@ export const CNETMsgTick = {
     if (message.expectedLongTickReason !== undefined && message.expectedLongTickReason !== "") {
       obj.expectedLongTickReason = message.expectedLongTickReason;
     }
+    if (message.hostFrameDroppedPctX10 !== undefined && message.hostFrameDroppedPctX10 !== 0) {
+      obj.hostFrameDroppedPctX10 = Math.round(message.hostFrameDroppedPctX10);
+    }
+    if (message.hostFrameIrregularArrivalPctX10 !== undefined && message.hostFrameIrregularArrivalPctX10 !== 0) {
+      obj.hostFrameIrregularArrivalPctX10 = Math.round(message.hostFrameIrregularArrivalPctX10);
+    }
     return obj;
   },
 
@@ -1710,16 +1629,15 @@ export const CNETMsgTick = {
   fromPartial(object: DeepPartial<CNETMsgTick>): CNETMsgTick {
     const message = createBaseCNETMsgTick();
     message.tick = object.tick ?? 0;
-    message.hostFrametime = object.hostFrametime ?? 0;
-    message.hostFrametimeStdDeviation = object.hostFrametimeStdDeviation ?? 0;
     message.hostComputationtime = object.hostComputationtime ?? 0;
     message.hostComputationtimeStdDeviation = object.hostComputationtimeStdDeviation ?? 0;
-    message.hostFramestarttimeStdDeviation = object.hostFramestarttimeStdDeviation ?? 0;
-    message.hostLoss = object.hostLoss ?? 0;
+    message.legacyHostLoss = object.legacyHostLoss ?? 0;
     message.hostUnfilteredFrametime = object.hostUnfilteredFrametime ?? 0;
     message.hltvReplayFlags = object.hltvReplayFlags ?? 0;
     message.expectedLongTick = object.expectedLongTick ?? 0;
     message.expectedLongTickReason = object.expectedLongTickReason ?? "";
+    message.hostFrameDroppedPctX10 = object.hostFrameDroppedPctX10 ?? 0;
+    message.hostFrameIrregularArrivalPctX10 = object.hostFrameIrregularArrivalPctX10 ?? 0;
     return message;
   },
 };
@@ -1850,8 +1768,9 @@ export const CNETMsgSetConVar = {
   },
   fromPartial(object: DeepPartial<CNETMsgSetConVar>): CNETMsgSetConVar {
     const message = createBaseCNETMsgSetConVar();
-    message.convars =
-      object.convars !== undefined && object.convars !== null ? CMsgCVars.fromPartial(object.convars) : undefined;
+    message.convars = (object.convars !== undefined && object.convars !== null)
+      ? CMsgCVars.fromPartial(object.convars)
+      : undefined;
     return message;
   },
 };
@@ -2377,8 +2296,9 @@ export const CSVCMsgListGameEvents_eventT = {
   fromPartial(object: DeepPartial<CSVCMsgListGameEvents_eventT>): CSVCMsgListGameEvents_eventT {
     const message = createBaseCSVCMsgListGameEvents_eventT();
     message.tick = object.tick ?? 0;
-    message.event =
-      object.event !== undefined && object.event !== null ? CSVCMsgGameEvent.fromPartial(object.event) : undefined;
+    message.event = (object.event !== undefined && object.event !== null)
+      ? CSVCMsgGameEvent.fromPartial(object.event)
+      : undefined;
     return message;
   },
 };
@@ -2733,14 +2653,12 @@ export const CNETMsgSpawnGroupLoad = {
     message.entityfiltername = object.entityfiltername ?? "";
     message.spawngrouphandle = object.spawngrouphandle ?? 0;
     message.spawngroupownerhandle = object.spawngroupownerhandle ?? 0;
-    message.worldOffsetPos =
-      object.worldOffsetPos !== undefined && object.worldOffsetPos !== null
-        ? CMsgVector.fromPartial(object.worldOffsetPos)
-        : undefined;
-    message.worldOffsetAngle =
-      object.worldOffsetAngle !== undefined && object.worldOffsetAngle !== null
-        ? CMsgQAngle.fromPartial(object.worldOffsetAngle)
-        : undefined;
+    message.worldOffsetPos = (object.worldOffsetPos !== undefined && object.worldOffsetPos !== null)
+      ? CMsgVector.fromPartial(object.worldOffsetPos)
+      : undefined;
+    message.worldOffsetAngle = (object.worldOffsetAngle !== undefined && object.worldOffsetAngle !== null)
+      ? CMsgQAngle.fromPartial(object.worldOffsetAngle)
+      : undefined;
     message.spawngroupmanifest = object.spawngroupmanifest ?? Buffer.alloc(0);
     message.flags = object.flags ?? 0;
     message.tickcount = object.tickcount ?? 0;
@@ -3657,15 +3575,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

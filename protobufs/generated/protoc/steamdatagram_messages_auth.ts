@@ -335,8 +335,8 @@ export const CMsgSteamDatagramRelayAuthTicket = {
     message.gameserverAddress = object.gameserverAddress ?? Buffer.alloc(0);
     message.appId = object.appId ?? 0;
     message.virtualPort = object.virtualPort ?? 0;
-    message.extraFields =
-      object.extraFields?.map((e) => CMsgSteamDatagramRelayAuthTicket_ExtraField.fromPartial(e)) || [];
+    message.extraFields = object.extraFields?.map((e) => CMsgSteamDatagramRelayAuthTicket_ExtraField.fromPartial(e)) ||
+      [];
     message.legacyAuthorizedSteamId = object.legacyAuthorizedSteamId ?? "0";
     message.legacyGameserverSteamId = object.legacyGameserverSteamId ?? "0";
     message.legacyGameserverPopId = object.legacyGameserverPopId ?? 0;
@@ -914,10 +914,9 @@ export const CMsgSteamDatagramSignedGameCoordinatorServerLogin = {
     object: DeepPartial<CMsgSteamDatagramSignedGameCoordinatorServerLogin>,
   ): CMsgSteamDatagramSignedGameCoordinatorServerLogin {
     const message = createBaseCMsgSteamDatagramSignedGameCoordinatorServerLogin();
-    message.cert =
-      object.cert !== undefined && object.cert !== null
-        ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
-        : undefined;
+    message.cert = (object.cert !== undefined && object.cert !== null)
+      ? CMsgSteamDatagramCertificateSigned.fromPartial(object.cert)
+      : undefined;
     message.login = object.login ?? Buffer.alloc(0);
     message.signature = object.signature ?? Buffer.alloc(0);
     return message;
@@ -1057,15 +1056,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

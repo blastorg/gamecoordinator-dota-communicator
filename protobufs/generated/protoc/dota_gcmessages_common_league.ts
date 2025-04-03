@@ -358,7 +358,8 @@ export interface CMsgDOTALeaguePrizePool {
   incrementPerSecond?: number | undefined;
 }
 
-export interface CMsgDOTALeagueInfoListAdminsRequest {}
+export interface CMsgDOTALeagueInfoListAdminsRequest {
+}
 
 export interface CMsgDOTALeagueAvailableLobbyNodesRequest {
   leagueId?: number | undefined;
@@ -1940,12 +1941,12 @@ export const CMsgDOTALeague = {
   },
   fromPartial(object: DeepPartial<CMsgDOTALeague>): CMsgDOTALeague {
     const message = createBaseCMsgDOTALeague();
-    message.info =
-      object.info !== undefined && object.info !== null ? CMsgDOTALeague_Info.fromPartial(object.info) : undefined;
-    message.prizePool =
-      object.prizePool !== undefined && object.prizePool !== null
-        ? CMsgDOTALeague_PrizePool.fromPartial(object.prizePool)
-        : undefined;
+    message.info = (object.info !== undefined && object.info !== null)
+      ? CMsgDOTALeague_Info.fromPartial(object.info)
+      : undefined;
+    message.prizePool = (object.prizePool !== undefined && object.prizePool !== null)
+      ? CMsgDOTALeague_PrizePool.fromPartial(object.prizePool)
+      : undefined;
     message.admins = object.admins?.map((e) => CMsgDOTALeague_Admin.fromPartial(e)) || [];
     message.streams = object.streams?.map((e) => CMsgDOTALeague_Stream.fromPartial(e)) || [];
     message.nodeGroups = object.nodeGroups?.map((e) => CMsgDOTALeagueNodeGroup.fromPartial(e)) || [];
@@ -5034,17 +5035,17 @@ export const CMsgDOTADPCSeasonResults = {
     }
     if (message.majorWildcardStandings?.length) {
       obj.majorWildcardStandings = message.majorWildcardStandings.map((e) =>
-        CMsgDOTADPCSeasonResults_StandingEntry.toJSON(e),
+        CMsgDOTADPCSeasonResults_StandingEntry.toJSON(e)
       );
     }
     if (message.majorGroupStandings?.length) {
       obj.majorGroupStandings = message.majorGroupStandings.map((e) =>
-        CMsgDOTADPCSeasonResults_StandingEntry.toJSON(e),
+        CMsgDOTADPCSeasonResults_StandingEntry.toJSON(e)
       );
     }
     if (message.majorPlayoffStandings?.length) {
       obj.majorPlayoffStandings = message.majorPlayoffStandings.map((e) =>
-        CMsgDOTADPCSeasonResults_StandingEntry.toJSON(e),
+        CMsgDOTADPCSeasonResults_StandingEntry.toJSON(e)
       );
     }
     return obj;
@@ -5688,25 +5689,20 @@ export const CMsgDOTADPCSeasonSpoilerResults = {
   fromPartial(object: DeepPartial<CMsgDOTADPCSeasonSpoilerResults>): CMsgDOTADPCSeasonSpoilerResults {
     const message = createBaseCMsgDOTADPCSeasonSpoilerResults();
     message.timeLastUpdated = object.timeLastUpdated ?? 0;
-    message.savedResults =
-      object.savedResults !== undefined && object.savedResults !== null
-        ? CMsgDOTADPCSeasonResults.fromPartial(object.savedResults)
-        : undefined;
+    message.savedResults = (object.savedResults !== undefined && object.savedResults !== null)
+      ? CMsgDOTADPCSeasonResults.fromPartial(object.savedResults)
+      : undefined;
     return message;
   },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

@@ -41,6 +41,7 @@ export interface CSourceTVGameSmall {
   weekendTourneySkillLevel?: number | undefined;
   weekendTourneyBracketRound?: number | undefined;
   customGameDifficulty?: number | undefined;
+  isPlayerDraft?: boolean | undefined;
 }
 
 export interface CSourceTVGameSmall_Player {
@@ -75,9 +76,11 @@ export interface CMsgGCToClientTopWeekendTourneyGames {
   liveGames: CSourceTVGameSmall[];
 }
 
-export interface CMsgClientToGCTopLeagueMatchesRequest {}
+export interface CMsgClientToGCTopLeagueMatchesRequest {
+}
 
-export interface CMsgClientToGCTopFriendMatchesRequest {}
+export interface CMsgClientToGCTopFriendMatchesRequest {
+}
 
 export interface CMsgClientToGCMatchesMinimalRequest {
   matchIds: string[];
@@ -243,7 +246,8 @@ export interface CMsgWatchGame {
   regions: number[];
 }
 
-export interface CMsgCancelWatchGame {}
+export interface CMsgCancelWatchGame {
+}
 
 export interface CMsgWatchGameResponse {
   watchGameResult?: CMsgWatchGameResponse_WatchGameResult | undefined;
@@ -398,6 +402,7 @@ function createBaseCSourceTVGameSmall(): CSourceTVGameSmall {
     weekendTourneySkillLevel: 0,
     weekendTourneyBracketRound: 0,
     customGameDifficulty: 0,
+    isPlayerDraft: false,
   };
 }
 
@@ -495,6 +500,9 @@ export const CSourceTVGameSmall = {
     }
     if (message.customGameDifficulty !== undefined && message.customGameDifficulty !== 0) {
       writer.uint32(256).uint32(message.customGameDifficulty);
+    }
+    if (message.isPlayerDraft !== undefined && message.isPlayerDraft !== false) {
+      writer.uint32(264).bool(message.isPlayerDraft);
     }
     return writer;
   },
@@ -723,6 +731,13 @@ export const CSourceTVGameSmall = {
 
           message.customGameDifficulty = reader.uint32();
           continue;
+        case 33:
+          if (tag !== 264) {
+            break;
+          }
+
+          message.isPlayerDraft = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -775,6 +790,7 @@ export const CSourceTVGameSmall = {
         ? globalThis.Number(object.weekendTourneyBracketRound)
         : 0,
       customGameDifficulty: isSet(object.customGameDifficulty) ? globalThis.Number(object.customGameDifficulty) : 0,
+      isPlayerDraft: isSet(object.isPlayerDraft) ? globalThis.Boolean(object.isPlayerDraft) : false,
     };
   },
 
@@ -873,6 +889,9 @@ export const CSourceTVGameSmall = {
     if (message.customGameDifficulty !== undefined && message.customGameDifficulty !== 0) {
       obj.customGameDifficulty = Math.round(message.customGameDifficulty);
     }
+    if (message.isPlayerDraft !== undefined && message.isPlayerDraft !== false) {
+      obj.isPlayerDraft = message.isPlayerDraft;
+    }
     return obj;
   },
 
@@ -912,6 +931,7 @@ export const CSourceTVGameSmall = {
     message.weekendTourneySkillLevel = object.weekendTourneySkillLevel ?? 0;
     message.weekendTourneyBracketRound = object.weekendTourneyBracketRound ?? 0;
     message.customGameDifficulty = object.customGameDifficulty ?? 0;
+    message.isPlayerDraft = object.isPlayerDraft ?? false;
     return message;
   },
 };
@@ -926,7 +946,7 @@ export const CSourceTVGameSmall_Player = {
       writer.uint32(8).uint32(message.accountId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     if (message.teamSlot !== undefined && message.teamSlot !== 0) {
       writer.uint32(24).uint32(message.teamSlot);
@@ -956,7 +976,7 @@ export const CSourceTVGameSmall_Player = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag !== 24) {
@@ -1033,7 +1053,7 @@ export const CMsgClientToGCFindTopSourceTVGames = {
       writer.uint32(16).uint32(message.leagueId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     if (message.startGame !== undefined && message.startGame !== 0) {
       writer.uint32(32).uint32(message.startGame);
@@ -1075,7 +1095,7 @@ export const CMsgClientToGCFindTopSourceTVGames = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag !== 32) {
@@ -1189,7 +1209,7 @@ export const CMsgGCToClientFindTopSourceTVGamesResponse = {
       writer.uint32(16).uint32(message.leagueId);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     if (message.startGame !== undefined && message.startGame !== 0) {
       writer.uint32(32).uint32(message.startGame);
@@ -1238,7 +1258,7 @@ export const CMsgGCToClientFindTopSourceTVGamesResponse = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 4:
           if (tag !== 32) {
@@ -1354,10 +1374,9 @@ export const CMsgGCToClientFindTopSourceTVGamesResponse = {
     message.gameListIndex = object.gameListIndex ?? 0;
     message.gameList = object.gameList?.map((e) => CSourceTVGameSmall.fromPartial(e)) || [];
     message.specificGames = object.specificGames ?? false;
-    message.botGame =
-      object.botGame !== undefined && object.botGame !== null
-        ? CSourceTVGameSmall.fromPartial(object.botGame)
-        : undefined;
+    message.botGame = (object.botGame !== undefined && object.botGame !== null)
+      ? CSourceTVGameSmall.fromPartial(object.botGame)
+      : undefined;
     return message;
   },
 };
@@ -2052,8 +2071,9 @@ export const CDOTAReplayDownloadInfo = {
   },
   fromPartial(object: DeepPartial<CDOTAReplayDownloadInfo>): CDOTAReplayDownloadInfo {
     const message = createBaseCDOTAReplayDownloadInfo();
-    message.match =
-      object.match !== undefined && object.match !== null ? CMsgDOTAMatchMinimal.fromPartial(object.match) : undefined;
+    message.match = (object.match !== undefined && object.match !== null)
+      ? CMsgDOTAMatchMinimal.fromPartial(object.match)
+      : undefined;
     message.title = object.title ?? "";
     message.description = object.description ?? "";
     message.size = object.size ?? 0;
@@ -2864,19 +2884,16 @@ export const CMsgDOTASeries = {
     const message = createBaseCMsgDOTASeries();
     message.seriesId = object.seriesId ?? 0;
     message.seriesType = object.seriesType ?? 0;
-    message.team1 =
-      object.team1 !== undefined && object.team1 !== null
-        ? CMsgDOTASeries_TeamInfo.fromPartial(object.team1)
-        : undefined;
-    message.team2 =
-      object.team2 !== undefined && object.team2 !== null
-        ? CMsgDOTASeries_TeamInfo.fromPartial(object.team2)
-        : undefined;
+    message.team1 = (object.team1 !== undefined && object.team1 !== null)
+      ? CMsgDOTASeries_TeamInfo.fromPartial(object.team1)
+      : undefined;
+    message.team2 = (object.team2 !== undefined && object.team2 !== null)
+      ? CMsgDOTASeries_TeamInfo.fromPartial(object.team2)
+      : undefined;
     message.matchMinimal = object.matchMinimal?.map((e) => CMsgDOTAMatchMinimal.fromPartial(e)) || [];
-    message.liveGame =
-      object.liveGame !== undefined && object.liveGame !== null
-        ? CMsgDOTASeries_LiveGame.fromPartial(object.liveGame)
-        : undefined;
+    message.liveGame = (object.liveGame !== undefined && object.liveGame !== null)
+      ? CMsgDOTASeries_LiveGame.fromPartial(object.liveGame)
+      : undefined;
     return message;
   },
 };
@@ -3096,14 +3113,12 @@ export const CMsgDOTASeries_LiveGame = {
   fromPartial(object: DeepPartial<CMsgDOTASeries_LiveGame>): CMsgDOTASeries_LiveGame {
     const message = createBaseCMsgDOTASeries_LiveGame();
     message.serverSteamId = object.serverSteamId ?? "0";
-    message.teamRadiant =
-      object.teamRadiant !== undefined && object.teamRadiant !== null
-        ? CMsgDOTASeries_TeamInfo.fromPartial(object.teamRadiant)
-        : undefined;
-    message.teamDire =
-      object.teamDire !== undefined && object.teamDire !== null
-        ? CMsgDOTASeries_TeamInfo.fromPartial(object.teamDire)
-        : undefined;
+    message.teamRadiant = (object.teamRadiant !== undefined && object.teamRadiant !== null)
+      ? CMsgDOTASeries_TeamInfo.fromPartial(object.teamRadiant)
+      : undefined;
+    message.teamDire = (object.teamDire !== undefined && object.teamDire !== null)
+      ? CMsgDOTASeries_TeamInfo.fromPartial(object.teamDire)
+      : undefined;
     message.teamRadiantScore = object.teamRadiantScore ?? 0;
     message.teamDireScore = object.teamDireScore ?? 0;
     return message;
@@ -3112,15 +3127,11 @@ export const CMsgDOTASeries_LiveGame = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

@@ -869,7 +869,8 @@ export interface CMsgBattleReportAggregateStats_CMsgBattleReportAggregate {
   friendlyRoshanKills?: CMsgBattleReportAggregateStats_CMsgBattleReportStat | undefined;
 }
 
-export interface CMsgBattleReportAggregatedGeneralStats {}
+export interface CMsgBattleReportAggregatedGeneralStats {
+}
 
 export interface CMsgClientToGCGetBattleReportResponse {
   report?: CMsgBattleReport | undefined;
@@ -1456,7 +1457,7 @@ function createBaseCMsgBattleReportGame(): CMsgBattleReportGame {
 export const CMsgBattleReportGame = {
   encode(message: CMsgBattleReportGame, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.kills !== undefined && message.kills !== 0) {
       writer.uint32(16).uint32(message.kills);
@@ -1620,7 +1621,7 @@ export const CMsgBattleReportGame = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -2379,10 +2380,9 @@ export const CMsgBattleReport = {
   fromPartial(object: DeepPartial<CMsgBattleReport>): CMsgBattleReport {
     const message = createBaseCMsgBattleReport();
     message.games = object.games?.map((e) => CMsgBattleReportGame.fromPartial(e)) || [];
-    message.highlights =
-      object.highlights !== undefined && object.highlights !== null
-        ? CMsgBattleReportHighlights.fromPartial(object.highlights)
-        : undefined;
+    message.highlights = (object.highlights !== undefined && object.highlights !== null)
+      ? CMsgBattleReportHighlights.fromPartial(object.highlights)
+      : undefined;
     return message;
   },
 };
@@ -2527,7 +2527,7 @@ export const CMsgBattleReport_Highlight = {
       writer.uint32(53).float(message.confidence);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(56).uint32(message.heroId);
+      writer.uint32(56).int32(message.heroId);
     }
     if (message.role !== undefined && message.role !== -1) {
       writer.uint32(64).int32(message.role);
@@ -2595,7 +2595,7 @@ export const CMsgBattleReport_Highlight = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 8:
           if (tag !== 64) {
@@ -2720,7 +2720,7 @@ export const CMsgBattleReportInfo = {
       writer.uint32(24).bool(message.acknowledged);
     }
     if (message.featuredHeroId !== undefined && message.featuredHeroId !== 0) {
-      writer.uint32(32).uint32(message.featuredHeroId);
+      writer.uint32(32).int32(message.featuredHeroId);
     }
     if (message.featuredPosition !== undefined && message.featuredPosition !== 0) {
       writer.uint32(40).uint32(message.featuredPosition);
@@ -2769,7 +2769,7 @@ export const CMsgBattleReportInfo = {
             break;
           }
 
-          message.featuredHeroId = reader.uint32();
+          message.featuredHeroId = reader.int32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -3174,7 +3174,7 @@ export const CMsgBattleReportAggregateStats_CMsgBattleReportAggregate = {
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.predictedPosition !== undefined && message.predictedPosition !== 0) {
       writer.uint32(16).uint32(message.predictedPosition);
@@ -3213,28 +3213,20 @@ export const CMsgBattleReportAggregateStats_CMsgBattleReportAggregate = {
       CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.xpm, writer.uint32(106).fork()).ldelim();
     }
     if (message.secondsDead !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.secondsDead,
-        writer.uint32(114).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.secondsDead, writer.uint32(114).fork())
+        .ldelim();
     }
     if (message.bountyRunes !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.bountyRunes,
-        writer.uint32(122).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.bountyRunes, writer.uint32(122).fork())
+        .ldelim();
     }
     if (message.waterRunes !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.waterRunes,
-        writer.uint32(130).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.waterRunes, writer.uint32(130).fork())
+        .ldelim();
     }
     if (message.powerRunes !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.powerRunes,
-        writer.uint32(138).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.powerRunes, writer.uint32(138).fork())
+        .ldelim();
     }
     if (message.timeEnemyT1TowerDestroyed !== undefined) {
       CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
@@ -3249,70 +3241,50 @@ export const CMsgBattleReportAggregateStats_CMsgBattleReportAggregate = {
       ).ldelim();
     }
     if (message.enemyRoshanKills !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.enemyRoshanKills,
-        writer.uint32(162).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.enemyRoshanKills, writer.uint32(162).fork())
+        .ldelim();
     }
     if (message.teleportsUsed !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.teleportsUsed,
-        writer.uint32(170).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.teleportsUsed, writer.uint32(170).fork())
+        .ldelim();
     }
     if (message.dewards !== undefined) {
       CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.dewards, writer.uint32(178).fork()).ldelim();
     }
     if (message.campsStacked !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.campsStacked,
-        writer.uint32(186).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.campsStacked, writer.uint32(186).fork())
+        .ldelim();
     }
     if (message.supportGold !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.supportGold,
-        writer.uint32(194).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.supportGold, writer.uint32(194).fork())
+        .ldelim();
     }
     if (message.heroDamage !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.heroDamage,
-        writer.uint32(202).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.heroDamage, writer.uint32(202).fork())
+        .ldelim();
     }
     if (message.heroHealing !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.heroHealing,
-        writer.uint32(210).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.heroHealing, writer.uint32(210).fork())
+        .ldelim();
     }
     if (message.towerDamage !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.towerDamage,
-        writer.uint32(218).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.towerDamage, writer.uint32(218).fork())
+        .ldelim();
     }
     if (message.successfulSmokes !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.successfulSmokes,
-        writer.uint32(226).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.successfulSmokes, writer.uint32(226).fork())
+        .ldelim();
     }
     if (message.stunDuration !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.stunDuration,
-        writer.uint32(234).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.stunDuration, writer.uint32(234).fork())
+        .ldelim();
     }
     if (message.duration !== undefined) {
       CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.duration, writer.uint32(242).fork()).ldelim();
     }
     if (message.friendlyRoshanKills !== undefined) {
-      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(
-        message.friendlyRoshanKills,
-        writer.uint32(250).fork(),
-      ).ldelim();
+      CMsgBattleReportAggregateStats_CMsgBattleReportStat.encode(message.friendlyRoshanKills, writer.uint32(250).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -3329,7 +3301,7 @@ export const CMsgBattleReportAggregateStats_CMsgBattleReportAggregate = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -3765,110 +3737,86 @@ export const CMsgBattleReportAggregateStats_CMsgBattleReportAggregate = {
     message.gameCount = object.gameCount ?? 0;
     message.winCount = object.winCount ?? 0;
     message.laneWinCount = object.laneWinCount ?? 0;
-    message.kills =
-      object.kills !== undefined && object.kills !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.kills)
-        : undefined;
-    message.deaths =
-      object.deaths !== undefined && object.deaths !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.deaths)
-        : undefined;
-    message.assists =
-      object.assists !== undefined && object.assists !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.assists)
-        : undefined;
-    message.rankChange =
-      object.rankChange !== undefined && object.rankChange !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.rankChange)
-        : undefined;
-    message.lastHits =
-      object.lastHits !== undefined && object.lastHits !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.lastHits)
-        : undefined;
-    message.denies =
-      object.denies !== undefined && object.denies !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.denies)
-        : undefined;
-    message.gpm =
-      object.gpm !== undefined && object.gpm !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.gpm)
-        : undefined;
-    message.xpm =
-      object.xpm !== undefined && object.xpm !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.xpm)
-        : undefined;
-    message.secondsDead =
-      object.secondsDead !== undefined && object.secondsDead !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.secondsDead)
-        : undefined;
-    message.bountyRunes =
-      object.bountyRunes !== undefined && object.bountyRunes !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.bountyRunes)
-        : undefined;
-    message.waterRunes =
-      object.waterRunes !== undefined && object.waterRunes !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.waterRunes)
-        : undefined;
-    message.powerRunes =
-      object.powerRunes !== undefined && object.powerRunes !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.powerRunes)
-        : undefined;
+    message.kills = (object.kills !== undefined && object.kills !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.kills)
+      : undefined;
+    message.deaths = (object.deaths !== undefined && object.deaths !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.deaths)
+      : undefined;
+    message.assists = (object.assists !== undefined && object.assists !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.assists)
+      : undefined;
+    message.rankChange = (object.rankChange !== undefined && object.rankChange !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.rankChange)
+      : undefined;
+    message.lastHits = (object.lastHits !== undefined && object.lastHits !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.lastHits)
+      : undefined;
+    message.denies = (object.denies !== undefined && object.denies !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.denies)
+      : undefined;
+    message.gpm = (object.gpm !== undefined && object.gpm !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.gpm)
+      : undefined;
+    message.xpm = (object.xpm !== undefined && object.xpm !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.xpm)
+      : undefined;
+    message.secondsDead = (object.secondsDead !== undefined && object.secondsDead !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.secondsDead)
+      : undefined;
+    message.bountyRunes = (object.bountyRunes !== undefined && object.bountyRunes !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.bountyRunes)
+      : undefined;
+    message.waterRunes = (object.waterRunes !== undefined && object.waterRunes !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.waterRunes)
+      : undefined;
+    message.powerRunes = (object.powerRunes !== undefined && object.powerRunes !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.powerRunes)
+      : undefined;
     message.timeEnemyT1TowerDestroyed =
-      object.timeEnemyT1TowerDestroyed !== undefined && object.timeEnemyT1TowerDestroyed !== null
+      (object.timeEnemyT1TowerDestroyed !== undefined && object.timeEnemyT1TowerDestroyed !== null)
         ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.timeEnemyT1TowerDestroyed)
         : undefined;
     message.timeFriendlyT1TowerDestroyed =
-      object.timeFriendlyT1TowerDestroyed !== undefined && object.timeFriendlyT1TowerDestroyed !== null
+      (object.timeFriendlyT1TowerDestroyed !== undefined && object.timeFriendlyT1TowerDestroyed !== null)
         ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.timeFriendlyT1TowerDestroyed)
         : undefined;
-    message.enemyRoshanKills =
-      object.enemyRoshanKills !== undefined && object.enemyRoshanKills !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.enemyRoshanKills)
-        : undefined;
-    message.teleportsUsed =
-      object.teleportsUsed !== undefined && object.teleportsUsed !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.teleportsUsed)
-        : undefined;
-    message.dewards =
-      object.dewards !== undefined && object.dewards !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.dewards)
-        : undefined;
-    message.campsStacked =
-      object.campsStacked !== undefined && object.campsStacked !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.campsStacked)
-        : undefined;
-    message.supportGold =
-      object.supportGold !== undefined && object.supportGold !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.supportGold)
-        : undefined;
-    message.heroDamage =
-      object.heroDamage !== undefined && object.heroDamage !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.heroDamage)
-        : undefined;
-    message.heroHealing =
-      object.heroHealing !== undefined && object.heroHealing !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.heroHealing)
-        : undefined;
-    message.towerDamage =
-      object.towerDamage !== undefined && object.towerDamage !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.towerDamage)
-        : undefined;
-    message.successfulSmokes =
-      object.successfulSmokes !== undefined && object.successfulSmokes !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.successfulSmokes)
-        : undefined;
-    message.stunDuration =
-      object.stunDuration !== undefined && object.stunDuration !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.stunDuration)
-        : undefined;
-    message.duration =
-      object.duration !== undefined && object.duration !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.duration)
-        : undefined;
-    message.friendlyRoshanKills =
-      object.friendlyRoshanKills !== undefined && object.friendlyRoshanKills !== null
-        ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.friendlyRoshanKills)
-        : undefined;
+    message.enemyRoshanKills = (object.enemyRoshanKills !== undefined && object.enemyRoshanKills !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.enemyRoshanKills)
+      : undefined;
+    message.teleportsUsed = (object.teleportsUsed !== undefined && object.teleportsUsed !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.teleportsUsed)
+      : undefined;
+    message.dewards = (object.dewards !== undefined && object.dewards !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.dewards)
+      : undefined;
+    message.campsStacked = (object.campsStacked !== undefined && object.campsStacked !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.campsStacked)
+      : undefined;
+    message.supportGold = (object.supportGold !== undefined && object.supportGold !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.supportGold)
+      : undefined;
+    message.heroDamage = (object.heroDamage !== undefined && object.heroDamage !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.heroDamage)
+      : undefined;
+    message.heroHealing = (object.heroHealing !== undefined && object.heroHealing !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.heroHealing)
+      : undefined;
+    message.towerDamage = (object.towerDamage !== undefined && object.towerDamage !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.towerDamage)
+      : undefined;
+    message.successfulSmokes = (object.successfulSmokes !== undefined && object.successfulSmokes !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.successfulSmokes)
+      : undefined;
+    message.stunDuration = (object.stunDuration !== undefined && object.stunDuration !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.stunDuration)
+      : undefined;
+    message.duration = (object.duration !== undefined && object.duration !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.duration)
+      : undefined;
+    message.friendlyRoshanKills = (object.friendlyRoshanKills !== undefined && object.friendlyRoshanKills !== null)
+      ? CMsgBattleReportAggregateStats_CMsgBattleReportStat.fromPartial(object.friendlyRoshanKills)
+      : undefined;
     return message;
   },
 };
@@ -4014,15 +3962,16 @@ export const CMsgClientToGCGetBattleReportResponse = {
   },
   fromPartial(object: DeepPartial<CMsgClientToGCGetBattleReportResponse>): CMsgClientToGCGetBattleReportResponse {
     const message = createBaseCMsgClientToGCGetBattleReportResponse();
-    message.report =
-      object.report !== undefined && object.report !== null ? CMsgBattleReport.fromPartial(object.report) : undefined;
+    message.report = (object.report !== undefined && object.report !== null)
+      ? CMsgBattleReport.fromPartial(object.report)
+      : undefined;
     message.response = object.response ?? 0;
-    message.aggregateStats =
-      object.aggregateStats !== undefined && object.aggregateStats !== null
-        ? CMsgBattleReportAggregateStats.fromPartial(object.aggregateStats)
-        : undefined;
-    message.info =
-      object.info !== undefined && object.info !== null ? CMsgBattleReportInfo.fromPartial(object.info) : undefined;
+    message.aggregateStats = (object.aggregateStats !== undefined && object.aggregateStats !== null)
+      ? CMsgBattleReportAggregateStats.fromPartial(object.aggregateStats)
+      : undefined;
+    message.info = (object.info !== undefined && object.info !== null)
+      ? CMsgBattleReportInfo.fromPartial(object.info)
+      : undefined;
     return message;
   },
 };
@@ -4034,10 +3983,8 @@ function createBaseCMsgClientToGCGetBattleReportAggregateStats(): CMsgClientToGC
 export const CMsgClientToGCGetBattleReportAggregateStats = {
   encode(message: CMsgClientToGCGetBattleReportAggregateStats, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.aggregateKeys) {
-      CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggregateKey.encode(
-        v!,
-        writer.uint32(10).fork(),
-      ).ldelim();
+      CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggregateKey.encode(v!, writer.uint32(10).fork())
+        .ldelim();
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
       writer.uint32(16).uint32(message.timestamp);
@@ -4101,8 +4048,8 @@ export const CMsgClientToGCGetBattleReportAggregateStats = {
     return {
       aggregateKeys: globalThis.Array.isArray(object?.aggregateKeys)
         ? object.aggregateKeys.map((e: any) =>
-            CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggregateKey.fromJSON(e),
-          )
+          CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggregateKey.fromJSON(e)
+        )
         : [],
       timestamp: isSet(object.timestamp) ? globalThis.Number(object.timestamp) : 0,
       duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
@@ -4114,7 +4061,7 @@ export const CMsgClientToGCGetBattleReportAggregateStats = {
     const obj: any = {};
     if (message.aggregateKeys?.length) {
       obj.aggregateKeys = message.aggregateKeys.map((e) =>
-        CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggregateKey.toJSON(e),
+        CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggregateKey.toJSON(e)
       );
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
@@ -4138,7 +4085,7 @@ export const CMsgClientToGCGetBattleReportAggregateStats = {
     const message = createBaseCMsgClientToGCGetBattleReportAggregateStats();
     message.aggregateKeys =
       object.aggregateKeys?.map((e) =>
-        CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggregateKey.fromPartial(e),
+        CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggregateKey.fromPartial(e)
       ) || [];
     message.timestamp = object.timestamp ?? 0;
     message.duration = object.duration ?? 0;
@@ -4157,7 +4104,7 @@ export const CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggrega
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.predictedPosition !== undefined && message.predictedPosition !== 0) {
       writer.uint32(16).uint32(message.predictedPosition);
@@ -4180,7 +4127,7 @@ export const CMsgClientToGCGetBattleReportAggregateStats_CMsgBattleReportAggrega
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -4310,10 +4257,9 @@ export const CMsgClientToGCGetBattleReportAggregateStatsResponse = {
     object: DeepPartial<CMsgClientToGCGetBattleReportAggregateStatsResponse>,
   ): CMsgClientToGCGetBattleReportAggregateStatsResponse {
     const message = createBaseCMsgClientToGCGetBattleReportAggregateStatsResponse();
-    message.aggregateStats =
-      object.aggregateStats !== undefined && object.aggregateStats !== null
-        ? CMsgBattleReportAggregateStats.fromPartial(object.aggregateStats)
-        : undefined;
+    message.aggregateStats = (object.aggregateStats !== undefined && object.aggregateStats !== null)
+      ? CMsgBattleReportAggregateStats.fromPartial(object.aggregateStats)
+      : undefined;
     message.response = object.response ?? 0;
     return message;
   },
@@ -4450,10 +4396,9 @@ export const CMsgClientToGCGetBattleReportInfoResponse = {
     object: DeepPartial<CMsgClientToGCGetBattleReportInfoResponse>,
   ): CMsgClientToGCGetBattleReportInfoResponse {
     const message = createBaseCMsgClientToGCGetBattleReportInfoResponse();
-    message.battleReportInfoList =
-      object.battleReportInfoList !== undefined && object.battleReportInfoList !== null
-        ? CMsgBattleReportInfoList.fromPartial(object.battleReportInfoList)
-        : undefined;
+    message.battleReportInfoList = (object.battleReportInfoList !== undefined && object.battleReportInfoList !== null)
+      ? CMsgBattleReportInfoList.fromPartial(object.battleReportInfoList)
+      : undefined;
     message.response = object.response ?? 0;
     return message;
   },
@@ -4797,25 +4742,20 @@ export const CMsgClientToGCGetBattleReportMatchHistoryResponse = {
   ): CMsgClientToGCGetBattleReportMatchHistoryResponse {
     const message = createBaseCMsgClientToGCGetBattleReportMatchHistoryResponse();
     message.response = object.response ?? 0;
-    message.games =
-      object.games !== undefined && object.games !== null
-        ? CMsgBattleReportGameList.fromPartial(object.games)
-        : undefined;
+    message.games = (object.games !== undefined && object.games !== null)
+      ? CMsgBattleReportGameList.fromPartial(object.games)
+      : undefined;
     return message;
   },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

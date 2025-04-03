@@ -13,15 +13,19 @@ export interface NetMessageSplitscreenUserChanged {
 
 export interface NetMessageConnectionClosed {
   reason?: number | undefined;
+  message?: string | undefined;
 }
 
 export interface NetMessageConnectionCrashed {
   reason?: number | undefined;
+  message?: string | undefined;
 }
 
-export interface NetMessagePacketStart {}
+export interface NetMessagePacketStart {
+}
 
-export interface NetMessagePacketEnd {}
+export interface NetMessagePacketEnd {
+}
 
 function createBaseNetMessageSplitscreenUserChanged(): NetMessageSplitscreenUserChanged {
   return { slot: 0 };
@@ -81,13 +85,16 @@ export const NetMessageSplitscreenUserChanged = {
 };
 
 function createBaseNetMessageConnectionClosed(): NetMessageConnectionClosed {
-  return { reason: 0 };
+  return { reason: 0, message: "" };
 }
 
 export const NetMessageConnectionClosed = {
   encode(message: NetMessageConnectionClosed, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.reason !== undefined && message.reason !== 0) {
       writer.uint32(8).uint32(message.reason);
+    }
+    if (message.message !== undefined && message.message !== "") {
+      writer.uint32(18).string(message.message);
     }
     return writer;
   },
@@ -106,6 +113,13 @@ export const NetMessageConnectionClosed = {
 
           message.reason = reader.uint32();
           continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.message = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -116,13 +130,19 @@ export const NetMessageConnectionClosed = {
   },
 
   fromJSON(object: any): NetMessageConnectionClosed {
-    return { reason: isSet(object.reason) ? globalThis.Number(object.reason) : 0 };
+    return {
+      reason: isSet(object.reason) ? globalThis.Number(object.reason) : 0,
+      message: isSet(object.message) ? globalThis.String(object.message) : "",
+    };
   },
 
   toJSON(message: NetMessageConnectionClosed): unknown {
     const obj: any = {};
     if (message.reason !== undefined && message.reason !== 0) {
       obj.reason = Math.round(message.reason);
+    }
+    if (message.message !== undefined && message.message !== "") {
+      obj.message = message.message;
     }
     return obj;
   },
@@ -133,18 +153,22 @@ export const NetMessageConnectionClosed = {
   fromPartial(object: DeepPartial<NetMessageConnectionClosed>): NetMessageConnectionClosed {
     const message = createBaseNetMessageConnectionClosed();
     message.reason = object.reason ?? 0;
+    message.message = object.message ?? "";
     return message;
   },
 };
 
 function createBaseNetMessageConnectionCrashed(): NetMessageConnectionCrashed {
-  return { reason: 0 };
+  return { reason: 0, message: "" };
 }
 
 export const NetMessageConnectionCrashed = {
   encode(message: NetMessageConnectionCrashed, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.reason !== undefined && message.reason !== 0) {
       writer.uint32(8).uint32(message.reason);
+    }
+    if (message.message !== undefined && message.message !== "") {
+      writer.uint32(18).string(message.message);
     }
     return writer;
   },
@@ -163,6 +187,13 @@ export const NetMessageConnectionCrashed = {
 
           message.reason = reader.uint32();
           continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.message = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -173,13 +204,19 @@ export const NetMessageConnectionCrashed = {
   },
 
   fromJSON(object: any): NetMessageConnectionCrashed {
-    return { reason: isSet(object.reason) ? globalThis.Number(object.reason) : 0 };
+    return {
+      reason: isSet(object.reason) ? globalThis.Number(object.reason) : 0,
+      message: isSet(object.message) ? globalThis.String(object.message) : "",
+    };
   },
 
   toJSON(message: NetMessageConnectionCrashed): unknown {
     const obj: any = {};
     if (message.reason !== undefined && message.reason !== 0) {
       obj.reason = Math.round(message.reason);
+    }
+    if (message.message !== undefined && message.message !== "") {
+      obj.message = message.message;
     }
     return obj;
   },
@@ -190,6 +227,7 @@ export const NetMessageConnectionCrashed = {
   fromPartial(object: DeepPartial<NetMessageConnectionCrashed>): NetMessageConnectionCrashed {
     const message = createBaseNetMessageConnectionCrashed();
     message.reason = object.reason ?? 0;
+    message.message = object.message ?? "";
     return message;
   },
 };
@@ -282,15 +320,11 @@ export const NetMessagePacketEnd = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

@@ -16,6 +16,8 @@ export enum P2PMessages {
   p2p_Ping = 258,
   p2p_VRAvatarPosition = 259,
   p2p_WatchSynchronization = 260,
+  p2p_FightingGame_GameData = 261,
+  p2p_FightingGame_Connection = 262,
 }
 
 export function p2PMessagesFromJSON(object: any): P2PMessages {
@@ -35,6 +37,12 @@ export function p2PMessagesFromJSON(object: any): P2PMessages {
     case 260:
     case "p2p_WatchSynchronization":
       return P2PMessages.p2p_WatchSynchronization;
+    case 261:
+    case "p2p_FightingGame_GameData":
+      return P2PMessages.p2p_FightingGame_GameData;
+    case 262:
+    case "p2p_FightingGame_Connection":
+      return P2PMessages.p2p_FightingGame_Connection;
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum P2PMessages");
   }
@@ -52,6 +60,10 @@ export function p2PMessagesToJSON(object: P2PMessages): string {
       return "p2p_VRAvatarPosition";
     case P2PMessages.p2p_WatchSynchronization:
       return "p2p_WatchSynchronization";
+    case P2PMessages.p2p_FightingGame_GameData:
+      return "p2p_FightingGame_GameData";
+    case P2PMessages.p2p_FightingGame_Connection:
+      return "p2p_FightingGame_Connection";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum P2PMessages");
   }
@@ -303,8 +315,9 @@ export const CP2PVoice = {
   },
   fromPartial(object: DeepPartial<CP2PVoice>): CP2PVoice {
     const message = createBaseCP2PVoice();
-    message.audio =
-      object.audio !== undefined && object.audio !== null ? CMsgVoiceAudio.fromPartial(object.audio) : undefined;
+    message.audio = (object.audio !== undefined && object.audio !== null)
+      ? CMsgVoiceAudio.fromPartial(object.audio)
+      : undefined;
     message.broadcastGroup = object.broadcastGroup ?? 0;
     return message;
   },
@@ -558,8 +571,8 @@ export const CP2PVRAvatarPosition_COrientation = {
   },
   fromPartial(object: DeepPartial<CP2PVRAvatarPosition_COrientation>): CP2PVRAvatarPosition_COrientation {
     const message = createBaseCP2PVRAvatarPosition_COrientation();
-    message.pos = object.pos !== undefined && object.pos !== null ? CMsgVector.fromPartial(object.pos) : undefined;
-    message.ang = object.ang !== undefined && object.ang !== null ? CMsgQAngle.fromPartial(object.ang) : undefined;
+    message.pos = (object.pos !== undefined && object.pos !== null) ? CMsgVector.fromPartial(object.pos) : undefined;
+    message.ang = (object.ang !== undefined && object.ang !== null) ? CMsgQAngle.fromPartial(object.ang) : undefined;
     return message;
   },
 };
@@ -753,15 +766,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

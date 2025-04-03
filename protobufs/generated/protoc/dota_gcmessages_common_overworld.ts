@@ -7,6 +7,7 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
 import { CMsgDOTAClaimEventActionResponse } from "./dota_gcmessages_common";
+import { CMsgSurvivorsUserData } from "./dota_gcmessages_common_survivors";
 import { CExtraMsgBlock } from "./gcsdk_gcmessages";
 
 export enum EOverworldNodeState {
@@ -41,6 +42,41 @@ export function eOverworldNodeStateToJSON(object: EOverworldNodeState): string {
       return "k_eOverworldNodeState_Unlocked";
     default:
       throw new globalThis.Error("Unrecognized enum value " + object + " for enum EOverworldNodeState");
+  }
+}
+
+export enum EOverworldPathState {
+  k_eOverworldPathState_Invalid = 0,
+  k_eOverworldPathState_Incomplete = 1,
+  k_eOverworldPathState_Complete = 2,
+}
+
+export function eOverworldPathStateFromJSON(object: any): EOverworldPathState {
+  switch (object) {
+    case 0:
+    case "k_eOverworldPathState_Invalid":
+      return EOverworldPathState.k_eOverworldPathState_Invalid;
+    case 1:
+    case "k_eOverworldPathState_Incomplete":
+      return EOverworldPathState.k_eOverworldPathState_Incomplete;
+    case 2:
+    case "k_eOverworldPathState_Complete":
+      return EOverworldPathState.k_eOverworldPathState_Complete;
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum EOverworldPathState");
+  }
+}
+
+export function eOverworldPathStateToJSON(object: EOverworldPathState): string {
+  switch (object) {
+    case EOverworldPathState.k_eOverworldPathState_Invalid:
+      return "k_eOverworldPathState_Invalid";
+    case EOverworldPathState.k_eOverworldPathState_Incomplete:
+      return "k_eOverworldPathState_Incomplete";
+    case EOverworldPathState.k_eOverworldPathState_Complete:
+      return "k_eOverworldPathState_Complete";
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum EOverworldPathState");
   }
 }
 
@@ -163,6 +199,65 @@ export function eOverworldAuditActionToJSON(object: EOverworldAuditAction): stri
   }
 }
 
+export enum EOverworldMinigameAction {
+  k_eOverworldMinigameAction_Invalid = 0,
+  k_eOverworldMinigameAction_DevReset = 1,
+  k_eOverworldMinigameAction_DevGiveCurrency = 2,
+  k_eOverworldMinigameAction_Purchase = 3,
+  k_eOverworldMinigameAction_SetOption = 4,
+  k_eOverworldMinigameAction_ReportCurrencyGained = 5,
+  k_eOverworldMinigameAction_UnlockDifficulty = 6,
+}
+
+export function eOverworldMinigameActionFromJSON(object: any): EOverworldMinigameAction {
+  switch (object) {
+    case 0:
+    case "k_eOverworldMinigameAction_Invalid":
+      return EOverworldMinigameAction.k_eOverworldMinigameAction_Invalid;
+    case 1:
+    case "k_eOverworldMinigameAction_DevReset":
+      return EOverworldMinigameAction.k_eOverworldMinigameAction_DevReset;
+    case 2:
+    case "k_eOverworldMinigameAction_DevGiveCurrency":
+      return EOverworldMinigameAction.k_eOverworldMinigameAction_DevGiveCurrency;
+    case 3:
+    case "k_eOverworldMinigameAction_Purchase":
+      return EOverworldMinigameAction.k_eOverworldMinigameAction_Purchase;
+    case 4:
+    case "k_eOverworldMinigameAction_SetOption":
+      return EOverworldMinigameAction.k_eOverworldMinigameAction_SetOption;
+    case 5:
+    case "k_eOverworldMinigameAction_ReportCurrencyGained":
+      return EOverworldMinigameAction.k_eOverworldMinigameAction_ReportCurrencyGained;
+    case 6:
+    case "k_eOverworldMinigameAction_UnlockDifficulty":
+      return EOverworldMinigameAction.k_eOverworldMinigameAction_UnlockDifficulty;
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum EOverworldMinigameAction");
+  }
+}
+
+export function eOverworldMinigameActionToJSON(object: EOverworldMinigameAction): string {
+  switch (object) {
+    case EOverworldMinigameAction.k_eOverworldMinigameAction_Invalid:
+      return "k_eOverworldMinigameAction_Invalid";
+    case EOverworldMinigameAction.k_eOverworldMinigameAction_DevReset:
+      return "k_eOverworldMinigameAction_DevReset";
+    case EOverworldMinigameAction.k_eOverworldMinigameAction_DevGiveCurrency:
+      return "k_eOverworldMinigameAction_DevGiveCurrency";
+    case EOverworldMinigameAction.k_eOverworldMinigameAction_Purchase:
+      return "k_eOverworldMinigameAction_Purchase";
+    case EOverworldMinigameAction.k_eOverworldMinigameAction_SetOption:
+      return "k_eOverworldMinigameAction_SetOption";
+    case EOverworldMinigameAction.k_eOverworldMinigameAction_ReportCurrencyGained:
+      return "k_eOverworldMinigameAction_ReportCurrencyGained";
+    case EOverworldMinigameAction.k_eOverworldMinigameAction_UnlockDifficulty:
+      return "k_eOverworldMinigameAction_UnlockDifficulty";
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum EOverworldMinigameAction");
+  }
+}
+
 export interface CMsgOverworldTokenCount {
   tokenId?: number | undefined;
   tokenCount?: number | undefined;
@@ -221,6 +316,17 @@ export interface CMsgOverworldNode {
 export interface CMsgOverworldPath {
   pathId?: number | undefined;
   pathCost?: CMsgOverworldTokenQuantity | undefined;
+  pathState?: EOverworldPathState | undefined;
+}
+
+export interface CMsgOverworldMinigameCustomData {
+  survivorsData?: CMsgSurvivorsUserData | undefined;
+}
+
+export interface CMsgOverworldMinigameUserData {
+  nodeId?: number | undefined;
+  currencyAmount?: number | undefined;
+  customData?: CMsgOverworldMinigameCustomData | undefined;
 }
 
 export interface CMsgOverworldUserData {
@@ -228,6 +334,12 @@ export interface CMsgOverworldUserData {
   overworldNodes: CMsgOverworldNode[];
   overworldPaths: CMsgOverworldPath[];
   currentNodeId?: number | undefined;
+  minigameData: CMsgOverworldUserData_MinigameDataEntry[];
+}
+
+export interface CMsgOverworldUserData_MinigameDataEntry {
+  key?: number | undefined;
+  value?: CMsgOverworldMinigameUserData | undefined;
 }
 
 export interface CMsgOverworldMatchRewards {
@@ -421,6 +533,9 @@ export interface CMsgClientToGCOverworldClaimEncounterReward {
   rewardData?: number | undefined;
   periodicResourceId?: number | undefined;
   extraRewardData?: CMsgOverworldEncounterData | undefined;
+  leaderboardData?: number | undefined;
+  leaderboardIndex?: number | undefined;
+  shouldClaimReward?: boolean | undefined;
 }
 
 export interface CMsgClientToGCOverworldClaimEncounterRewardResponse {
@@ -445,6 +560,7 @@ export enum CMsgClientToGCOverworldClaimEncounterRewardResponse_EResponse {
   k_eInvalidEncounterData = 12,
   k_eNotEnoughTokensForReward = 13,
   k_eNotEnoughResourceForReward = 14,
+  k_eInvalidRewardData = 15,
 }
 
 export function cMsgClientToGCOverworldClaimEncounterRewardResponse_EResponseFromJSON(
@@ -496,6 +612,9 @@ export function cMsgClientToGCOverworldClaimEncounterRewardResponse_EResponseFro
     case 14:
     case "k_eNotEnoughResourceForReward":
       return CMsgClientToGCOverworldClaimEncounterRewardResponse_EResponse.k_eNotEnoughResourceForReward;
+    case 15:
+    case "k_eInvalidRewardData":
+      return CMsgClientToGCOverworldClaimEncounterRewardResponse_EResponse.k_eInvalidRewardData;
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldClaimEncounterRewardResponse_EResponse",
@@ -537,6 +656,8 @@ export function cMsgClientToGCOverworldClaimEncounterRewardResponse_EResponseToJ
       return "k_eNotEnoughTokensForReward";
     case CMsgClientToGCOverworldClaimEncounterRewardResponse_EResponse.k_eNotEnoughResourceForReward:
       return "k_eNotEnoughResourceForReward";
+    case CMsgClientToGCOverworldClaimEncounterRewardResponse_EResponse.k_eInvalidRewardData:
+      return "k_eInvalidRewardData";
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldClaimEncounterRewardResponse_EResponse",
@@ -724,57 +845,8 @@ export interface CMsgClientToGCOverworldTradeTokens {
   overworldId?: number | undefined;
   tokenOffer?: CMsgOverworldTokenQuantity | undefined;
   tokenRequest?: CMsgOverworldTokenQuantity | undefined;
-  recipe?: CMsgClientToGCOverworldTradeTokens_ETradeRecipe | undefined;
+  recipe?: number | undefined;
   encounterId?: number | undefined;
-}
-
-export enum CMsgClientToGCOverworldTradeTokens_ETradeRecipe {
-  k_eThreeToOneChosen = 1,
-  k_eFourToOneChosen = 2,
-  k_eThreeToTwoRandom = 3,
-  k_eSixScrapToOneChosen = 4,
-}
-
-export function cMsgClientToGCOverworldTradeTokens_ETradeRecipeFromJSON(
-  object: any,
-): CMsgClientToGCOverworldTradeTokens_ETradeRecipe {
-  switch (object) {
-    case 1:
-    case "k_eThreeToOneChosen":
-      return CMsgClientToGCOverworldTradeTokens_ETradeRecipe.k_eThreeToOneChosen;
-    case 2:
-    case "k_eFourToOneChosen":
-      return CMsgClientToGCOverworldTradeTokens_ETradeRecipe.k_eFourToOneChosen;
-    case 3:
-    case "k_eThreeToTwoRandom":
-      return CMsgClientToGCOverworldTradeTokens_ETradeRecipe.k_eThreeToTwoRandom;
-    case 4:
-    case "k_eSixScrapToOneChosen":
-      return CMsgClientToGCOverworldTradeTokens_ETradeRecipe.k_eSixScrapToOneChosen;
-    default:
-      throw new globalThis.Error(
-        "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldTradeTokens_ETradeRecipe",
-      );
-  }
-}
-
-export function cMsgClientToGCOverworldTradeTokens_ETradeRecipeToJSON(
-  object: CMsgClientToGCOverworldTradeTokens_ETradeRecipe,
-): string {
-  switch (object) {
-    case CMsgClientToGCOverworldTradeTokens_ETradeRecipe.k_eThreeToOneChosen:
-      return "k_eThreeToOneChosen";
-    case CMsgClientToGCOverworldTradeTokens_ETradeRecipe.k_eFourToOneChosen:
-      return "k_eFourToOneChosen";
-    case CMsgClientToGCOverworldTradeTokens_ETradeRecipe.k_eThreeToTwoRandom:
-      return "k_eThreeToTwoRandom";
-    case CMsgClientToGCOverworldTradeTokens_ETradeRecipe.k_eSixScrapToOneChosen:
-      return "k_eSixScrapToOneChosen";
-    default:
-      throw new globalThis.Error(
-        "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldTradeTokens_ETradeRecipe",
-      );
-  }
 }
 
 export interface CMsgClientToGCOverworldTradeTokensResponse {
@@ -795,6 +867,7 @@ export enum CMsgClientToGCOverworldTradeTokensResponse_EResponse {
   k_eNotEnoughTokens = 9,
   k_eInvalidNode = 10,
   k_eInvalidEncounter = 11,
+  k_eRewardDoesNotMatchRecipe = 12,
 }
 
 export function cMsgClientToGCOverworldTradeTokensResponse_EResponseFromJSON(
@@ -837,6 +910,9 @@ export function cMsgClientToGCOverworldTradeTokensResponse_EResponseFromJSON(
     case 11:
     case "k_eInvalidEncounter":
       return CMsgClientToGCOverworldTradeTokensResponse_EResponse.k_eInvalidEncounter;
+    case 12:
+    case "k_eRewardDoesNotMatchRecipe":
+      return CMsgClientToGCOverworldTradeTokensResponse_EResponse.k_eRewardDoesNotMatchRecipe;
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldTradeTokensResponse_EResponse",
@@ -872,6 +948,8 @@ export function cMsgClientToGCOverworldTradeTokensResponse_EResponseToJSON(
       return "k_eInvalidNode";
     case CMsgClientToGCOverworldTradeTokensResponse_EResponse.k_eInvalidEncounter:
       return "k_eInvalidEncounter";
+    case CMsgClientToGCOverworldTradeTokensResponse_EResponse.k_eRewardDoesNotMatchRecipe:
+      return "k_eRewardDoesNotMatchRecipe";
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldTradeTokensResponse_EResponse",
@@ -983,6 +1061,103 @@ export function cMsgClientToGCOverworldGiftTokensResponse_EResponseToJSON(
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldGiftTokensResponse_EResponse",
+      );
+  }
+}
+
+export interface CMsgClientToGCOverworldRequestTokensNeededByFriend {
+  friendAccountId?: number | undefined;
+  overworldId?: number | undefined;
+}
+
+export interface CMsgClientToGCOverworldRequestTokensNeededByFriendResponse {
+  response?: CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse | undefined;
+  tokenQuantity?: CMsgOverworldTokenQuantity | undefined;
+}
+
+export enum CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse {
+  k_eInternalError = 0,
+  k_eSuccess = 1,
+  k_eTooBusy = 2,
+  k_eDisabled = 3,
+  k_eTimeout = 4,
+  k_eNotAllowed = 5,
+  k_eNodeLocked = 6,
+  k_eInvalidOverworld = 7,
+  k_eInvalidFriend = 8,
+  k_eTooManyRequests = 9,
+}
+
+export function cMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponseFromJSON(
+  object: any,
+): CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse {
+  switch (object) {
+    case 0:
+    case "k_eInternalError":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eInternalError;
+    case 1:
+    case "k_eSuccess":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eSuccess;
+    case 2:
+    case "k_eTooBusy":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eTooBusy;
+    case 3:
+    case "k_eDisabled":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eDisabled;
+    case 4:
+    case "k_eTimeout":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eTimeout;
+    case 5:
+    case "k_eNotAllowed":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eNotAllowed;
+    case 6:
+    case "k_eNodeLocked":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eNodeLocked;
+    case 7:
+    case "k_eInvalidOverworld":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eInvalidOverworld;
+    case 8:
+    case "k_eInvalidFriend":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eInvalidFriend;
+    case 9:
+    case "k_eTooManyRequests":
+      return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eTooManyRequests;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object +
+          " for enum CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse",
+      );
+  }
+}
+
+export function cMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponseToJSON(
+  object: CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse,
+): string {
+  switch (object) {
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eInternalError:
+      return "k_eInternalError";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eSuccess:
+      return "k_eSuccess";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eTooBusy:
+      return "k_eTooBusy";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eDisabled:
+      return "k_eDisabled";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eTimeout:
+      return "k_eTimeout";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eNotAllowed:
+      return "k_eNotAllowed";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eNodeLocked:
+      return "k_eNodeLocked";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eInvalidOverworld:
+      return "k_eInvalidOverworld";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eInvalidFriend:
+      return "k_eInvalidFriend";
+    case CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse.k_eTooManyRequests:
+      return "k_eTooManyRequests";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object +
+          " for enum CMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponse",
       );
   }
 }
@@ -1404,8 +1579,7 @@ export function cMsgClientToGCOverworldGetDynamicImageResponse_EDynamicImageForm
       return CMsgClientToGCOverworldGetDynamicImageResponse_EDynamicImageFormat.k_eData;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCOverworldGetDynamicImageResponse_EDynamicImageFormat",
       );
   }
@@ -1423,8 +1597,7 @@ export function cMsgClientToGCOverworldGetDynamicImageResponse_EDynamicImageForm
       return "k_eData";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCOverworldGetDynamicImageResponse_EDynamicImageFormat",
       );
   }
@@ -1435,6 +1608,116 @@ export interface CMsgClientToGCOverworldGetDynamicImageResponse_Image {
   height?: number | undefined;
   format?: CMsgClientToGCOverworldGetDynamicImageResponse_EDynamicImageFormat | undefined;
   imageBytes?: Buffer | undefined;
+}
+
+export interface CMsgClientToGCOverworldMinigameAction {
+  overworldId?: number | undefined;
+  nodeId?: number | undefined;
+  action?: EOverworldMinigameAction | undefined;
+  selection?: number | undefined;
+  optionValue?: number | undefined;
+  currencyAmount?: number | undefined;
+}
+
+export interface CMsgClientToGCOverworldMinigameActionResponse {
+  response?: CMsgClientToGCOverworldMinigameActionResponse_EResponse | undefined;
+}
+
+export enum CMsgClientToGCOverworldMinigameActionResponse_EResponse {
+  k_eInternalError = 0,
+  k_eSuccess = 1,
+  k_eTooBusy = 2,
+  k_eDisabled = 3,
+  k_eTimeout = 4,
+  k_eInvalidOverworld = 5,
+  k_eInvalidNode = 6,
+  k_eNodeLocked = 7,
+  k_eInvalidSelection = 8,
+  k_eNotEnoughTokens = 9,
+  k_eNotEnoughMinigameCurrency = 10,
+  k_eNotAllowed = 11,
+}
+
+export function cMsgClientToGCOverworldMinigameActionResponse_EResponseFromJSON(
+  object: any,
+): CMsgClientToGCOverworldMinigameActionResponse_EResponse {
+  switch (object) {
+    case 0:
+    case "k_eInternalError":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eInternalError;
+    case 1:
+    case "k_eSuccess":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eSuccess;
+    case 2:
+    case "k_eTooBusy":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eTooBusy;
+    case 3:
+    case "k_eDisabled":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eDisabled;
+    case 4:
+    case "k_eTimeout":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eTimeout;
+    case 5:
+    case "k_eInvalidOverworld":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eInvalidOverworld;
+    case 6:
+    case "k_eInvalidNode":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eInvalidNode;
+    case 7:
+    case "k_eNodeLocked":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eNodeLocked;
+    case 8:
+    case "k_eInvalidSelection":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eInvalidSelection;
+    case 9:
+    case "k_eNotEnoughTokens":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eNotEnoughTokens;
+    case 10:
+    case "k_eNotEnoughMinigameCurrency":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eNotEnoughMinigameCurrency;
+    case 11:
+    case "k_eNotAllowed":
+      return CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eNotAllowed;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldMinigameActionResponse_EResponse",
+      );
+  }
+}
+
+export function cMsgClientToGCOverworldMinigameActionResponse_EResponseToJSON(
+  object: CMsgClientToGCOverworldMinigameActionResponse_EResponse,
+): string {
+  switch (object) {
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eInternalError:
+      return "k_eInternalError";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eSuccess:
+      return "k_eSuccess";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eTooBusy:
+      return "k_eTooBusy";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eDisabled:
+      return "k_eDisabled";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eTimeout:
+      return "k_eTimeout";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eInvalidOverworld:
+      return "k_eInvalidOverworld";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eInvalidNode:
+      return "k_eInvalidNode";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eNodeLocked:
+      return "k_eNodeLocked";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eInvalidSelection:
+      return "k_eInvalidSelection";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eNotEnoughTokens:
+      return "k_eNotEnoughTokens";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eNotEnoughMinigameCurrency:
+      return "k_eNotEnoughMinigameCurrency";
+    case CMsgClientToGCOverworldMinigameActionResponse_EResponse.k_eNotAllowed:
+      return "k_eNotAllowed";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCOverworldMinigameActionResponse_EResponse",
+      );
+  }
 }
 
 function createBaseCMsgOverworldTokenCount(): CMsgOverworldTokenCount {
@@ -1621,7 +1904,7 @@ export const CMsgOverworldEncounterTokenTreasureData = {
     const obj: any = {};
     if (message.rewardOptions?.length) {
       obj.rewardOptions = message.rewardOptions.map((e) =>
-        CMsgOverworldEncounterTokenTreasureData_RewardOption.toJSON(e),
+        CMsgOverworldEncounterTokenTreasureData_RewardOption.toJSON(e)
       );
     }
     return obj;
@@ -1728,14 +2011,12 @@ export const CMsgOverworldEncounterTokenTreasureData_RewardOption = {
   ): CMsgOverworldEncounterTokenTreasureData_RewardOption {
     const message = createBaseCMsgOverworldEncounterTokenTreasureData_RewardOption();
     message.rewardData = object.rewardData ?? 0;
-    message.tokenCost =
-      object.tokenCost !== undefined && object.tokenCost !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokenCost)
-        : undefined;
-    message.tokenReward =
-      object.tokenReward !== undefined && object.tokenReward !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokenReward)
-        : undefined;
+    message.tokenCost = (object.tokenCost !== undefined && object.tokenCost !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenCost)
+      : undefined;
+    message.tokenReward = (object.tokenReward !== undefined && object.tokenReward !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenReward)
+      : undefined;
     return message;
   },
 };
@@ -1886,14 +2167,12 @@ export const CMsgOverworldEncounterTokenQuestData_Quest = {
   ): CMsgOverworldEncounterTokenQuestData_Quest {
     const message = createBaseCMsgOverworldEncounterTokenQuestData_Quest();
     message.rewardData = object.rewardData ?? 0;
-    message.tokenCost =
-      object.tokenCost !== undefined && object.tokenCost !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokenCost)
-        : undefined;
-    message.tokenReward =
-      object.tokenReward !== undefined && object.tokenReward !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokenReward)
-        : undefined;
+    message.tokenCost = (object.tokenCost !== undefined && object.tokenCost !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenCost)
+      : undefined;
+    message.tokenReward = (object.tokenReward !== undefined && object.tokenReward !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenReward)
+      : undefined;
     return message;
   },
 };
@@ -1906,7 +2185,7 @@ export const CMsgOverworldHeroList = {
   encode(message: CMsgOverworldHeroList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).fork();
     for (const v of message.heroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     return writer;
@@ -1921,7 +2200,7 @@ export const CMsgOverworldHeroList = {
       switch (tag >>> 3) {
         case 1:
           if (tag === 8) {
-            message.heroIds.push(reader.uint32());
+            message.heroIds.push(reader.int32());
 
             continue;
           }
@@ -1929,7 +2208,7 @@ export const CMsgOverworldHeroList = {
           if (tag === 10) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.heroIds.push(reader.uint32());
+              message.heroIds.push(reader.int32());
             }
 
             continue;
@@ -2037,10 +2316,9 @@ export const CMsgOverworldEncounterChooseHeroData = {
   },
   fromPartial(object: DeepPartial<CMsgOverworldEncounterChooseHeroData>): CMsgOverworldEncounterChooseHeroData {
     const message = createBaseCMsgOverworldEncounterChooseHeroData();
-    message.heroList =
-      object.heroList !== undefined && object.heroList !== null
-        ? CMsgOverworldHeroList.fromPartial(object.heroList)
-        : undefined;
+    message.heroList = (object.heroList !== undefined && object.heroList !== null)
+      ? CMsgOverworldHeroList.fromPartial(object.heroList)
+      : undefined;
     message.additive = object.additive ?? false;
     return message;
   },
@@ -2297,16 +2575,15 @@ export const CMsgOverworldNode = {
     const message = createBaseCMsgOverworldNode();
     message.nodeId = object.nodeId ?? 0;
     message.nodeState = object.nodeState ?? 0;
-    message.nodeEncounterData =
-      object.nodeEncounterData !== undefined && object.nodeEncounterData !== null
-        ? CMsgOverworldEncounterData.fromPartial(object.nodeEncounterData)
-        : undefined;
+    message.nodeEncounterData = (object.nodeEncounterData !== undefined && object.nodeEncounterData !== null)
+      ? CMsgOverworldEncounterData.fromPartial(object.nodeEncounterData)
+      : undefined;
     return message;
   },
 };
 
 function createBaseCMsgOverworldPath(): CMsgOverworldPath {
-  return { pathId: 0, pathCost: undefined };
+  return { pathId: 0, pathCost: undefined, pathState: 0 };
 }
 
 export const CMsgOverworldPath = {
@@ -2316,6 +2593,9 @@ export const CMsgOverworldPath = {
     }
     if (message.pathCost !== undefined) {
       CMsgOverworldTokenQuantity.encode(message.pathCost, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.pathState !== undefined && message.pathState !== 0) {
+      writer.uint32(24).int32(message.pathState);
     }
     return writer;
   },
@@ -2341,6 +2621,13 @@ export const CMsgOverworldPath = {
 
           message.pathCost = CMsgOverworldTokenQuantity.decode(reader, reader.uint32());
           continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.pathState = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2354,6 +2641,7 @@ export const CMsgOverworldPath = {
     return {
       pathId: isSet(object.pathId) ? globalThis.Number(object.pathId) : 0,
       pathCost: isSet(object.pathCost) ? CMsgOverworldTokenQuantity.fromJSON(object.pathCost) : undefined,
+      pathState: isSet(object.pathState) ? eOverworldPathStateFromJSON(object.pathState) : 0,
     };
   },
 
@@ -2365,6 +2653,9 @@ export const CMsgOverworldPath = {
     if (message.pathCost !== undefined) {
       obj.pathCost = CMsgOverworldTokenQuantity.toJSON(message.pathCost);
     }
+    if (message.pathState !== undefined && message.pathState !== 0) {
+      obj.pathState = eOverworldPathStateToJSON(message.pathState);
+    }
     return obj;
   },
 
@@ -2374,16 +2665,168 @@ export const CMsgOverworldPath = {
   fromPartial(object: DeepPartial<CMsgOverworldPath>): CMsgOverworldPath {
     const message = createBaseCMsgOverworldPath();
     message.pathId = object.pathId ?? 0;
-    message.pathCost =
-      object.pathCost !== undefined && object.pathCost !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.pathCost)
-        : undefined;
+    message.pathCost = (object.pathCost !== undefined && object.pathCost !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.pathCost)
+      : undefined;
+    message.pathState = object.pathState ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgOverworldMinigameCustomData(): CMsgOverworldMinigameCustomData {
+  return { survivorsData: undefined };
+}
+
+export const CMsgOverworldMinigameCustomData = {
+  encode(message: CMsgOverworldMinigameCustomData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.survivorsData !== undefined) {
+      CMsgSurvivorsUserData.encode(message.survivorsData, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgOverworldMinigameCustomData {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgOverworldMinigameCustomData();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.survivorsData = CMsgSurvivorsUserData.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgOverworldMinigameCustomData {
+    return {
+      survivorsData: isSet(object.survivorsData) ? CMsgSurvivorsUserData.fromJSON(object.survivorsData) : undefined,
+    };
+  },
+
+  toJSON(message: CMsgOverworldMinigameCustomData): unknown {
+    const obj: any = {};
+    if (message.survivorsData !== undefined) {
+      obj.survivorsData = CMsgSurvivorsUserData.toJSON(message.survivorsData);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgOverworldMinigameCustomData>): CMsgOverworldMinigameCustomData {
+    return CMsgOverworldMinigameCustomData.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgOverworldMinigameCustomData>): CMsgOverworldMinigameCustomData {
+    const message = createBaseCMsgOverworldMinigameCustomData();
+    message.survivorsData = (object.survivorsData !== undefined && object.survivorsData !== null)
+      ? CMsgSurvivorsUserData.fromPartial(object.survivorsData)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseCMsgOverworldMinigameUserData(): CMsgOverworldMinigameUserData {
+  return { nodeId: 0, currencyAmount: 0, customData: undefined };
+}
+
+export const CMsgOverworldMinigameUserData = {
+  encode(message: CMsgOverworldMinigameUserData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.nodeId !== undefined && message.nodeId !== 0) {
+      writer.uint32(8).uint32(message.nodeId);
+    }
+    if (message.currencyAmount !== undefined && message.currencyAmount !== 0) {
+      writer.uint32(16).uint32(message.currencyAmount);
+    }
+    if (message.customData !== undefined) {
+      CMsgOverworldMinigameCustomData.encode(message.customData, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgOverworldMinigameUserData {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgOverworldMinigameUserData();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.nodeId = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.currencyAmount = reader.uint32();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.customData = CMsgOverworldMinigameCustomData.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgOverworldMinigameUserData {
+    return {
+      nodeId: isSet(object.nodeId) ? globalThis.Number(object.nodeId) : 0,
+      currencyAmount: isSet(object.currencyAmount) ? globalThis.Number(object.currencyAmount) : 0,
+      customData: isSet(object.customData) ? CMsgOverworldMinigameCustomData.fromJSON(object.customData) : undefined,
+    };
+  },
+
+  toJSON(message: CMsgOverworldMinigameUserData): unknown {
+    const obj: any = {};
+    if (message.nodeId !== undefined && message.nodeId !== 0) {
+      obj.nodeId = Math.round(message.nodeId);
+    }
+    if (message.currencyAmount !== undefined && message.currencyAmount !== 0) {
+      obj.currencyAmount = Math.round(message.currencyAmount);
+    }
+    if (message.customData !== undefined) {
+      obj.customData = CMsgOverworldMinigameCustomData.toJSON(message.customData);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgOverworldMinigameUserData>): CMsgOverworldMinigameUserData {
+    return CMsgOverworldMinigameUserData.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgOverworldMinigameUserData>): CMsgOverworldMinigameUserData {
+    const message = createBaseCMsgOverworldMinigameUserData();
+    message.nodeId = object.nodeId ?? 0;
+    message.currencyAmount = object.currencyAmount ?? 0;
+    message.customData = (object.customData !== undefined && object.customData !== null)
+      ? CMsgOverworldMinigameCustomData.fromPartial(object.customData)
+      : undefined;
     return message;
   },
 };
 
 function createBaseCMsgOverworldUserData(): CMsgOverworldUserData {
-  return { tokenInventory: undefined, overworldNodes: [], overworldPaths: [], currentNodeId: 0 };
+  return { tokenInventory: undefined, overworldNodes: [], overworldPaths: [], currentNodeId: 0, minigameData: [] };
 }
 
 export const CMsgOverworldUserData = {
@@ -2399,6 +2842,9 @@ export const CMsgOverworldUserData = {
     }
     if (message.currentNodeId !== undefined && message.currentNodeId !== 0) {
       writer.uint32(32).uint32(message.currentNodeId);
+    }
+    for (const v of message.minigameData) {
+      CMsgOverworldUserData_MinigameDataEntry.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -2438,6 +2884,13 @@ export const CMsgOverworldUserData = {
 
           message.currentNodeId = reader.uint32();
           continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.minigameData.push(CMsgOverworldUserData_MinigameDataEntry.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2459,6 +2912,9 @@ export const CMsgOverworldUserData = {
         ? object.overworldPaths.map((e: any) => CMsgOverworldPath.fromJSON(e))
         : [],
       currentNodeId: isSet(object.currentNodeId) ? globalThis.Number(object.currentNodeId) : 0,
+      minigameData: globalThis.Array.isArray(object?.minigameData)
+        ? object.minigameData.map((e: any) => CMsgOverworldUserData_MinigameDataEntry.fromJSON(e))
+        : [],
     };
   },
 
@@ -2476,6 +2932,9 @@ export const CMsgOverworldUserData = {
     if (message.currentNodeId !== undefined && message.currentNodeId !== 0) {
       obj.currentNodeId = Math.round(message.currentNodeId);
     }
+    if (message.minigameData?.length) {
+      obj.minigameData = message.minigameData.map((e) => CMsgOverworldUserData_MinigameDataEntry.toJSON(e));
+    }
     return obj;
   },
 
@@ -2484,13 +2943,90 @@ export const CMsgOverworldUserData = {
   },
   fromPartial(object: DeepPartial<CMsgOverworldUserData>): CMsgOverworldUserData {
     const message = createBaseCMsgOverworldUserData();
-    message.tokenInventory =
-      object.tokenInventory !== undefined && object.tokenInventory !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokenInventory)
-        : undefined;
+    message.tokenInventory = (object.tokenInventory !== undefined && object.tokenInventory !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenInventory)
+      : undefined;
     message.overworldNodes = object.overworldNodes?.map((e) => CMsgOverworldNode.fromPartial(e)) || [];
     message.overworldPaths = object.overworldPaths?.map((e) => CMsgOverworldPath.fromPartial(e)) || [];
     message.currentNodeId = object.currentNodeId ?? 0;
+    message.minigameData = object.minigameData?.map((e) => CMsgOverworldUserData_MinigameDataEntry.fromPartial(e)) ||
+      [];
+    return message;
+  },
+};
+
+function createBaseCMsgOverworldUserData_MinigameDataEntry(): CMsgOverworldUserData_MinigameDataEntry {
+  return { key: 0, value: undefined };
+}
+
+export const CMsgOverworldUserData_MinigameDataEntry = {
+  encode(message: CMsgOverworldUserData_MinigameDataEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== undefined && message.key !== 0) {
+      writer.uint32(8).uint32(message.key);
+    }
+    if (message.value !== undefined) {
+      CMsgOverworldMinigameUserData.encode(message.value, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgOverworldUserData_MinigameDataEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgOverworldUserData_MinigameDataEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.key = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.value = CMsgOverworldMinigameUserData.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgOverworldUserData_MinigameDataEntry {
+    return {
+      key: isSet(object.key) ? globalThis.Number(object.key) : 0,
+      value: isSet(object.value) ? CMsgOverworldMinigameUserData.fromJSON(object.value) : undefined,
+    };
+  },
+
+  toJSON(message: CMsgOverworldUserData_MinigameDataEntry): unknown {
+    const obj: any = {};
+    if (message.key !== undefined && message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== undefined) {
+      obj.value = CMsgOverworldMinigameUserData.toJSON(message.value);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgOverworldUserData_MinigameDataEntry>): CMsgOverworldUserData_MinigameDataEntry {
+    return CMsgOverworldUserData_MinigameDataEntry.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgOverworldUserData_MinigameDataEntry>): CMsgOverworldUserData_MinigameDataEntry {
+    const message = createBaseCMsgOverworldUserData_MinigameDataEntry();
+    message.key = object.key ?? 0;
+    message.value = (object.value !== undefined && object.value !== null)
+      ? CMsgOverworldMinigameUserData.fromPartial(object.value)
+      : undefined;
     return message;
   },
 };
@@ -2639,10 +3175,9 @@ export const CMsgOverworldMatchRewards_Player = {
   fromPartial(object: DeepPartial<CMsgOverworldMatchRewards_Player>): CMsgOverworldMatchRewards_Player {
     const message = createBaseCMsgOverworldMatchRewards_Player();
     message.playerSlot = object.playerSlot ?? 0;
-    message.tokens =
-      object.tokens !== undefined && object.tokens !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokens)
-        : undefined;
+    message.tokens = (object.tokens !== undefined && object.tokens !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokens)
+      : undefined;
     message.overworldId = object.overworldId ?? 0;
     return message;
   },
@@ -2778,10 +3313,9 @@ export const CMsgClientToGCOverworldGetUserDataResponse = {
   ): CMsgClientToGCOverworldGetUserDataResponse {
     const message = createBaseCMsgClientToGCOverworldGetUserDataResponse();
     message.response = object.response ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgOverworldUserData.fromPartial(object.userData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgOverworldUserData.fromPartial(object.userData)
+      : undefined;
     return message;
   },
 };
@@ -2855,10 +3389,9 @@ export const CMsgGCToClientOverworldUserDataUpdated = {
   fromPartial(object: DeepPartial<CMsgGCToClientOverworldUserDataUpdated>): CMsgGCToClientOverworldUserDataUpdated {
     const message = createBaseCMsgGCToClientOverworldUserDataUpdated();
     message.overworldId = object.overworldId ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgOverworldUserData.fromPartial(object.userData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgOverworldUserData.fromPartial(object.userData)
+      : undefined;
     return message;
   },
 };
@@ -3012,10 +3545,9 @@ export const CMsgClientToGCOverworldCompletePathResponse = {
   ): CMsgClientToGCOverworldCompletePathResponse {
     const message = createBaseCMsgClientToGCOverworldCompletePathResponse();
     message.response = object.response ?? 0;
-    message.claimResponse =
-      object.claimResponse !== undefined && object.claimResponse !== null
-        ? CMsgDOTAClaimEventActionResponse.fromPartial(object.claimResponse)
-        : undefined;
+    message.claimResponse = (object.claimResponse !== undefined && object.claimResponse !== null)
+      ? CMsgDOTAClaimEventActionResponse.fromPartial(object.claimResponse)
+      : undefined;
     return message;
   },
 };
@@ -3097,7 +3629,16 @@ export const CMsgOverworldEncounterPitFighterRewardData = {
 };
 
 function createBaseCMsgClientToGCOverworldClaimEncounterReward(): CMsgClientToGCOverworldClaimEncounterReward {
-  return { overworldId: 0, nodeId: 0, rewardData: 0, periodicResourceId: 0, extraRewardData: undefined };
+  return {
+    overworldId: 0,
+    nodeId: 0,
+    rewardData: 0,
+    periodicResourceId: 0,
+    extraRewardData: undefined,
+    leaderboardData: 0,
+    leaderboardIndex: 0,
+    shouldClaimReward: false,
+  };
 }
 
 export const CMsgClientToGCOverworldClaimEncounterReward = {
@@ -3116,6 +3657,15 @@ export const CMsgClientToGCOverworldClaimEncounterReward = {
     }
     if (message.extraRewardData !== undefined) {
       CMsgOverworldEncounterData.encode(message.extraRewardData, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.leaderboardData !== undefined && message.leaderboardData !== 0) {
+      writer.uint32(48).uint32(message.leaderboardData);
+    }
+    if (message.leaderboardIndex !== undefined && message.leaderboardIndex !== 0) {
+      writer.uint32(56).uint32(message.leaderboardIndex);
+    }
+    if (message.shouldClaimReward !== undefined && message.shouldClaimReward !== false) {
+      writer.uint32(64).bool(message.shouldClaimReward);
     }
     return writer;
   },
@@ -3162,6 +3712,27 @@ export const CMsgClientToGCOverworldClaimEncounterReward = {
 
           message.extraRewardData = CMsgOverworldEncounterData.decode(reader, reader.uint32());
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.leaderboardData = reader.uint32();
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.leaderboardIndex = reader.uint32();
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.shouldClaimReward = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3180,6 +3751,9 @@ export const CMsgClientToGCOverworldClaimEncounterReward = {
       extraRewardData: isSet(object.extraRewardData)
         ? CMsgOverworldEncounterData.fromJSON(object.extraRewardData)
         : undefined,
+      leaderboardData: isSet(object.leaderboardData) ? globalThis.Number(object.leaderboardData) : 0,
+      leaderboardIndex: isSet(object.leaderboardIndex) ? globalThis.Number(object.leaderboardIndex) : 0,
+      shouldClaimReward: isSet(object.shouldClaimReward) ? globalThis.Boolean(object.shouldClaimReward) : false,
     };
   },
 
@@ -3200,6 +3774,15 @@ export const CMsgClientToGCOverworldClaimEncounterReward = {
     if (message.extraRewardData !== undefined) {
       obj.extraRewardData = CMsgOverworldEncounterData.toJSON(message.extraRewardData);
     }
+    if (message.leaderboardData !== undefined && message.leaderboardData !== 0) {
+      obj.leaderboardData = Math.round(message.leaderboardData);
+    }
+    if (message.leaderboardIndex !== undefined && message.leaderboardIndex !== 0) {
+      obj.leaderboardIndex = Math.round(message.leaderboardIndex);
+    }
+    if (message.shouldClaimReward !== undefined && message.shouldClaimReward !== false) {
+      obj.shouldClaimReward = message.shouldClaimReward;
+    }
     return obj;
   },
 
@@ -3214,10 +3797,12 @@ export const CMsgClientToGCOverworldClaimEncounterReward = {
     message.nodeId = object.nodeId ?? 0;
     message.rewardData = object.rewardData ?? 0;
     message.periodicResourceId = object.periodicResourceId ?? 0;
-    message.extraRewardData =
-      object.extraRewardData !== undefined && object.extraRewardData !== null
-        ? CMsgOverworldEncounterData.fromPartial(object.extraRewardData)
-        : undefined;
+    message.extraRewardData = (object.extraRewardData !== undefined && object.extraRewardData !== null)
+      ? CMsgOverworldEncounterData.fromPartial(object.extraRewardData)
+      : undefined;
+    message.leaderboardData = object.leaderboardData ?? 0;
+    message.leaderboardIndex = object.leaderboardIndex ?? 0;
+    message.shouldClaimReward = object.shouldClaimReward ?? false;
     return message;
   },
 };
@@ -3318,14 +3903,12 @@ export const CMsgClientToGCOverworldClaimEncounterRewardResponse = {
   ): CMsgClientToGCOverworldClaimEncounterRewardResponse {
     const message = createBaseCMsgClientToGCOverworldClaimEncounterRewardResponse();
     message.response = object.response ?? 0;
-    message.claimResponse =
-      object.claimResponse !== undefined && object.claimResponse !== null
-        ? CMsgDOTAClaimEventActionResponse.fromPartial(object.claimResponse)
-        : undefined;
-    message.tokensReceived =
-      object.tokensReceived !== undefined && object.tokensReceived !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokensReceived)
-        : undefined;
+    message.claimResponse = (object.claimResponse !== undefined && object.claimResponse !== null)
+      ? CMsgDOTAClaimEventActionResponse.fromPartial(object.claimResponse)
+      : undefined;
+    message.tokensReceived = (object.tokensReceived !== undefined && object.tokensReceived !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokensReceived)
+      : undefined;
     return message;
   },
 };
@@ -3607,7 +4190,7 @@ export const CMsgClientToGCOverworldMoveToNodeResponse = {
 };
 
 function createBaseCMsgClientToGCOverworldTradeTokens(): CMsgClientToGCOverworldTradeTokens {
-  return { overworldId: 0, tokenOffer: undefined, tokenRequest: undefined, recipe: 1, encounterId: 0 };
+  return { overworldId: 0, tokenOffer: undefined, tokenRequest: undefined, recipe: 0, encounterId: 0 };
 }
 
 export const CMsgClientToGCOverworldTradeTokens = {
@@ -3621,8 +4204,8 @@ export const CMsgClientToGCOverworldTradeTokens = {
     if (message.tokenRequest !== undefined) {
       CMsgOverworldTokenQuantity.encode(message.tokenRequest, writer.uint32(26).fork()).ldelim();
     }
-    if (message.recipe !== undefined && message.recipe !== 1) {
-      writer.uint32(32).int32(message.recipe);
+    if (message.recipe !== undefined && message.recipe !== 0) {
+      writer.uint32(32).uint32(message.recipe);
     }
     if (message.encounterId !== undefined && message.encounterId !== 0) {
       writer.uint32(40).uint32(message.encounterId);
@@ -3663,7 +4246,7 @@ export const CMsgClientToGCOverworldTradeTokens = {
             break;
           }
 
-          message.recipe = reader.int32() as any;
+          message.recipe = reader.uint32();
           continue;
         case 5:
           if (tag !== 40) {
@@ -3686,7 +4269,7 @@ export const CMsgClientToGCOverworldTradeTokens = {
       overworldId: isSet(object.overworldId) ? globalThis.Number(object.overworldId) : 0,
       tokenOffer: isSet(object.tokenOffer) ? CMsgOverworldTokenQuantity.fromJSON(object.tokenOffer) : undefined,
       tokenRequest: isSet(object.tokenRequest) ? CMsgOverworldTokenQuantity.fromJSON(object.tokenRequest) : undefined,
-      recipe: isSet(object.recipe) ? cMsgClientToGCOverworldTradeTokens_ETradeRecipeFromJSON(object.recipe) : 1,
+      recipe: isSet(object.recipe) ? globalThis.Number(object.recipe) : 0,
       encounterId: isSet(object.encounterId) ? globalThis.Number(object.encounterId) : 0,
     };
   },
@@ -3702,8 +4285,8 @@ export const CMsgClientToGCOverworldTradeTokens = {
     if (message.tokenRequest !== undefined) {
       obj.tokenRequest = CMsgOverworldTokenQuantity.toJSON(message.tokenRequest);
     }
-    if (message.recipe !== undefined && message.recipe !== 1) {
-      obj.recipe = cMsgClientToGCOverworldTradeTokens_ETradeRecipeToJSON(message.recipe);
+    if (message.recipe !== undefined && message.recipe !== 0) {
+      obj.recipe = Math.round(message.recipe);
     }
     if (message.encounterId !== undefined && message.encounterId !== 0) {
       obj.encounterId = Math.round(message.encounterId);
@@ -3717,15 +4300,13 @@ export const CMsgClientToGCOverworldTradeTokens = {
   fromPartial(object: DeepPartial<CMsgClientToGCOverworldTradeTokens>): CMsgClientToGCOverworldTradeTokens {
     const message = createBaseCMsgClientToGCOverworldTradeTokens();
     message.overworldId = object.overworldId ?? 0;
-    message.tokenOffer =
-      object.tokenOffer !== undefined && object.tokenOffer !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokenOffer)
-        : undefined;
-    message.tokenRequest =
-      object.tokenRequest !== undefined && object.tokenRequest !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokenRequest)
-        : undefined;
-    message.recipe = object.recipe ?? 1;
+    message.tokenOffer = (object.tokenOffer !== undefined && object.tokenOffer !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenOffer)
+      : undefined;
+    message.tokenRequest = (object.tokenRequest !== undefined && object.tokenRequest !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenRequest)
+      : undefined;
+    message.recipe = object.recipe ?? 0;
     message.encounterId = object.encounterId ?? 0;
     return message;
   },
@@ -3806,10 +4387,9 @@ export const CMsgClientToGCOverworldTradeTokensResponse = {
   ): CMsgClientToGCOverworldTradeTokensResponse {
     const message = createBaseCMsgClientToGCOverworldTradeTokensResponse();
     message.response = object.response ?? 0;
-    message.tokensReceived =
-      object.tokensReceived !== undefined && object.tokensReceived !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokensReceived)
-        : undefined;
+    message.tokensReceived = (object.tokensReceived !== undefined && object.tokensReceived !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokensReceived)
+      : undefined;
     return message;
   },
 };
@@ -3911,10 +4491,9 @@ export const CMsgClientToGCOverworldGiftTokens = {
   fromPartial(object: DeepPartial<CMsgClientToGCOverworldGiftTokens>): CMsgClientToGCOverworldGiftTokens {
     const message = createBaseCMsgClientToGCOverworldGiftTokens();
     message.overworldId = object.overworldId ?? 0;
-    message.tokenGift =
-      object.tokenGift !== undefined && object.tokenGift !== null
-        ? CMsgOverworldTokenCount.fromPartial(object.tokenGift)
-        : undefined;
+    message.tokenGift = (object.tokenGift !== undefined && object.tokenGift !== null)
+      ? CMsgOverworldTokenCount.fromPartial(object.tokenGift)
+      : undefined;
     message.recipientAccountId = object.recipientAccountId ?? 0;
     message.periodicResourceId = object.periodicResourceId ?? 0;
     return message;
@@ -3980,6 +4559,174 @@ export const CMsgClientToGCOverworldGiftTokensResponse = {
   ): CMsgClientToGCOverworldGiftTokensResponse {
     const message = createBaseCMsgClientToGCOverworldGiftTokensResponse();
     message.response = object.response ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCOverworldRequestTokensNeededByFriend(): CMsgClientToGCOverworldRequestTokensNeededByFriend {
+  return { friendAccountId: 0, overworldId: 0 };
+}
+
+export const CMsgClientToGCOverworldRequestTokensNeededByFriend = {
+  encode(
+    message: CMsgClientToGCOverworldRequestTokensNeededByFriend,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.friendAccountId !== undefined && message.friendAccountId !== 0) {
+      writer.uint32(8).uint32(message.friendAccountId);
+    }
+    if (message.overworldId !== undefined && message.overworldId !== 0) {
+      writer.uint32(16).uint32(message.overworldId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCOverworldRequestTokensNeededByFriend {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCOverworldRequestTokensNeededByFriend();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.friendAccountId = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.overworldId = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCOverworldRequestTokensNeededByFriend {
+    return {
+      friendAccountId: isSet(object.friendAccountId) ? globalThis.Number(object.friendAccountId) : 0,
+      overworldId: isSet(object.overworldId) ? globalThis.Number(object.overworldId) : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCOverworldRequestTokensNeededByFriend): unknown {
+    const obj: any = {};
+    if (message.friendAccountId !== undefined && message.friendAccountId !== 0) {
+      obj.friendAccountId = Math.round(message.friendAccountId);
+    }
+    if (message.overworldId !== undefined && message.overworldId !== 0) {
+      obj.overworldId = Math.round(message.overworldId);
+    }
+    return obj;
+  },
+
+  create(
+    base?: DeepPartial<CMsgClientToGCOverworldRequestTokensNeededByFriend>,
+  ): CMsgClientToGCOverworldRequestTokensNeededByFriend {
+    return CMsgClientToGCOverworldRequestTokensNeededByFriend.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CMsgClientToGCOverworldRequestTokensNeededByFriend>,
+  ): CMsgClientToGCOverworldRequestTokensNeededByFriend {
+    const message = createBaseCMsgClientToGCOverworldRequestTokensNeededByFriend();
+    message.friendAccountId = object.friendAccountId ?? 0;
+    message.overworldId = object.overworldId ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCOverworldRequestTokensNeededByFriendResponse(): CMsgClientToGCOverworldRequestTokensNeededByFriendResponse {
+  return { response: 0, tokenQuantity: undefined };
+}
+
+export const CMsgClientToGCOverworldRequestTokensNeededByFriendResponse = {
+  encode(
+    message: CMsgClientToGCOverworldRequestTokensNeededByFriendResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.response !== undefined && message.response !== 0) {
+      writer.uint32(8).int32(message.response);
+    }
+    if (message.tokenQuantity !== undefined) {
+      CMsgOverworldTokenQuantity.encode(message.tokenQuantity, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCOverworldRequestTokensNeededByFriendResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCOverworldRequestTokensNeededByFriendResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.response = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.tokenQuantity = CMsgOverworldTokenQuantity.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCOverworldRequestTokensNeededByFriendResponse {
+    return {
+      response: isSet(object.response)
+        ? cMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponseFromJSON(object.response)
+        : 0,
+      tokenQuantity: isSet(object.tokenQuantity)
+        ? CMsgOverworldTokenQuantity.fromJSON(object.tokenQuantity)
+        : undefined,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCOverworldRequestTokensNeededByFriendResponse): unknown {
+    const obj: any = {};
+    if (message.response !== undefined && message.response !== 0) {
+      obj.response = cMsgClientToGCOverworldRequestTokensNeededByFriendResponse_EResponseToJSON(message.response);
+    }
+    if (message.tokenQuantity !== undefined) {
+      obj.tokenQuantity = CMsgOverworldTokenQuantity.toJSON(message.tokenQuantity);
+    }
+    return obj;
+  },
+
+  create(
+    base?: DeepPartial<CMsgClientToGCOverworldRequestTokensNeededByFriendResponse>,
+  ): CMsgClientToGCOverworldRequestTokensNeededByFriendResponse {
+    return CMsgClientToGCOverworldRequestTokensNeededByFriendResponse.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CMsgClientToGCOverworldRequestTokensNeededByFriendResponse>,
+  ): CMsgClientToGCOverworldRequestTokensNeededByFriendResponse {
+    const message = createBaseCMsgClientToGCOverworldRequestTokensNeededByFriendResponse();
+    message.response = object.response ?? 0;
+    message.tokenQuantity = (object.tokenQuantity !== undefined && object.tokenQuantity !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenQuantity)
+      : undefined;
     return message;
   },
 };
@@ -4312,10 +5059,9 @@ export const CMsgClientToGCOverworldDevGrantTokens = {
   fromPartial(object: DeepPartial<CMsgClientToGCOverworldDevGrantTokens>): CMsgClientToGCOverworldDevGrantTokens {
     const message = createBaseCMsgClientToGCOverworldDevGrantTokens();
     message.overworldId = object.overworldId ?? 0;
-    message.tokenQuantity =
-      object.tokenQuantity !== undefined && object.tokenQuantity !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokenQuantity)
-        : undefined;
+    message.tokenQuantity = (object.tokenQuantity !== undefined && object.tokenQuantity !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokenQuantity)
+      : undefined;
     return message;
   },
 };
@@ -4825,8 +5571,8 @@ export const CMsgClientToGCOverworldGetDynamicImageResponse = {
   ): CMsgClientToGCOverworldGetDynamicImageResponse {
     const message = createBaseCMsgClientToGCOverworldGetDynamicImageResponse();
     message.imageId = object.imageId ?? 0;
-    message.images =
-      object.images?.map((e) => CMsgClientToGCOverworldGetDynamicImageResponse_Image.fromPartial(e)) || [];
+    message.images = object.images?.map((e) => CMsgClientToGCOverworldGetDynamicImageResponse_Image.fromPartial(e)) ||
+      [];
     return message;
   },
 };
@@ -4944,6 +5690,205 @@ export const CMsgClientToGCOverworldGetDynamicImageResponse_Image = {
   },
 };
 
+function createBaseCMsgClientToGCOverworldMinigameAction(): CMsgClientToGCOverworldMinigameAction {
+  return { overworldId: 0, nodeId: 0, action: 0, selection: 0, optionValue: 0, currencyAmount: 0 };
+}
+
+export const CMsgClientToGCOverworldMinigameAction = {
+  encode(message: CMsgClientToGCOverworldMinigameAction, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.overworldId !== undefined && message.overworldId !== 0) {
+      writer.uint32(8).uint32(message.overworldId);
+    }
+    if (message.nodeId !== undefined && message.nodeId !== 0) {
+      writer.uint32(16).uint32(message.nodeId);
+    }
+    if (message.action !== undefined && message.action !== 0) {
+      writer.uint32(24).int32(message.action);
+    }
+    if (message.selection !== undefined && message.selection !== 0) {
+      writer.uint32(32).uint32(message.selection);
+    }
+    if (message.optionValue !== undefined && message.optionValue !== 0) {
+      writer.uint32(40).uint32(message.optionValue);
+    }
+    if (message.currencyAmount !== undefined && message.currencyAmount !== 0) {
+      writer.uint32(48).uint32(message.currencyAmount);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCOverworldMinigameAction {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCOverworldMinigameAction();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.overworldId = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.nodeId = reader.uint32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.action = reader.int32() as any;
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.selection = reader.uint32();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.optionValue = reader.uint32();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.currencyAmount = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCOverworldMinigameAction {
+    return {
+      overworldId: isSet(object.overworldId) ? globalThis.Number(object.overworldId) : 0,
+      nodeId: isSet(object.nodeId) ? globalThis.Number(object.nodeId) : 0,
+      action: isSet(object.action) ? eOverworldMinigameActionFromJSON(object.action) : 0,
+      selection: isSet(object.selection) ? globalThis.Number(object.selection) : 0,
+      optionValue: isSet(object.optionValue) ? globalThis.Number(object.optionValue) : 0,
+      currencyAmount: isSet(object.currencyAmount) ? globalThis.Number(object.currencyAmount) : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCOverworldMinigameAction): unknown {
+    const obj: any = {};
+    if (message.overworldId !== undefined && message.overworldId !== 0) {
+      obj.overworldId = Math.round(message.overworldId);
+    }
+    if (message.nodeId !== undefined && message.nodeId !== 0) {
+      obj.nodeId = Math.round(message.nodeId);
+    }
+    if (message.action !== undefined && message.action !== 0) {
+      obj.action = eOverworldMinigameActionToJSON(message.action);
+    }
+    if (message.selection !== undefined && message.selection !== 0) {
+      obj.selection = Math.round(message.selection);
+    }
+    if (message.optionValue !== undefined && message.optionValue !== 0) {
+      obj.optionValue = Math.round(message.optionValue);
+    }
+    if (message.currencyAmount !== undefined && message.currencyAmount !== 0) {
+      obj.currencyAmount = Math.round(message.currencyAmount);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgClientToGCOverworldMinigameAction>): CMsgClientToGCOverworldMinigameAction {
+    return CMsgClientToGCOverworldMinigameAction.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgClientToGCOverworldMinigameAction>): CMsgClientToGCOverworldMinigameAction {
+    const message = createBaseCMsgClientToGCOverworldMinigameAction();
+    message.overworldId = object.overworldId ?? 0;
+    message.nodeId = object.nodeId ?? 0;
+    message.action = object.action ?? 0;
+    message.selection = object.selection ?? 0;
+    message.optionValue = object.optionValue ?? 0;
+    message.currencyAmount = object.currencyAmount ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCOverworldMinigameActionResponse(): CMsgClientToGCOverworldMinigameActionResponse {
+  return { response: 0 };
+}
+
+export const CMsgClientToGCOverworldMinigameActionResponse = {
+  encode(message: CMsgClientToGCOverworldMinigameActionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.response !== undefined && message.response !== 0) {
+      writer.uint32(8).int32(message.response);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCOverworldMinigameActionResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCOverworldMinigameActionResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.response = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCOverworldMinigameActionResponse {
+    return {
+      response: isSet(object.response)
+        ? cMsgClientToGCOverworldMinigameActionResponse_EResponseFromJSON(object.response)
+        : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCOverworldMinigameActionResponse): unknown {
+    const obj: any = {};
+    if (message.response !== undefined && message.response !== 0) {
+      obj.response = cMsgClientToGCOverworldMinigameActionResponse_EResponseToJSON(message.response);
+    }
+    return obj;
+  },
+
+  create(
+    base?: DeepPartial<CMsgClientToGCOverworldMinigameActionResponse>,
+  ): CMsgClientToGCOverworldMinigameActionResponse {
+    return CMsgClientToGCOverworldMinigameActionResponse.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CMsgClientToGCOverworldMinigameActionResponse>,
+  ): CMsgClientToGCOverworldMinigameActionResponse {
+    const message = createBaseCMsgClientToGCOverworldMinigameActionResponse();
+    message.response = object.response ?? 0;
+    return message;
+  },
+};
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -4954,15 +5899,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

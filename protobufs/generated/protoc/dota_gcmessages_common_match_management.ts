@@ -509,7 +509,8 @@ export interface CMsgReadyCheckStatus_ReadyMember {
   readyStatus?: EReadyCheckStatus | undefined;
 }
 
-export interface CMsgPartyReadyCheckRequest {}
+export interface CMsgPartyReadyCheckRequest {
+}
 
 export interface CMsgPartyReadyCheckResponse {
   result?: EReadyCheckRequestResult | undefined;
@@ -531,6 +532,7 @@ export interface CMsgMatchMatchmakingStats {
 
 export interface CMvpData {
   mvps: CMvpData_MvpDatum[];
+  eventMvps: CMvpData_MvpDatum[];
 }
 
 export interface CMvpData_MvpDatum {
@@ -816,6 +818,15 @@ export enum CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType {
   kKillEaterEventType_Muerta_PierceTheVeilKills = 276,
   kKillEaterEventType_Muerta_MultiHeroDeadShot = 277,
   kKillEaterEventType_Muerta_DeadShotsIntoTheCalling = 278,
+  kKillEaterEventType_Ringmaster_LongRangeDaggerHits = 279,
+  kKillEaterEventType_Ringmaster_MultiHeroWhips = 280,
+  kKillEaterEventType_Ringmaster_MultiHeroMesmerizes = 281,
+  kKillEaterEventType_Kez_ParryCounterAttacks = 282,
+  kKillEaterEventType_Kez_RavensVeilKills = 283,
+  kKillEaterEventType_Kez_RaptorDanceHealing = 284,
+  kKillEaterEventType_Kez_KillsDuringFalconRush = 285,
+  kKillEaterEventType_Seasonal_PartyHatsStolen = 286,
+  kKillEaterEventType_Seasonal_TallestHat = 287,
 }
 
 export function cMvpData_MvpDatum_MvpAccolade_MvpAccoladeTypeFromJSON(
@@ -1382,7 +1393,8 @@ export function cMvpData_MvpDatum_MvpAccolade_MvpAccoladeTypeFromJSON(
       return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_DeathProphet_ExorcismKillsDuringEuls;
     case 193:
     case "kKillEaterEventType_Disruptor_ThreeHeroKineticFieldStaticStorm":
-      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Disruptor_ThreeHeroKineticFieldStaticStorm;
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType
+        .kKillEaterEventType_Disruptor_ThreeHeroKineticFieldStaticStorm;
     case 194:
     case "kKillEaterEventType_Doom_InfernalBladeBurnKills":
       return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Doom_InfernalBladeBurnKills;
@@ -1490,7 +1502,8 @@ export function cMvpData_MvpDatum_MvpAccolade_MvpAccoladeTypeFromJSON(
       return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Windrunner_ShackleFocusFireKills;
     case 229:
     case "kKillEaterEventType_VengefulSpirit_VengeanceAuraIllusionKills":
-      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_VengefulSpirit_VengeanceAuraIllusionKills;
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType
+        .kKillEaterEventType_VengefulSpirit_VengeanceAuraIllusionKills;
     case 230:
     case "kKillEaterEventType_Tusk_WalrusPunchKills":
       return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Tusk_WalrusPunchKills;
@@ -1535,7 +1548,8 @@ export function cMvpData_MvpDatum_MvpAccolade_MvpAccoladeTypeFromJSON(
       return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Omniknight_PurificationKills;
     case 244:
     case "kKillEaterEventType_NightStalker_EnemyMissesUnderCripplingFear":
-      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_NightStalker_EnemyMissesUnderCripplingFear;
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType
+        .kKillEaterEventType_NightStalker_EnemyMissesUnderCripplingFear;
     case 245:
     case "kKillEaterEventType_Warlock_ThreeHeroFatalBonds":
       return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Warlock_ThreeHeroFatalBonds;
@@ -1638,6 +1652,33 @@ export function cMvpData_MvpDatum_MvpAccolade_MvpAccoladeTypeFromJSON(
     case 278:
     case "kKillEaterEventType_Muerta_DeadShotsIntoTheCalling":
       return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Muerta_DeadShotsIntoTheCalling;
+    case 279:
+    case "kKillEaterEventType_Ringmaster_LongRangeDaggerHits":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Ringmaster_LongRangeDaggerHits;
+    case 280:
+    case "kKillEaterEventType_Ringmaster_MultiHeroWhips":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Ringmaster_MultiHeroWhips;
+    case 281:
+    case "kKillEaterEventType_Ringmaster_MultiHeroMesmerizes":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Ringmaster_MultiHeroMesmerizes;
+    case 282:
+    case "kKillEaterEventType_Kez_ParryCounterAttacks":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Kez_ParryCounterAttacks;
+    case 283:
+    case "kKillEaterEventType_Kez_RavensVeilKills":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Kez_RavensVeilKills;
+    case 284:
+    case "kKillEaterEventType_Kez_RaptorDanceHealing":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Kez_RaptorDanceHealing;
+    case 285:
+    case "kKillEaterEventType_Kez_KillsDuringFalconRush":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Kez_KillsDuringFalconRush;
+    case 286:
+    case "kKillEaterEventType_Seasonal_PartyHatsStolen":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Seasonal_PartyHatsStolen;
+    case 287:
+    case "kKillEaterEventType_Seasonal_TallestHat":
+      return CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Seasonal_TallestHat;
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType",
@@ -2193,6 +2234,24 @@ export function cMvpData_MvpDatum_MvpAccolade_MvpAccoladeTypeToJSON(
       return "kKillEaterEventType_Muerta_MultiHeroDeadShot";
     case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Muerta_DeadShotsIntoTheCalling:
       return "kKillEaterEventType_Muerta_DeadShotsIntoTheCalling";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Ringmaster_LongRangeDaggerHits:
+      return "kKillEaterEventType_Ringmaster_LongRangeDaggerHits";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Ringmaster_MultiHeroWhips:
+      return "kKillEaterEventType_Ringmaster_MultiHeroWhips";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Ringmaster_MultiHeroMesmerizes:
+      return "kKillEaterEventType_Ringmaster_MultiHeroMesmerizes";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Kez_ParryCounterAttacks:
+      return "kKillEaterEventType_Kez_ParryCounterAttacks";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Kez_RavensVeilKills:
+      return "kKillEaterEventType_Kez_RavensVeilKills";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Kez_RaptorDanceHealing:
+      return "kKillEaterEventType_Kez_RaptorDanceHealing";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Kez_KillsDuringFalconRush:
+      return "kKillEaterEventType_Kez_KillsDuringFalconRush";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Seasonal_PartyHatsStolen:
+      return "kKillEaterEventType_Seasonal_PartyHatsStolen";
+    case CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType.kKillEaterEventType_Seasonal_TallestHat:
+      return "kKillEaterEventType_Seasonal_TallestHat";
     default:
       throw new globalThis.Error(
         "Unrecognized enum value " + object + " for enum CMvpData_MvpDatum_MvpAccolade_MvpAccoladeType",
@@ -2270,7 +2329,7 @@ export const CSODOTAPartyMember = {
     }
     writer.uint32(138).fork();
     for (const v of message.bannedHeroIds) {
-      writer.uint32(v);
+      writer.int32(v);
     }
     writer.ldelim();
     return writer;
@@ -2403,7 +2462,7 @@ export const CSODOTAPartyMember = {
           continue;
         case 17:
           if (tag === 136) {
-            message.bannedHeroIds.push(reader.uint32());
+            message.bannedHeroIds.push(reader.int32());
 
             continue;
           }
@@ -2411,7 +2470,7 @@ export const CSODOTAPartyMember = {
           if (tag === 138) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.bannedHeroIds.push(reader.uint32());
+              message.bannedHeroIds.push(reader.int32());
             }
 
             continue;
@@ -3494,10 +3553,9 @@ export const CSODOTAParty = {
     message.partyBuilderStartTime = object.partyBuilderStartTime ?? 0;
     message.soloQueue = object.soloQueue ?? false;
     message.steamClanAccountId = object.steamClanAccountId ?? 0;
-    message.readyCheck =
-      object.readyCheck !== undefined && object.readyCheck !== null
-        ? CMsgReadyCheckStatus.fromPartial(object.readyCheck)
-        : undefined;
+    message.readyCheck = (object.readyCheck !== undefined && object.readyCheck !== null)
+      ? CMsgReadyCheckStatus.fromPartial(object.readyCheck)
+      : undefined;
     message.customGameDisabledUntilDate = object.customGameDisabledUntilDate ?? 0;
     message.customGameDisabledAccountId = object.customGameDisabledAccountId ?? 0;
     message.isChallengeMatch = object.isChallengeMatch ?? false;
@@ -4408,13 +4466,16 @@ export const CMsgMatchMatchmakingStats = {
 };
 
 function createBaseCMvpData(): CMvpData {
-  return { mvps: [] };
+  return { mvps: [], eventMvps: [] };
 }
 
 export const CMvpData = {
   encode(message: CMvpData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.mvps) {
       CMvpData_MvpDatum.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.eventMvps) {
+      CMvpData_MvpDatum.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -4433,6 +4494,13 @@ export const CMvpData = {
 
           message.mvps.push(CMvpData_MvpDatum.decode(reader, reader.uint32()));
           continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.eventMvps.push(CMvpData_MvpDatum.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4445,6 +4513,9 @@ export const CMvpData = {
   fromJSON(object: any): CMvpData {
     return {
       mvps: globalThis.Array.isArray(object?.mvps) ? object.mvps.map((e: any) => CMvpData_MvpDatum.fromJSON(e)) : [],
+      eventMvps: globalThis.Array.isArray(object?.eventMvps)
+        ? object.eventMvps.map((e: any) => CMvpData_MvpDatum.fromJSON(e))
+        : [],
     };
   },
 
@@ -4452,6 +4523,9 @@ export const CMvpData = {
     const obj: any = {};
     if (message.mvps?.length) {
       obj.mvps = message.mvps.map((e) => CMvpData_MvpDatum.toJSON(e));
+    }
+    if (message.eventMvps?.length) {
+      obj.eventMvps = message.eventMvps.map((e) => CMvpData_MvpDatum.toJSON(e));
     }
     return obj;
   },
@@ -4462,6 +4536,7 @@ export const CMvpData = {
   fromPartial(object: DeepPartial<CMvpData>): CMvpData {
     const message = createBaseCMvpData();
     message.mvps = object.mvps?.map((e) => CMvpData_MvpDatum.fromPartial(e)) || [];
+    message.eventMvps = object.eventMvps?.map((e) => CMvpData_MvpDatum.fromPartial(e)) || [];
     return message;
   },
 };
@@ -4626,15 +4701,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

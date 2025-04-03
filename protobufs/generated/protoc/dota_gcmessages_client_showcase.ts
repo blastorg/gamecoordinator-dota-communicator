@@ -446,26 +446,30 @@ export interface CMsgShowcaseItemChatWheel {
   chatWheelMessageId?: number | undefined;
 }
 
-export interface CMsgShowcaseItemChatWheel_Data {}
+export interface CMsgShowcaseItemChatWheel_Data {
+}
 
 export interface CMsgShowcaseItemEmoticon {
   data?: CMsgShowcaseItemEmoticon_Data | undefined;
   emoticonId?: number | undefined;
 }
 
-export interface CMsgShowcaseItemEmoticon_Data {}
+export interface CMsgShowcaseItemEmoticon_Data {
+}
 
 export interface CMsgShowcaseItemSpiderGraph {
   data?: CMsgShowcaseItemSpiderGraph_Data | undefined;
 }
 
-export interface CMsgShowcaseItemSpiderGraph_Data {}
+export interface CMsgShowcaseItemSpiderGraph_Data {
+}
 
 export interface CMsgShowcaseItemUserFeed {
   data?: CMsgShowcaseItemUserFeed_Data | undefined;
 }
 
-export interface CMsgShowcaseItemUserFeed_Data {}
+export interface CMsgShowcaseItemUserFeed_Data {
+}
 
 export interface CMsgShowcaseItemStat {
   data?: CMsgShowcaseItemStat_Data | undefined;
@@ -821,7 +825,8 @@ export interface CMsgShowcaseReportsRollup {
   rollupEntries: CMsgShowcaseReportsRollupEntry[];
 }
 
-export interface CMsgClientToGCShowcaseAdminGetReportsRollupList {}
+export interface CMsgClientToGCShowcaseAdminGetReportsRollupList {
+}
 
 export interface CMsgClientToGCShowcaseAdminGetReportsRollupListResponse {
   response?: CMsgClientToGCShowcaseAdminGetReportsRollupListResponse_EResponse | undefined;
@@ -861,8 +866,7 @@ export function cMsgClientToGCShowcaseAdminGetReportsRollupListResponse_ERespons
       return CMsgClientToGCShowcaseAdminGetReportsRollupListResponse_EResponse.k_eNoPermission;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCShowcaseAdminGetReportsRollupListResponse_EResponse",
       );
   }
@@ -886,8 +890,7 @@ export function cMsgClientToGCShowcaseAdminGetReportsRollupListResponse_ERespons
       return "k_eNoPermission";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCShowcaseAdminGetReportsRollupListResponse_EResponse",
       );
   }
@@ -1476,8 +1479,7 @@ export function cMsgClientToGCShowcaseModerationApplyModerationResponse_ERespons
       return CMsgClientToGCShowcaseModerationApplyModerationResponse_EResponse.k_eGone;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCShowcaseModerationApplyModerationResponse_EResponse",
       );
   }
@@ -1503,8 +1505,7 @@ export function cMsgClientToGCShowcaseModerationApplyModerationResponse_ERespons
       return "k_eGone";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCShowcaseModerationApplyModerationResponse_EResponse",
       );
   }
@@ -1739,10 +1740,9 @@ export const CMsgShowcaseItemTrophy = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemTrophy>): CMsgShowcaseItemTrophy {
     const message = createBaseCMsgShowcaseItemTrophy();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemTrophy_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemTrophy_Data.fromPartial(object.data)
+      : undefined;
     message.trophyId = object.trophyId ?? 0;
     return message;
   },
@@ -1873,14 +1873,12 @@ export const CMsgShowcaseItemEconItem = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemEconItem>): CMsgShowcaseItemEconItem {
     const message = createBaseCMsgShowcaseItemEconItem();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemEconItem_Data.fromPartial(object.data)
-        : undefined;
-    message.ref =
-      object.ref !== undefined && object.ref !== null
-        ? CMsgShowcaseEconItemReference.fromPartial(object.ref)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemEconItem_Data.fromPartial(object.data)
+      : undefined;
+    message.ref = (object.ref !== undefined && object.ref !== null)
+      ? CMsgShowcaseEconItemReference.fromPartial(object.ref)
+      : undefined;
     return message;
   },
 };
@@ -1937,8 +1935,9 @@ export const CMsgShowcaseItemEconItem_Data = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemEconItem_Data>): CMsgShowcaseItemEconItem_Data {
     const message = createBaseCMsgShowcaseItemEconItem_Data();
-    message.econItem =
-      object.econItem !== undefined && object.econItem !== null ? CSOEconItem.fromPartial(object.econItem) : undefined;
+    message.econItem = (object.econItem !== undefined && object.econItem !== null)
+      ? CSOEconItem.fromPartial(object.econItem)
+      : undefined;
     return message;
   },
 };
@@ -1966,7 +1965,7 @@ export const CMsgShowcaseItemHero = {
       CMsgShowcaseItemHero_Data.encode(message.data, writer.uint32(10).fork()).ldelim();
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     for (const v of message.econItemRefs) {
       CMsgShowcaseEconItemReference.encode(v!, writer.uint32(26).fork()).ldelim();
@@ -2020,7 +2019,7 @@ export const CMsgShowcaseItemHero = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag !== 26) {
@@ -2168,18 +2167,16 @@ export const CMsgShowcaseItemHero = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemHero>): CMsgShowcaseItemHero {
     const message = createBaseCMsgShowcaseItemHero();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemHero_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemHero_Data.fromPartial(object.data)
+      : undefined;
     message.heroId = object.heroId ?? 0;
     message.econItemRefs = object.econItemRefs?.map((e) => CMsgShowcaseEconItemReference.fromPartial(e)) || [];
     message.rotation = object.rotation ?? 0;
     message.flags = object.flags ?? 0;
-    message.plusInfo =
-      object.plusInfo !== undefined && object.plusInfo !== null
-        ? CMsgHeroPlusInfo.fromPartial(object.plusInfo)
-        : undefined;
+    message.plusInfo = (object.plusInfo !== undefined && object.plusInfo !== null)
+      ? CMsgHeroPlusInfo.fromPartial(object.plusInfo)
+      : undefined;
     message.animationName = object.animationName ?? "";
     message.animationPlaybackSpeed = object.animationPlaybackSpeed ?? 100;
     message.animationOffset = object.animationOffset ?? 0;
@@ -2200,7 +2197,7 @@ export const CMsgShowcaseItemHero_Data = {
       CSOEconItem.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.actualHeroId !== undefined && message.actualHeroId !== 0) {
-      writer.uint32(16).uint32(message.actualHeroId);
+      writer.uint32(16).int32(message.actualHeroId);
     }
     if (message.plusHeroXp !== undefined && message.plusHeroXp !== 0) {
       writer.uint32(24).uint32(message.plusHeroXp);
@@ -2227,7 +2224,7 @@ export const CMsgShowcaseItemHero_Data = {
             break;
           }
 
-          message.actualHeroId = reader.uint32();
+          message.actualHeroId = reader.int32();
           continue;
         case 3:
           if (tag !== 24) {
@@ -2291,7 +2288,7 @@ export const CMsgShowcaseItemHeroIcon = {
       CMsgShowcaseItemHeroIcon_Data.encode(message.data, writer.uint32(10).fork()).ldelim();
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(16).uint32(message.heroId);
+      writer.uint32(16).int32(message.heroId);
     }
     if (message.econItemRef !== undefined) {
       CMsgShowcaseEconItemReference.encode(message.econItemRef, writer.uint32(26).fork()).ldelim();
@@ -2318,7 +2315,7 @@ export const CMsgShowcaseItemHeroIcon = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 3:
           if (tag !== 26) {
@@ -2363,15 +2360,13 @@ export const CMsgShowcaseItemHeroIcon = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemHeroIcon>): CMsgShowcaseItemHeroIcon {
     const message = createBaseCMsgShowcaseItemHeroIcon();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemHeroIcon_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemHeroIcon_Data.fromPartial(object.data)
+      : undefined;
     message.heroId = object.heroId ?? 0;
-    message.econItemRef =
-      object.econItemRef !== undefined && object.econItemRef !== null
-        ? CMsgShowcaseEconItemReference.fromPartial(object.econItemRef)
-        : undefined;
+    message.econItemRef = (object.econItemRef !== undefined && object.econItemRef !== null)
+      ? CMsgShowcaseEconItemReference.fromPartial(object.econItemRef)
+      : undefined;
     return message;
   },
 };
@@ -2428,8 +2423,9 @@ export const CMsgShowcaseItemHeroIcon_Data = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemHeroIcon_Data>): CMsgShowcaseItemHeroIcon_Data {
     const message = createBaseCMsgShowcaseItemHeroIcon_Data();
-    message.econItem =
-      object.econItem !== undefined && object.econItem !== null ? CSOEconItem.fromPartial(object.econItem) : undefined;
+    message.econItem = (object.econItem !== undefined && object.econItem !== null)
+      ? CSOEconItem.fromPartial(object.econItem)
+      : undefined;
     return message;
   },
 };
@@ -2516,10 +2512,9 @@ export const CMsgShowcaseItemPlayerMatch = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemPlayerMatch>): CMsgShowcaseItemPlayerMatch {
     const message = createBaseCMsgShowcaseItemPlayerMatch();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemPlayerMatch_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemPlayerMatch_Data.fromPartial(object.data)
+      : undefined;
     message.matchId = object.matchId ?? "0";
     message.playerSlot = object.playerSlot ?? 0;
     return message;
@@ -2533,7 +2528,7 @@ function createBaseCMsgShowcaseItemPlayerMatch_Data(): CMsgShowcaseItemPlayerMat
 export const CMsgShowcaseItemPlayerMatch_Data = {
   encode(message: CMsgShowcaseItemPlayerMatch_Data, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.timestamp !== undefined && message.timestamp !== 0) {
       writer.uint32(16).uint32(message.timestamp);
@@ -2571,7 +2566,7 @@ export const CMsgShowcaseItemPlayerMatch_Data = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -2758,10 +2753,9 @@ export const CMsgShowcaseItemChatWheel = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemChatWheel>): CMsgShowcaseItemChatWheel {
     const message = createBaseCMsgShowcaseItemChatWheel();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemChatWheel_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemChatWheel_Data.fromPartial(object.data)
+      : undefined;
     message.chatWheelMessageId = object.chatWheelMessageId ?? 4294967295;
     return message;
   },
@@ -2878,10 +2872,9 @@ export const CMsgShowcaseItemEmoticon = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemEmoticon>): CMsgShowcaseItemEmoticon {
     const message = createBaseCMsgShowcaseItemEmoticon();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemEmoticon_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemEmoticon_Data.fromPartial(object.data)
+      : undefined;
     message.emoticonId = object.emoticonId ?? 0;
     return message;
   },
@@ -2982,10 +2975,9 @@ export const CMsgShowcaseItemSpiderGraph = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemSpiderGraph>): CMsgShowcaseItemSpiderGraph {
     const message = createBaseCMsgShowcaseItemSpiderGraph();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemSpiderGraph_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemSpiderGraph_Data.fromPartial(object.data)
+      : undefined;
     return message;
   },
 };
@@ -3085,10 +3077,9 @@ export const CMsgShowcaseItemUserFeed = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemUserFeed>): CMsgShowcaseItemUserFeed {
     const message = createBaseCMsgShowcaseItemUserFeed();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemUserFeed_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemUserFeed_Data.fromPartial(object.data)
+      : undefined;
     return message;
   },
 };
@@ -3204,10 +3195,9 @@ export const CMsgShowcaseItemStat = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemStat>): CMsgShowcaseItemStat {
     const message = createBaseCMsgShowcaseItemStat();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseItemStat_Data.fromPartial(object.data)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseItemStat_Data.fromPartial(object.data)
+      : undefined;
     message.statId = object.statId ?? 3;
     return message;
   },
@@ -3382,14 +3372,12 @@ export const CMsgShowcaseBackground = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseBackground>): CMsgShowcaseBackground {
     const message = createBaseCMsgShowcaseBackground();
-    message.data =
-      object.data !== undefined && object.data !== null
-        ? CMsgShowcaseBackground_Data.fromPartial(object.data)
-        : undefined;
-    message.loadingScreenRef =
-      object.loadingScreenRef !== undefined && object.loadingScreenRef !== null
-        ? CMsgShowcaseEconItemReference.fromPartial(object.loadingScreenRef)
-        : undefined;
+    message.data = (object.data !== undefined && object.data !== null)
+      ? CMsgShowcaseBackground_Data.fromPartial(object.data)
+      : undefined;
+    message.loadingScreenRef = (object.loadingScreenRef !== undefined && object.loadingScreenRef !== null)
+      ? CMsgShowcaseEconItemReference.fromPartial(object.loadingScreenRef)
+      : undefined;
     message.dim = object.dim ?? 0;
     message.blur = object.blur ?? 0;
     message.backgroundId = object.backgroundId ?? 0;
@@ -3449,10 +3437,9 @@ export const CMsgShowcaseBackground_Data = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseBackground_Data>): CMsgShowcaseBackground_Data {
     const message = createBaseCMsgShowcaseBackground_Data();
-    message.loadingScreen =
-      object.loadingScreen !== undefined && object.loadingScreen !== null
-        ? CSOEconItem.fromPartial(object.loadingScreen)
-        : undefined;
+    message.loadingScreen = (object.loadingScreen !== undefined && object.loadingScreen !== null)
+      ? CSOEconItem.fromPartial(object.loadingScreen)
+      : undefined;
     return message;
   },
 };
@@ -3798,82 +3785,66 @@ export const CMsgShowcaseItemData = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseItemData>): CMsgShowcaseItemData {
     const message = createBaseCMsgShowcaseItemData();
-    message.trophy =
-      object.trophy !== undefined && object.trophy !== null
-        ? CMsgShowcaseItemTrophy.fromPartial(object.trophy)
-        : undefined;
-    message.econItemIcon =
-      object.econItemIcon !== undefined && object.econItemIcon !== null
-        ? CMsgShowcaseItemEconItem.fromPartial(object.econItemIcon)
-        : undefined;
-    message.sticker =
-      object.sticker !== undefined && object.sticker !== null
-        ? CMsgShowcaseItemEconItem.fromPartial(object.sticker)
-        : undefined;
-    message.heroModel =
-      object.heroModel !== undefined && object.heroModel !== null
-        ? CMsgShowcaseItemHero.fromPartial(object.heroModel)
-        : undefined;
-    message.playerMatch =
-      object.playerMatch !== undefined && object.playerMatch !== null
-        ? CMsgShowcaseItemPlayerMatch.fromPartial(object.playerMatch)
-        : undefined;
-    message.chatWheel =
-      object.chatWheel !== undefined && object.chatWheel !== null
-        ? CMsgShowcaseItemChatWheel.fromPartial(object.chatWheel)
-        : undefined;
-    message.spray =
-      object.spray !== undefined && object.spray !== null
-        ? CMsgShowcaseItemChatWheel.fromPartial(object.spray)
-        : undefined;
-    message.emoticon =
-      object.emoticon !== undefined && object.emoticon !== null
-        ? CMsgShowcaseItemEmoticon.fromPartial(object.emoticon)
-        : undefined;
-    message.courier =
-      object.courier !== undefined && object.courier !== null
-        ? CMsgShowcaseItemEconItem.fromPartial(object.courier)
-        : undefined;
-    message.ward =
-      object.ward !== undefined && object.ward !== null ? CMsgShowcaseItemEconItem.fromPartial(object.ward) : undefined;
-    message.heroIcon =
-      object.heroIcon !== undefined && object.heroIcon !== null
-        ? CMsgShowcaseItemHeroIcon.fromPartial(object.heroIcon)
-        : undefined;
-    message.spiderGraph =
-      object.spiderGraph !== undefined && object.spiderGraph !== null
-        ? CMsgShowcaseItemSpiderGraph.fromPartial(object.spiderGraph)
-        : undefined;
-    message.userFeed =
-      object.userFeed !== undefined && object.userFeed !== null
-        ? CMsgShowcaseItemUserFeed.fromPartial(object.userFeed)
-        : undefined;
-    message.stat =
-      object.stat !== undefined && object.stat !== null ? CMsgShowcaseItemStat.fromPartial(object.stat) : undefined;
-    message.roshan =
-      object.roshan !== undefined && object.roshan !== null
-        ? CMsgShowcaseItemEconItem.fromPartial(object.roshan)
-        : undefined;
-    message.creep =
-      object.creep !== undefined && object.creep !== null
-        ? CMsgShowcaseItemEconItem.fromPartial(object.creep)
-        : undefined;
-    message.tower =
-      object.tower !== undefined && object.tower !== null
-        ? CMsgShowcaseItemEconItem.fromPartial(object.tower)
-        : undefined;
-    message.effigy =
-      object.effigy !== undefined && object.effigy !== null
-        ? CMsgShowcaseItemEconItem.fromPartial(object.effigy)
-        : undefined;
-    message.decoration =
-      object.decoration !== undefined && object.decoration !== null
-        ? CMsgShowcaseItemEconItem.fromPartial(object.decoration)
-        : undefined;
-    message.background =
-      object.background !== undefined && object.background !== null
-        ? CMsgShowcaseBackground.fromPartial(object.background)
-        : undefined;
+    message.trophy = (object.trophy !== undefined && object.trophy !== null)
+      ? CMsgShowcaseItemTrophy.fromPartial(object.trophy)
+      : undefined;
+    message.econItemIcon = (object.econItemIcon !== undefined && object.econItemIcon !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.econItemIcon)
+      : undefined;
+    message.sticker = (object.sticker !== undefined && object.sticker !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.sticker)
+      : undefined;
+    message.heroModel = (object.heroModel !== undefined && object.heroModel !== null)
+      ? CMsgShowcaseItemHero.fromPartial(object.heroModel)
+      : undefined;
+    message.playerMatch = (object.playerMatch !== undefined && object.playerMatch !== null)
+      ? CMsgShowcaseItemPlayerMatch.fromPartial(object.playerMatch)
+      : undefined;
+    message.chatWheel = (object.chatWheel !== undefined && object.chatWheel !== null)
+      ? CMsgShowcaseItemChatWheel.fromPartial(object.chatWheel)
+      : undefined;
+    message.spray = (object.spray !== undefined && object.spray !== null)
+      ? CMsgShowcaseItemChatWheel.fromPartial(object.spray)
+      : undefined;
+    message.emoticon = (object.emoticon !== undefined && object.emoticon !== null)
+      ? CMsgShowcaseItemEmoticon.fromPartial(object.emoticon)
+      : undefined;
+    message.courier = (object.courier !== undefined && object.courier !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.courier)
+      : undefined;
+    message.ward = (object.ward !== undefined && object.ward !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.ward)
+      : undefined;
+    message.heroIcon = (object.heroIcon !== undefined && object.heroIcon !== null)
+      ? CMsgShowcaseItemHeroIcon.fromPartial(object.heroIcon)
+      : undefined;
+    message.spiderGraph = (object.spiderGraph !== undefined && object.spiderGraph !== null)
+      ? CMsgShowcaseItemSpiderGraph.fromPartial(object.spiderGraph)
+      : undefined;
+    message.userFeed = (object.userFeed !== undefined && object.userFeed !== null)
+      ? CMsgShowcaseItemUserFeed.fromPartial(object.userFeed)
+      : undefined;
+    message.stat = (object.stat !== undefined && object.stat !== null)
+      ? CMsgShowcaseItemStat.fromPartial(object.stat)
+      : undefined;
+    message.roshan = (object.roshan !== undefined && object.roshan !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.roshan)
+      : undefined;
+    message.creep = (object.creep !== undefined && object.creep !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.creep)
+      : undefined;
+    message.tower = (object.tower !== undefined && object.tower !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.tower)
+      : undefined;
+    message.effigy = (object.effigy !== undefined && object.effigy !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.effigy)
+      : undefined;
+    message.decoration = (object.decoration !== undefined && object.decoration !== null)
+      ? CMsgShowcaseItemEconItem.fromPartial(object.decoration)
+      : undefined;
+    message.background = (object.background !== undefined && object.background !== null)
+      ? CMsgShowcaseBackground.fromPartial(object.background)
+      : undefined;
     return message;
   },
 };
@@ -4196,14 +4167,12 @@ export const CMsgShowcaseItem = {
   fromPartial(object: DeepPartial<CMsgShowcaseItem>): CMsgShowcaseItem {
     const message = createBaseCMsgShowcaseItem();
     message.showcaseItemId = object.showcaseItemId ?? 0;
-    message.itemPosition =
-      object.itemPosition !== undefined && object.itemPosition !== null
-        ? CMsgShowcaseItemPosition.fromPartial(object.itemPosition)
-        : undefined;
-    message.itemData =
-      object.itemData !== undefined && object.itemData !== null
-        ? CMsgShowcaseItemData.fromPartial(object.itemData)
-        : undefined;
+    message.itemPosition = (object.itemPosition !== undefined && object.itemPosition !== null)
+      ? CMsgShowcaseItemPosition.fromPartial(object.itemPosition)
+      : undefined;
+    message.itemData = (object.itemData !== undefined && object.itemData !== null)
+      ? CMsgShowcaseItemData.fromPartial(object.itemData)
+      : undefined;
     message.state = object.state ?? 0;
     message.flags = object.flags ?? 0;
     return message;
@@ -4297,10 +4266,9 @@ export const CMsgShowcase = {
   fromPartial(object: DeepPartial<CMsgShowcase>): CMsgShowcase {
     const message = createBaseCMsgShowcase();
     message.showcaseItems = object.showcaseItems?.map((e) => CMsgShowcaseItem.fromPartial(e)) || [];
-    message.background =
-      object.background !== undefined && object.background !== null
-        ? CMsgShowcaseItem.fromPartial(object.background)
-        : undefined;
+    message.background = (object.background !== undefined && object.background !== null)
+      ? CMsgShowcaseItem.fromPartial(object.background)
+      : undefined;
     message.moderationState = object.moderationState ?? 0;
     return message;
   },
@@ -4453,8 +4421,9 @@ export const CMsgClientToGCShowcaseGetUserDataResponse = {
   ): CMsgClientToGCShowcaseGetUserDataResponse {
     const message = createBaseCMsgClientToGCShowcaseGetUserDataResponse();
     message.response = object.response ?? 0;
-    message.showcase =
-      object.showcase !== undefined && object.showcase !== null ? CMsgShowcase.fromPartial(object.showcase) : undefined;
+    message.showcase = (object.showcase !== undefined && object.showcase !== null)
+      ? CMsgShowcase.fromPartial(object.showcase)
+      : undefined;
     return message;
   },
 };
@@ -4542,8 +4511,9 @@ export const CMsgClientToGCShowcaseSetUserData = {
   fromPartial(object: DeepPartial<CMsgClientToGCShowcaseSetUserData>): CMsgClientToGCShowcaseSetUserData {
     const message = createBaseCMsgClientToGCShowcaseSetUserData();
     message.showcaseType = object.showcaseType ?? 0;
-    message.showcase =
-      object.showcase !== undefined && object.showcase !== null ? CMsgShowcase.fromPartial(object.showcase) : undefined;
+    message.showcase = (object.showcase !== undefined && object.showcase !== null)
+      ? CMsgShowcase.fromPartial(object.showcase)
+      : undefined;
     message.formatVersion = object.formatVersion ?? 0;
     return message;
   },
@@ -4636,10 +4606,9 @@ export const CMsgClientToGCShowcaseSetUserDataResponse = {
   ): CMsgClientToGCShowcaseSetUserDataResponse {
     const message = createBaseCMsgClientToGCShowcaseSetUserDataResponse();
     message.response = object.response ?? 0;
-    message.validatedShowcase =
-      object.validatedShowcase !== undefined && object.validatedShowcase !== null
-        ? CMsgShowcase.fromPartial(object.validatedShowcase)
-        : undefined;
+    message.validatedShowcase = (object.validatedShowcase !== undefined && object.validatedShowcase !== null)
+      ? CMsgShowcase.fromPartial(object.validatedShowcase)
+      : undefined;
     message.lockedUntilTimestamp = object.lockedUntilTimestamp ?? 0;
     return message;
   },
@@ -5106,10 +5075,9 @@ export const CMsgShowcaseReportsRollup = {
   },
   fromPartial(object: DeepPartial<CMsgShowcaseReportsRollup>): CMsgShowcaseReportsRollup {
     const message = createBaseCMsgShowcaseReportsRollup();
-    message.rollupInfo =
-      object.rollupInfo !== undefined && object.rollupInfo !== null
-        ? CMsgShowcaseReportsRollupInfo.fromPartial(object.rollupInfo)
-        : undefined;
+    message.rollupInfo = (object.rollupInfo !== undefined && object.rollupInfo !== null)
+      ? CMsgShowcaseReportsRollupInfo.fromPartial(object.rollupInfo)
+      : undefined;
     message.rollupEntries = object.rollupEntries?.map((e) => CMsgShowcaseReportsRollupEntry.fromPartial(e)) || [];
     return message;
   },
@@ -5240,10 +5208,9 @@ export const CMsgClientToGCShowcaseAdminGetReportsRollupListResponse = {
   ): CMsgClientToGCShowcaseAdminGetReportsRollupListResponse {
     const message = createBaseCMsgClientToGCShowcaseAdminGetReportsRollupListResponse();
     message.response = object.response ?? 0;
-    message.rollupList =
-      object.rollupList !== undefined && object.rollupList !== null
-        ? CMsgShowcaseReportsRollupList.fromPartial(object.rollupList)
-        : undefined;
+    message.rollupList = (object.rollupList !== undefined && object.rollupList !== null)
+      ? CMsgShowcaseReportsRollupList.fromPartial(object.rollupList)
+      : undefined;
     return message;
   },
 };
@@ -5385,10 +5352,9 @@ export const CMsgClientToGCShowcaseAdminGetReportsRollupResponse = {
   ): CMsgClientToGCShowcaseAdminGetReportsRollupResponse {
     const message = createBaseCMsgClientToGCShowcaseAdminGetReportsRollupResponse();
     message.response = object.response ?? 0;
-    message.rollup =
-      object.rollup !== undefined && object.rollup !== null
-        ? CMsgShowcaseReportsRollup.fromPartial(object.rollup)
-        : undefined;
+    message.rollup = (object.rollup !== undefined && object.rollup !== null)
+      ? CMsgShowcaseReportsRollup.fromPartial(object.rollup)
+      : undefined;
     return message;
   },
 };
@@ -5831,10 +5797,9 @@ export const CMsgClientToGCShowcaseAdminGetUserDetailsResponse = {
   ): CMsgClientToGCShowcaseAdminGetUserDetailsResponse {
     const message = createBaseCMsgClientToGCShowcaseAdminGetUserDetailsResponse();
     message.response = object.response ?? 0;
-    message.userDetails =
-      object.userDetails !== undefined && object.userDetails !== null
-        ? CMsgShowcaseAdminUserDetails.fromPartial(object.userDetails)
-        : undefined;
+    message.userDetails = (object.userDetails !== undefined && object.userDetails !== null)
+      ? CMsgShowcaseAdminUserDetails.fromPartial(object.userDetails)
+      : undefined;
     return message;
   },
 };
@@ -6821,15 +6786,11 @@ export const CMsgClientToGCShowcaseModerationApplyModerationResponse = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

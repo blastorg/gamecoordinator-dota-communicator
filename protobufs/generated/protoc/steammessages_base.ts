@@ -763,10 +763,9 @@ export const CMsgIPAddressBucket = {
   },
   fromPartial(object: DeepPartial<CMsgIPAddressBucket>): CMsgIPAddressBucket {
     const message = createBaseCMsgIPAddressBucket();
-    message.originalIpAddress =
-      object.originalIpAddress !== undefined && object.originalIpAddress !== null
-        ? CMsgIPAddress.fromPartial(object.originalIpAddress)
-        : undefined;
+    message.originalIpAddress = (object.originalIpAddress !== undefined && object.originalIpAddress !== null)
+      ? CMsgIPAddress.fromPartial(object.originalIpAddress)
+      : undefined;
     message.bucket = object.bucket ?? "0";
     return message;
   },
@@ -1429,10 +1428,9 @@ export const CMsgProtoBufHeader = {
     message.debugSource = object.debugSource ?? "";
     message.debugSourceStringIndex = object.debugSourceStringIndex ?? 0;
     message.tokenId = object.tokenId ?? "0";
-    message.routingGc =
-      object.routingGc !== undefined && object.routingGc !== null
-        ? CMsgGCRoutingProtoBufHeader.fromPartial(object.routingGc)
-        : undefined;
+    message.routingGc = (object.routingGc !== undefined && object.routingGc !== null)
+      ? CMsgGCRoutingProtoBufHeader.fromPartial(object.routingGc)
+      : undefined;
     message.sessionDisposition = object.sessionDisposition ?? 0;
     message.wgToken = object.wgToken ?? "";
     message.webuiAuthKey = object.webuiAuthKey ?? "";
@@ -3916,10 +3914,9 @@ export const CClanEventData = {
     message.lastUpdateSteamid = object.lastUpdateSteamid ?? "0";
     message.eventNotes = object.eventNotes ?? "";
     message.jsondata = object.jsondata ?? "";
-    message.announcementBody =
-      object.announcementBody !== undefined && object.announcementBody !== null
-        ? CCommunityClanAnnouncementInfo.fromPartial(object.announcementBody)
-        : undefined;
+    message.announcementBody = (object.announcementBody !== undefined && object.announcementBody !== null)
+      ? CCommunityClanAnnouncementInfo.fromPartial(object.announcementBody)
+      : undefined;
     message.published = object.published ?? false;
     message.hidden = object.hidden ?? false;
     message.rtime32VisibilityStart = object.rtime32VisibilityStart ?? 0;
@@ -4493,8 +4490,8 @@ export const UserContentDescriptorPreferences = {
     return {
       contentDescriptorsToExclude: globalThis.Array.isArray(object?.contentDescriptorsToExclude)
         ? object.contentDescriptorsToExclude.map((e: any) =>
-            UserContentDescriptorPreferences_ContentDescriptor.fromJSON(e),
-          )
+          UserContentDescriptorPreferences_ContentDescriptor.fromJSON(e)
+        )
         : [],
     };
   },
@@ -4503,7 +4500,7 @@ export const UserContentDescriptorPreferences = {
     const obj: any = {};
     if (message.contentDescriptorsToExclude?.length) {
       obj.contentDescriptorsToExclude = message.contentDescriptorsToExclude.map((e) =>
-        UserContentDescriptorPreferences_ContentDescriptor.toJSON(e),
+        UserContentDescriptorPreferences_ContentDescriptor.toJSON(e)
       );
     }
     return obj;
@@ -4516,7 +4513,7 @@ export const UserContentDescriptorPreferences = {
     const message = createBaseUserContentDescriptorPreferences();
     message.contentDescriptorsToExclude =
       object.contentDescriptorsToExclude?.map((e) =>
-        UserContentDescriptorPreferences_ContentDescriptor.fromPartial(e),
+        UserContentDescriptorPreferences_ContentDescriptor.fromPartial(e)
       ) || [];
     return message;
   },
@@ -4613,15 +4610,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

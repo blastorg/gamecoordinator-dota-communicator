@@ -7,18 +7,120 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
 
+export enum EBingoAuditAction {
+  k_eBingoAuditAction_Invalid = 0,
+  k_eBingoAuditAction_DevModifyTokens = 1,
+  k_eBingoAuditAction_DevClearInventory = 2,
+  k_eBingoAuditAction_DevRerollCard = 3,
+  k_eBingoAuditAction_ShuffleCard = 4,
+  k_eBingoAuditAction_RerollSquare = 5,
+  k_eBingoAuditAction_UpgradeSquare = 6,
+  k_eBingoAuditAction_ClaimRow = 7,
+  k_eBingoAuditAction_EventActionTokenGrant = 8,
+  k_eBingoAuditAction_SupportGrantTokens = 9,
+  k_eBingoAuditAction_SupportStatThresholdFixup = 10,
+}
+
+export function eBingoAuditActionFromJSON(object: any): EBingoAuditAction {
+  switch (object) {
+    case 0:
+    case "k_eBingoAuditAction_Invalid":
+      return EBingoAuditAction.k_eBingoAuditAction_Invalid;
+    case 1:
+    case "k_eBingoAuditAction_DevModifyTokens":
+      return EBingoAuditAction.k_eBingoAuditAction_DevModifyTokens;
+    case 2:
+    case "k_eBingoAuditAction_DevClearInventory":
+      return EBingoAuditAction.k_eBingoAuditAction_DevClearInventory;
+    case 3:
+    case "k_eBingoAuditAction_DevRerollCard":
+      return EBingoAuditAction.k_eBingoAuditAction_DevRerollCard;
+    case 4:
+    case "k_eBingoAuditAction_ShuffleCard":
+      return EBingoAuditAction.k_eBingoAuditAction_ShuffleCard;
+    case 5:
+    case "k_eBingoAuditAction_RerollSquare":
+      return EBingoAuditAction.k_eBingoAuditAction_RerollSquare;
+    case 6:
+    case "k_eBingoAuditAction_UpgradeSquare":
+      return EBingoAuditAction.k_eBingoAuditAction_UpgradeSquare;
+    case 7:
+    case "k_eBingoAuditAction_ClaimRow":
+      return EBingoAuditAction.k_eBingoAuditAction_ClaimRow;
+    case 8:
+    case "k_eBingoAuditAction_EventActionTokenGrant":
+      return EBingoAuditAction.k_eBingoAuditAction_EventActionTokenGrant;
+    case 9:
+    case "k_eBingoAuditAction_SupportGrantTokens":
+      return EBingoAuditAction.k_eBingoAuditAction_SupportGrantTokens;
+    case 10:
+    case "k_eBingoAuditAction_SupportStatThresholdFixup":
+      return EBingoAuditAction.k_eBingoAuditAction_SupportStatThresholdFixup;
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum EBingoAuditAction");
+  }
+}
+
+export function eBingoAuditActionToJSON(object: EBingoAuditAction): string {
+  switch (object) {
+    case EBingoAuditAction.k_eBingoAuditAction_Invalid:
+      return "k_eBingoAuditAction_Invalid";
+    case EBingoAuditAction.k_eBingoAuditAction_DevModifyTokens:
+      return "k_eBingoAuditAction_DevModifyTokens";
+    case EBingoAuditAction.k_eBingoAuditAction_DevClearInventory:
+      return "k_eBingoAuditAction_DevClearInventory";
+    case EBingoAuditAction.k_eBingoAuditAction_DevRerollCard:
+      return "k_eBingoAuditAction_DevRerollCard";
+    case EBingoAuditAction.k_eBingoAuditAction_ShuffleCard:
+      return "k_eBingoAuditAction_ShuffleCard";
+    case EBingoAuditAction.k_eBingoAuditAction_RerollSquare:
+      return "k_eBingoAuditAction_RerollSquare";
+    case EBingoAuditAction.k_eBingoAuditAction_UpgradeSquare:
+      return "k_eBingoAuditAction_UpgradeSquare";
+    case EBingoAuditAction.k_eBingoAuditAction_ClaimRow:
+      return "k_eBingoAuditAction_ClaimRow";
+    case EBingoAuditAction.k_eBingoAuditAction_EventActionTokenGrant:
+      return "k_eBingoAuditAction_EventActionTokenGrant";
+    case EBingoAuditAction.k_eBingoAuditAction_SupportGrantTokens:
+      return "k_eBingoAuditAction_SupportGrantTokens";
+    case EBingoAuditAction.k_eBingoAuditAction_SupportStatThresholdFixup:
+      return "k_eBingoAuditAction_SupportStatThresholdFixup";
+    default:
+      throw new globalThis.Error("Unrecognized enum value " + object + " for enum EBingoAuditAction");
+  }
+}
+
 export interface CMsgBingoSquare {
   statId?: number | undefined;
   statThreshold?: number | undefined;
+  upgradeLevel?: number | undefined;
+}
+
+export interface CMsgBingoTokens {
+  tokenCount?: number | undefined;
+}
+
+export interface CMsgBingoCard {
+  squares: CMsgBingoSquare[];
 }
 
 export interface CMsgBingoUserData {
-  squares: CMsgBingoSquare[];
+  bingoCards: CMsgBingoUserData_BingoCardsEntry[];
+  bingoTokens: CMsgBingoUserData_BingoTokensEntry[];
+}
+
+export interface CMsgBingoUserData_BingoCardsEntry {
+  key?: number | undefined;
+  value?: CMsgBingoCard | undefined;
+}
+
+export interface CMsgBingoUserData_BingoTokensEntry {
+  key?: number | undefined;
+  value?: CMsgBingoTokens | undefined;
 }
 
 export interface CMsgClientToGCBingoGetUserData {
   leagueId?: number | undefined;
-  leaguePhase?: number | undefined;
 }
 
 export interface CMsgClientToGCBingoGetUserDataResponse {
@@ -157,7 +259,6 @@ export function cMsgClientToGCBingoGetStatsDataResponse_EResponseToJSON(
 
 export interface CMsgGCToClientBingoUserDataUpdated {
   leagueId?: number | undefined;
-  leaguePhase?: number | undefined;
   userData?: CMsgBingoUserData | undefined;
 }
 
@@ -238,6 +339,227 @@ export function cMsgClientToGCBingoClaimRowResponse_EResponseToJSON(
   }
 }
 
+export interface CMsgClientToGCBingoShuffleCard {
+  leagueId?: number | undefined;
+  leaguePhase?: number | undefined;
+}
+
+export interface CMsgClientToGCBingoShuffleCardResponse {
+  response?: CMsgClientToGCBingoShuffleCardResponse_EResponse | undefined;
+}
+
+export enum CMsgClientToGCBingoShuffleCardResponse_EResponse {
+  k_eInternalError = 0,
+  k_eSuccess = 1,
+  k_eTooBusy = 2,
+  k_eDisabled = 3,
+  k_eTimeout = 4,
+  k_eExpiredCard = 6,
+  k_eNotAllowed = 7,
+  k_eInsufficientTokens = 8,
+}
+
+export function cMsgClientToGCBingoShuffleCardResponse_EResponseFromJSON(
+  object: any,
+): CMsgClientToGCBingoShuffleCardResponse_EResponse {
+  switch (object) {
+    case 0:
+    case "k_eInternalError":
+      return CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eInternalError;
+    case 1:
+    case "k_eSuccess":
+      return CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eSuccess;
+    case 2:
+    case "k_eTooBusy":
+      return CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eTooBusy;
+    case 3:
+    case "k_eDisabled":
+      return CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eDisabled;
+    case 4:
+    case "k_eTimeout":
+      return CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eTimeout;
+    case 6:
+    case "k_eExpiredCard":
+      return CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eExpiredCard;
+    case 7:
+    case "k_eNotAllowed":
+      return CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eNotAllowed;
+    case 8:
+    case "k_eInsufficientTokens":
+      return CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eInsufficientTokens;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoShuffleCardResponse_EResponse",
+      );
+  }
+}
+
+export function cMsgClientToGCBingoShuffleCardResponse_EResponseToJSON(
+  object: CMsgClientToGCBingoShuffleCardResponse_EResponse,
+): string {
+  switch (object) {
+    case CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eInternalError:
+      return "k_eInternalError";
+    case CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eSuccess:
+      return "k_eSuccess";
+    case CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eTooBusy:
+      return "k_eTooBusy";
+    case CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eDisabled:
+      return "k_eDisabled";
+    case CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eTimeout:
+      return "k_eTimeout";
+    case CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eExpiredCard:
+      return "k_eExpiredCard";
+    case CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eNotAllowed:
+      return "k_eNotAllowed";
+    case CMsgClientToGCBingoShuffleCardResponse_EResponse.k_eInsufficientTokens:
+      return "k_eInsufficientTokens";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoShuffleCardResponse_EResponse",
+      );
+  }
+}
+
+export interface CMsgClientToGCBingoModifySquare {
+  leagueId?: number | undefined;
+  leaguePhase?: number | undefined;
+  squareIndex?: number | undefined;
+  action?: CMsgClientToGCBingoModifySquare_EModifyAction | undefined;
+}
+
+export enum CMsgClientToGCBingoModifySquare_EModifyAction {
+  k_eRerollStat = 0,
+  k_eUpgrade = 1,
+}
+
+export function cMsgClientToGCBingoModifySquare_EModifyActionFromJSON(
+  object: any,
+): CMsgClientToGCBingoModifySquare_EModifyAction {
+  switch (object) {
+    case 0:
+    case "k_eRerollStat":
+      return CMsgClientToGCBingoModifySquare_EModifyAction.k_eRerollStat;
+    case 1:
+    case "k_eUpgrade":
+      return CMsgClientToGCBingoModifySquare_EModifyAction.k_eUpgrade;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoModifySquare_EModifyAction",
+      );
+  }
+}
+
+export function cMsgClientToGCBingoModifySquare_EModifyActionToJSON(
+  object: CMsgClientToGCBingoModifySquare_EModifyAction,
+): string {
+  switch (object) {
+    case CMsgClientToGCBingoModifySquare_EModifyAction.k_eRerollStat:
+      return "k_eRerollStat";
+    case CMsgClientToGCBingoModifySquare_EModifyAction.k_eUpgrade:
+      return "k_eUpgrade";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoModifySquare_EModifyAction",
+      );
+  }
+}
+
+export interface CMsgClientToGCBingoModifySquareResponse {
+  response?: CMsgClientToGCBingoModifySquareResponse_EResponse | undefined;
+}
+
+export enum CMsgClientToGCBingoModifySquareResponse_EResponse {
+  k_eInternalError = 0,
+  k_eSuccess = 1,
+  k_eTooBusy = 2,
+  k_eDisabled = 3,
+  k_eTimeout = 4,
+  k_eExpiredCard = 6,
+  k_eNotAllowed = 7,
+  k_eInsufficientTokens = 8,
+  k_eCantUpgrade = 9,
+  k_eCantReroll = 10,
+  k_eInvalidSquare = 11,
+}
+
+export function cMsgClientToGCBingoModifySquareResponse_EResponseFromJSON(
+  object: any,
+): CMsgClientToGCBingoModifySquareResponse_EResponse {
+  switch (object) {
+    case 0:
+    case "k_eInternalError":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eInternalError;
+    case 1:
+    case "k_eSuccess":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eSuccess;
+    case 2:
+    case "k_eTooBusy":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eTooBusy;
+    case 3:
+    case "k_eDisabled":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eDisabled;
+    case 4:
+    case "k_eTimeout":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eTimeout;
+    case 6:
+    case "k_eExpiredCard":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eExpiredCard;
+    case 7:
+    case "k_eNotAllowed":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eNotAllowed;
+    case 8:
+    case "k_eInsufficientTokens":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eInsufficientTokens;
+    case 9:
+    case "k_eCantUpgrade":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eCantUpgrade;
+    case 10:
+    case "k_eCantReroll":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eCantReroll;
+    case 11:
+    case "k_eInvalidSquare":
+      return CMsgClientToGCBingoModifySquareResponse_EResponse.k_eInvalidSquare;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoModifySquareResponse_EResponse",
+      );
+  }
+}
+
+export function cMsgClientToGCBingoModifySquareResponse_EResponseToJSON(
+  object: CMsgClientToGCBingoModifySquareResponse_EResponse,
+): string {
+  switch (object) {
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eInternalError:
+      return "k_eInternalError";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eSuccess:
+      return "k_eSuccess";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eTooBusy:
+      return "k_eTooBusy";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eDisabled:
+      return "k_eDisabled";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eTimeout:
+      return "k_eTimeout";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eExpiredCard:
+      return "k_eExpiredCard";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eNotAllowed:
+      return "k_eNotAllowed";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eInsufficientTokens:
+      return "k_eInsufficientTokens";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eCantUpgrade:
+      return "k_eCantUpgrade";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eCantReroll:
+      return "k_eCantReroll";
+    case CMsgClientToGCBingoModifySquareResponse_EResponse.k_eInvalidSquare:
+      return "k_eInvalidSquare";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoModifySquareResponse_EResponse",
+      );
+  }
+}
+
 export interface CMsgClientToGCBingoDevRerollCard {
   leagueId?: number | undefined;
   leaguePhase?: number | undefined;
@@ -314,8 +636,160 @@ export function cMsgClientToGCBingoDevRerollCardResponse_EResponseToJSON(
   }
 }
 
+export interface CMsgClientToGCBingoDevAddTokens {
+  leagueId?: number | undefined;
+  leaguePhase?: number | undefined;
+  tokenCount?: number | undefined;
+}
+
+export interface CMsgClientToGCBingoDevAddTokensResponse {
+  response?: CMsgClientToGCBingoDevAddTokensResponse_EResponse | undefined;
+}
+
+export enum CMsgClientToGCBingoDevAddTokensResponse_EResponse {
+  k_eInternalError = 0,
+  k_eSuccess = 1,
+  k_eTooBusy = 2,
+  k_eDisabled = 3,
+  k_eTimeout = 4,
+  k_eExpiredCard = 6,
+  k_eNotAllowed = 7,
+}
+
+export function cMsgClientToGCBingoDevAddTokensResponse_EResponseFromJSON(
+  object: any,
+): CMsgClientToGCBingoDevAddTokensResponse_EResponse {
+  switch (object) {
+    case 0:
+    case "k_eInternalError":
+      return CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eInternalError;
+    case 1:
+    case "k_eSuccess":
+      return CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eSuccess;
+    case 2:
+    case "k_eTooBusy":
+      return CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eTooBusy;
+    case 3:
+    case "k_eDisabled":
+      return CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eDisabled;
+    case 4:
+    case "k_eTimeout":
+      return CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eTimeout;
+    case 6:
+    case "k_eExpiredCard":
+      return CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eExpiredCard;
+    case 7:
+    case "k_eNotAllowed":
+      return CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eNotAllowed;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoDevAddTokensResponse_EResponse",
+      );
+  }
+}
+
+export function cMsgClientToGCBingoDevAddTokensResponse_EResponseToJSON(
+  object: CMsgClientToGCBingoDevAddTokensResponse_EResponse,
+): string {
+  switch (object) {
+    case CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eInternalError:
+      return "k_eInternalError";
+    case CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eSuccess:
+      return "k_eSuccess";
+    case CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eTooBusy:
+      return "k_eTooBusy";
+    case CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eDisabled:
+      return "k_eDisabled";
+    case CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eTimeout:
+      return "k_eTimeout";
+    case CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eExpiredCard:
+      return "k_eExpiredCard";
+    case CMsgClientToGCBingoDevAddTokensResponse_EResponse.k_eNotAllowed:
+      return "k_eNotAllowed";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoDevAddTokensResponse_EResponse",
+      );
+  }
+}
+
+export interface CMsgClientToGCBingoDevClearInventory {
+  leagueId?: number | undefined;
+}
+
+export interface CMsgClientToGCBingoDevClearInventoryResponse {
+  response?: CMsgClientToGCBingoDevClearInventoryResponse_EResponse | undefined;
+}
+
+export enum CMsgClientToGCBingoDevClearInventoryResponse_EResponse {
+  k_eInternalError = 0,
+  k_eSuccess = 1,
+  k_eTooBusy = 2,
+  k_eDisabled = 3,
+  k_eTimeout = 4,
+  k_eExpiredCard = 6,
+  k_eNotAllowed = 7,
+}
+
+export function cMsgClientToGCBingoDevClearInventoryResponse_EResponseFromJSON(
+  object: any,
+): CMsgClientToGCBingoDevClearInventoryResponse_EResponse {
+  switch (object) {
+    case 0:
+    case "k_eInternalError":
+      return CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eInternalError;
+    case 1:
+    case "k_eSuccess":
+      return CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eSuccess;
+    case 2:
+    case "k_eTooBusy":
+      return CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eTooBusy;
+    case 3:
+    case "k_eDisabled":
+      return CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eDisabled;
+    case 4:
+    case "k_eTimeout":
+      return CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eTimeout;
+    case 6:
+    case "k_eExpiredCard":
+      return CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eExpiredCard;
+    case 7:
+    case "k_eNotAllowed":
+      return CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eNotAllowed;
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoDevClearInventoryResponse_EResponse",
+      );
+  }
+}
+
+export function cMsgClientToGCBingoDevClearInventoryResponse_EResponseToJSON(
+  object: CMsgClientToGCBingoDevClearInventoryResponse_EResponse,
+): string {
+  switch (object) {
+    case CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eInternalError:
+      return "k_eInternalError";
+    case CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eSuccess:
+      return "k_eSuccess";
+    case CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eTooBusy:
+      return "k_eTooBusy";
+    case CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eDisabled:
+      return "k_eDisabled";
+    case CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eTimeout:
+      return "k_eTimeout";
+    case CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eExpiredCard:
+      return "k_eExpiredCard";
+    case CMsgClientToGCBingoDevClearInventoryResponse_EResponse.k_eNotAllowed:
+      return "k_eNotAllowed";
+    default:
+      throw new globalThis.Error(
+        "Unrecognized enum value " + object + " for enum CMsgClientToGCBingoDevClearInventoryResponse_EResponse",
+      );
+  }
+}
+
 function createBaseCMsgBingoSquare(): CMsgBingoSquare {
-  return { statId: 0, statThreshold: 0 };
+  return { statId: 0, statThreshold: 0, upgradeLevel: 0 };
 }
 
 export const CMsgBingoSquare = {
@@ -325,6 +799,9 @@ export const CMsgBingoSquare = {
     }
     if (message.statThreshold !== undefined && message.statThreshold !== 0) {
       writer.uint32(16).int32(message.statThreshold);
+    }
+    if (message.upgradeLevel !== undefined && message.upgradeLevel !== 0) {
+      writer.uint32(24).uint32(message.upgradeLevel);
     }
     return writer;
   },
@@ -350,6 +827,13 @@ export const CMsgBingoSquare = {
 
           message.statThreshold = reader.int32();
           continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.upgradeLevel = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -363,6 +847,7 @@ export const CMsgBingoSquare = {
     return {
       statId: isSet(object.statId) ? globalThis.Number(object.statId) : 0,
       statThreshold: isSet(object.statThreshold) ? globalThis.Number(object.statThreshold) : 0,
+      upgradeLevel: isSet(object.upgradeLevel) ? globalThis.Number(object.upgradeLevel) : 0,
     };
   },
 
@@ -374,6 +859,9 @@ export const CMsgBingoSquare = {
     if (message.statThreshold !== undefined && message.statThreshold !== 0) {
       obj.statThreshold = Math.round(message.statThreshold);
     }
+    if (message.upgradeLevel !== undefined && message.upgradeLevel !== 0) {
+      obj.upgradeLevel = Math.round(message.upgradeLevel);
+    }
     return obj;
   },
 
@@ -384,26 +872,84 @@ export const CMsgBingoSquare = {
     const message = createBaseCMsgBingoSquare();
     message.statId = object.statId ?? 0;
     message.statThreshold = object.statThreshold ?? 0;
+    message.upgradeLevel = object.upgradeLevel ?? 0;
     return message;
   },
 };
 
-function createBaseCMsgBingoUserData(): CMsgBingoUserData {
+function createBaseCMsgBingoTokens(): CMsgBingoTokens {
+  return { tokenCount: 0 };
+}
+
+export const CMsgBingoTokens = {
+  encode(message: CMsgBingoTokens, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.tokenCount !== undefined && message.tokenCount !== 0) {
+      writer.uint32(8).uint32(message.tokenCount);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgBingoTokens {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgBingoTokens();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.tokenCount = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgBingoTokens {
+    return { tokenCount: isSet(object.tokenCount) ? globalThis.Number(object.tokenCount) : 0 };
+  },
+
+  toJSON(message: CMsgBingoTokens): unknown {
+    const obj: any = {};
+    if (message.tokenCount !== undefined && message.tokenCount !== 0) {
+      obj.tokenCount = Math.round(message.tokenCount);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgBingoTokens>): CMsgBingoTokens {
+    return CMsgBingoTokens.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgBingoTokens>): CMsgBingoTokens {
+    const message = createBaseCMsgBingoTokens();
+    message.tokenCount = object.tokenCount ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgBingoCard(): CMsgBingoCard {
   return { squares: [] };
 }
 
-export const CMsgBingoUserData = {
-  encode(message: CMsgBingoUserData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CMsgBingoCard = {
+  encode(message: CMsgBingoCard, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.squares) {
       CMsgBingoSquare.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgBingoUserData {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgBingoCard {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCMsgBingoUserData();
+    const message = createBaseCMsgBingoCard();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -423,7 +969,7 @@ export const CMsgBingoUserData = {
     return message;
   },
 
-  fromJSON(object: any): CMsgBingoUserData {
+  fromJSON(object: any): CMsgBingoCard {
     return {
       squares: globalThis.Array.isArray(object?.squares)
         ? object.squares.map((e: any) => CMsgBingoSquare.fromJSON(e))
@@ -431,10 +977,87 @@ export const CMsgBingoUserData = {
     };
   },
 
-  toJSON(message: CMsgBingoUserData): unknown {
+  toJSON(message: CMsgBingoCard): unknown {
     const obj: any = {};
     if (message.squares?.length) {
       obj.squares = message.squares.map((e) => CMsgBingoSquare.toJSON(e));
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgBingoCard>): CMsgBingoCard {
+    return CMsgBingoCard.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgBingoCard>): CMsgBingoCard {
+    const message = createBaseCMsgBingoCard();
+    message.squares = object.squares?.map((e) => CMsgBingoSquare.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseCMsgBingoUserData(): CMsgBingoUserData {
+  return { bingoCards: [], bingoTokens: [] };
+}
+
+export const CMsgBingoUserData = {
+  encode(message: CMsgBingoUserData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.bingoCards) {
+      CMsgBingoUserData_BingoCardsEntry.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.bingoTokens) {
+      CMsgBingoUserData_BingoTokensEntry.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgBingoUserData {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgBingoUserData();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.bingoCards.push(CMsgBingoUserData_BingoCardsEntry.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.bingoTokens.push(CMsgBingoUserData_BingoTokensEntry.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgBingoUserData {
+    return {
+      bingoCards: globalThis.Array.isArray(object?.bingoCards)
+        ? object.bingoCards.map((e: any) => CMsgBingoUserData_BingoCardsEntry.fromJSON(e))
+        : [],
+      bingoTokens: globalThis.Array.isArray(object?.bingoTokens)
+        ? object.bingoTokens.map((e: any) => CMsgBingoUserData_BingoTokensEntry.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: CMsgBingoUserData): unknown {
+    const obj: any = {};
+    if (message.bingoCards?.length) {
+      obj.bingoCards = message.bingoCards.map((e) => CMsgBingoUserData_BingoCardsEntry.toJSON(e));
+    }
+    if (message.bingoTokens?.length) {
+      obj.bingoTokens = message.bingoTokens.map((e) => CMsgBingoUserData_BingoTokensEntry.toJSON(e));
     }
     return obj;
   },
@@ -444,22 +1067,172 @@ export const CMsgBingoUserData = {
   },
   fromPartial(object: DeepPartial<CMsgBingoUserData>): CMsgBingoUserData {
     const message = createBaseCMsgBingoUserData();
-    message.squares = object.squares?.map((e) => CMsgBingoSquare.fromPartial(e)) || [];
+    message.bingoCards = object.bingoCards?.map((e) => CMsgBingoUserData_BingoCardsEntry.fromPartial(e)) || [];
+    message.bingoTokens = object.bingoTokens?.map((e) => CMsgBingoUserData_BingoTokensEntry.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseCMsgBingoUserData_BingoCardsEntry(): CMsgBingoUserData_BingoCardsEntry {
+  return { key: 0, value: undefined };
+}
+
+export const CMsgBingoUserData_BingoCardsEntry = {
+  encode(message: CMsgBingoUserData_BingoCardsEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== undefined && message.key !== 0) {
+      writer.uint32(8).uint32(message.key);
+    }
+    if (message.value !== undefined) {
+      CMsgBingoCard.encode(message.value, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgBingoUserData_BingoCardsEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgBingoUserData_BingoCardsEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.key = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.value = CMsgBingoCard.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgBingoUserData_BingoCardsEntry {
+    return {
+      key: isSet(object.key) ? globalThis.Number(object.key) : 0,
+      value: isSet(object.value) ? CMsgBingoCard.fromJSON(object.value) : undefined,
+    };
+  },
+
+  toJSON(message: CMsgBingoUserData_BingoCardsEntry): unknown {
+    const obj: any = {};
+    if (message.key !== undefined && message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== undefined) {
+      obj.value = CMsgBingoCard.toJSON(message.value);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgBingoUserData_BingoCardsEntry>): CMsgBingoUserData_BingoCardsEntry {
+    return CMsgBingoUserData_BingoCardsEntry.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgBingoUserData_BingoCardsEntry>): CMsgBingoUserData_BingoCardsEntry {
+    const message = createBaseCMsgBingoUserData_BingoCardsEntry();
+    message.key = object.key ?? 0;
+    message.value = (object.value !== undefined && object.value !== null)
+      ? CMsgBingoCard.fromPartial(object.value)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseCMsgBingoUserData_BingoTokensEntry(): CMsgBingoUserData_BingoTokensEntry {
+  return { key: 0, value: undefined };
+}
+
+export const CMsgBingoUserData_BingoTokensEntry = {
+  encode(message: CMsgBingoUserData_BingoTokensEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== undefined && message.key !== 0) {
+      writer.uint32(8).uint32(message.key);
+    }
+    if (message.value !== undefined) {
+      CMsgBingoTokens.encode(message.value, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgBingoUserData_BingoTokensEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgBingoUserData_BingoTokensEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.key = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.value = CMsgBingoTokens.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgBingoUserData_BingoTokensEntry {
+    return {
+      key: isSet(object.key) ? globalThis.Number(object.key) : 0,
+      value: isSet(object.value) ? CMsgBingoTokens.fromJSON(object.value) : undefined,
+    };
+  },
+
+  toJSON(message: CMsgBingoUserData_BingoTokensEntry): unknown {
+    const obj: any = {};
+    if (message.key !== undefined && message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== undefined) {
+      obj.value = CMsgBingoTokens.toJSON(message.value);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgBingoUserData_BingoTokensEntry>): CMsgBingoUserData_BingoTokensEntry {
+    return CMsgBingoUserData_BingoTokensEntry.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgBingoUserData_BingoTokensEntry>): CMsgBingoUserData_BingoTokensEntry {
+    const message = createBaseCMsgBingoUserData_BingoTokensEntry();
+    message.key = object.key ?? 0;
+    message.value = (object.value !== undefined && object.value !== null)
+      ? CMsgBingoTokens.fromPartial(object.value)
+      : undefined;
     return message;
   },
 };
 
 function createBaseCMsgClientToGCBingoGetUserData(): CMsgClientToGCBingoGetUserData {
-  return { leagueId: 0, leaguePhase: 0 };
+  return { leagueId: 0 };
 }
 
 export const CMsgClientToGCBingoGetUserData = {
   encode(message: CMsgClientToGCBingoGetUserData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.leagueId !== undefined && message.leagueId !== 0) {
       writer.uint32(8).uint32(message.leagueId);
-    }
-    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
-      writer.uint32(16).uint32(message.leaguePhase);
     }
     return writer;
   },
@@ -478,13 +1251,6 @@ export const CMsgClientToGCBingoGetUserData = {
 
           message.leagueId = reader.uint32();
           continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.leaguePhase = reader.uint32();
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -495,19 +1261,13 @@ export const CMsgClientToGCBingoGetUserData = {
   },
 
   fromJSON(object: any): CMsgClientToGCBingoGetUserData {
-    return {
-      leagueId: isSet(object.leagueId) ? globalThis.Number(object.leagueId) : 0,
-      leaguePhase: isSet(object.leaguePhase) ? globalThis.Number(object.leaguePhase) : 0,
-    };
+    return { leagueId: isSet(object.leagueId) ? globalThis.Number(object.leagueId) : 0 };
   },
 
   toJSON(message: CMsgClientToGCBingoGetUserData): unknown {
     const obj: any = {};
     if (message.leagueId !== undefined && message.leagueId !== 0) {
       obj.leagueId = Math.round(message.leagueId);
-    }
-    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
-      obj.leaguePhase = Math.round(message.leaguePhase);
     }
     return obj;
   },
@@ -518,7 +1278,6 @@ export const CMsgClientToGCBingoGetUserData = {
   fromPartial(object: DeepPartial<CMsgClientToGCBingoGetUserData>): CMsgClientToGCBingoGetUserData {
     const message = createBaseCMsgClientToGCBingoGetUserData();
     message.leagueId = object.leagueId ?? 0;
-    message.leaguePhase = object.leaguePhase ?? 0;
     return message;
   },
 };
@@ -592,10 +1351,9 @@ export const CMsgClientToGCBingoGetUserDataResponse = {
   fromPartial(object: DeepPartial<CMsgClientToGCBingoGetUserDataResponse>): CMsgClientToGCBingoGetUserDataResponse {
     const message = createBaseCMsgClientToGCBingoGetUserDataResponse();
     message.response = object.response ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgBingoUserData.fromPartial(object.userData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgBingoUserData.fromPartial(object.userData)
+      : undefined;
     return message;
   },
 };
@@ -878,16 +1636,15 @@ export const CMsgClientToGCBingoGetStatsDataResponse = {
   fromPartial(object: DeepPartial<CMsgClientToGCBingoGetStatsDataResponse>): CMsgClientToGCBingoGetStatsDataResponse {
     const message = createBaseCMsgClientToGCBingoGetStatsDataResponse();
     message.response = object.response ?? 0;
-    message.statsData =
-      object.statsData !== undefined && object.statsData !== null
-        ? CMsgBingoStatsData.fromPartial(object.statsData)
-        : undefined;
+    message.statsData = (object.statsData !== undefined && object.statsData !== null)
+      ? CMsgBingoStatsData.fromPartial(object.statsData)
+      : undefined;
     return message;
   },
 };
 
 function createBaseCMsgGCToClientBingoUserDataUpdated(): CMsgGCToClientBingoUserDataUpdated {
-  return { leagueId: 0, leaguePhase: 0, userData: undefined };
+  return { leagueId: 0, userData: undefined };
 }
 
 export const CMsgGCToClientBingoUserDataUpdated = {
@@ -895,11 +1652,8 @@ export const CMsgGCToClientBingoUserDataUpdated = {
     if (message.leagueId !== undefined && message.leagueId !== 0) {
       writer.uint32(8).uint32(message.leagueId);
     }
-    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
-      writer.uint32(16).uint32(message.leaguePhase);
-    }
     if (message.userData !== undefined) {
-      CMsgBingoUserData.encode(message.userData, writer.uint32(26).fork()).ldelim();
+      CMsgBingoUserData.encode(message.userData, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -919,14 +1673,7 @@ export const CMsgGCToClientBingoUserDataUpdated = {
           message.leagueId = reader.uint32();
           continue;
         case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.leaguePhase = reader.uint32();
-          continue;
-        case 3:
-          if (tag !== 26) {
+          if (tag !== 18) {
             break;
           }
 
@@ -944,7 +1691,6 @@ export const CMsgGCToClientBingoUserDataUpdated = {
   fromJSON(object: any): CMsgGCToClientBingoUserDataUpdated {
     return {
       leagueId: isSet(object.leagueId) ? globalThis.Number(object.leagueId) : 0,
-      leaguePhase: isSet(object.leaguePhase) ? globalThis.Number(object.leaguePhase) : 0,
       userData: isSet(object.userData) ? CMsgBingoUserData.fromJSON(object.userData) : undefined,
     };
   },
@@ -953,9 +1699,6 @@ export const CMsgGCToClientBingoUserDataUpdated = {
     const obj: any = {};
     if (message.leagueId !== undefined && message.leagueId !== 0) {
       obj.leagueId = Math.round(message.leagueId);
-    }
-    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
-      obj.leaguePhase = Math.round(message.leaguePhase);
     }
     if (message.userData !== undefined) {
       obj.userData = CMsgBingoUserData.toJSON(message.userData);
@@ -969,11 +1712,9 @@ export const CMsgGCToClientBingoUserDataUpdated = {
   fromPartial(object: DeepPartial<CMsgGCToClientBingoUserDataUpdated>): CMsgGCToClientBingoUserDataUpdated {
     const message = createBaseCMsgGCToClientBingoUserDataUpdated();
     message.leagueId = object.leagueId ?? 0;
-    message.leaguePhase = object.leaguePhase ?? 0;
-    message.userData =
-      object.userData !== undefined && object.userData !== null
-        ? CMsgBingoUserData.fromPartial(object.userData)
-        : undefined;
+    message.userData = (object.userData !== undefined && object.userData !== null)
+      ? CMsgBingoUserData.fromPartial(object.userData)
+      : undefined;
     return message;
   },
 };
@@ -1126,6 +1867,302 @@ export const CMsgClientToGCBingoClaimRowResponse = {
   },
 };
 
+function createBaseCMsgClientToGCBingoShuffleCard(): CMsgClientToGCBingoShuffleCard {
+  return { leagueId: 0, leaguePhase: 0 };
+}
+
+export const CMsgClientToGCBingoShuffleCard = {
+  encode(message: CMsgClientToGCBingoShuffleCard, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.leagueId !== undefined && message.leagueId !== 0) {
+      writer.uint32(8).uint32(message.leagueId);
+    }
+    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
+      writer.uint32(16).uint32(message.leaguePhase);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCBingoShuffleCard {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCBingoShuffleCard();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.leagueId = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.leaguePhase = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCBingoShuffleCard {
+    return {
+      leagueId: isSet(object.leagueId) ? globalThis.Number(object.leagueId) : 0,
+      leaguePhase: isSet(object.leaguePhase) ? globalThis.Number(object.leaguePhase) : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCBingoShuffleCard): unknown {
+    const obj: any = {};
+    if (message.leagueId !== undefined && message.leagueId !== 0) {
+      obj.leagueId = Math.round(message.leagueId);
+    }
+    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
+      obj.leaguePhase = Math.round(message.leaguePhase);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgClientToGCBingoShuffleCard>): CMsgClientToGCBingoShuffleCard {
+    return CMsgClientToGCBingoShuffleCard.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgClientToGCBingoShuffleCard>): CMsgClientToGCBingoShuffleCard {
+    const message = createBaseCMsgClientToGCBingoShuffleCard();
+    message.leagueId = object.leagueId ?? 0;
+    message.leaguePhase = object.leaguePhase ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCBingoShuffleCardResponse(): CMsgClientToGCBingoShuffleCardResponse {
+  return { response: 0 };
+}
+
+export const CMsgClientToGCBingoShuffleCardResponse = {
+  encode(message: CMsgClientToGCBingoShuffleCardResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.response !== undefined && message.response !== 0) {
+      writer.uint32(8).int32(message.response);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCBingoShuffleCardResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCBingoShuffleCardResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.response = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCBingoShuffleCardResponse {
+    return {
+      response: isSet(object.response) ? cMsgClientToGCBingoShuffleCardResponse_EResponseFromJSON(object.response) : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCBingoShuffleCardResponse): unknown {
+    const obj: any = {};
+    if (message.response !== undefined && message.response !== 0) {
+      obj.response = cMsgClientToGCBingoShuffleCardResponse_EResponseToJSON(message.response);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgClientToGCBingoShuffleCardResponse>): CMsgClientToGCBingoShuffleCardResponse {
+    return CMsgClientToGCBingoShuffleCardResponse.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgClientToGCBingoShuffleCardResponse>): CMsgClientToGCBingoShuffleCardResponse {
+    const message = createBaseCMsgClientToGCBingoShuffleCardResponse();
+    message.response = object.response ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCBingoModifySquare(): CMsgClientToGCBingoModifySquare {
+  return { leagueId: 0, leaguePhase: 0, squareIndex: 0, action: 0 };
+}
+
+export const CMsgClientToGCBingoModifySquare = {
+  encode(message: CMsgClientToGCBingoModifySquare, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.leagueId !== undefined && message.leagueId !== 0) {
+      writer.uint32(8).uint32(message.leagueId);
+    }
+    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
+      writer.uint32(16).uint32(message.leaguePhase);
+    }
+    if (message.squareIndex !== undefined && message.squareIndex !== 0) {
+      writer.uint32(24).uint32(message.squareIndex);
+    }
+    if (message.action !== undefined && message.action !== 0) {
+      writer.uint32(32).int32(message.action);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCBingoModifySquare {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCBingoModifySquare();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.leagueId = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.leaguePhase = reader.uint32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.squareIndex = reader.uint32();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.action = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCBingoModifySquare {
+    return {
+      leagueId: isSet(object.leagueId) ? globalThis.Number(object.leagueId) : 0,
+      leaguePhase: isSet(object.leaguePhase) ? globalThis.Number(object.leaguePhase) : 0,
+      squareIndex: isSet(object.squareIndex) ? globalThis.Number(object.squareIndex) : 0,
+      action: isSet(object.action) ? cMsgClientToGCBingoModifySquare_EModifyActionFromJSON(object.action) : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCBingoModifySquare): unknown {
+    const obj: any = {};
+    if (message.leagueId !== undefined && message.leagueId !== 0) {
+      obj.leagueId = Math.round(message.leagueId);
+    }
+    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
+      obj.leaguePhase = Math.round(message.leaguePhase);
+    }
+    if (message.squareIndex !== undefined && message.squareIndex !== 0) {
+      obj.squareIndex = Math.round(message.squareIndex);
+    }
+    if (message.action !== undefined && message.action !== 0) {
+      obj.action = cMsgClientToGCBingoModifySquare_EModifyActionToJSON(message.action);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgClientToGCBingoModifySquare>): CMsgClientToGCBingoModifySquare {
+    return CMsgClientToGCBingoModifySquare.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgClientToGCBingoModifySquare>): CMsgClientToGCBingoModifySquare {
+    const message = createBaseCMsgClientToGCBingoModifySquare();
+    message.leagueId = object.leagueId ?? 0;
+    message.leaguePhase = object.leaguePhase ?? 0;
+    message.squareIndex = object.squareIndex ?? 0;
+    message.action = object.action ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCBingoModifySquareResponse(): CMsgClientToGCBingoModifySquareResponse {
+  return { response: 0 };
+}
+
+export const CMsgClientToGCBingoModifySquareResponse = {
+  encode(message: CMsgClientToGCBingoModifySquareResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.response !== undefined && message.response !== 0) {
+      writer.uint32(8).int32(message.response);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCBingoModifySquareResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCBingoModifySquareResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.response = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCBingoModifySquareResponse {
+    return {
+      response: isSet(object.response) ? cMsgClientToGCBingoModifySquareResponse_EResponseFromJSON(object.response) : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCBingoModifySquareResponse): unknown {
+    const obj: any = {};
+    if (message.response !== undefined && message.response !== 0) {
+      obj.response = cMsgClientToGCBingoModifySquareResponse_EResponseToJSON(message.response);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgClientToGCBingoModifySquareResponse>): CMsgClientToGCBingoModifySquareResponse {
+    return CMsgClientToGCBingoModifySquareResponse.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgClientToGCBingoModifySquareResponse>): CMsgClientToGCBingoModifySquareResponse {
+    const message = createBaseCMsgClientToGCBingoModifySquareResponse();
+    message.response = object.response ?? 0;
+    return message;
+  },
+};
+
 function createBaseCMsgClientToGCBingoDevRerollCard(): CMsgClientToGCBingoDevRerollCard {
   return { leagueId: 0, leaguePhase: 0 };
 }
@@ -1261,17 +2298,283 @@ export const CMsgClientToGCBingoDevRerollCardResponse = {
   },
 };
 
+function createBaseCMsgClientToGCBingoDevAddTokens(): CMsgClientToGCBingoDevAddTokens {
+  return { leagueId: 0, leaguePhase: 0, tokenCount: 0 };
+}
+
+export const CMsgClientToGCBingoDevAddTokens = {
+  encode(message: CMsgClientToGCBingoDevAddTokens, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.leagueId !== undefined && message.leagueId !== 0) {
+      writer.uint32(8).uint32(message.leagueId);
+    }
+    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
+      writer.uint32(16).uint32(message.leaguePhase);
+    }
+    if (message.tokenCount !== undefined && message.tokenCount !== 0) {
+      writer.uint32(24).int32(message.tokenCount);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCBingoDevAddTokens {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCBingoDevAddTokens();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.leagueId = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.leaguePhase = reader.uint32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.tokenCount = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCBingoDevAddTokens {
+    return {
+      leagueId: isSet(object.leagueId) ? globalThis.Number(object.leagueId) : 0,
+      leaguePhase: isSet(object.leaguePhase) ? globalThis.Number(object.leaguePhase) : 0,
+      tokenCount: isSet(object.tokenCount) ? globalThis.Number(object.tokenCount) : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCBingoDevAddTokens): unknown {
+    const obj: any = {};
+    if (message.leagueId !== undefined && message.leagueId !== 0) {
+      obj.leagueId = Math.round(message.leagueId);
+    }
+    if (message.leaguePhase !== undefined && message.leaguePhase !== 0) {
+      obj.leaguePhase = Math.round(message.leaguePhase);
+    }
+    if (message.tokenCount !== undefined && message.tokenCount !== 0) {
+      obj.tokenCount = Math.round(message.tokenCount);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgClientToGCBingoDevAddTokens>): CMsgClientToGCBingoDevAddTokens {
+    return CMsgClientToGCBingoDevAddTokens.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgClientToGCBingoDevAddTokens>): CMsgClientToGCBingoDevAddTokens {
+    const message = createBaseCMsgClientToGCBingoDevAddTokens();
+    message.leagueId = object.leagueId ?? 0;
+    message.leaguePhase = object.leaguePhase ?? 0;
+    message.tokenCount = object.tokenCount ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCBingoDevAddTokensResponse(): CMsgClientToGCBingoDevAddTokensResponse {
+  return { response: 0 };
+}
+
+export const CMsgClientToGCBingoDevAddTokensResponse = {
+  encode(message: CMsgClientToGCBingoDevAddTokensResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.response !== undefined && message.response !== 0) {
+      writer.uint32(8).int32(message.response);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCBingoDevAddTokensResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCBingoDevAddTokensResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.response = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCBingoDevAddTokensResponse {
+    return {
+      response: isSet(object.response) ? cMsgClientToGCBingoDevAddTokensResponse_EResponseFromJSON(object.response) : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCBingoDevAddTokensResponse): unknown {
+    const obj: any = {};
+    if (message.response !== undefined && message.response !== 0) {
+      obj.response = cMsgClientToGCBingoDevAddTokensResponse_EResponseToJSON(message.response);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgClientToGCBingoDevAddTokensResponse>): CMsgClientToGCBingoDevAddTokensResponse {
+    return CMsgClientToGCBingoDevAddTokensResponse.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgClientToGCBingoDevAddTokensResponse>): CMsgClientToGCBingoDevAddTokensResponse {
+    const message = createBaseCMsgClientToGCBingoDevAddTokensResponse();
+    message.response = object.response ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCBingoDevClearInventory(): CMsgClientToGCBingoDevClearInventory {
+  return { leagueId: 0 };
+}
+
+export const CMsgClientToGCBingoDevClearInventory = {
+  encode(message: CMsgClientToGCBingoDevClearInventory, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.leagueId !== undefined && message.leagueId !== 0) {
+      writer.uint32(8).uint32(message.leagueId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCBingoDevClearInventory {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCBingoDevClearInventory();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.leagueId = reader.uint32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCBingoDevClearInventory {
+    return { leagueId: isSet(object.leagueId) ? globalThis.Number(object.leagueId) : 0 };
+  },
+
+  toJSON(message: CMsgClientToGCBingoDevClearInventory): unknown {
+    const obj: any = {};
+    if (message.leagueId !== undefined && message.leagueId !== 0) {
+      obj.leagueId = Math.round(message.leagueId);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CMsgClientToGCBingoDevClearInventory>): CMsgClientToGCBingoDevClearInventory {
+    return CMsgClientToGCBingoDevClearInventory.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CMsgClientToGCBingoDevClearInventory>): CMsgClientToGCBingoDevClearInventory {
+    const message = createBaseCMsgClientToGCBingoDevClearInventory();
+    message.leagueId = object.leagueId ?? 0;
+    return message;
+  },
+};
+
+function createBaseCMsgClientToGCBingoDevClearInventoryResponse(): CMsgClientToGCBingoDevClearInventoryResponse {
+  return { response: 0 };
+}
+
+export const CMsgClientToGCBingoDevClearInventoryResponse = {
+  encode(message: CMsgClientToGCBingoDevClearInventoryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.response !== undefined && message.response !== 0) {
+      writer.uint32(8).int32(message.response);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CMsgClientToGCBingoDevClearInventoryResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCMsgClientToGCBingoDevClearInventoryResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.response = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CMsgClientToGCBingoDevClearInventoryResponse {
+    return {
+      response: isSet(object.response)
+        ? cMsgClientToGCBingoDevClearInventoryResponse_EResponseFromJSON(object.response)
+        : 0,
+    };
+  },
+
+  toJSON(message: CMsgClientToGCBingoDevClearInventoryResponse): unknown {
+    const obj: any = {};
+    if (message.response !== undefined && message.response !== 0) {
+      obj.response = cMsgClientToGCBingoDevClearInventoryResponse_EResponseToJSON(message.response);
+    }
+    return obj;
+  },
+
+  create(
+    base?: DeepPartial<CMsgClientToGCBingoDevClearInventoryResponse>,
+  ): CMsgClientToGCBingoDevClearInventoryResponse {
+    return CMsgClientToGCBingoDevClearInventoryResponse.fromPartial(base ?? {});
+  },
+  fromPartial(
+    object: DeepPartial<CMsgClientToGCBingoDevClearInventoryResponse>,
+  ): CMsgClientToGCBingoDevClearInventoryResponse {
+    const message = createBaseCMsgClientToGCBingoDevClearInventoryResponse();
+    message.response = object.response ?? 0;
+    return message;
+  },
+};
+
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

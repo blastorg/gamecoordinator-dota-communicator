@@ -1036,9 +1036,11 @@ export interface CMsgGCRequestStoreSalesDataUpToDateResponse {
   expirationTime?: number | undefined;
 }
 
-export interface CMsgGCToGCPingRequest {}
+export interface CMsgGCToGCPingRequest {
+}
 
-export interface CMsgGCToGCPingResponse {}
+export interface CMsgGCToGCPingResponse {
+}
 
 export interface CMsgGCToGCGetUserSessionServer {
   accountId?: number | undefined;
@@ -1393,7 +1395,8 @@ export interface CMsgClientToGCUnwrapGift {
   itemId?: string | undefined;
 }
 
-export interface CMsgClientToGCGetGiftPermissions {}
+export interface CMsgClientToGCGetGiftPermissions {
+}
 
 export interface CMsgClientToGCGetGiftPermissionsResponse {
   isUnlimited?: boolean | undefined;
@@ -1840,14 +1843,15 @@ export function cMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttributeFr
       return CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute.k_RemoveItemAttribute_Failed_ItemIsInvalid;
     case 3:
     case "k_RemoveItemAttribute_Failed_AttributeCannotBeRemoved":
-      return CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute.k_RemoveItemAttribute_Failed_AttributeCannotBeRemoved;
+      return CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute
+        .k_RemoveItemAttribute_Failed_AttributeCannotBeRemoved;
     case 4:
     case "k_RemoveItemAttribute_Failed_AttributeDoesntExist":
-      return CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute.k_RemoveItemAttribute_Failed_AttributeDoesntExist;
+      return CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute
+        .k_RemoveItemAttribute_Failed_AttributeDoesntExist;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute",
       );
   }
@@ -1863,14 +1867,15 @@ export function cMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttributeTo
       return "k_RemoveItemAttribute_Failed";
     case CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute.k_RemoveItemAttribute_Failed_ItemIsInvalid:
       return "k_RemoveItemAttribute_Failed_ItemIsInvalid";
-    case CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute.k_RemoveItemAttribute_Failed_AttributeCannotBeRemoved:
+    case CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute
+      .k_RemoveItemAttribute_Failed_AttributeCannotBeRemoved:
       return "k_RemoveItemAttribute_Failed_AttributeCannotBeRemoved";
-    case CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute.k_RemoveItemAttribute_Failed_AttributeDoesntExist:
+    case CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute
+      .k_RemoveItemAttribute_Failed_AttributeDoesntExist:
       return "k_RemoveItemAttribute_Failed_AttributeDoesntExist";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCRemoveItemAttributeResponse_ERemoveItemAttribute",
       );
   }
@@ -2225,6 +2230,7 @@ export interface CMsgGCToGCBroadcastConsoleCommand {
   reportOutput?: boolean | undefined;
   sendingGc?: number | undefined;
   outputInitiator?: string | undefined;
+  senderSource?: string | undefined;
 }
 
 export interface CMsgGCToGCConsoleOutput {
@@ -2306,7 +2312,8 @@ export interface CMsgGCToGCSelfPing {
   sampleId?: number | undefined;
 }
 
-export interface CMsgGCToGCGetInfuxIntervalStats {}
+export interface CMsgGCToGCGetInfuxIntervalStats {
+}
 
 export interface CMsgGCToGCGetInfuxIntervalStatsResponse {
   statIds: number[];
@@ -2316,7 +2323,8 @@ export interface CMsgGCToGCGetInfuxIntervalStatsResponse {
   sampleDurationMs?: number | undefined;
 }
 
-export interface CMsgGCToGCPurchaseSucceeded {}
+export interface CMsgGCToGCPurchaseSucceeded {
+}
 
 export interface CMsgClientToGCGetLimitedItemPurchaseQuantity {
   itemDef?: number | undefined;
@@ -2364,8 +2372,7 @@ export function cMsgClientToGCGetLimitedItemPurchaseQuantityResponse_EResponseFr
       return CMsgClientToGCGetLimitedItemPurchaseQuantityResponse_EResponse.k_eItemDefNotLimited;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCGetLimitedItemPurchaseQuantityResponse_EResponse",
       );
   }
@@ -2391,8 +2398,7 @@ export function cMsgClientToGCGetLimitedItemPurchaseQuantityResponse_EResponseTo
       return "k_eItemDefNotLimited";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCGetLimitedItemPurchaseQuantityResponse_EResponse",
       );
   }
@@ -2833,8 +2839,8 @@ export const CMsgEconPlayerStrangeCountAdjustment = {
       accountId: isSet(object.accountId) ? globalThis.Number(object.accountId) : 0,
       strangeCountAdjustments: globalThis.Array.isArray(object?.strangeCountAdjustments)
         ? object.strangeCountAdjustments.map((e: any) =>
-            CMsgEconPlayerStrangeCountAdjustment_CStrangeCountAdjustment.fromJSON(e),
-          )
+          CMsgEconPlayerStrangeCountAdjustment_CStrangeCountAdjustment.fromJSON(e)
+        )
         : [],
       turboMode: isSet(object.turboMode) ? globalThis.Boolean(object.turboMode) : false,
     };
@@ -2847,7 +2853,7 @@ export const CMsgEconPlayerStrangeCountAdjustment = {
     }
     if (message.strangeCountAdjustments?.length) {
       obj.strangeCountAdjustments = message.strangeCountAdjustments.map((e) =>
-        CMsgEconPlayerStrangeCountAdjustment_CStrangeCountAdjustment.toJSON(e),
+        CMsgEconPlayerStrangeCountAdjustment_CStrangeCountAdjustment.toJSON(e)
       );
     }
     if (message.turboMode !== undefined && message.turboMode !== false) {
@@ -2864,7 +2870,7 @@ export const CMsgEconPlayerStrangeCountAdjustment = {
     message.accountId = object.accountId ?? 0;
     message.strangeCountAdjustments =
       object.strangeCountAdjustments?.map((e) =>
-        CMsgEconPlayerStrangeCountAdjustment_CStrangeCountAdjustment.fromPartial(e),
+        CMsgEconPlayerStrangeCountAdjustment_CStrangeCountAdjustment.fromPartial(e)
       ) || [];
     message.turboMode = object.turboMode ?? false;
     return message;
@@ -5096,8 +5102,8 @@ export const CMsgGCToGCGrantAccountRolledItems_Item = {
         : [],
       additionalAuditEntries: globalThis.Array.isArray(object?.additionalAuditEntries)
         ? object.additionalAuditEntries.map((e: any) =>
-            CMsgGCToGCGrantAccountRolledItems_Item_AdditionalAuditEntry.fromJSON(e),
-          )
+          CMsgGCToGCGrantAccountRolledItems_Item_AdditionalAuditEntry.fromJSON(e)
+        )
         : [],
       inventoryToken: isSet(object.inventoryToken) ? globalThis.Number(object.inventoryToken) : 0,
       quality: isSet(object.quality) ? globalThis.Number(object.quality) : -1,
@@ -5120,12 +5126,12 @@ export const CMsgGCToGCGrantAccountRolledItems_Item = {
     }
     if (message.dynamicAttributes?.length) {
       obj.dynamicAttributes = message.dynamicAttributes.map((e) =>
-        CMsgGCToGCGrantAccountRolledItems_Item_DynamicAttribute.toJSON(e),
+        CMsgGCToGCGrantAccountRolledItems_Item_DynamicAttribute.toJSON(e)
       );
     }
     if (message.additionalAuditEntries?.length) {
       obj.additionalAuditEntries = message.additionalAuditEntries.map((e) =>
-        CMsgGCToGCGrantAccountRolledItems_Item_AdditionalAuditEntry.toJSON(e),
+        CMsgGCToGCGrantAccountRolledItems_Item_AdditionalAuditEntry.toJSON(e)
       );
     }
     if (message.inventoryToken !== undefined && message.inventoryToken !== 0) {
@@ -5151,7 +5157,7 @@ export const CMsgGCToGCGrantAccountRolledItems_Item = {
       [];
     message.additionalAuditEntries =
       object.additionalAuditEntries?.map((e) =>
-        CMsgGCToGCGrantAccountRolledItems_Item_AdditionalAuditEntry.fromPartial(e),
+        CMsgGCToGCGrantAccountRolledItems_Item_AdditionalAuditEntry.fromPartial(e)
       ) || [];
     message.inventoryToken = object.inventoryToken ?? 0;
     message.quality = object.quality ?? -1;
@@ -5779,10 +5785,9 @@ export const CMsgServerUseItem = {
   fromPartial(object: DeepPartial<CMsgServerUseItem>): CMsgServerUseItem {
     const message = createBaseCMsgServerUseItem();
     message.initiatorAccountId = object.initiatorAccountId ?? 0;
-    message.useItemMsg =
-      object.useItemMsg !== undefined && object.useItemMsg !== null
-        ? CMsgUseItem.fromPartial(object.useItemMsg)
-        : undefined;
+    message.useItemMsg = (object.useItemMsg !== undefined && object.useItemMsg !== null)
+      ? CMsgUseItem.fromPartial(object.useItemMsg)
+      : undefined;
     return message;
   },
 };
@@ -6844,10 +6849,9 @@ export const CMsgGCAddGiftItem = {
     const message = createBaseCMsgGCAddGiftItem();
     message.gifterAccountId = object.gifterAccountId ?? 0;
     message.receiverAccountId = object.receiverAccountId ?? 0;
-    message.wrappedItem =
-      object.wrappedItem !== undefined && object.wrappedItem !== null
-        ? CSOEconItem.fromPartial(object.wrappedItem)
-        : undefined;
+    message.wrappedItem = (object.wrappedItem !== undefined && object.wrappedItem !== null)
+      ? CSOEconItem.fromPartial(object.wrappedItem)
+      : undefined;
     message.giftMessage = object.giftMessage ?? "";
     message.isWalletCashTrusted = object.isWalletCashTrusted ?? false;
     return message;
@@ -7385,8 +7389,8 @@ export const CMsgClientToGCGetGiftPermissionsResponse = {
         : 0,
       friendPermissions: globalThis.Array.isArray(object?.friendPermissions)
         ? object.friendPermissions.map((e: any) =>
-            CMsgClientToGCGetGiftPermissionsResponse_FriendPermission.fromJSON(e),
-          )
+          CMsgClientToGCGetGiftPermissionsResponse_FriendPermission.fromJSON(e)
+        )
         : [],
     };
   },
@@ -7410,7 +7414,7 @@ export const CMsgClientToGCGetGiftPermissionsResponse = {
     }
     if (message.friendPermissions?.length) {
       obj.friendPermissions = message.friendPermissions.map((e) =>
-        CMsgClientToGCGetGiftPermissionsResponse_FriendPermission.toJSON(e),
+        CMsgClientToGCGetGiftPermissionsResponse_FriendPermission.toJSON(e)
       );
     }
     return obj;
@@ -9520,8 +9524,9 @@ export const CProtoItemSocketEmpty = {
   },
   fromPartial(object: DeepPartial<CProtoItemSocketEmpty>): CProtoItemSocketEmpty {
     const message = createBaseCProtoItemSocketEmpty();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     return message;
   },
 };
@@ -9594,8 +9599,9 @@ export const CProtoItemSocketEffect = {
   },
   fromPartial(object: DeepPartial<CProtoItemSocketEffect>): CProtoItemSocketEffect {
     const message = createBaseCProtoItemSocketEffect();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     message.effect = object.effect ?? 0;
     return message;
   },
@@ -9697,8 +9703,9 @@ export const CProtoItemSocketColor = {
   },
   fromPartial(object: DeepPartial<CProtoItemSocketColor>): CProtoItemSocketColor {
     const message = createBaseCProtoItemSocketColor();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     message.red = object.red ?? 0;
     message.green = object.green ?? 0;
     message.blue = object.blue ?? 0;
@@ -9788,8 +9795,9 @@ export const CProtoItemSocketStrange = {
   },
   fromPartial(object: DeepPartial<CProtoItemSocketStrange>): CProtoItemSocketStrange {
     const message = createBaseCProtoItemSocketStrange();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     message.strangeType = object.strangeType ?? 0;
     message.strangeValue = object.strangeValue ?? 0;
     return message;
@@ -9899,8 +9907,9 @@ export const CProtoItemSocketStrangeDESERIALIZEFROMSTRINGONLY = {
     object: DeepPartial<CProtoItemSocketStrangeDESERIALIZEFROMSTRINGONLY>,
   ): CProtoItemSocketStrangeDESERIALIZEFROMSTRINGONLY {
     const message = createBaseCProtoItemSocketStrangeDESERIALIZEFROMSTRINGONLY();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     message.strangeType = object.strangeType ?? 0;
     message.strangeValue = object.strangeValue ?? 0;
     message.abilityEffect = object.abilityEffect ?? 0;
@@ -10018,8 +10027,9 @@ export const CProtoItemSocketSpectator = {
   },
   fromPartial(object: DeepPartial<CProtoItemSocketSpectator>): CProtoItemSocketSpectator {
     const message = createBaseCProtoItemSocketSpectator();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     message.gamesViewed = object.gamesViewed ?? 0;
     message.corporationId = object.corporationId ?? 0;
     message.leagueId = object.leagueId ?? 0;
@@ -10096,8 +10106,9 @@ export const CProtoItemSocketAssetModifier = {
   },
   fromPartial(object: DeepPartial<CProtoItemSocketAssetModifier>): CProtoItemSocketAssetModifier {
     const message = createBaseCProtoItemSocketAssetModifier();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     message.assetModifier = object.assetModifier ?? 0;
     return message;
   },
@@ -10206,8 +10217,9 @@ export const CProtoItemSocketAssetModifierDESERIALIZEFROMSTRINGONLY = {
     object: DeepPartial<CProtoItemSocketAssetModifierDESERIALIZEFROMSTRINGONLY>,
   ): CProtoItemSocketAssetModifierDESERIALIZEFROMSTRINGONLY {
     const message = createBaseCProtoItemSocketAssetModifierDESERIALIZEFROMSTRINGONLY();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     message.assetModifier = object.assetModifier ?? 0;
     message.animModifier = object.animModifier ?? 0;
     message.abilityEffect = object.abilityEffect ?? 0;
@@ -10311,8 +10323,9 @@ export const CProtoItemSocketAutograph = {
   },
   fromPartial(object: DeepPartial<CProtoItemSocketAutograph>): CProtoItemSocketAutograph {
     const message = createBaseCProtoItemSocketAutograph();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     message.autograph = object.autograph ?? "";
     message.autographId = object.autographId ?? 0;
     message.autographScore = object.autographScore ?? 0;
@@ -10372,8 +10385,9 @@ export const CProtoItemSocketStaticVisuals = {
   },
   fromPartial(object: DeepPartial<CProtoItemSocketStaticVisuals>): CProtoItemSocketStaticVisuals {
     const message = createBaseCProtoItemSocketStaticVisuals();
-    message.socket =
-      object.socket !== undefined && object.socket !== null ? CProtoItemSocket.fromPartial(object.socket) : undefined;
+    message.socket = (object.socket !== undefined && object.socket !== null)
+      ? CProtoItemSocket.fromPartial(object.socket)
+      : undefined;
     return message;
   },
 };
@@ -10588,7 +10602,7 @@ export const CWorkshopGetItemDailyRevenueResponse = {
     const obj: any = {};
     if (message.countryRevenue?.length) {
       obj.countryRevenue = message.countryRevenue.map((e) =>
-        CWorkshopGetItemDailyRevenueResponse_CountryDailyRevenue.toJSON(e),
+        CWorkshopGetItemDailyRevenueResponse_CountryDailyRevenue.toJSON(e)
       );
     }
     return obj;
@@ -10854,7 +10868,7 @@ export const CWorkshopGetPackageDailyRevenueResponse = {
     const obj: any = {};
     if (message.countryRevenue?.length) {
       obj.countryRevenue = message.countryRevenue.map((e) =>
-        CWorkshopGetPackageDailyRevenueResponse_CountryDailyRevenue.toJSON(e),
+        CWorkshopGetPackageDailyRevenueResponse_CountryDailyRevenue.toJSON(e)
       );
     }
     return obj;
@@ -11418,8 +11432,8 @@ export const CMsgClientToGCCreateStaticRecipeResponse = {
         : [],
       additionalOutputs: globalThis.Array.isArray(object?.additionalOutputs)
         ? object.additionalOutputs.map((e: any) =>
-            CMsgClientToGCCreateStaticRecipeResponse_AdditionalOutput.fromJSON(e),
-          )
+          CMsgClientToGCCreateStaticRecipeResponse_AdditionalOutput.fromJSON(e)
+        )
         : [],
     };
   },
@@ -11437,7 +11451,7 @@ export const CMsgClientToGCCreateStaticRecipeResponse = {
     }
     if (message.additionalOutputs?.length) {
       obj.additionalOutputs = message.additionalOutputs.map((e) =>
-        CMsgClientToGCCreateStaticRecipeResponse_AdditionalOutput.toJSON(e),
+        CMsgClientToGCCreateStaticRecipeResponse_AdditionalOutput.toJSON(e)
       );
     }
     return obj;
@@ -12196,10 +12210,9 @@ export const CMsgGCToGCStoreProcessCDKeyTransaction = {
   },
   fromPartial(object: DeepPartial<CMsgGCToGCStoreProcessCDKeyTransaction>): CMsgGCToGCStoreProcessCDKeyTransaction {
     const message = createBaseCMsgGCToGCStoreProcessCDKeyTransaction();
-    message.order =
-      object.order !== undefined && object.order !== null
-        ? CMsgProcessTransactionOrder.fromPartial(object.order)
-        : undefined;
+    message.order = (object.order !== undefined && object.order !== null)
+      ? CMsgProcessTransactionOrder.fromPartial(object.order)
+      : undefined;
     message.reasonCode = object.reasonCode ?? 0;
     message.partner = object.partner ?? 0;
     return message;
@@ -12322,10 +12335,9 @@ export const CMsgGCToGCStoreProcessSettlement = {
   },
   fromPartial(object: DeepPartial<CMsgGCToGCStoreProcessSettlement>): CMsgGCToGCStoreProcessSettlement {
     const message = createBaseCMsgGCToGCStoreProcessSettlement();
-    message.order =
-      object.order !== undefined && object.order !== null
-        ? CMsgProcessTransactionOrder.fromPartial(object.order)
-        : undefined;
+    message.order = (object.order !== undefined && object.order !== null)
+      ? CMsgProcessTransactionOrder.fromPartial(object.order)
+      : undefined;
     return message;
   },
 };
@@ -12388,7 +12400,7 @@ export const CMsgGCToGCStoreProcessSettlementResponse = {
 };
 
 function createBaseCMsgGCToGCBroadcastConsoleCommand(): CMsgGCToGCBroadcastConsoleCommand {
-  return { conCommand: "", reportOutput: false, sendingGc: -1, outputInitiator: "" };
+  return { conCommand: "", reportOutput: false, sendingGc: -1, outputInitiator: "", senderSource: "" };
 }
 
 export const CMsgGCToGCBroadcastConsoleCommand = {
@@ -12404,6 +12416,9 @@ export const CMsgGCToGCBroadcastConsoleCommand = {
     }
     if (message.outputInitiator !== undefined && message.outputInitiator !== "") {
       writer.uint32(34).string(message.outputInitiator);
+    }
+    if (message.senderSource !== undefined && message.senderSource !== "") {
+      writer.uint32(42).string(message.senderSource);
     }
     return writer;
   },
@@ -12443,6 +12458,13 @@ export const CMsgGCToGCBroadcastConsoleCommand = {
 
           message.outputInitiator = reader.string();
           continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.senderSource = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -12458,6 +12480,7 @@ export const CMsgGCToGCBroadcastConsoleCommand = {
       reportOutput: isSet(object.reportOutput) ? globalThis.Boolean(object.reportOutput) : false,
       sendingGc: isSet(object.sendingGc) ? globalThis.Number(object.sendingGc) : -1,
       outputInitiator: isSet(object.outputInitiator) ? globalThis.String(object.outputInitiator) : "",
+      senderSource: isSet(object.senderSource) ? globalThis.String(object.senderSource) : "",
     };
   },
 
@@ -12475,6 +12498,9 @@ export const CMsgGCToGCBroadcastConsoleCommand = {
     if (message.outputInitiator !== undefined && message.outputInitiator !== "") {
       obj.outputInitiator = message.outputInitiator;
     }
+    if (message.senderSource !== undefined && message.senderSource !== "") {
+      obj.senderSource = message.senderSource;
+    }
     return obj;
   },
 
@@ -12487,6 +12513,7 @@ export const CMsgGCToGCBroadcastConsoleCommand = {
     message.reportOutput = object.reportOutput ?? false;
     message.sendingGc = object.sendingGc ?? -1;
     message.outputInitiator = object.outputInitiator ?? "";
+    message.senderSource = object.senderSource ?? "";
     return message;
   },
 };
@@ -14600,7 +14627,7 @@ export const CMsgGCToClientInFlightChargesUpdated = {
     const obj: any = {};
     if (message.inFlightCharges?.length) {
       obj.inFlightCharges = message.inFlightCharges.map((e) =>
-        CMsgGCToClientInFlightChargesUpdated_ItemCharges.toJSON(e),
+        CMsgGCToClientInFlightChargesUpdated_ItemCharges.toJSON(e)
       );
     }
     return obj;
@@ -14904,8 +14931,9 @@ export const CMsgGCToGCUpdateWelcomeMsg = {
   fromPartial(object: DeepPartial<CMsgGCToGCUpdateWelcomeMsg>): CMsgGCToGCUpdateWelcomeMsg {
     const message = createBaseCMsgGCToGCUpdateWelcomeMsg();
     message.server = object.server ?? false;
-    message.newMsg =
-      object.newMsg !== undefined && object.newMsg !== null ? CExtraMsgBlock.fromPartial(object.newMsg) : undefined;
+    message.newMsg = (object.newMsg !== undefined && object.newMsg !== null)
+      ? CExtraMsgBlock.fromPartial(object.newMsg)
+      : undefined;
     message.broadcast = object.broadcast ?? false;
     return message;
   },
@@ -14921,15 +14949,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

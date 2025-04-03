@@ -9,6 +9,7 @@ import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { CSOEconItemAttribute, CSOEconItemEquipped } from "./base_gcmessages";
 import { CMsgTrackedStat } from "./dota_gcmessages_common";
+import { CMsgCraftworksQuestReward } from "./dota_gcmessages_common_craftworks";
 import { CMsgMatchMatchmakingStats, CMvpData } from "./dota_gcmessages_common_match_management";
 import { CMsgOverworldTokenQuantity } from "./dota_gcmessages_common_overworld";
 import {
@@ -84,6 +85,7 @@ export interface CDOTAMatchMetadata_Team_InventorySnapshot {
   level?: number | undefined;
   backpackItemId: number[];
   neutralItemId?: number | undefined;
+  neutralEnhancementId?: number | undefined;
 }
 
 export interface CDOTAMatchMetadata_Team_AutoStyleCriteria {
@@ -228,6 +230,7 @@ export interface CDOTAMatchMetadata_Team_Player {
   gamePlayerId?: number | undefined;
   playerTrackedStats: CMsgTrackedStat[];
   overworldRewards?: CDOTAMatchMetadata_Team_Player_OverworldRewards | undefined;
+  craftworksQuestRewards: CMsgCraftworksQuestReward[];
 }
 
 export interface CDOTAMatchMetadata_Team_Player_ContractProgress {
@@ -470,10 +473,9 @@ export const CDOTAMatchMetadataFile = {
     const message = createBaseCDOTAMatchMetadataFile();
     message.version = object.version ?? 0;
     message.matchId = object.matchId ?? "0";
-    message.metadata =
-      object.metadata !== undefined && object.metadata !== null
-        ? CDOTAMatchMetadata.fromPartial(object.metadata)
-        : undefined;
+    message.metadata = (object.metadata !== undefined && object.metadata !== null)
+      ? CDOTAMatchMetadata.fromPartial(object.metadata)
+      : undefined;
     message.privateMetadata = object.privateMetadata ?? Buffer.alloc(0);
     return message;
   },
@@ -683,7 +685,7 @@ export const CDOTAMatchMetadata = {
     }
     if (message.guildChallengeProgress?.length) {
       obj.guildChallengeProgress = message.guildChallengeProgress.map((e) =>
-        CDOTAMatchMetadata_GuildChallengeProgress.toJSON(e),
+        CDOTAMatchMetadata_GuildChallengeProgress.toJSON(e)
       );
     }
     if (message.customPostGameTable !== undefined && message.customPostGameTable.length !== 0) {
@@ -708,12 +710,12 @@ export const CDOTAMatchMetadata = {
     message.reportUntilTime = object.reportUntilTime ?? "0";
     message.eventGameCustomTable = object.eventGameCustomTable ?? Buffer.alloc(0);
     message.primaryEventId = object.primaryEventId ?? 0;
-    message.matchmakingStats =
-      object.matchmakingStats !== undefined && object.matchmakingStats !== null
-        ? CMsgMatchMatchmakingStats.fromPartial(object.matchmakingStats)
-        : undefined;
-    message.mvpData =
-      object.mvpData !== undefined && object.mvpData !== null ? CMvpData.fromPartial(object.mvpData) : undefined;
+    message.matchmakingStats = (object.matchmakingStats !== undefined && object.matchmakingStats !== null)
+      ? CMsgMatchMatchmakingStats.fromPartial(object.matchmakingStats)
+      : undefined;
+    message.mvpData = (object.mvpData !== undefined && object.mvpData !== null)
+      ? CMvpData.fromPartial(object.mvpData)
+      : undefined;
     message.guildChallengeProgress =
       object.guildChallengeProgress?.map((e) => CDOTAMatchMetadata_GuildChallengeProgress.fromPartial(e)) || [];
     message.customPostGameTable = object.customPostGameTable ?? Buffer.alloc(0);
@@ -1230,7 +1232,17 @@ export const CDOTAMatchMetadata_Team_ItemPurchase = {
 };
 
 function createBaseCDOTAMatchMetadata_Team_InventorySnapshot(): CDOTAMatchMetadata_Team_InventorySnapshot {
-  return { itemId: [], gameTime: 0, kills: 0, deaths: 0, assists: 0, level: 0, backpackItemId: [], neutralItemId: -1 };
+  return {
+    itemId: [],
+    gameTime: 0,
+    kills: 0,
+    deaths: 0,
+    assists: 0,
+    level: 0,
+    backpackItemId: [],
+    neutralItemId: -1,
+    neutralEnhancementId: -1,
+  };
 }
 
 export const CDOTAMatchMetadata_Team_InventorySnapshot = {
@@ -1262,6 +1274,9 @@ export const CDOTAMatchMetadata_Team_InventorySnapshot = {
     writer.ldelim();
     if (message.neutralItemId !== undefined && message.neutralItemId !== -1) {
       writer.uint32(64).int32(message.neutralItemId);
+    }
+    if (message.neutralEnhancementId !== undefined && message.neutralEnhancementId !== -1) {
+      writer.uint32(72).int32(message.neutralEnhancementId);
     }
     return writer;
   },
@@ -1349,6 +1364,13 @@ export const CDOTAMatchMetadata_Team_InventorySnapshot = {
 
           message.neutralItemId = reader.int32();
           continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.neutralEnhancementId = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1370,6 +1392,7 @@ export const CDOTAMatchMetadata_Team_InventorySnapshot = {
         ? object.backpackItemId.map((e: any) => globalThis.Number(e))
         : [],
       neutralItemId: isSet(object.neutralItemId) ? globalThis.Number(object.neutralItemId) : -1,
+      neutralEnhancementId: isSet(object.neutralEnhancementId) ? globalThis.Number(object.neutralEnhancementId) : -1,
     };
   },
 
@@ -1399,6 +1422,9 @@ export const CDOTAMatchMetadata_Team_InventorySnapshot = {
     if (message.neutralItemId !== undefined && message.neutralItemId !== -1) {
       obj.neutralItemId = Math.round(message.neutralItemId);
     }
+    if (message.neutralEnhancementId !== undefined && message.neutralEnhancementId !== -1) {
+      obj.neutralEnhancementId = Math.round(message.neutralEnhancementId);
+    }
     return obj;
   },
 
@@ -1417,6 +1443,7 @@ export const CDOTAMatchMetadata_Team_InventorySnapshot = {
     message.level = object.level ?? 0;
     message.backpackItemId = object.backpackItemId?.map((e) => e) || [];
     message.neutralItemId = object.neutralItemId ?? -1;
+    message.neutralEnhancementId = object.neutralEnhancementId ?? -1;
     return message;
   },
 };
@@ -1518,7 +1545,7 @@ export const CDOTAMatchMetadata_Team_StrangeGemProgress = {
       writer.uint32(16).uint32(message.gemItemDefIndex);
     }
     if (message.requiredHeroId !== undefined && message.requiredHeroId !== 0) {
-      writer.uint32(24).uint32(message.requiredHeroId);
+      writer.uint32(24).int32(message.requiredHeroId);
     }
     if (message.startingValue !== undefined && message.startingValue !== 0) {
       writer.uint32(32).uint32(message.startingValue);
@@ -1561,7 +1588,7 @@ export const CDOTAMatchMetadata_Team_StrangeGemProgress = {
             break;
           }
 
-          message.requiredHeroId = reader.uint32();
+          message.requiredHeroId = reader.int32();
           continue;
         case 4:
           if (tag !== 32) {
@@ -2621,7 +2648,7 @@ export const CDOTAMatchMetadata_Team_EventData = {
     }
     if (message.subChallengesWithProgress?.length) {
       obj.subChallengesWithProgress = message.subChallengesWithProgress.map((e) =>
-        CDOTAMatchMetadata_Team_SubChallenge.toJSON(e),
+        CDOTAMatchMetadata_Team_SubChallenge.toJSON(e)
       );
     }
     if (message.wagerWinnings !== undefined && message.wagerWinnings !== 0) {
@@ -2641,7 +2668,7 @@ export const CDOTAMatchMetadata_Team_EventData = {
     }
     if (message.cavernChallengeMapResults?.length) {
       obj.cavernChallengeMapResults = message.cavernChallengeMapResults.map((e) =>
-        CDOTAMatchMetadata_Team_CavernChallengeResult.toJSON(e),
+        CDOTAMatchMetadata_Team_CavernChallengeResult.toJSON(e)
       );
     }
     if (message.cavernChallengePlusShardWinnings !== undefined && message.cavernChallengePlusShardWinnings !== 0) {
@@ -2670,7 +2697,7 @@ export const CDOTAMatchMetadata_Team_EventData = {
     }
     if (message.periodicResources?.length) {
       obj.periodicResources = message.periodicResources.map((e) =>
-        CDOTAMatchMetadata_Team_PeriodicResourceData.toJSON(e),
+        CDOTAMatchMetadata_Team_PeriodicResourceData.toJSON(e)
       );
     }
     if (message.extraEventMessages?.length) {
@@ -2703,8 +2730,8 @@ export const CDOTAMatchMetadata_Team_EventData = {
     message.cavernChallengeMapResults =
       object.cavernChallengeMapResults?.map((e) => CDOTAMatchMetadata_Team_CavernChallengeResult.fromPartial(e)) || [];
     message.cavernChallengePlusShardWinnings = object.cavernChallengePlusShardWinnings ?? 0;
-    message.actionsGranted =
-      object.actionsGranted?.map((e) => CDOTAMatchMetadata_Team_ActionGrant.fromPartial(e)) || [];
+    message.actionsGranted = object.actionsGranted?.map((e) => CDOTAMatchMetadata_Team_ActionGrant.fromPartial(e)) ||
+      [];
     message.cavernCrawlMapVariant = object.cavernCrawlMapVariant ?? 255;
     message.teamWagerBonusPct = object.teamWagerBonusPct ?? 0;
     message.wagerStreakPct = object.wagerStreakPct ?? 0;
@@ -2871,6 +2898,7 @@ function createBaseCDOTAMatchMetadata_Team_Player(): CDOTAMatchMetadata_Team_Pla
     gamePlayerId: -1,
     playerTrackedStats: [],
     overworldRewards: undefined,
+    craftworksQuestRewards: [],
   };
 }
 
@@ -3049,10 +3077,11 @@ export const CDOTAMatchMetadata_Team_Player = {
       CMsgTrackedStat.encode(v!, writer.uint32(466).fork()).ldelim();
     }
     if (message.overworldRewards !== undefined) {
-      CDOTAMatchMetadata_Team_Player_OverworldRewards.encode(
-        message.overworldRewards,
-        writer.uint32(474).fork(),
-      ).ldelim();
+      CDOTAMatchMetadata_Team_Player_OverworldRewards.encode(message.overworldRewards, writer.uint32(474).fork())
+        .ldelim();
+    }
+    for (const v of message.craftworksQuestRewards) {
+      CMsgCraftworksQuestReward.encode(v!, writer.uint32(482).fork()).ldelim();
     }
     return writer;
   },
@@ -3497,6 +3526,13 @@ export const CDOTAMatchMetadata_Team_Player = {
 
           message.overworldRewards = CDOTAMatchMetadata_Team_Player_OverworldRewards.decode(reader, reader.uint32());
           continue;
+        case 60:
+          if (tag !== 482) {
+            break;
+          }
+
+          message.craftworksQuestRewards.push(CMsgCraftworksQuestReward.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3573,7 +3609,9 @@ export const CDOTAMatchMetadata_Team_Player = {
       contractProgress: globalThis.Array.isArray(object?.contractProgress)
         ? object.contractProgress.map((e: any) => CDOTAMatchMetadata_Team_Player_ContractProgress.fromJSON(e))
         : [],
-      guildIds: globalThis.Array.isArray(object?.guildIds) ? object.guildIds.map((e: any) => globalThis.Number(e)) : [],
+      guildIds: globalThis.Array.isArray(object?.guildIds)
+        ? object.guildIds.map((e: any) => globalThis.Number(e))
+        : [],
       graphHeroDamage: globalThis.Array.isArray(object?.graphHeroDamage)
         ? object.graphHeroDamage.map((e: any) => globalThis.Number(e))
         : [],
@@ -3598,6 +3636,9 @@ export const CDOTAMatchMetadata_Team_Player = {
       overworldRewards: isSet(object.overworldRewards)
         ? CDOTAMatchMetadata_Team_Player_OverworldRewards.fromJSON(object.overworldRewards)
         : undefined,
+      craftworksQuestRewards: globalThis.Array.isArray(object?.craftworksQuestRewards)
+        ? object.craftworksQuestRewards.map((e: any) => CMsgCraftworksQuestReward.fromJSON(e))
+        : [],
     };
   },
 
@@ -3680,7 +3721,7 @@ export const CDOTAMatchMetadata_Team_Player = {
     }
     if (message.strangeGemProgress?.length) {
       obj.strangeGemProgress = message.strangeGemProgress.map((e) =>
-        CDOTAMatchMetadata_Team_StrangeGemProgress.toJSON(e),
+        CDOTAMatchMetadata_Team_StrangeGemProgress.toJSON(e)
       );
     }
     if (message.heroXp !== undefined && message.heroXp !== 0) {
@@ -3733,7 +3774,7 @@ export const CDOTAMatchMetadata_Team_Player = {
     }
     if (message.contractProgress?.length) {
       obj.contractProgress = message.contractProgress.map((e) =>
-        CDOTAMatchMetadata_Team_Player_ContractProgress.toJSON(e),
+        CDOTAMatchMetadata_Team_Player_ContractProgress.toJSON(e)
       );
     }
     if (message.guildIds?.length) {
@@ -3770,6 +3811,9 @@ export const CDOTAMatchMetadata_Team_Player = {
     }
     if (message.overworldRewards !== undefined) {
       obj.overworldRewards = CDOTAMatchMetadata_Team_Player_OverworldRewards.toJSON(message.overworldRewards);
+    }
+    if (message.craftworksQuestRewards?.length) {
+      obj.craftworksQuestRewards = message.craftworksQuestRewards.map((e) => CMsgCraftworksQuestReward.toJSON(e));
     }
     return obj;
   },
@@ -3832,7 +3876,7 @@ export const CDOTAMatchMetadata_Team_Player = {
     message.teamNumber = object.teamNumber ?? 0;
     message.teamSlot = object.teamSlot ?? 0;
     message.featuredGamemodeProgress =
-      object.featuredGamemodeProgress !== undefined && object.featuredGamemodeProgress !== null
+      (object.featuredGamemodeProgress !== undefined && object.featuredGamemodeProgress !== null)
         ? CDOTAMatchMetadata_Team_FeaturedGamemodeProgress.fromPartial(object.featuredGamemodeProgress)
         : undefined;
     message.featuredHeroStickerIndex = object.featuredHeroStickerIndex ?? 0;
@@ -3840,10 +3884,11 @@ export const CDOTAMatchMetadata_Team_Player = {
     message.equippedEconItems = object.equippedEconItems?.map((e) => CDOTAMatchMetadata_EconItem.fromPartial(e)) || [];
     message.gamePlayerId = object.gamePlayerId ?? -1;
     message.playerTrackedStats = object.playerTrackedStats?.map((e) => CMsgTrackedStat.fromPartial(e)) || [];
-    message.overworldRewards =
-      object.overworldRewards !== undefined && object.overworldRewards !== null
-        ? CDOTAMatchMetadata_Team_Player_OverworldRewards.fromPartial(object.overworldRewards)
-        : undefined;
+    message.overworldRewards = (object.overworldRewards !== undefined && object.overworldRewards !== null)
+      ? CDOTAMatchMetadata_Team_Player_OverworldRewards.fromPartial(object.overworldRewards)
+      : undefined;
+    message.craftworksQuestRewards =
+      object.craftworksQuestRewards?.map((e) => CMsgCraftworksQuestReward.fromPartial(e)) || [];
     return message;
   },
 };
@@ -4088,10 +4133,9 @@ export const CDOTAMatchMetadata_Team_Player_OverworldRewards = {
   ): CDOTAMatchMetadata_Team_Player_OverworldRewards {
     const message = createBaseCDOTAMatchMetadata_Team_Player_OverworldRewards();
     message.overworldId = object.overworldId ?? 0;
-    message.tokens =
-      object.tokens !== undefined && object.tokens !== null
-        ? CMsgOverworldTokenQuantity.fromPartial(object.tokens)
-        : undefined;
+    message.tokens = (object.tokens !== undefined && object.tokens !== null)
+      ? CMsgOverworldTokenQuantity.fromPartial(object.tokens)
+      : undefined;
     return message;
   },
 };
@@ -4227,8 +4271,8 @@ export const CDOTAMatchMetadata_GuildChallengeProgress = {
         : 0,
       individualProgress: globalThis.Array.isArray(object?.individualProgress)
         ? object.individualProgress.map((e: any) =>
-            CDOTAMatchMetadata_GuildChallengeProgress_IndividualProgress.fromJSON(e),
-          )
+          CDOTAMatchMetadata_GuildChallengeProgress_IndividualProgress.fromJSON(e)
+        )
         : [],
     };
   },
@@ -4258,7 +4302,7 @@ export const CDOTAMatchMetadata_GuildChallengeProgress = {
     }
     if (message.individualProgress?.length) {
       obj.individualProgress = message.individualProgress.map((e) =>
-        CDOTAMatchMetadata_GuildChallengeProgress_IndividualProgress.toJSON(e),
+        CDOTAMatchMetadata_GuildChallengeProgress_IndividualProgress.toJSON(e)
       );
     }
     return obj;
@@ -4280,7 +4324,7 @@ export const CDOTAMatchMetadata_GuildChallengeProgress = {
     message.challengeProgressAccumulated = object.challengeProgressAccumulated ?? 0;
     message.individualProgress =
       object.individualProgress?.map((e) =>
-        CDOTAMatchMetadata_GuildChallengeProgress_IndividualProgress.fromPartial(e),
+        CDOTAMatchMetadata_GuildChallengeProgress_IndividualProgress.fromPartial(e)
       ) || [];
     return message;
   },
@@ -4810,10 +4854,8 @@ export const CDOTAMatchPrivateMetadata_Team_Player = {
     }
     writer.ldelim();
     if (message.goldReceived !== undefined) {
-      CDOTAMatchPrivateMetadata_Team_Player_GoldReceived.encode(
-        message.goldReceived,
-        writer.uint32(98).fork(),
-      ).ldelim();
+      CDOTAMatchPrivateMetadata_Team_Player_GoldReceived.encode(message.goldReceived, writer.uint32(98).fork())
+        .ldelim();
     }
     if (message.xpReceived !== undefined) {
       CDOTAMatchPrivateMetadata_Team_Player_XPReceived.encode(message.xpReceived, writer.uint32(106).fork()).ldelim();
@@ -5044,7 +5086,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player = {
     }
     if (message.combatSegments?.length) {
       obj.combatSegments = message.combatSegments.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment.toJSON(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment.toJSON(e)
       );
     }
     if (message.damageUnitNames?.length) {
@@ -5100,14 +5142,12 @@ export const CDOTAMatchPrivateMetadata_Team_Player = {
     message.graphAssists = object.graphAssists?.map((e) => e) || [];
     message.graphLasthits = object.graphLasthits?.map((e) => e) || [];
     message.graphDenies = object.graphDenies?.map((e) => e) || [];
-    message.goldReceived =
-      object.goldReceived !== undefined && object.goldReceived !== null
-        ? CDOTAMatchPrivateMetadata_Team_Player_GoldReceived.fromPartial(object.goldReceived)
-        : undefined;
-    message.xpReceived =
-      object.xpReceived !== undefined && object.xpReceived !== null
-        ? CDOTAMatchPrivateMetadata_Team_Player_XPReceived.fromPartial(object.xpReceived)
-        : undefined;
+    message.goldReceived = (object.goldReceived !== undefined && object.goldReceived !== null)
+      ? CDOTAMatchPrivateMetadata_Team_Player_GoldReceived.fromPartial(object.goldReceived)
+      : undefined;
+    message.xpReceived = (object.xpReceived !== undefined && object.xpReceived !== null)
+      ? CDOTAMatchPrivateMetadata_Team_Player_XPReceived.fromPartial(object.xpReceived)
+      : undefined;
     message.teamNumber = object.teamNumber ?? 0;
     message.teamSlot = object.teamSlot ?? 0;
     return message;
@@ -5130,10 +5170,8 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment = {
       CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     for (const v of message.healingByAbility) {
-      CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility.encode(
-        v!,
-        writer.uint32(26).fork(),
-      ).ldelim();
+      CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility.encode(v!, writer.uint32(26).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -5184,13 +5222,13 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment = {
       gameTime: isSet(object.gameTime) ? globalThis.Number(object.gameTime) : 0,
       damageByAbility: globalThis.Array.isArray(object?.damageByAbility)
         ? object.damageByAbility.map((e: any) =>
-            CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility.fromJSON(e),
-          )
+          CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility.fromJSON(e)
+        )
         : [],
       healingByAbility: globalThis.Array.isArray(object?.healingByAbility)
         ? object.healingByAbility.map((e: any) =>
-            CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility.fromJSON(e),
-          )
+          CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility.fromJSON(e)
+        )
         : [],
     };
   },
@@ -5202,12 +5240,12 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment = {
     }
     if (message.damageByAbility?.length) {
       obj.damageByAbility = message.damageByAbility.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility.toJSON(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility.toJSON(e)
       );
     }
     if (message.healingByAbility?.length) {
       obj.healingByAbility = message.healingByAbility.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility.toJSON(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility.toJSON(e)
       );
     }
     return obj;
@@ -5225,11 +5263,11 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment = {
     message.gameTime = object.gameTime ?? 0;
     message.damageByAbility =
       object.damageByAbility?.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility.fromPartial(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility.fromPartial(e)
       ) || [];
     message.healingByAbility =
       object.healingByAbility?.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility.fromPartial(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility.fromPartial(e)
       ) || [];
     return message;
   },
@@ -5310,8 +5348,8 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility
       abilityId: isSet(object.abilityId) ? globalThis.Number(object.abilityId) : -1,
       byHeroTargets: globalThis.Array.isArray(object?.byHeroTargets)
         ? object.byHeroTargets.map((e: any) =>
-            CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility_ByHeroTarget.fromJSON(e),
-          )
+          CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility_ByHeroTarget.fromJSON(e)
+        )
         : [],
     };
   },
@@ -5326,7 +5364,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility
     }
     if (message.byHeroTargets?.length) {
       obj.byHeroTargets = message.byHeroTargets.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility_ByHeroTarget.toJSON(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility_ByHeroTarget.toJSON(e)
       );
     }
     return obj;
@@ -5345,7 +5383,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility
     message.abilityId = object.abilityId ?? -1;
     message.byHeroTargets =
       object.byHeroTargets?.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility_ByHeroTarget.fromPartial(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility_ByHeroTarget.fromPartial(e)
       ) || [];
     return message;
   },
@@ -5361,7 +5399,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.damage !== undefined && message.damage !== 0) {
       writer.uint32(16).uint32(message.damage);
@@ -5384,7 +5422,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_DamageByAbility
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -5510,8 +5548,8 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbilit
       abilityId: isSet(object.abilityId) ? globalThis.Number(object.abilityId) : -1,
       byHeroTargets: globalThis.Array.isArray(object?.byHeroTargets)
         ? object.byHeroTargets.map((e: any) =>
-            CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility_ByHeroTarget.fromJSON(e),
-          )
+          CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility_ByHeroTarget.fromJSON(e)
+        )
         : [],
     };
   },
@@ -5526,7 +5564,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbilit
     }
     if (message.byHeroTargets?.length) {
       obj.byHeroTargets = message.byHeroTargets.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility_ByHeroTarget.toJSON(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility_ByHeroTarget.toJSON(e)
       );
     }
     return obj;
@@ -5545,7 +5583,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbilit
     message.abilityId = object.abilityId ?? -1;
     message.byHeroTargets =
       object.byHeroTargets?.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility_ByHeroTarget.fromPartial(e),
+        CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbility_ByHeroTarget.fromPartial(e)
       ) || [];
     return message;
   },
@@ -5561,7 +5599,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbilit
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.healing !== undefined && message.healing !== 0) {
       writer.uint32(16).uint32(message.healing);
@@ -5584,7 +5622,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_CombatSegment_HealingByAbilit
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 16) {
@@ -5701,8 +5739,8 @@ export const CDOTAMatchPrivateMetadata_Team_Player_BuffRecord = {
       buffModifierName: isSet(object.buffModifierName) ? globalThis.String(object.buffModifierName) : "",
       byHeroTargets: globalThis.Array.isArray(object?.byHeroTargets)
         ? object.byHeroTargets.map((e: any) =>
-            CDOTAMatchPrivateMetadata_Team_Player_BuffRecord_ByHeroTarget.fromJSON(e),
-          )
+          CDOTAMatchPrivateMetadata_Team_Player_BuffRecord_ByHeroTarget.fromJSON(e)
+        )
         : [],
     };
   },
@@ -5717,7 +5755,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_BuffRecord = {
     }
     if (message.byHeroTargets?.length) {
       obj.byHeroTargets = message.byHeroTargets.map((e) =>
-        CDOTAMatchPrivateMetadata_Team_Player_BuffRecord_ByHeroTarget.toJSON(e),
+        CDOTAMatchPrivateMetadata_Team_Player_BuffRecord_ByHeroTarget.toJSON(e)
       );
     }
     return obj;
@@ -5751,7 +5789,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_BuffRecord_ByHeroTarget = {
     writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(8).uint32(message.heroId);
+      writer.uint32(8).int32(message.heroId);
     }
     if (message.elapsedDuration !== undefined && message.elapsedDuration !== 0) {
       writer.uint32(21).float(message.elapsedDuration);
@@ -5777,7 +5815,7 @@ export const CDOTAMatchPrivateMetadata_Team_Player_BuffRecord_ByHeroTarget = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
         case 2:
           if (tag !== 21) {
@@ -6281,15 +6319,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

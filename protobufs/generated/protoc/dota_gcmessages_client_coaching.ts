@@ -218,7 +218,8 @@ export interface CMsgAvailablePrivateCoachingSessionSummary {
   coachingSessionCount?: number | undefined;
 }
 
-export interface CMsgClientToGCRequestPlayerCoachMatches {}
+export interface CMsgClientToGCRequestPlayerCoachMatches {
+}
 
 export interface CMsgClientToGCRequestPlayerCoachMatchesResponse {
   result?: CMsgClientToGCRequestPlayerCoachMatchesResponse_EResponse | undefined;
@@ -728,7 +729,8 @@ export function cMsgClientToGCAcceptPrivateCoachingSessionResponse_EResponseToJS
   }
 }
 
-export interface CMsgClientToGCLeavePrivateCoachingSession {}
+export interface CMsgClientToGCLeavePrivateCoachingSession {
+}
 
 export interface CMsgClientToGCLeavePrivateCoachingSessionResponse {
   result?: CMsgClientToGCLeavePrivateCoachingSessionResponse_EResponse | undefined;
@@ -801,7 +803,8 @@ export function cMsgClientToGCLeavePrivateCoachingSessionResponse_EResponseToJSO
   }
 }
 
-export interface CMsgClientToGCGetCurrentPrivateCoachingSession {}
+export interface CMsgClientToGCGetCurrentPrivateCoachingSession {
+}
 
 export interface CMsgClientToGCGetCurrentPrivateCoachingSessionResponse {
   result?: CMsgClientToGCGetCurrentPrivateCoachingSessionResponse_EResponse | undefined;
@@ -837,8 +840,7 @@ export function cMsgClientToGCGetCurrentPrivateCoachingSessionResponse_EResponse
       return CMsgClientToGCGetCurrentPrivateCoachingSessionResponse_EResponse.k_eTimeout;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCGetCurrentPrivateCoachingSessionResponse_EResponse",
       );
   }
@@ -860,8 +862,7 @@ export function cMsgClientToGCGetCurrentPrivateCoachingSessionResponse_EResponse
       return "k_eTimeout";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCGetCurrentPrivateCoachingSessionResponse_EResponse",
       );
   }
@@ -937,8 +938,7 @@ export function cMsgClientToGCSubmitPrivateCoachingSessionRatingResponse_ERespon
       return CMsgClientToGCSubmitPrivateCoachingSessionRatingResponse_EResponse.k_eInvalidRating;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCSubmitPrivateCoachingSessionRatingResponse_EResponse",
       );
   }
@@ -974,8 +974,7 @@ export function cMsgClientToGCSubmitPrivateCoachingSessionRatingResponse_ERespon
       return "k_eInvalidRating";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCSubmitPrivateCoachingSessionRatingResponse_EResponse",
       );
   }
@@ -1019,8 +1018,7 @@ export function cMsgClientToGCGetAvailablePrivateCoachingSessionsResponse_ERespo
       return CMsgClientToGCGetAvailablePrivateCoachingSessionsResponse_EResponse.k_eTimeout;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCGetAvailablePrivateCoachingSessionsResponse_EResponse",
       );
   }
@@ -1042,14 +1040,14 @@ export function cMsgClientToGCGetAvailablePrivateCoachingSessionsResponse_ERespo
       return "k_eTimeout";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCGetAvailablePrivateCoachingSessionsResponse_EResponse",
       );
   }
 }
 
-export interface CMsgClientToGCGetAvailablePrivateCoachingSessionsSummary {}
+export interface CMsgClientToGCGetAvailablePrivateCoachingSessionsSummary {
+}
 
 export interface CMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse {
   result?: CMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse_EResponse | undefined;
@@ -1085,8 +1083,7 @@ export function cMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse
       return CMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse_EResponse.k_eTimeout;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse_EResponse",
       );
   }
@@ -1108,14 +1105,14 @@ export function cMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse
       return "k_eTimeout";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse_EResponse",
       );
   }
 }
 
-export interface CMsgClientToGCJoinPrivateCoachingSessionLobby {}
+export interface CMsgClientToGCJoinPrivateCoachingSessionLobby {
+}
 
 export interface CMsgClientToGCJoinPrivateCoachingSessionLobbyResponse {
   result?: CMsgClientToGCJoinPrivateCoachingSessionLobbyResponse_EResponse | undefined;
@@ -1210,8 +1207,7 @@ export function cMsgClientToGCJoinPrivateCoachingSessionLobbyResponse_EResponseF
       return CMsgClientToGCJoinPrivateCoachingSessionLobbyResponse_EResponse.k_eJoinFailed;
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCJoinPrivateCoachingSessionLobbyResponse_EResponse",
       );
   }
@@ -1263,8 +1259,7 @@ export function cMsgClientToGCJoinPrivateCoachingSessionLobbyResponse_EResponseT
       return "k_eJoinFailed";
     default:
       throw new globalThis.Error(
-        "Unrecognized enum value " +
-          object +
+        "Unrecognized enum value " + object +
           " for enum CMsgClientToGCJoinPrivateCoachingSessionLobbyResponse_EResponse",
       );
   }
@@ -2140,12 +2135,11 @@ export const CMsgAvailablePrivateCoachingSession = {
   },
   fromPartial(object: DeepPartial<CMsgAvailablePrivateCoachingSession>): CMsgAvailablePrivateCoachingSession {
     const message = createBaseCMsgAvailablePrivateCoachingSession();
-    message.coachingSession =
-      object.coachingSession !== undefined && object.coachingSession !== null
-        ? CMsgPrivateCoachingSession.fromPartial(object.coachingSession)
-        : undefined;
+    message.coachingSession = (object.coachingSession !== undefined && object.coachingSession !== null)
+      ? CMsgPrivateCoachingSession.fromPartial(object.coachingSession)
+      : undefined;
     message.coachingSessionStatus =
-      object.coachingSessionStatus !== undefined && object.coachingSessionStatus !== null
+      (object.coachingSessionStatus !== undefined && object.coachingSessionStatus !== null)
         ? CMsgPrivateCoachingSessionStatus.fromPartial(object.coachingSessionStatus)
         : undefined;
     return message;
@@ -2199,7 +2193,7 @@ export const CMsgAvailablePrivateCoachingSessionList = {
     const obj: any = {};
     if (message.availableCoachingSessions?.length) {
       obj.availableCoachingSessions = message.availableCoachingSessions.map((e) =>
-        CMsgAvailablePrivateCoachingSession.toJSON(e),
+        CMsgAvailablePrivateCoachingSession.toJSON(e)
       );
     }
     return obj;
@@ -2535,10 +2529,9 @@ export const CMsgClientToGCRequestPlayerCoachMatchResponse = {
   ): CMsgClientToGCRequestPlayerCoachMatchResponse {
     const message = createBaseCMsgClientToGCRequestPlayerCoachMatchResponse();
     message.result = object.result ?? 0;
-    message.coachMatch =
-      object.coachMatch !== undefined && object.coachMatch !== null
-        ? CMsgPlayerCoachMatch.fromPartial(object.coachMatch)
-        : undefined;
+    message.coachMatch = (object.coachMatch !== undefined && object.coachMatch !== null)
+      ? CMsgPlayerCoachMatch.fromPartial(object.coachMatch)
+      : undefined;
     return message;
   },
 };
@@ -2769,10 +2762,9 @@ export const CMsgGCToClientCoachTeammateRatingsChanged = {
     object: DeepPartial<CMsgGCToClientCoachTeammateRatingsChanged>,
   ): CMsgGCToClientCoachTeammateRatingsChanged {
     const message = createBaseCMsgGCToClientCoachTeammateRatingsChanged();
-    message.coachMatch =
-      object.coachMatch !== undefined && object.coachMatch !== null
-        ? CMsgPlayerCoachMatch.fromPartial(object.coachMatch)
-        : undefined;
+    message.coachMatch = (object.coachMatch !== undefined && object.coachMatch !== null)
+      ? CMsgPlayerCoachMatch.fromPartial(object.coachMatch)
+      : undefined;
     return message;
   },
 };
@@ -2916,10 +2908,9 @@ export const CMsgClientToGCRequestPrivateCoachingSessionResponse = {
   ): CMsgClientToGCRequestPrivateCoachingSessionResponse {
     const message = createBaseCMsgClientToGCRequestPrivateCoachingSessionResponse();
     message.result = object.result ?? 0;
-    message.coachingSession =
-      object.coachingSession !== undefined && object.coachingSession !== null
-        ? CMsgPrivateCoachingSession.fromPartial(object.coachingSession)
-        : undefined;
+    message.coachingSession = (object.coachingSession !== undefined && object.coachingSession !== null)
+      ? CMsgPrivateCoachingSession.fromPartial(object.coachingSession)
+      : undefined;
     return message;
   },
 };
@@ -3063,10 +3054,9 @@ export const CMsgClientToGCAcceptPrivateCoachingSessionResponse = {
   ): CMsgClientToGCAcceptPrivateCoachingSessionResponse {
     const message = createBaseCMsgClientToGCAcceptPrivateCoachingSessionResponse();
     message.result = object.result ?? 0;
-    message.coachingSession =
-      object.coachingSession !== undefined && object.coachingSession !== null
-        ? CMsgPrivateCoachingSession.fromPartial(object.coachingSession)
-        : undefined;
+    message.coachingSession = (object.coachingSession !== undefined && object.coachingSession !== null)
+      ? CMsgPrivateCoachingSession.fromPartial(object.coachingSession)
+      : undefined;
     return message;
   },
 };
@@ -3309,10 +3299,9 @@ export const CMsgClientToGCGetCurrentPrivateCoachingSessionResponse = {
   ): CMsgClientToGCGetCurrentPrivateCoachingSessionResponse {
     const message = createBaseCMsgClientToGCGetCurrentPrivateCoachingSessionResponse();
     message.result = object.result ?? 0;
-    message.currentSession =
-      object.currentSession !== undefined && object.currentSession !== null
-        ? CMsgPrivateCoachingSession.fromPartial(object.currentSession)
-        : undefined;
+    message.currentSession = (object.currentSession !== undefined && object.currentSession !== null)
+      ? CMsgPrivateCoachingSession.fromPartial(object.currentSession)
+      : undefined;
     return message;
   },
 };
@@ -3375,10 +3364,9 @@ export const CMsgGCToClientPrivateCoachingSessionUpdated = {
     object: DeepPartial<CMsgGCToClientPrivateCoachingSessionUpdated>,
   ): CMsgGCToClientPrivateCoachingSessionUpdated {
     const message = createBaseCMsgGCToClientPrivateCoachingSessionUpdated();
-    message.coachingSession =
-      object.coachingSession !== undefined && object.coachingSession !== null
-        ? CMsgPrivateCoachingSession.fromPartial(object.coachingSession)
-        : undefined;
+    message.coachingSession = (object.coachingSession !== undefined && object.coachingSession !== null)
+      ? CMsgPrivateCoachingSession.fromPartial(object.coachingSession)
+      : undefined;
     return message;
   },
 };
@@ -3677,7 +3665,7 @@ export const CMsgClientToGCGetAvailablePrivateCoachingSessionsResponse = {
     const message = createBaseCMsgClientToGCGetAvailablePrivateCoachingSessionsResponse();
     message.result = object.result ?? 0;
     message.availableSessionsList =
-      object.availableSessionsList !== undefined && object.availableSessionsList !== null
+      (object.availableSessionsList !== undefined && object.availableSessionsList !== null)
         ? CMsgAvailablePrivateCoachingSessionList.fromPartial(object.availableSessionsList)
         : undefined;
     return message;
@@ -3747,10 +3735,8 @@ export const CMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse = 
       writer.uint32(8).int32(message.result);
     }
     if (message.coachingSessionSummary !== undefined) {
-      CMsgAvailablePrivateCoachingSessionSummary.encode(
-        message.coachingSessionSummary,
-        writer.uint32(18).fork(),
-      ).ldelim();
+      CMsgAvailablePrivateCoachingSessionSummary.encode(message.coachingSessionSummary, writer.uint32(18).fork())
+        .ldelim();
     }
     return writer;
   },
@@ -3821,7 +3807,7 @@ export const CMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse = 
     const message = createBaseCMsgClientToGCGetAvailablePrivateCoachingSessionsSummaryResponse();
     message.result = object.result ?? 0;
     message.coachingSessionSummary =
-      object.coachingSessionSummary !== undefined && object.coachingSessionSummary !== null
+      (object.coachingSessionSummary !== undefined && object.coachingSessionSummary !== null)
         ? CMsgAvailablePrivateCoachingSessionSummary.fromPartial(object.coachingSessionSummary)
         : undefined;
     return message;
@@ -4203,15 +4189,11 @@ export const CMsgClientToGCRespondToCoachFriendRequestResponse = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

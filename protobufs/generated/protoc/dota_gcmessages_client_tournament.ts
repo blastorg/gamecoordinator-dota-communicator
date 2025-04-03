@@ -111,7 +111,8 @@ export function eTournamentEventToJSON(object: ETournamentEvent): string {
   }
 }
 
-export interface CMsgRequestWeekendTourneySchedule {}
+export interface CMsgRequestWeekendTourneySchedule {
+}
 
 export interface CMsgWeekendTourneySchedule {
   divisions: CMsgWeekendTourneySchedule_Division[];
@@ -137,7 +138,8 @@ export interface CMsgWeekendTourneyOpts {
   pickupTeamLogo?: string | undefined;
 }
 
-export interface CMsgWeekendTourneyLeave {}
+export interface CMsgWeekendTourneyLeave {
+}
 
 export interface CMsgDOTATournament {
   tournamentId?: number | undefined;
@@ -2082,8 +2084,8 @@ export const CMsgDOTAWeekendTourneyPlayerStats = {
     const message = createBaseCMsgDOTAWeekendTourneyPlayerStats();
     message.accountId = object.accountId ?? 0;
     message.seasonTrophyId = object.seasonTrophyId ?? 0;
-    message.skillLevels =
-      object.skillLevels?.map((e) => CMsgDOTAWeekendTourneyPlayerSkillLevelStats.fromPartial(e)) || [];
+    message.skillLevels = object.skillLevels?.map((e) => CMsgDOTAWeekendTourneyPlayerSkillLevelStats.fromPartial(e)) ||
+      [];
     message.currentTier = object.currentTier ?? 0;
     return message;
   },
@@ -2794,15 +2796,11 @@ export const CMsgDOTAWeekendTourneyParticipationDetails_Division = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();

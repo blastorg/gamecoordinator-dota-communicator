@@ -28,7 +28,8 @@ export enum EDemoCommands {
   DEM_SpawnGroups = 15,
   DEM_AnimationData = 16,
   DEM_AnimationHeader = 17,
-  DEM_Max = 18,
+  DEM_Recovery = 18,
+  DEM_Max = 19,
   DEM_IsCompressed = 64,
 }
 
@@ -92,6 +93,9 @@ export function eDemoCommandsFromJSON(object: any): EDemoCommands {
     case "DEM_AnimationHeader":
       return EDemoCommands.DEM_AnimationHeader;
     case 18:
+    case "DEM_Recovery":
+      return EDemoCommands.DEM_Recovery;
+    case 19:
     case "DEM_Max":
       return EDemoCommands.DEM_Max;
     case 64:
@@ -142,6 +146,8 @@ export function eDemoCommandsToJSON(object: EDemoCommands): string {
       return "DEM_AnimationData";
     case EDemoCommands.DEM_AnimationHeader:
       return "DEM_AnimationHeader";
+    case EDemoCommands.DEM_Recovery:
+      return "DEM_Recovery";
     case EDemoCommands.DEM_Max:
       return "DEM_Max";
     case EDemoCommands.DEM_IsCompressed:
@@ -229,7 +235,8 @@ export interface CDemoSaveGame {
   version?: number | undefined;
 }
 
-export interface CDemoSyncTick {}
+export interface CDemoSyncTick {
+}
 
 export interface CDemoConsoleCmd {
   cmdstring?: string | undefined;
@@ -288,7 +295,8 @@ export interface CDemoStringTables_tableT {
   tableFlags?: number | undefined;
 }
 
-export interface CDemoStop {}
+export interface CDemoStop {
+}
 
 export interface CDemoUserCmd {
   cmdNumber?: number | undefined;
@@ -297,6 +305,16 @@ export interface CDemoUserCmd {
 
 export interface CDemoSpawnGroups {
   msgs: Buffer[];
+}
+
+export interface CDemoRecovery {
+  initialSpawnGroup?: CDemoRecovery_DemoInitialSpawnGroupEntry | undefined;
+  spawnGroupMessage?: Buffer | undefined;
+}
+
+export interface CDemoRecovery_DemoInitialSpawnGroupEntry {
+  spawngrouphandle?: number | undefined;
+  wasCreated?: boolean | undefined;
 }
 
 function createBaseCDemoFileHeader(): CDemoFileHeader {
@@ -656,10 +674,12 @@ export const CGameInfo = {
   },
   fromPartial(object: DeepPartial<CGameInfo>): CGameInfo {
     const message = createBaseCGameInfo();
-    message.dota =
-      object.dota !== undefined && object.dota !== null ? CGameInfo_CDotaGameInfo.fromPartial(object.dota) : undefined;
-    message.cs =
-      object.cs !== undefined && object.cs !== null ? CGameInfo_CCSGameInfo.fromPartial(object.cs) : undefined;
+    message.dota = (object.dota !== undefined && object.dota !== null)
+      ? CGameInfo_CDotaGameInfo.fromPartial(object.dota)
+      : undefined;
+    message.cs = (object.cs !== undefined && object.cs !== null)
+      ? CGameInfo_CCSGameInfo.fromPartial(object.cs)
+      : undefined;
     return message;
   },
 };
@@ -1021,7 +1041,7 @@ export const CGameInfo_CDotaGameInfo_CHeroSelectEvent = {
       writer.uint32(16).uint32(message.team);
     }
     if (message.heroId !== undefined && message.heroId !== 0) {
-      writer.uint32(24).uint32(message.heroId);
+      writer.uint32(24).int32(message.heroId);
     }
     return writer;
   },
@@ -1052,7 +1072,7 @@ export const CGameInfo_CDotaGameInfo_CHeroSelectEvent = {
             break;
           }
 
-          message.heroId = reader.uint32();
+          message.heroId = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1269,8 +1289,9 @@ export const CDemoFileInfo = {
     message.playbackTime = object.playbackTime ?? 0;
     message.playbackTicks = object.playbackTicks ?? 0;
     message.playbackFrames = object.playbackFrames ?? 0;
-    message.gameInfo =
-      object.gameInfo !== undefined && object.gameInfo !== null ? CGameInfo.fromPartial(object.gameInfo) : undefined;
+    message.gameInfo = (object.gameInfo !== undefined && object.gameInfo !== null)
+      ? CGameInfo.fromPartial(object.gameInfo)
+      : undefined;
     return message;
   },
 };
@@ -1400,12 +1421,12 @@ export const CDemoFullPacket = {
   },
   fromPartial(object: DeepPartial<CDemoFullPacket>): CDemoFullPacket {
     const message = createBaseCDemoFullPacket();
-    message.stringTable =
-      object.stringTable !== undefined && object.stringTable !== null
-        ? CDemoStringTables.fromPartial(object.stringTable)
-        : undefined;
-    message.packet =
-      object.packet !== undefined && object.packet !== null ? CDemoPacket.fromPartial(object.packet) : undefined;
+    message.stringTable = (object.stringTable !== undefined && object.stringTable !== null)
+      ? CDemoStringTables.fromPartial(object.stringTable)
+      : undefined;
+    message.packet = (object.packet !== undefined && object.packet !== null)
+      ? CDemoPacket.fromPartial(object.packet)
+      : undefined;
     return message;
   },
 };
@@ -2581,6 +2602,160 @@ export const CDemoSpawnGroups = {
   },
 };
 
+function createBaseCDemoRecovery(): CDemoRecovery {
+  return { initialSpawnGroup: undefined, spawnGroupMessage: Buffer.alloc(0) };
+}
+
+export const CDemoRecovery = {
+  encode(message: CDemoRecovery, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.initialSpawnGroup !== undefined) {
+      CDemoRecovery_DemoInitialSpawnGroupEntry.encode(message.initialSpawnGroup, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.spawnGroupMessage !== undefined && message.spawnGroupMessage.length !== 0) {
+      writer.uint32(18).bytes(message.spawnGroupMessage);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CDemoRecovery {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCDemoRecovery();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.initialSpawnGroup = CDemoRecovery_DemoInitialSpawnGroupEntry.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.spawnGroupMessage = reader.bytes() as Buffer;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CDemoRecovery {
+    return {
+      initialSpawnGroup: isSet(object.initialSpawnGroup)
+        ? CDemoRecovery_DemoInitialSpawnGroupEntry.fromJSON(object.initialSpawnGroup)
+        : undefined,
+      spawnGroupMessage: isSet(object.spawnGroupMessage)
+        ? Buffer.from(bytesFromBase64(object.spawnGroupMessage))
+        : Buffer.alloc(0),
+    };
+  },
+
+  toJSON(message: CDemoRecovery): unknown {
+    const obj: any = {};
+    if (message.initialSpawnGroup !== undefined) {
+      obj.initialSpawnGroup = CDemoRecovery_DemoInitialSpawnGroupEntry.toJSON(message.initialSpawnGroup);
+    }
+    if (message.spawnGroupMessage !== undefined && message.spawnGroupMessage.length !== 0) {
+      obj.spawnGroupMessage = base64FromBytes(message.spawnGroupMessage);
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CDemoRecovery>): CDemoRecovery {
+    return CDemoRecovery.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CDemoRecovery>): CDemoRecovery {
+    const message = createBaseCDemoRecovery();
+    message.initialSpawnGroup = (object.initialSpawnGroup !== undefined && object.initialSpawnGroup !== null)
+      ? CDemoRecovery_DemoInitialSpawnGroupEntry.fromPartial(object.initialSpawnGroup)
+      : undefined;
+    message.spawnGroupMessage = object.spawnGroupMessage ?? Buffer.alloc(0);
+    return message;
+  },
+};
+
+function createBaseCDemoRecovery_DemoInitialSpawnGroupEntry(): CDemoRecovery_DemoInitialSpawnGroupEntry {
+  return { spawngrouphandle: 0, wasCreated: false };
+}
+
+export const CDemoRecovery_DemoInitialSpawnGroupEntry = {
+  encode(message: CDemoRecovery_DemoInitialSpawnGroupEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.spawngrouphandle !== undefined && message.spawngrouphandle !== 0) {
+      writer.uint32(8).uint32(message.spawngrouphandle);
+    }
+    if (message.wasCreated !== undefined && message.wasCreated !== false) {
+      writer.uint32(16).bool(message.wasCreated);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CDemoRecovery_DemoInitialSpawnGroupEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCDemoRecovery_DemoInitialSpawnGroupEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.spawngrouphandle = reader.uint32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.wasCreated = reader.bool();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CDemoRecovery_DemoInitialSpawnGroupEntry {
+    return {
+      spawngrouphandle: isSet(object.spawngrouphandle) ? globalThis.Number(object.spawngrouphandle) : 0,
+      wasCreated: isSet(object.wasCreated) ? globalThis.Boolean(object.wasCreated) : false,
+    };
+  },
+
+  toJSON(message: CDemoRecovery_DemoInitialSpawnGroupEntry): unknown {
+    const obj: any = {};
+    if (message.spawngrouphandle !== undefined && message.spawngrouphandle !== 0) {
+      obj.spawngrouphandle = Math.round(message.spawngrouphandle);
+    }
+    if (message.wasCreated !== undefined && message.wasCreated !== false) {
+      obj.wasCreated = message.wasCreated;
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<CDemoRecovery_DemoInitialSpawnGroupEntry>): CDemoRecovery_DemoInitialSpawnGroupEntry {
+    return CDemoRecovery_DemoInitialSpawnGroupEntry.fromPartial(base ?? {});
+  },
+  fromPartial(object: DeepPartial<CDemoRecovery_DemoInitialSpawnGroupEntry>): CDemoRecovery_DemoInitialSpawnGroupEntry {
+    const message = createBaseCDemoRecovery_DemoInitialSpawnGroupEntry();
+    message.spawngrouphandle = object.spawngrouphandle ?? 0;
+    message.wasCreated = object.wasCreated ?? false;
+    return message;
+  },
+};
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -2591,15 +2766,11 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends globalThis.Array<infer U>
-    ? globalThis.Array<DeepPartial<U>>
-    : T extends ReadonlyArray<infer U>
-      ? ReadonlyArray<DeepPartial<U>>
-      : T extends {}
-        ? { [K in keyof T]?: DeepPartial<T[K]> }
-        : Partial<T>;
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
 
 function longToString(long: Long) {
   return long.toString();
